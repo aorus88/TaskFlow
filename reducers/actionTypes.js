@@ -1,0 +1,9 @@
+export const ADD_TASK = "ADD_TASK";
+export const DELETE_TASK = "DELETE_TASK";
+export const ADD_CATEGORY = "ADD_CATEGORY";
+export const REMOVE_CATEGORY = "REMOVE_CATEGORY";
+export const ADD_SUBTASK = "ADD_SUBTASK";
+export const TOGGLE_SUBTASK = "TOGGLE_SUBTASK";
+export const DELETE_SUBTASK = "DELETE_SUBTASK";
+export const UPDATE_TASK_TIME = "UPDATE_TASK_TIME";
+export const EDIT_TASK = "EDIT_TASK"; // Ajout de l'action EDIT_TASK

@@ -1,0 +1,37 @@
+.task-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+  }
+
+  .filter-container {
+    display: flex;
+    gap: 15px; /* Espacement entre les filtres */
+    align-items: center;
+  }
+  
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .filter-group label {
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .filter-group select,
+  .filter-group input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .filter-group select:hover,
+  .filter-group input:hover {
+    border-color: #4caf50;
+  }
+  

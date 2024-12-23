@@ -1,0 +1,41 @@
+.archived-tasks {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+  
+  .archived-tasks-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  
+  .archived-tasks-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .archived-task-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .archived-task-item:last-child {
+    border-bottom: none;
+  }
+  
+  .task-name {
+    font-weight: bold;
+  }
+  
+  .task-date,
+  .task-priority,
+  .task-time-spent {
+    margin-left: 10px;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
