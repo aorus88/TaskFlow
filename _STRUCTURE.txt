@@ -1,0 +1,11 @@
+taskflow/
+  ├─ node_modules/        (ceux de la partie React)
+  ├─ package.json         (celui du front)
+  ├─ public/
+  ├─ src/                 (ton code React)
+  ├─ backend/
+  │    ├─ node_modules/   (ceux du serveur)
+  │    ├─ package.json    (celui du back-end)
+  │    └─ app.js
+  ├─ .gitignore
+  └─ README.md

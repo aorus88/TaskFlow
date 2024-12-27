@@ -1,0 +1,18 @@
+.clock-container {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin: 20px 0;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    background: #e7dec683;
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .clock-time {
+    font-family: "Courier New", Courier, monospace;
+  }
+  

@@ -1,0 +1,51 @@
+.weather-widget {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    margin: 1rem 0;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .weather-widget.sun {
+    background-color: #ffeb3b; /* Jaune pour le soleil */
+    color: #333;
+  }
+  
+  .weather-widget.cloud {
+    background-color: #90a4ae; /* Gris clair pour les nuages */
+    color: #fff;
+  }
+  
+  .weather-widget.rain {
+    background-color: #2196f3; /* Bleu pour la pluie */
+    color: #fff;
+  }
+  
+  .weather-widget.snow {
+    background-color: #e3f2fd; /* Blanc bleuâtre pour la neige */
+    color: #333;
+  }
+  
+  .weather-widget.wind {
+    background-color: #a5d6a7; /* Vert pour le vent */
+    color: #333;
+  }
+  
+  .weather-widget h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .weather-widget p {
+    margin: 0.3rem 0;
+    font-size: 1.1rem;
+  }
+  
+  .weather-widget-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  

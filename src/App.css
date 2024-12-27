@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ajout de styles spécifiques à l'application */
+.App {
+  @apply text-center p-5; /* Centrer le texte et ajouter du padding */
+}
+
+.task-list-container {
+  @apply mx-auto my-5 max-w-4xl; /* Centrage horizontal et marge verticale */
+}
+
+.filters {
+  @apply my-5; /* Marge verticale */
+}
+
+.filters select,
+.filters input {
+  @apply mx-1 p-2 text-lg border border-gray-300 rounded; /* Espacement, padding et style de base */
+}
+
+.filters button {
+  @apply px-4 py-2 text-lg text-white bg-green-500 rounded cursor-pointer hover:bg-green-600; /* Bouton stylé avec hover */
+}
+
+.task-item {
+  @apply p-3 my-3 border border-gray-300 rounded bg-gray-50 transition-transform transform hover:scale-105; /* Effet de survol */
+}
+
+.task-priority {
+  @apply font-bold; /* Texte en gras pour les priorités */
+}
+
+.task-priority.low {
+  @apply text-green-500; /* Priorité basse en vert */
+}
+
+.task-priority.medium {
+  @apply text-orange-500; /* Priorité moyenne en orange */
+}
+
+.task-priority.high {
+  @apply text-red-500; /* Priorité haute en rouge */
+}

@@ -1,0 +1,58 @@
+.task-detail {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .subtask-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .subtask-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .subtask-item .delete-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .subtask-item .delete-button:hover {
+    background-color: #d32f2f;
+  }
+  
+  .subtask-form {
+    display: flex;
+    margin-top: 15px;
+  }
+  
+  .subtask-form input {
+    flex: 1;
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .subtask-form .add-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .subtask-form .add-button:hover {
+    background-color: #388e3c;
+  }
+  

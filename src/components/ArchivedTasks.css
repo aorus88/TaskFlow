@@ -1,0 +1,58 @@
+.archived-tasks {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+
+  
+  .archived-tasks-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .archived-task-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 5px;
+  }
+  
+  .archived-task-item:last-child {
+    border-bottom: none;
+  }
+  
+  
+  .task-name {
+    font-weight: bold;
+  }
+  
+  .task-priority,
+  .task-time-spent {
+    margin-left: 0px;
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  .task-archived-date {
+    
+  font-size: 0.9rem
+  }
+
+
+  
+  .sort-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .sort-button:hover {
+    background-color: #0056b3;
+  }
+  
+  

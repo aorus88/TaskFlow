@@ -1,0 +1,85 @@
+@tailwind base; /* Inclut les styles de base de Tailwind */
+@tailwind components; /* Inclut les composants de Tailwind */
+@tailwind utilities; /* Inclut les classes utilitaires de Tailwind */
+
+/* Styles globaux personnalisés */
+body {
+  @apply bg-gray-50 text-gray-800; /* Fond clair et texte gris foncé */
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+/* Gestion du mode sombre */
+body.dark {
+  @apply bg-gray-900 text-gray-100;
+}
+
+/* Supprimer les marges des ul/ol globalement */
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+/* Classes personnalisées globales */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
+/* organiser menu flottant */
+.app-container {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.content-container {
+  flex-grow: 1; /* Prend tout l'espace disponible */
+  padding: 20px;
+  transition: padding-left 0.3s ease; /* Transition fluide quand le menu s'ouvre/ferme */
+}
+
+.floating-menu.open ~ .content-container {
+  padding-left: 200px; /* Ajuste l'espace pour le menu ouvert */
+}
+
+.floating-menu.closed ~ .content-container {
+  padding-left: 50px; /* Ajuste l'espace pour le menu fermé */
+}
+
+/*message d'info enregistrement - v.1.1.5*/
+.feedback-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4caf50; /* Couleur verte pour le succès */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  font-size: 16px;
+  animation: fade-in-out 3s forwards;
+}
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+/*message d'info enregistrement - v.1.1.5*END*/
