@@ -1,15 +1,18 @@
 .clock-container {
     display: flex;
-    justify-content: left;
-    align-items: center;
-    margin: 20px 0;
+
+    margin: 0px 0;
     font-size: 2rem;
     font-weight: bold;
-    color: #333;
-    background: #e7dec683;
-    padding: 10px 20px;
+    color: #090000;
+    background: #c7f292;
+    padding: 1px 50px;
     border-radius: 50px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    zoom : 100%;
+    max-width: fit-content;
+    margin: 0 auto;
+  
   }
   
   .clock-time {

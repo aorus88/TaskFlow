@@ -15,9 +15,9 @@ const initialState = {
 const App = () => {
   const [state, dispatch] = useReducer(taskReducer, initialState);
 
-  const fetchTasks = async () => {
+  const fetchTasks = async (archived = false) => {
     try {
-      const response = await fetch("http://192.168.50.241:4000/tasks");
+      const response = await fetch(`http://192.168.50.241:4000/tasks?archived=${archived}`);
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
       }
@@ -153,7 +153,7 @@ const App = () => {
             path="/"
             element={
               <Home
-                tasks={state.tasks.filter((task) => task.archived === 'open')}
+                tasks={state.tasks.filter((task) => task.archived === "open")}
                 onAddTask={addTask}
                 onEditTask={updateTask}
                 onDeleteTask={deleteTask}
@@ -168,8 +168,8 @@ const App = () => {
             path="/archives"
             element={
               <Archives
-                archivedTasks={state.tasks.filter((task) => task.archived === 'closed')} // Correction ici
-                handleDeleteTask={deleteTask}
+              archivedTasks={state.tasks.filter((task) => task.archived?.trim() === "closed")}
+                             handleDeleteTask={deleteTask}
                 onFetchArchivedTasks={fetchTasks} // Ajoutez cette ligne pour passer la fonction de fetch
               />
             }

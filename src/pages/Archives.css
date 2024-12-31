@@ -1,0 +1,6 @@
+.archives-page {
+  margin-left: 10%; /* Décale tout vers la droite */
+  padding: 20px; /* Ajoute de l'espace à l'intérieur */
+  box-sizing: border-box; /* Assure que les marges sont bien calculées */
+  margin-right: 10%; /* Décale tout vers la droite */
+}

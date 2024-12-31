@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-//import "./ArchivedTasks.css"; // Importer les styles spécifiques
+import TaskItem from "../components/TaskItem";
+import "./Archives.css"; // Importer les styles spécifiques
 
 const Archives = ({ 
   archivedTasks, 
@@ -12,16 +13,16 @@ const Archives = ({
   // Charger les tâches archivées quand on arrive sur la page
   useEffect(() => {
     if (onFetchArchivedTasks) {
-      onFetchArchivedTasks();
+      onFetchArchivedTasks(true); // Passez true pour charger les tâches archivées
     }
   }, []); // Ajoutez un tableau de dépendances vide pour appeler une seule fois
 
   // Suppression d'une tâche archivée
-  const handleDeleteArchivedTask = (taskId) => {
-    handleDeleteTask(taskId, true); // true = tâche archivée
-    setFeedbackMessage("Tâche archivée supprimée avec succès !");
-    setTimeout(() => setFeedbackMessage(""), 3000);
-  };
+  //const handleDeleteArchivedTask = (taskId) => {
+   // handleDeleteTask(taskId, true); // true = tâche archivée
+    //setFeedbackMessage("Tâche archivée supprimée avec succès !");
+   // setTimeout(() => setFeedbackMessage(""), 3000);
+  //};
 
   console.log("Archives.js - Tâches archivées reçues :", archivedTasks);
 
@@ -91,15 +92,7 @@ const Archives = ({
                   {Math.floor((task.timeSpent || 0) / 60)} min passées
                 </span>
               </div>
-              {/* Bouton pour supprimer la tâche archivée */}
-              <div className="task-actions">
-                <button
-                  className="delete-button"
-                  onClick={() => handleDeleteArchivedTask(task.id)}
-                >
-                  Supprimer
-                </button>
-              </div>
+            
             </li>
           ))}
         </ul>

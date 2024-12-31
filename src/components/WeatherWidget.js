@@ -5,8 +5,8 @@ const WeatherWidget = () => {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
 
-  const location = "Lausanne";
-  const apiKey = "e67be99e9774281db7d895e637a5a008";
+  const location = "Coppet";
+  const apiKey = "6646ef98bb617a6aa6419692cb622d72";
 
   const weatherTranslations = {
     "clear sky": "Ciel dégagé",
@@ -18,14 +18,16 @@ const WeatherWidget = () => {
     "thunderstorm": "Orage",
     "snow": "Neige",
     "mist": "Brume",
+    "fog": "Brouillard",
   };
 
   const getWeatherClass = (condition) => {
-    if (condition.includes("clear")) return "sun";
-    if (condition.includes("cloud")) return "cloud";
-    if (condition.includes("rain")) return "rain";
-    if (condition.includes("snow")) return "snow";
-    if (condition.includes("wind")) return "wind";
+    if (condition.includes("clear")) return "Ensoleillé";
+    if (condition.includes("cloud")) return "Nuageux";
+    if (condition.includes("rain")) return "Pluie";
+    if (condition.includes("snow")) return "Neige";
+    if (condition.includes("wind")) return "Vents";
+    if (condition.includes("fog")) return "Vents";
     return ""; // Classe par défaut
   };
 

@@ -6,6 +6,8 @@ import EditTaskModal from "../components/EditTaskModal";
 import PriorityPieChart from "../components/PriorityPieChart";
 import WeatherWidget from "../components/WeatherWidget";
 import Clock from "../components/Clock";
+import "./Home.css";
+
 
 const Home = ({
   tasks = [], // Valeur par défaut pour éviter les erreurs
@@ -41,23 +43,31 @@ const Home = ({
 
   return (
     <div className="home-page">
-      {/* Horloge */}
-      <div>
-        <Clock />
-      </div>
-      <h1>TaskFlow - V1.1.7_beta ❄️</h1>
+
+      <h1>TaskFlow - V1.1.9_beta</h1>
 
       {/* Widget Météo */}
       <div
         style={{
           marginBottom: "20px",
-          padding: "10px",
+          padding: "6px",
           border: "1px solid #ccc",
           borderRadius: "8px",
         }}
       >
         <WeatherWidget />
       </div>
+
+        {/* Horloge */}
+        <div>
+        <Clock />
+      </div>
+
+<div className="PriorityPieChart">
+<PriorityPieChart tasks={tasks} />
+</div>
+
+    
 
       {/* Formulaire pour ajouter une tâche */}
       <TaskForm onAddTask={onAddTask} />
