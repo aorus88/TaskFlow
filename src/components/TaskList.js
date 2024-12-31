@@ -14,72 +14,68 @@ const TaskList = ({
   onArchiveTask,
   onTaskComplete, // Nouvelle prop pour gérer la combinaison de "Terminé" et "Archiver"
   isArchived = false, // Indique si les tâches affichées sont des archives
-  filter, // Ajout du filtre comme prop pour appliquer le tri
+  filter, // Ajout du filtre pour gérer les recherches ou tri
 }) => {
-  // Déclarations d'état
-  const [feedbackMessage, setFeedbackMessage] = useState("");
   const [selectedTask, setSelectedTask] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  // Gérer la suppression d'une tâche avec un message de feedback
-  const handleDeleteTask = (taskId) => {
-    onDeleteTask(taskId, isArchived); // Ajout de `isArchived` pour gérer les tâches archivées
-    setFeedbackMessage("Tâche supprimée avec succès !");
-    setTimeout(() => setFeedbackMessage(""), 3000);
+  // Fonction pour filtrer les tâches en fonction du texte de recherche
+  const filteredTasks = filter
+    ? tasks.filter((task) => task.name.toLowerCase().includes(filter.toLowerCase()))
+    : tasks;
+
+  // Gestion de l'ouverture de la modale d'édition
+  const handleEditTask = (task) => {
+    setSelectedTask(task);
+    setIsEditing(true);
   };
 
-  // Gérer la sauvegarde d'une tâche après édition
+  // Gestion de la fermeture de la modale d'édition
+  const handleCloseModal = () => {
+    setIsEditing(false);
+    setSelectedTask(null);
+  };
+
+  // Gestion de la sauvegarde des modifications de tâche
   const handleSaveTask = (updatedTask) => {
-    onEditTask(updatedTask);
+    onSaveTask(updatedTask.id, {
+      name: updatedTask.name,
+      date: updatedTask.date,
+      priority: updatedTask.priority,
+      // ...et tout ce que tu veux mettre à jour
+    });
+    setIsEditing(false);
+    setSelectedTask(null);
+    // Puis on ferme la modale
+    handleCloseModal();
   };
-
-  // Trier les tâches en fonction de filter.sortOrder (du plus récent au plus ancien)
-  const sortedTasks = [...tasks].sort((a, b) => {
-    if (filter.sortOrder === "newest") {
-      return new Date(b.addedAt || 0) - new Date(a.addedAt || 0); // Du plus récent
-    } else if (filter.sortOrder === "oldest") {
-      return new Date(a.addedAt || 0) - new Date(b.addedAt || 0); // Du plus ancien
-    }
-    return 0; // Aucun tri si sortOrder n'est pas défini
-  });
 
   return (
-    <div className="task-list-container">
-      {/* Affichage du message de feedback */}
-      {feedbackMessage && <p className="feedback-message">{feedbackMessage}</p>}
-
-      {/* Liste des tâches */}
-      <ul className="task-list">
-        {sortedTasks.map((task) => (
+    <div className="task-list">
+      <ul>
+        {filteredTasks.map((task) => (
           <TaskItem
             key={task.id}
             task={task}
             onEditTask={onEditTask}
-            onDeleteTask={handleDeleteTask}
-            isArchived={isArchived} // Passez également l'état d'archivage
-            onArchiveTask={onArchiveTask} // Transmettre onArchiveTask
-            onTaskComplete={onTaskComplete} // Gestion du statut (open - closed)
+            onSaveTask={onSaveTask}
+            onDeleteTask={onDeleteTask}
+            onArchiveTask={onArchiveTask}
             onAddSubtask={onAddSubtask}
             onDeleteSubtask={onDeleteSubtask}
+            onUpdateTask={onSaveTask} // Ajoutez cette ligne
+            isArchived={isArchived}
           />
         ))}
       </ul>
 
-      {/* Modale pour l'édition */}
+      {/* Modale d'édition */}
       {isEditing && selectedTask && (
         <EditTaskModal
           task={selectedTask}
-          onClose={() => setIsEditing(false)}
-          onSave={handleSaveTask}
-        />
-      )}
-
-      {/* Affichage des détails de la tâche sélectionnée */}
-      {selectedTask && (
-        <TaskDetail
-          task={selectedTask}
-          onAddSubtask={onAddSubtask}
-          onDeleteSubtask={onDeleteSubtask}
+          onClose={handleCloseModal}
+          onSave={onSaveTask}  
+          /* ICI on transmet handleSaveTask */
         />
       )}
     </div>

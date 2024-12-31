@@ -1,7 +1,7 @@
 import React from "react";
 import "./Tasks.css"; // Centralisation des styles dans un fichier commun
 
-const TaskFilters = ({ filter, setFilter }) => {
+const TaskFilters = ({ filter = {}, setFilter = () => {} }) => {
   // Gestion des changements de filtres
   const handleChange = (key, value) => {
     setFilter({ ...filter, [key]: value });
@@ -11,13 +11,12 @@ const TaskFilters = ({ filter, setFilter }) => {
     <div className="task-filters">
       <h3>Filtres</h3>
       <div className="filter-container">
-        
         {/* Filtre de priorité */}
         <div className="filter-group">
           <label>
             Priorité :
             <select
-              value={filter.priority}
+              value={filter.priority || ""}
               onChange={(e) => handleChange("priority", e.target.value)}
             >
               <option value="">Toutes</option>
@@ -34,18 +33,43 @@ const TaskFilters = ({ filter, setFilter }) => {
             Date :
             <input
               type="date"
-              value={filter.date}
+              value={filter.date || ""}
               onChange={(e) => handleChange("date", e.target.value)}
             />
           </label>
         </div>
+
+        {/* Filtre du statut (archivé ou non) */}
+        <div className="filter-group">
+          <label>
+            Statut :
+            <select
+              value={filter.status || ""}
+              onChange={(e) => handleChange("status", e.target.value)}
+            >
+              <option value="">Tous</option>
+              <option value="open">Actifs</option>
+              <option value="closed">Archivés</option>
+            </select>
+          </label>
+        </div>
+
+        {/* Application logique pour le statut */}
+        {filter.status === "open" && (
+          // Filtre les tâches avec le statut 'open'
+          <p>Affiche uniquement les tâches non archivées.</p>
+        )}
+        {filter.status === "closed" && (
+          // Filtre les tâches avec le statut 'closed'
+          <p>Affiche uniquement les tâches archivées.</p>
+        )}
 
         {/* Filtre du plus récent ou plus ancien (ordre) */}
         <div className="filter-group">
           <label>
             Chronologie :
             <select
-              value={filter.sortOrder}
+              value={filter.sortOrder || ""}
               onChange={(e) => handleChange("sortOrder", e.target.value)}
             >
               <option value="newest">Du plus récent</option>
@@ -53,7 +77,6 @@ const TaskFilters = ({ filter, setFilter }) => {
             </select>
           </label>
         </div>
-        
       </div>
     </div>
   );

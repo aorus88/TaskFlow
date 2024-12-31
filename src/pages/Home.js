@@ -1,54 +1,40 @@
 import React, { useState } from "react";
-import Clock from "../components/Clock";
 import TaskForm from "../components/TaskForm";
 import TaskFilters from "../components/TaskFilters";
 import TaskList from "../components/TaskList";
 import EditTaskModal from "../components/EditTaskModal";
 import PriorityPieChart from "../components/PriorityPieChart";
 import WeatherWidget from "../components/WeatherWidget";
+import Clock from "../components/Clock";
 
 const Home = ({
   tasks = [], // Valeur par défaut pour éviter les erreurs
-  archivedTasks = [], // Nouvelle prop avec une valeur par défaut
-  onAddTask,
+  onAddTask, // Nouvelle prop sans valeur par défaut
   onEditTask,
+  onDeleteTask,
   onArchiveTask,
   onAddSubtask,
-  onDeleteTask,
-  onDeleteSubtask,
-  onUpdateTaskStatus,
+  onDeleteSubtask, 
   filter,
   setFilter,
+  onSaveTask // Assurez-vous que cette prop est correctement passée
 }) => {
   console.log("Home.js - Liste des tâches reçues :", tasks);
 
   const [selectedTask, setSelectedTask] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  // Obtenir la date du jour
-  const getTodayDate = () => {
-    const today = new Date();
-    return today.toISOString().split("T")[0];
-  };
-
-  // Calcul des statistiques
-  const openTasks = tasks.filter((task) => task.status === "open").length;
-
-  const completedTasksToday = archivedTasks.filter(
-    (task) => task.archivedAt?.startsWith(getTodayDate())
-  ).length;
-
-  console.log("Tâches ouvertes :", openTasks);
-  console.log("Tâches terminées aujourd'hui :", completedTasksToday);
-
   // Gestion de l'édition des tâches
-  const handleEditTask = (task) => {
-    setSelectedTask(task);
-    setIsEditing(true);
+  const handleEditTask = async (taskId, updatedFields) => {
+    try {
+      await onEditTask(taskId, updatedFields);
+    } catch (error) {
+      console.error('Erreur dans Home.js :', error);
+    }
   };
 
   const handleSaveTask = (updatedTask) => {
-    onEditTask(updatedTask);
+    onSaveTask(updatedTask.id, updatedTask);
     setIsEditing(false);
     setSelectedTask(null);
   };
@@ -73,21 +59,6 @@ const Home = ({
         <WeatherWidget />
       </div>
 
-      {/* Section des statistiques */}
-      <div
-        style={{
-          marginBottom: "20px",
-          padding: "10px",
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-        }}
-      >
-        <h2>Statistiques des Tâches</h2>
-        <p>Tâches ouvertes : {openTasks}</p>
-        <p>Tâches terminées aujourd'hui : {completedTasksToday}</p>
-        <PriorityPieChart tasks={tasks} />
-      </div>
-
       {/* Formulaire pour ajouter une tâche */}
       <TaskForm onAddTask={onAddTask} />
 
@@ -96,15 +67,15 @@ const Home = ({
 
       {/* Liste des tâches */}
       <TaskList
-        tasks={tasks}
+        tasks={tasks.filter((task) => task.archived === 'open')} // Filtrer les tâches actives
         filter={filter} // Transmission de la prop filter pour le tri
-        onEditTask={handleEditTask}
+        onEditTask={onEditTask}
+        onSaveTask={onSaveTask}
+        onDeleteTask={onDeleteTask}
         onArchiveTask={onArchiveTask}
         onAddSubtask={onAddSubtask}
-        onDeleteTask={onDeleteTask}
         onDeleteSubtask={onDeleteSubtask}
-        onUpdateTaskStatus={onUpdateTaskStatus}
-        isArchived={false} // Indique que ce sont des tâches normales
+        onUpdateTask={onSaveTask} // Ajoutez cette ligne
       />
 
       {/* Modale pour éditer une tâche */}

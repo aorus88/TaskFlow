@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import "./TaskItem.css";
+import EditTaskModal from "./EditTaskModal"; // Import de la modale
 
 const TaskItem = ({
   task,
-  onEditTask,
+  onUpdateTask, // Ajoutez cette ligne
   onDeleteTask,
   onArchiveTask,
   onAddSubtask,
@@ -12,6 +13,21 @@ const TaskItem = ({
 }) => {
   const [newSubtaskText, setNewSubtaskText] = useState("");
   const [expanded, setExpanded] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false); // État pour gérer l'ouverture de la modale
+  const [selectedTask, setSelectedTask] = useState(null); // État pour stocker la tâche en cours d'édition
+
+  // Fonction pour ouvrir la modale
+  const openEditModal = (task) => {
+    setSelectedTask(task); // Définit la tâche à modifier
+    setIsModalOpen(true); // Ouvre la modale
+  };
+
+  // Fonction pour fermer la modale
+  const closeEditModal = () => {
+    setSelectedTask(null); // Réinitialise la tâche sélectionnée
+    setIsModalOpen(false); // Ferme la modale
+  };
 
   // Fonction pour formater les dates au format jj.mm.aaaa
   const formatDate = (dateString) => {
@@ -55,11 +71,22 @@ const TaskItem = ({
         <p>Échéance : {formatDate(task.date)}</p>
 
         <p>
-          <strong>Statut :</strong> {task.status === "open" ? "🟢 Open" : "🔴 Closed"}
+          <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
         </p>
 
+        {/* Affichage des catégories */}
+        {task.categories && task.categories.length > 0 && (
+          <p>
+            <strong>Catégories :</strong> {task.categories.join(", ")}
+          </p>
+        )}
+
+        {/* Affichage des données de temps */}
         <p>
-          <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
+          <strong>Temps total :</strong> {task.totalTime || 0} minutes
+        </p>
+        <p>
+          <strong>Session en cours :</strong> {task.currentSessionTime || 0} minutes
         </p>
 
         {/* Barre de progression */}
@@ -74,7 +101,7 @@ const TaskItem = ({
 
       {/* Boutons d'action */}
       <div className="task-buttons">
-        <button className="edit-button" onClick={() => onEditTask(task)}>
+        <button className="edit-button" onClick={() => openEditModal(task)}>
           Éditer
         </button>
         <button className="complete-button" onClick={() => onArchiveTask(task.id)}>
@@ -100,7 +127,7 @@ const TaskItem = ({
                   <input
                     type="checkbox"
                     checked={subtask.completed}
-                    onUpdateSubtask={() =>
+                    onChange={() =>
                       onAddSubtask(task.id, {
                         ...subtask,
                         completed: !subtask.completed,
@@ -129,6 +156,18 @@ const TaskItem = ({
           </div>
         )}
       </div>
+
+      {/* Composant de modale */}
+      {isModalOpen && (
+        <EditTaskModal
+          task={selectedTask} // Tâche actuelle
+          onClose={closeEditModal} // Fonction pour fermer la modale
+          onSave={(updatedTask) => {
+            onUpdateTask(updatedTask.id, updatedTask); // Appelle la fonction de mise à jour avec l'ID et les champs mis à jour
+            closeEditModal(); // Ferme la modale après la sauvegarde
+          }}
+        />
+      )}
     </li>
   );
 };

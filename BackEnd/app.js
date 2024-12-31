@@ -1,7 +1,3 @@
-/*******************************************************
- * FICHIER : app.js
- * BACK-END NODE/EXPRESS (MongoDB)
- *******************************************************/
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -10,130 +6,113 @@ const cors = require('cors');
 const app = express();
 
 // 2) Middlewares
-// -- Autorise les requêtes cross-origin depuis http://192.168.50.241:3000 
-//    (ou toute autre origine de ton choix) :
-app.use(cors({ 
-    origin: 'http://192.168.50.241:3000',
-  }));
-  
-
-app.use(express.json()); // pour lire req.body au format JSON
+app.use(cors());
+app.use(express.json());
 
 // 3) Connexion à MongoDB
-//    À adapter selon ton URL / le nom de ta base
-mongoose.connect('mongodb://127.0.0.1:27017/taskflowDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect('mongodb://127.0.0.1:27017/taskflowDB')
 .then(() => {
-  console.log('Connecté à MongoDB');
+    console.log('Connecté à MongoDB');
 })
 .catch((err) => {
-  console.error('Erreur de connexion à MongoDB :', err);
+    console.error('Erreur de connexion à MongoDB :', err);
 });
 
 // 4) Définition du Schéma / Modèle Mongoose
 const subtaskSchema = new mongoose.Schema({
-  title: String,
-  completed: { type: Boolean, default: false },
+    name: { type: String, required: true },
+    priority: { type: String, enum: ['low', 'medium', 'high'], default: 'low' },
+    addedAt: { type: Date, default: Date.now },
+    archivedAt: { type: Date, default: null },
 });
 
 const taskSchema = new mongoose.Schema({
-  name: String,
-  date: String,
-  priority: { type: String, default: 'low' },
-  status: { type: String, default: 'open' },
-  subtasks: [subtaskSchema],
-  archivedAt: { type: Date, default: null },
-  addedAt: { type: Date, default: Date.now },
+    name: { type: String, required: true },
+    date: { type: Date, required: true },
+    priority: { type: String, enum: ['low', 'medium', 'high'], default: 'low' },
+    archivedAt: { type: Date, default: null },
+    archived: { type: String, enum: ['open', 'closed'], default: 'open' }, // Nouveau champ
+    addedAt: { type: Date, default: Date.now },
+    categories: { type: [String], default: [] },
+    totalTime: { type: Number, default: 0 }, // Temps total en minutes
+    totalTimeEstimed: { type: Number, default: 0 }, // Temps total estimé en minutes
+    currentSessionTime: { type: Number, default: 0 }, // Temps en cours en minutes
+    subtasks: { type: [subtaskSchema], default: [] }
 });
 
 const Task = mongoose.model('Task', taskSchema);
 
-// 5) Routes existantes
-
-// a) Test (accueil)
-app.get('/', (req, res) => {
-  res.send('Hello depuis ton backend Node + MongoDB (mis à jour avec CORS) !');
-});
-
-// b) Obtenir toutes les tâches (GET /tasks) - ici on renvoie TOUTES les tâches
-//    (Si tu préfères, tu peux filtrer seulement les "non archivées".)
+// 5) Routes de l'API
+// a) Récupérer toutes les tâches avec filtres
 app.get('/tasks', async (req, res) => {
-  try {
-    // EXEMPLE : Filtrer pour renvoyer seulement les tâches non archivées
-    // const tasks = await Task.find({ archivedAt: null });
-
-    // OU renvoyer toutes les tâches
-    const tasks = await Task.find();
-    res.json(tasks);
-  } catch (error) {
-    console.error('Erreur GET /tasks :', error);
-    res.status(500).json({ message: 'Erreur serveur' });
-  }
+    const { archived } = req.query;
+    const filter = archived === 'true' ? { archived: 'closed' } : { archived: 'open' };
+    try {
+        const tasks = await Task.find(filter);
+        console.log("Backend - Tâches récupérées :", tasks); // Ajoutez ce log
+        res.json(tasks);
+    } catch (err) {
+        res.status(500).json({ error: 'Erreur lors de la récupération des tâches.' });
+    }
 });
 
-// c) Créer une tâche (POST /tasks)
+// b) Ajouter une nouvelle tâche
 app.post('/tasks', async (req, res) => {
-  try {
-    const newTask = new Task(req.body);
-    await newTask.save();
-    res.status(201).json(newTask);
-  } catch (error) {
-    console.error('Erreur POST /tasks :', error);
-    res.status(400).json({ message: 'Erreur pour créer la tâche' });
-  }
+    const { name, date, priority, categories, subtasks } = req.body;
+    try {
+        const newTask = new Task({
+            name,
+            date,
+            priority,
+            categories,
+            subtasks
+        });
+        await newTask.save();
+        res.status(201).json(newTask);
+    } catch (err) {
+        res.status(400).json({ error: 'Erreur lors de l\'ajout de la tâche.' });
+    }
 });
 
-// d) Mettre à jour une tâche existante (PUT /tasks/:id)
+// c) Mettre à jour une tâche
 app.put('/tasks/:id', async (req, res) => {
-  try {
     const { id } = req.params;
-    // On applique la mise à jour
-    const updatedTask = await Task.findByIdAndUpdate(id, req.body, { new: true });
-    if (!updatedTask) {
-      return res.status(404).json({ message: 'Tâche non trouvée' });
+    const updates = req.body;
+    try {
+        const updatedTask = await Task.findByIdAndUpdate(id, updates, { new: true });
+        res.json(updatedTask);
+    } catch (err) {
+        res.status(400).json({ error: 'Erreur lors de la mise à jour de la tâche.' });
     }
-    res.json(updatedTask);
-  } catch (error) {
-    console.error('Erreur PUT /tasks/:id :', error);
-    res.status(400).json({ message: 'Erreur pour mettre à jour la tâche' });
-  }
 });
 
-// e) Supprimer une tâche (DELETE /tasks/:id)
+// d) Supprimer une tâche
 app.delete('/tasks/:id', async (req, res) => {
-  try {
     const { id } = req.params;
-    const deletedTask = await Task.findByIdAndDelete(id);
-    if (!deletedTask) {
-      return res.status(404).json({ message: 'Tâche non trouvée' });
+    try {
+        await Task.findByIdAndDelete(id);
+        res.json({ message: 'Tâche supprimée avec succès.' });
+    } catch (err) {
+        res.status(500).json({ error: 'Erreur lors de la suppression de la tâche.' });
     }
-    res.json({ message: 'Tâche supprimée avec succès' });
-  } catch (error) {
-    console.error('Erreur DELETE /tasks/:id :', error);
-    res.status(500).json({ message: 'Erreur serveur' });
-  }
 });
 
-// f) AJOUT : Récupérer les tâches ARCHIVÉES (GET /tasks/archived)
-app.get('/tasks/archived', async (req, res) => {
-  try {
-    // On suppose qu'une tâche "archivée" => archivedAt != null, ou status = "closed"
-    // Choisis ce que tu veux comme logique :
-    const archived = await Task.find({ archivedAt: { $ne: null } });
-    // ou "status: 'closed'" si tu gères comme ça :
-    // const archived = await Task.find({ status: 'closed' });
-
-    res.json(archived);
-  } catch (error) {
-    console.error('Erreur GET /tasks/archived :', error);
-    res.status(500).json({ message: 'Erreur serveur' });
-  }
+// e) Ajouter une sous-tâche à une tâche existante
+app.post('/tasks/:id/subtasks', async (req, res) => {
+    const { id } = req.params;
+    const { name, priority } = req.body;
+    try {
+        const task = await Task.findById(id);
+        if (!task) {
+            return res.status(404).json({ error: 'Tâche non trouvée.' });
+        }
+        task.subtasks.push({ name, priority });
+        await task.save();
+        res.json(task);
+    } catch (err) {
+        res.status(400).json({ error: 'Erreur lors de l\'ajout de la sous-tâche.' });
+    }
 });
 
-// 6) Lancement du serveur
-const PORT = 4000;
-app.listen(PORT, () => {
-  console.log(`Serveur lancé sur le port ${PORT}`);
-});
+// 6) Exportation de l'application
+module.exports = app;

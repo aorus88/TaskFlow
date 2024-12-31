@@ -6,12 +6,15 @@ const TaskForm = ({ onAddTask }) => {
     name: "",
     date: new Date().toISOString().split("T")[0],
     time: "20:00",
-    priority: "low",
+    priority: "medium",
   });
 
-  // Gestion des changements dans le formulaire
+  // Fonction pour gérer les changements dans le formulaire
   const handleChange = (key, value) => {
-    setFormData({ ...formData, [key]: value });
+    setFormData({
+      ...formData,
+      [key]: value,
+    });
   };
 
   // Gestion de l'ajout de tâche
@@ -21,62 +24,83 @@ const TaskForm = ({ onAddTask }) => {
       return;
     }
 
-    onAddTask({
-      ...formData,
-      id: Date.now(),
-      subtasks: [], // Par défaut, chaque tâche commence avec une liste vide de sous-tâches
-      timeSpent: 0,
-      status: "open", // nouveau statut par défaut
-      addedAt: new Date().toISOString(), // Date et heure d'ajout
-    });
+    if (typeof onAddTask === "function") {
+      onAddTask({
+        ...formData,
+        id: Date.now(),
+        subtasks: [], // Nouveau tableau par défaut
+        timeSpent: 1, // Initialisation à 1
+        status: "closed", // Statut par défaut
+        addedAt: new Date().toISOString(), // Date et heure d'ajout
+      });
 
-    // Réinitialisation des champs
-    setFormData({
-      name: "",
-      date: new Date().toISOString().split("T")[0],
-      time: "20:00",
-      priority: "low",
-    });
+      setFormData({
+        name: "",
+        date: new Date().toISOString().split("T")[0],
+        time: "20:00",
+        priority: "low",
+      });
+    } else {
+      console.error("onAddTask n'est pas défini ou n'est pas une fonction valide.");
+    }
   };
 
   // Gestion de la touche Entrée
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault(); // Empêche le comportement par défaut du formulaire
-      handleAddTask(); // Appelle la fonction d'ajout de tâche
+      handleAddTask(); // Sauvegarde les modifications
     }
   };
 
   return (
-    <form onKeyDown={handleKeyDown} className="task-form">
-      <input
-        type="text"
-        value={formData.name}
-        onChange={(e) => handleChange("name", e.target.value)}
-        placeholder="Nom de la tâche"
-      />
-      <input
-        type="date"
-        value={formData.date}
-        onChange={(e) => handleChange("date", e.target.value)}
-      />
-      <input
-        type="time"
-        value={formData.time}
-        onChange={(e) => handleChange("time", e.target.value)}
-      />
-      <select
-        value={formData.priority}
-        onChange={(e) => handleChange("priority", e.target.value)}
-      >
-        <option value="low">Basse</option>
-        <option value="medium">Moyenne</option>
-        <option value="high">Haute</option>
-      </select>
-      <button type="button" onClick={handleAddTask}>
-        Ajouter
-      </button>
-    </form>
+    <div className="task-form">
+      <h3>Ajouter une nouvelle tâche</h3>
+      <form onKeyDown={handleKeyDown} className="task-form">
+        <label>
+          Nom de la tâche :
+          <input
+            type="text"
+            value={formData.name}
+            onChange={(e) => handleChange("name", e.target.value)}
+          />
+        </label>
+
+        <label>
+          Date d'échéance:
+          <input
+            type="date"
+            value={formData.date}
+            onChange={(e) => handleChange("date", e.target.value)}
+          />
+        </label>
+
+        <label>
+          Heure :
+          <input
+            type="time"
+            value={formData.time}
+            onChange={(e) => handleChange("time", e.target.value)}
+          />
+        </label>
+
+        <label>
+          Priorité :
+          <select
+            value={formData.priority}
+            onChange={(e) => handleChange("priority", e.target.value)}
+          >
+            <option value="low">Faible</option>
+            <option value="medium">Moyenne</option>
+            <option value="high">Élevée</option>
+          </select>
+        </label>
+
+        <button type="button" onClick={handleAddTask}>
+          Ajouter la tâche
+        </button>
+      </form>
+    </div>
   );
 };
 
