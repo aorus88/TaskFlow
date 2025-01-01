@@ -11,7 +11,7 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
   const [totalTime, setTotalTime] = useState(task.totalTime || 0);
   const [currentSessionTime, setCurrentSessionTime] = useState(task.currentSessionTime || 0);
   const [newSubtask, setNewSubtask] = useState("");
-  
+
   // Fonction pour mettre à jour la tâche
   const handleUpdateTask = () => {
     if (!name.trim()) {
@@ -50,13 +50,15 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
     }
   };
 
-
-
   // Gestion de la touche Entrée
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault(); // Empêche le comportement par défaut du formulaire
-      handleUpdateTask(); // Sauvegarde les modifications
+      if (newSubtask.trim()) {
+        handleAddSubtask(); // Ajoute la sous-tâche
+      } else {
+        handleUpdateTask(); // Sauvegarde les modifications
+      }
     }
   };
 

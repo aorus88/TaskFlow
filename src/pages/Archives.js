@@ -78,7 +78,7 @@ const Archives = ({
                     Archivé le : {formatDate(task.archivedAt)}
                   </span>
                 </div>
-                <span className="task-name">{task.name}</span>
+                <span className="task-name"><strong>{task.name}</strong></span>
               </div>
               <div className="task-priority">
                 <span>
@@ -91,6 +91,8 @@ const Archives = ({
                 <span>
                   {Math.floor((task.timeSpent || 0) / 60)} min passées
                 </span>
+
+                  <hr className="task-separator" />
               </div>
             
             </li>

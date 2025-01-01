@@ -256,6 +256,7 @@ const App = () => {
                 onSaveTask={updateTask}
                 filter={filter}
                 setFilter={setFilter}
+                fetchTasks={fetchTasks} // Passez la fonction fetchTasks
               />
             }
           />

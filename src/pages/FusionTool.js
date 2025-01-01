@@ -12,6 +12,8 @@ const FusionTool = ({ entries, onAddEntry }) => {
     consumption: "yes",
   });
 
+  const [sortOrder, setSortOrder] = useState("desc"); // État pour gérer l'ordre de tri
+
   const handleChange = (key, value) => {
     setFormData({
       ...formData,
@@ -20,7 +22,7 @@ const FusionTool = ({ entries, onAddEntry }) => {
   };
 
   const handleAddEntry = () => {
-    onAddEntry({ ...formData, id: Date.now() });
+    onAddEntry({ ...formData, id: Date.now(), createdAt: new Date().toISOString() });
     setFormData({
       date: new Date().toISOString().split("T")[0],
       time: new Date().toLocaleTimeString("fr-FR", {
@@ -31,6 +33,13 @@ const FusionTool = ({ entries, onAddEntry }) => {
       consumption: "yes",
     });
   };
+
+  // Fonction pour trier les entrées de consommation
+  const sortedEntries = [...entries].sort((a, b) => {
+    const dateA = new Date(a.createdAt);
+    const dateB = new Date(b.createdAt);
+    return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
+  });
 
   return (
     <div className="fusion-tool">
@@ -54,12 +63,22 @@ const FusionTool = ({ entries, onAddEntry }) => {
         </label>
         <label>
           Humeur :
-          <input
-            type="text"
+          <select
             value={formData.mood}
             onChange={(e) => handleChange("mood", e.target.value)}
-            placeholder="Votre humeur"
-          />
+          >
+            <option value="">Sélectionnez</option>
+            <option value="heureux">Heureux</option>
+            <option value="triste">Triste</option>
+            <option value="stressé">Stressé</option>
+            <option value="calme">Calme</option>
+            <option value="fatigué">Fatigué</option>
+            <option value="énergique">Énergique</option>
+            <option value="anxieux">Anxieux</option>
+            <option value="colère">Colère</option>
+            <option value="ennuyé">Ennuyé</option>
+            <option value="excité">Excité</option>
+          </select>
         </label>
         <label>
           Consommation :
@@ -77,6 +96,14 @@ const FusionTool = ({ entries, onAddEntry }) => {
       </form>
 
       <h2>Historique des Consommations</h2>
+      <button
+        className="sort-button"
+        onClick={() =>
+          setSortOrder((prevOrder) => (prevOrder === "desc" ? "asc" : "desc"))
+        }
+      >
+        Trier : {sortOrder === "desc" ? "Du plus récent" : "Du plus ancien"}
+      </button>
       <table className="fusion-table">
         <thead>
           <tr>
@@ -87,7 +114,7 @@ const FusionTool = ({ entries, onAddEntry }) => {
           </tr>
         </thead>
         <tbody>
-          {entries.map((entry) => (
+          {sortedEntries.map((entry) => (
             <tr key={entry.id}>
               <td>{new Date(entry.date).toLocaleDateString("fr-FR")}</td>
               <td>{entry.time}</td>

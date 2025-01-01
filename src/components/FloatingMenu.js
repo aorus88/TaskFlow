@@ -28,16 +28,18 @@ const FloatingMenu = () => {
             </li>
 
             <li>
+              <Link to="/archives" className="menu-link" onClick={handleLinkClick}>
+                📁 Archives
+              </Link>
+            </li>
+
+            <li>
               <Link to="/fusion-tool" className="menu-link" onClick={handleLinkClick}>
                 📊 Fusion Tool
               </Link>
             </li>
 
-            <li>
-              <Link to="/archives" className="menu-link" onClick={handleLinkClick}>
-                📁 Archives
-              </Link>
-            </li>
+
 
           </ul>
         </>

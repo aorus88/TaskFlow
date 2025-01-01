@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TaskForm from "../components/TaskForm";
 import TaskFilters from "../components/TaskFilters";
 import TaskList from "../components/TaskList";
@@ -21,12 +21,18 @@ const Home = ({
   onToggleSubtaskStatus, // Ajoutez cette ligne
   filter,
   setFilter,
-  onSaveTask // Assurez-vous que cette prop est correctement passée
+  onSaveTask, // Assurez-vous que cette prop est correctement passée
+  fetchTasks // Ajoutez cette ligne pour passer la fonction de fetch
 }) => {
   console.log("Home.js - Liste des tâches reçues :", tasks);
 
   const [selectedTask, setSelectedTask] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+
+  // Utilisez useEffect pour recharger les tâches lorsque le composant est monté
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
 
   // Gestion de l'édition des tâches
   const handleEditTask = async (taskId, updatedFields) => {
@@ -46,7 +52,7 @@ const Home = ({
   return (
     <div className="home-page">
 
-      <h1>TaskFlow - V1.1.9_beta
+      <h1>TaskFlow - V1.2.0
         
         <Clock />
         
