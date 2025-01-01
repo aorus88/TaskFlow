@@ -6,10 +6,12 @@ import EditTaskModal from "../components/EditTaskModal";
 import PriorityPieChart from "../components/PriorityPieChart";
 import WeatherWidget from "../components/WeatherWidget";
 import Clock from "../components/Clock";
+import Statistics from "../components/Statistics"; // Importer le composant Statistics
 import "./Home.css";
 
 const Home = ({
   tasks = [], // Valeur par défaut pour éviter les erreurs
+  archivedTasks = [], // Ajouter les tâches archivées
   onAddTask, // Nouvelle prop sans valeur par défaut
   onEditTask,
   onDeleteTask,
@@ -62,13 +64,12 @@ const Home = ({
         <WeatherWidget />
       </div>
 
+      <div className="PriorityPieChart">
+        <PriorityPieChart tasks={tasks} />
+      </div>
 
-
-<div className="PriorityPieChart">
-<PriorityPieChart tasks={tasks} />
-</div>
-
-    
+      {/* Statistiques des tâches */}
+      <Statistics tasks={tasks} archivedTasks={archivedTasks} />
 
       {/* Formulaire pour ajouter une tâche */}
       <TaskForm onAddTask={onAddTask} />

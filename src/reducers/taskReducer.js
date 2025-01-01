@@ -25,6 +25,16 @@ const taskReducer = (state, action) => {
       };
     }
 
+
+//    // 1a) NOUVELLE ACTION : SET_TASKS pour les consommations / FUSION-TOOL
+    case "SET_CONSUMPTION_ENTRIES":
+      return {
+        ...state,
+        consumptionEntries: action.payload,
+      };
+
+
+
     // ────────────────────────────────────────────────────
     // 2) ARCHIVAGE D'UNE TÂCHE
     // ────────────────────────────────────────────────────

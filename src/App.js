@@ -45,56 +45,7 @@ const App = () => {
     }
   };
 
-  // Fetch consumption entries from the server
-  const fetchConsumptionEntries = async () => {
-    try {
-      const response = await fetch('http://192.168.50.241:4000/consumption-entries');
-      if (!response.ok) {
-        throw new Error(`HTTP error: ${response.status}`);
-      }
-      const data = await response.json();
-      console.log("fetchConsumptionEntries - Entrées reçues :", data); // Ajoutez ce log
-      if (!Array.isArray(data)) {
-        console.error("Les données reçues ne sont pas un tableau :", data);
-        return;
-      }
-      // On stocke les entrées de consommation dans le state
-      dispatch({ type: "SET_CONSUMPTION_ENTRIES", payload: data });
-    } catch (error) {
-      console.error("Erreur lors du chargement des entrées de consommation :", error);
-      // On peut choisir de remettre un tableau vide en cas d'erreur
-      dispatch({ type: "SET_CONSUMPTION_ENTRIES", payload: [] });
-    }
-  };
-
-  // Add a new consumption entry
-  const addConsumptionEntry = async (entry) => {
-    try {
-      const response = await fetch('http://192.168.50.241:4000/consumption-entries', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(entry),
-      });
-
-      if (!response.ok) {
-        throw new Error('Erreur lors de l\'ajout de l\'entrée de consommation.');
-      }
-
-      const newEntry = await response.json();
-      console.log('Entrée de consommation ajoutée :', newEntry);
-
-      // Mettez à jour l'état local ou relancez le fetch global des entrées de consommation
-      fetchConsumptionEntries();
-    } catch (error) {
-      console.error('Erreur :', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchTasks();
-    fetchConsumptionEntries(); // Charger les entrées de consommation au démarrage
-  }, []);
-
+  // Add a new task
   const addTask = async (task) => {
     try {
       const response = await fetch('http://192.168.50.241:4000/tasks', {
@@ -232,6 +183,56 @@ const App = () => {
     dispatch({ type: "DELETE_SUBTASK", payload: { taskId, subtaskId } });
   };
 
+  // Fetch consumption entries from the server
+  const fetchConsumptionEntries = async () => {
+    try {
+      const response = await fetch('http://192.168.50.241:4000/consumption-entries');
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log("fetchConsumptionEntries - Entrées reçues :", data); // Ajoutez ce log
+      if (!Array.isArray(data)) {
+        console.error("Les données reçues ne sont pas un tableau :", data);
+        return;
+      }
+      // On stocke les entrées de consommation dans le state
+      dispatch({ type: "SET_CONSUMPTION_ENTRIES", payload: data });
+    } catch (error) {
+      console.error("Erreur lors du chargement des entrées de consommation :", error);
+      // On peut choisir de remettre un tableau vide en cas d'erreur
+      dispatch({ type: "SET_CONSUMPTION_ENTRIES", payload: [] });
+    }
+  };
+
+  // Add a new consumption entry
+  const addConsumptionEntry = async (entry) => {
+    try {
+      const response = await fetch('http://192.168.50.241:4000/consumption-entries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de l\'ajout de l\'entrée de consommation.');
+      }
+
+      const newEntry = await response.json();
+      console.log('Entrée de consommation ajoutée :', newEntry);
+
+      // Mettez à jour l'état local ou relancez le fetch global des entrées de consommation
+      fetchConsumptionEntries();
+    } catch (error) {
+      console.error('Erreur :', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+    fetchConsumptionEntries(); // Charger les entrées de consommation au démarrage
+  }, []);
+
   // --- Rendu ---
   return (
     <Router>
@@ -244,6 +245,7 @@ const App = () => {
             element={
               <Home
                 tasks={state.tasks.filter((task) => task.archived === "open")}
+                archivedTasks={state.tasks.filter((task) => task.archived === "closed")} // Passer les tâches archivées
                 onAddTask={addTask}
                 onEditTask={updateTask}
                 onDeleteTask={deleteTask}
