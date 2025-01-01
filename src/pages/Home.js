@@ -8,7 +8,6 @@ import WeatherWidget from "../components/WeatherWidget";
 import Clock from "../components/Clock";
 import "./Home.css";
 
-
 const Home = ({
   tasks = [], // Valeur par défaut pour éviter les erreurs
   onAddTask, // Nouvelle prop sans valeur par défaut
@@ -17,6 +16,7 @@ const Home = ({
   onArchiveTask,
   onAddSubtask,
   onDeleteSubtask, 
+  onToggleSubtaskStatus, // Ajoutez cette ligne
   filter,
   setFilter,
   onSaveTask // Assurez-vous que cette prop est correctement passée
@@ -85,6 +85,7 @@ const Home = ({
         onArchiveTask={onArchiveTask}
         onAddSubtask={onAddSubtask}
         onDeleteSubtask={onDeleteSubtask}
+        onToggleSubtaskStatus={onToggleSubtaskStatus} // Ajoutez cette ligne
         onUpdateTask={onSaveTask} // Ajoutez cette ligne
       />
 

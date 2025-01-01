@@ -24,6 +24,7 @@ const subtaskSchema = new mongoose.Schema({
     priority: { type: String, enum: ['low', 'medium', 'high'], default: 'low' },
     addedAt: { type: Date, default: Date.now },
     archivedAt: { type: Date, default: null },
+    archived: { type: String, enum: ['open', 'closed'], default: 'open' }, // Nouveau champ
 });
 
 const taskSchema = new mongoose.Schema({
@@ -98,6 +99,7 @@ app.delete('/tasks/:id', async (req, res) => {
 });
 
 // e) Ajouter une sous-tâche à une tâche existante
+// e) Ajouter une sous-tâche à une tâche existante
 app.post('/tasks/:id/subtasks', async (req, res) => {
     const { id } = req.params;
     const { name, priority } = req.body;
@@ -106,11 +108,41 @@ app.post('/tasks/:id/subtasks', async (req, res) => {
         if (!task) {
             return res.status(404).json({ error: 'Tâche non trouvée.' });
         }
+        // Vérifiez l'unicité de la sous-tâche
+        const isSubtaskUnique = !task.subtasks.some(subtask => subtask.name === name);
+        if (!isSubtaskUnique) {
+            return res.status(400).json({ error: 'La sous-tâche existe déjà.' });
+        }
         task.subtasks.push({ name, priority });
+        await task.save();
+        console.log("Sous-tâche ajoutée :", { name, priority }); // Ajoutez ce log
+        res.json(task);
+    } catch (err) {
+        console.error('Erreur lors de l\'ajout de la sous-tâche :', err);
+        res.status(400).json({ error: 'Erreur lors de l\'ajout de la sous-tâche.' });
+    }
+});
+
+// f) Mettre à jour le statut d'une sous-tâche
+app.put('/tasks/:taskId/subtasks/:subtaskId', async (req, res) => {
+    const { taskId, subtaskId } = req.params;
+    const { archived } = req.body;
+    try {
+        const task = await Task.findById(taskId);
+        if (!task) {
+            return res.status(404).json({ error: 'Tâche non trouvée.' });
+        }
+        const subtask = task.subtasks.id(subtaskId);
+        if (!subtask) {
+            return res.status(404).json({ error: 'Sous-tâche non trouvée.' });
+        }
+        subtask.archived = archived;
+        subtask.archivedAt = archived === 'closed' ? new Date().toISOString() : null;
         await task.save();
         res.json(task);
     } catch (err) {
-        res.status(400).json({ error: 'Erreur lors de l\'ajout de la sous-tâche.' });
+        console.error('Erreur lors de la mise à jour de la sous-tâche :', err);
+        res.status(400).json({ error: 'Erreur lors de la mise à jour de la sous-tâche.' });
     }
 });
 

@@ -39,20 +39,7 @@ const TaskFilters = ({ filter = {}, setFilter = () => {} }) => {
           </label>
         </div>
 
-        {/* Filtre du statut (archivé ou non) */}
-        <div className="filter-group">
-          <label>
-            Statut :
-            <select
-              value={filter.status || ""}
-              onChange={(e) => handleChange("status", e.target.value)}
-            >
-              <option value="">Tous</option>
-              <option value="open">Actifs</option>
-              <option value="closed">Archivés</option>
-            </select>
-          </label>
-        </div>
+  
 
         {/* Application logique pour le statut */}
         {filter.status === "open" && (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./TaskItem.css";
 import EditTaskModal from "./EditTaskModal"; // Import de la modale
 
@@ -9,10 +9,11 @@ const TaskItem = ({
   onArchiveTask,
   onAddSubtask,
   onDeleteSubtask,
+  onToggleSubtaskStatus, // Ajoutez cette ligne
   isArchived,
 }) => {
   const [newSubtaskText, setNewSubtaskText] = useState("");
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false); // État pour gérer l'expansion des sous-tâches
 
   const [isModalOpen, setIsModalOpen] = useState(false); // État pour gérer l'ouverture de la modale
   const [selectedTask, setSelectedTask] = useState(null); // État pour stocker la tâche en cours d'édition
@@ -42,19 +43,29 @@ const TaskItem = ({
   // Calculer le pourcentage de progression des sous-tâches
   const calculateProgress = () => {
     const totalSubtasks = task.subtasks.length;
-    const completedSubtasks = task.subtasks.filter((subtask) => subtask.completed).length;
+    const completedSubtasks = task.subtasks.filter((subtask) => subtask.archived === "closed").length;
     return totalSubtasks > 0 ? (completedSubtasks / totalSubtasks) * 100 : 0;
+  };
+
+  // Fonction pour vérifier l'unicité des sous-tâches
+  const isSubtaskUnique = (task, subtaskName) => {
+    return !task.subtasks.some(subtask => subtask.name === subtaskName);
   };
 
   // Ajouter une sous-tâche
   const handleAddSubtask = () => {
     if (!newSubtaskText.trim()) return;
-    onAddSubtask(task.id, {
-      id: Date.now(),
-      title: newSubtaskText,
-      completed: false,
-    });
-    setNewSubtaskText("");
+    if (isSubtaskUnique(task, newSubtaskText)) {
+      onAddSubtask(task.id, {
+        id: Date.now(),
+        name: newSubtaskText,
+        completed: false,
+        archived: "open", // Nouveau champ
+      });
+      setNewSubtaskText("");
+    } else {
+      console.error('La sous-tâche existe déjà.');
+    }
   };
 
   // Validation de la sous-tâche avec "Entrée"
@@ -63,6 +74,13 @@ const TaskItem = ({
       handleAddSubtask();
     }
   };
+
+  // Utilisez useEffect pour initialiser expanded à true si des sous-tâches existent
+  useEffect(() => {
+    if (task.subtasks.length > 0) {
+      setExpanded(true);
+    }
+  }, [task.subtasks.length]);
 
   return (
     <li className="task-item">
@@ -113,49 +131,46 @@ const TaskItem = ({
       </div>
 
       {/* Sous-tâches */}
-      <div>
-        <button onClick={() => setExpanded(!expanded)}>
-          {expanded ? "Masquer les sous-tâches" : "Voir les sous-tâches"}
-        </button>
+      {task.subtasks.length > 0 && (
+        <div>
+          <button onClick={() => setExpanded(!expanded)}>
+            {expanded ? "Masquer les sous-tâches" : "Voir les sous-tâches"}
+          </button>
 
-        {expanded && (
-          <div className="subtasks-section">
-            <h4>Sous-tâches :</h4>
-            <ul className="subtask-list">
-              {task.subtasks.map((subtask) => (
-                <li key={subtask.id} className="subtask-item">
-                  <input
-                    type="checkbox"
-                    checked={subtask.completed}
-                    onChange={() =>
-                      onAddSubtask(task.id, {
-                        ...subtask,
-                        completed: !subtask.completed,
-                      })
-                    }
-                  />
-                  {subtask.title}
-                  <button
-                    className="delete-button"
-                    onClick={() => onDeleteSubtask(task.id, subtask.id)}
-                  >
-                    Supprimer
-                  </button>
-                </li>
-              ))}
-            </ul>
+          {expanded && (
+            <div className="subtasks-section">
+              <h4>Sous-tâches :</h4>
+              <ul className="subtask-list">
+                {task.subtasks.map((subtask) => (
+                  <li key={subtask.id} className="subtask-item">
+                    <input
+                      type="checkbox"
+                      checked={subtask.archived === "closed"}
+                      onChange={() => onToggleSubtaskStatus(task.id, subtask.id, subtask.archived === "open" ? "closed" : "open")}
+                    />
+                    {subtask.name}
+                    <button
+                      className="delete-button"
+                      onClick={() => onDeleteSubtask(task.id, subtask.id)}
+                    >
+                      Supprimer
+                    </button>
+                  </li>
+                ))}
+              </ul>
 
-            {/* Champ de saisie pour ajouter une sous-tâche */}
-            <input
-              type="text"
-              value={newSubtaskText}
-              onChange={(e) => setNewSubtaskText(e.target.value)}
-              onKeyDown={handleKeyPress}
-              placeholder="Nouvelle sous-tâche..."
-            />
-          </div>
-        )}
-      </div>
+              {/* Champ de saisie pour ajouter une sous-tâche */}
+              <input
+                type="text"
+                value={newSubtaskText}
+                onChange={(e) => setNewSubtaskText(e.target.value)}
+                onKeyDown={handleKeyPress}
+                placeholder="Nouvelle sous-tâche..."
+              />
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Composant de modale */}
       {isModalOpen && (

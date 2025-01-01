@@ -1,20 +1,27 @@
-import React, { useReducer, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useReducer, useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Archives from "./pages/Archives";
-import taskReducer from "./reducers/taskReducer";
 import FloatingMenu from "./components/FloatingMenu";
 import "./index.css";
 import "./timer.css";
+import taskReducer from "./reducers/taskReducer"; // Importer le reducer
 
-// State initial (vide, car on va charger depuis le serveur)
+// Initial state
 const initialState = {
   tasks: [],
 };
 
 const App = () => {
   const [state, dispatch] = useReducer(taskReducer, initialState);
+  const [filter, setFilter] = useState({
+    priority: "",
+    date: "",
+    status: "",
+    sortOrder: "newest",
+  });
 
+  // Fetch tasks from the server
   const fetchTasks = async (archived = false) => {
     try {
       const response = await fetch(`http://192.168.50.241:4000/tasks?archived=${archived}`);
@@ -36,14 +43,14 @@ const App = () => {
     }
   };
 
-  // Chargement des tâches depuis le backend au montage du composant
   useEffect(() => {
     fetchTasks();
   }, []);
 
-  // --- Fonctions dispatch ---
+  useEffect(() => {
+    fetchTasks(true); // Fetch archived tasks when the component mounts
+  }, []);
 
-  // Fonction pour ajouter une tâche
   const addTask = async (task) => {
     try {
       const response = await fetch('http://192.168.50.241:4000/tasks', {
@@ -66,7 +73,6 @@ const App = () => {
     }
   };
 
-  // Fonction pour modifier une tâche existante
   const updateTask = async (taskId, updatedFields) => {
     try {
       const response = await fetch(`http://192.168.50.241:4000/tasks/${taskId}`, {
@@ -91,7 +97,23 @@ const App = () => {
     }
   };
 
-  // Fonction pour archiver une tâche existante
+  const deleteTask = async (taskId) => {
+    try {
+      const response = await fetch(`http://192.168.50.241:4000/tasks/${taskId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la suppression de la tâche.');
+      }
+
+      console.log('Tâche supprimée.');
+      fetchTasks(); // Rafraîchissez les données
+    } catch (error) {
+      console.error('Erreur :', error);
+    }
+  };
+
   const archiveTask = async (taskId) => {
     try {
       const response = await fetch(`http://192.168.50.241:4000/tasks/${taskId}`, {
@@ -116,26 +138,50 @@ const App = () => {
     }
   };
 
-  // Fonction pour supprimer une tâche existante
-  const deleteTask = async (taskId) => {
+  const addSubtask = async (taskId, subtask) => {
     try {
-      const response = await fetch(`http://192.168.50.241:4000/tasks/${taskId}`, {
-        method: 'DELETE',
+      const response = await fetch(`http://192.168.50.241:4000/tasks/${taskId}/subtasks`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(subtask),
       });
 
       if (!response.ok) {
-        throw new Error('Erreur lors de la suppression de la tâche.');
+        throw new Error('Erreur lors de l\'ajout de la sous-tâche.');
       }
 
-      console.log('Tâche supprimée.');
-      fetchTasks(); // Rafraîchissez les données
+      const updatedTask = await response.json();
+      console.log('Sous-tâche ajoutée :', updatedTask);
+
+      // Mettez à jour l'état local ou relancez le fetch global des tâches
+      fetchTasks();
     } catch (error) {
       console.error('Erreur :', error);
     }
   };
 
-  const addSubtask = (parentId, subtask) => {
-    dispatch({ type: "ADD_SUBTASK", payload: { parentId, subtask } });
+  const toggleSubtaskStatus = async (taskId, subtaskId, status) => {
+    try {
+      const response = await fetch(`http://192.168.50.241:4000/tasks/${taskId}/subtasks/${subtaskId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ archived: status }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la mise à jour de la sous-tâche.');
+      }
+
+      const updatedTask = await response.json();
+      console.log('Sous-tâche mise à jour :', updatedTask);
+
+      // Mettez à jour l'état local ou relancez le fetch global des tâches
+      fetchTasks();
+    } catch (error) {
+      console.error('Erreur :', error);
+    }
   };
 
   const deleteSubtask = (taskId, subtaskId) => {
@@ -160,7 +206,10 @@ const App = () => {
                 onArchiveTask={archiveTask}
                 onAddSubtask={addSubtask}
                 onDeleteSubtask={deleteSubtask}
+                onToggleSubtaskStatus={toggleSubtaskStatus} // Ajoutez cette ligne
                 onSaveTask={updateTask}
+                filter={filter}
+                setFilter={setFilter}
               />
             }
           />

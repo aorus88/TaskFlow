@@ -7,3 +7,4 @@ export const TOGGLE_SUBTASK = "TOGGLE_SUBTASK";
 export const DELETE_SUBTASK = "DELETE_SUBTASK";
 export const UPDATE_TASK_TIME = "UPDATE_TASK_TIME";
 export const EDIT_TASK = "EDIT_TASK"; // Ajout de l'action EDIT_TASK
+export const TOGGLE_SUBTASK_STATUS = "TOGGLE_SUBTASK_STATUS"; // Nouvelle statut open / closed sous taches

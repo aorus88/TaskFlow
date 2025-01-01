@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import TaskDetail from "./TaskDetail";
 import EditTaskModal from "./EditTaskModal";
 import TaskItem from "./TaskItem";
 import "./TaskList.css";
@@ -12,17 +11,36 @@ const TaskList = ({
   onDeleteTask,
   onSaveTask,
   onArchiveTask,
-  onTaskComplete, // Nouvelle prop pour gérer la combinaison de "Terminé" et "Archiver"
+  onToggleSubtaskStatus, // Ajoutez cette ligne
   isArchived = false, // Indique si les tâches affichées sont des archives
-  filter, // Ajout du filtre pour gérer les recherches ou tri
+  filter = {}, // Ajoutez une valeur par défaut pour filter
 }) => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  // Fonction pour filtrer les tâches en fonction du texte de recherche
-  const filteredTasks = filter
-    ? tasks.filter((task) => task.name.toLowerCase().includes(filter.toLowerCase()))
-    : tasks;
+  // Fonction pour filtrer les tâches en fonction des filtres
+  const filteredTasks = tasks.filter((task) => {
+    if (filter.priority && task.priority !== filter.priority) {
+      return false;
+    }
+    if (filter.date && task.date !== filter.date) {
+      return false;
+    }
+    if (filter.status && task.status !== filter.status) {
+      return false;
+    }
+    if (filter.search && filter.search.trim() !== "") {
+      return task.name.toLowerCase().includes(filter.search.toLowerCase());
+    }
+    return true;
+  });
+
+  // Fonction pour trier les tâches par date d'ajout
+  const sortedTasks = filteredTasks.sort((a, b) => {
+    const dateA = new Date(a.addedAt);
+    const dateB = new Date(b.addedAt);
+    return filter.sortOrder === "newest" ? dateB - dateA : dateA - dateB;
+  });
 
   // Gestion de l'ouverture de la modale d'édition
   const handleEditTask = (task) => {
@@ -53,7 +71,7 @@ const TaskList = ({
   return (
     <div className="task-list">
       <ul>
-        {filteredTasks.map((task) => (
+        {sortedTasks.map((task) => (
           <TaskItem
             key={task.id}
             task={task}
@@ -63,6 +81,7 @@ const TaskList = ({
             onArchiveTask={onArchiveTask}
             onAddSubtask={onAddSubtask}
             onDeleteSubtask={onDeleteSubtask}
+            onToggleSubtaskStatus={onToggleSubtaskStatus} // Ajoutez cette ligne
             onUpdateTask={onSaveTask} // Ajoutez cette ligne
             isArchived={isArchived}
           />
@@ -74,7 +93,7 @@ const TaskList = ({
         <EditTaskModal
           task={selectedTask}
           onClose={handleCloseModal}
-          onSave={onSaveTask}  
+          onSave={handleSaveTask}  
           /* ICI on transmet handleSaveTask */
         />
       )}

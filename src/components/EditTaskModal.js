@@ -10,7 +10,8 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
   );
   const [totalTime, setTotalTime] = useState(task.totalTime || 0);
   const [currentSessionTime, setCurrentSessionTime] = useState(task.currentSessionTime || 0);
-
+  const [newSubtask, setNewSubtask] = useState("");
+  
   // Fonction pour mettre à jour la tâche
   const handleUpdateTask = () => {
     if (!name.trim()) {
@@ -34,6 +35,22 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
     // Ferme la modale
     onClose();
   };
+
+  const handleAddSubtask = () => {
+    if (newSubtask.trim()) {
+      const updatedTask = {
+        ...task,
+        subtasks: [
+          ...task.subtasks,
+          { id: Date.now(), name: newSubtask, archived: "open" },
+        ],
+      };
+      onSave(updatedTask);
+      setNewSubtask("");
+    }
+  };
+
+
 
   // Gestion de la touche Entrée
   const handleKeyDown = (e) => {
@@ -107,6 +124,18 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
         <div className="modal-buttons">
           <button onClick={handleUpdateTask}>Sauvegarder</button>
           <button onClick={onClose}>Annuler</button>
+        </div>
+
+        <div className="modal-subtasks">
+          <form onKeyDown={handleKeyDown} className="modal-form">
+            <input
+              type="text"
+              value={newSubtask}
+              onChange={(e) => setNewSubtask(e.target.value)}
+              placeholder="Nom de la sous-tâche"
+            />
+            <button type="button" onClick={handleAddSubtask}>Ajouter</button>
+          </form>
         </div>
       </div>
     </div>

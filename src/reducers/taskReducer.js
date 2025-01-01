@@ -73,6 +73,28 @@ const taskReducer = (state, action) => {
         ),
       };
 
+      // 5c) MISE À JOUR DU TEMPS D'UNE SOUS-TÂCHE
+      case "TOGGLE_SUBTASK_STATUS":
+        return {
+          ...state,
+          tasks: state.tasks.map((task) =>
+            task.id === action.payload.taskId
+              ? {
+                  ...task,
+                  subtasks: task.subtasks.map((subtask) =>
+                    subtask.id === action.payload.subtaskId
+                      ? {
+                          ...subtask,
+                          archived: subtask.archived === "open" ? "closed" : "open",
+                          archivedAt: subtask.archived === "open" ? new Date().toISOString() : null,
+                        }
+                      : subtask
+                  ),
+                }
+              : task
+          ),
+        };
+
     // ────────────────────────────────────────────────────
     // 6) SUPPRESSION D'UNE SOUS-TÂCHE
     // ────────────────────────────────────────────────────
