@@ -43,6 +43,17 @@ const taskSchema = new mongoose.Schema({
 
 const Task = mongoose.model('Task', taskSchema);
 
+// Schéma pour les entrées de consommation de cigarettes
+const consumptionEntrySchema = new mongoose.Schema({
+    date: { type: Date, required: true },
+    time: { type: String, required: true },
+    mood: { type: String, required: true },
+    consumption: { type: String, enum: ['yes', 'no'], required: true },
+    createdAt: { type: Date, default: Date.now }
+});
+
+const ConsumptionEntry = mongoose.model('ConsumptionEntry', consumptionEntrySchema);
+
 // 5) Routes de l'API
 // a) Récupérer toutes les tâches avec filtres
 app.get('/tasks', async (req, res) => {
@@ -99,7 +110,6 @@ app.delete('/tasks/:id', async (req, res) => {
 });
 
 // e) Ajouter une sous-tâche à une tâche existante
-// e) Ajouter une sous-tâche à une tâche existante
 app.post('/tasks/:id/subtasks', async (req, res) => {
     const { id } = req.params;
     const { name, priority } = req.body;
@@ -143,6 +153,57 @@ app.put('/tasks/:taskId/subtasks/:subtaskId', async (req, res) => {
     } catch (err) {
         console.error('Erreur lors de la mise à jour de la sous-tâche :', err);
         res.status(400).json({ error: 'Erreur lors de la mise à jour de la sous-tâche.' });
+    }
+});
+
+// Routes pour les entrées de consommation de cigarettes
+// a) Récupérer toutes les entrées
+app.get('/consumption-entries', async (req, res) => {
+    try {
+        const entries = await ConsumptionEntry.find();
+        res.json(entries);
+    } catch (err) {
+        res.status(500).json({ error: 'Erreur lors de la récupération des entrées.' });
+    }
+});
+
+// b) Ajouter une nouvelle entrée
+app.post('/consumption-entries', async (req, res) => {
+    const { date, time, mood, consumption } = req.body;
+    try {
+        const newEntry = new ConsumptionEntry({
+            date,
+            time,
+            mood,
+            consumption
+        });
+        await newEntry.save();
+        res.status(201).json(newEntry);
+    } catch (err) {
+        res.status(400).json({ error: 'Erreur lors de l\'ajout de l\'entrée.' });
+    }
+});
+
+// c) Mettre à jour une entrée
+app.put('/consumption-entries/:id', async (req, res) => {
+    const { id } = req.params;
+    const updates = req.body;
+    try {
+        const updatedEntry = await ConsumptionEntry.findByIdAndUpdate(id, updates, { new: true });
+        res.json(updatedEntry);
+    } catch (err) {
+        res.status(400).json({ error: 'Erreur lors de la mise à jour de l\'entrée.' });
+    }
+});
+
+// d) Supprimer une entrée
+app.delete('/consumption-entries/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        await ConsumptionEntry.findByIdAndDelete(id);
+        res.json({ message: 'Entrée supprimée avec succès.' });
+    } catch (err) {
+        res.status(500).json({ error: 'Erreur lors de la suppression de l\'entrée.' });
     }
 });
 

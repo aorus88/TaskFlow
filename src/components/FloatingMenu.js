@@ -19,18 +19,26 @@ const FloatingMenu = () => {
 
       {isOpen && (
         <>
-          <h2 className="menu-title">TaskFlow</h2>
+          <h2 className="menu-title">TaskFlow 🛖</h2>
           <ul className="menu-list">
             <li>
               <Link to="/" className="menu-link" onClick={handleLinkClick}>
                 🏠 Accueil
               </Link>
             </li>
+
+            <li>
+              <Link to="/fusion-tool" className="menu-link" onClick={handleLinkClick}>
+                📊 Fusion Tool
+              </Link>
+            </li>
+
             <li>
               <Link to="/archives" className="menu-link" onClick={handleLinkClick}>
                 📁 Archives
               </Link>
             </li>
+
           </ul>
         </>
       )}

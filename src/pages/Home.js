@@ -44,7 +44,11 @@ const Home = ({
   return (
     <div className="home-page">
 
-      <h1>TaskFlow - V1.1.9_beta</h1>
+      <h1>TaskFlow - V1.1.9_beta
+        
+        <Clock />
+        
+      </h1>
 
       {/* Widget Météo */}
       <div
@@ -58,10 +62,7 @@ const Home = ({
         <WeatherWidget />
       </div>
 
-        {/* Horloge */}
-        <div>
-        <Clock />
-      </div>
+
 
 <div className="PriorityPieChart">
 <PriorityPieChart tasks={tasks} />

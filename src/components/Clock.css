@@ -1,21 +1,35 @@
 .clock-container {
-    display: flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  font-size: 2rem;
+  font-weight: normal;
+  color: #333; /* Gris discret */
+  background: #f9f9f9; /* Fond clair */
+  padding: 10px 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Légère ombre pour la profondeur */
+  max-width: fit-content;
+  border: 1px solid #ddd; /* Bordure subtile */
+}
 
-    margin: 0px 0;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #090000;
-    background: #c7f292;
-    padding: 1px 50px;
-    border-radius: 50px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    zoom : 100%;
-    max-width: fit-content;
-    margin: 0 auto;
-  
+.clock-time {
+  font-family: "Arial", sans-serif; /* Police simple et courante */
+  letter-spacing: 0.03em; /* Espacement subtil */
+  color: #555; /* Gris légèrement plus foncé pour le contraste */
+}
+
+/* Style sobre avec une légère animation de fade-in au chargement */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
   }
-  
-  .clock-time {
-    font-family: "Courier New", Courier, monospace;
+  to {
+      opacity: 1;
   }
-  
+}
+
+.clock-container {
+  animation: fadeIn 0.5s ease-in-out;
+}

@@ -1,0 +1,56 @@
+.fusion-tool {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .fusion-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .fusion-form label {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .fusion-form input,
+  .fusion-form select {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .fusion-form button {
+    padding: 10px 15px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .fusion-form button:hover {
+    background-color: #45a045;
+  }
+  
+  .fusion-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .fusion-table th,
+  .fusion-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .fusion-table th {
+    background-color: #f2f2f2;
+  }
