@@ -128,16 +128,18 @@ const taskReducer = (state, action) => {
     // ────────────────────────────────────────────────────
     case "UPDATE_TASK_TIME":
       return {
-        ...state,
-        tasks: state.tasks.map((task) =>
-          task.id === action.payload.taskId
-            ? {
-                ...task,
-                timeSpent: action.payload.timeSpent,
-              }
-            : task
-        ),
-      };
+      ...state,
+      tasks: state.tasks.map((task) =>
+        task.id === action.payload.taskId
+          ? {
+              ...task,
+              totalTime: action.payload.updatedTask.totalTime,
+              currentSessionTime: action.payload.updatedTask.currentSessionTime,
+              sessions: action.payload.updatedTask.sessions, // Mettre à jour les sessions
+            }
+          : task
+      ),
+    };
 
     // ────────────────────────────────────────────────────
     // 8) MODIFICATION D'UNE TÂCHE (EDIT)

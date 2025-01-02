@@ -1,5 +1,3 @@
-// components/Clock.js
-
 import React, { useState, useEffect } from "react";
 import "./Clock.css"; // Importer les styles spécifiques
 
@@ -14,8 +12,11 @@ const Clock = () => {
     return () => clearInterval(interval); // Nettoyage pour éviter les fuites de mémoire
   }, []);
 
+
   return (
     <div className="clock-container">
+      
+      
       <span className="clock-time">
         {time.toLocaleTimeString("fr-FR", {
           hour: "2-digit",
@@ -23,6 +24,7 @@ const Clock = () => {
           second: "2-digit",
         })}
       </span>
+
     </div>
   );
 };

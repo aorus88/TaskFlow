@@ -1,4 +1,5 @@
 import React from "react";
+import "./Statistics.css"; // Importer le fichier CSS
 
 const Statistics = ({ tasks, archivedTasks }) => {
   console.log("Statistics.js - Tâches reçues :", tasks);
@@ -27,7 +28,7 @@ const Statistics = ({ tasks, archivedTasks }) => {
 
   return (
     <div>
-      <h2>Statistiques des Tâches</h2>
+      <h3>Statistiques des Tâches</h3>
       <p>Tâches ouvertes : {openTasks}</p>
       <p>Tâches terminées aujourd'hui : {completedToday}</p>
       <p>Tâches à faible priorité : {lowPriorityTasks}</p>

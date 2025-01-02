@@ -105,7 +105,7 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
             />
           </label>
           <label>
-            Temps total (minutes) :
+            Total sessions (minutes) :
             <input
               type="number"
               value={totalTime}
@@ -114,7 +114,7 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
             />
           </label>
           <label>
-            Temps de session en cours (minutes) :
+            Dernière session (minutes) :
             <input
               type="number"
               value={currentSessionTime}

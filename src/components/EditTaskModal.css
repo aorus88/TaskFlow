@@ -1,50 +1,68 @@
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .modal-form label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .modal-buttons {
-    margin-top: 20px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-  
-  .modal-buttons button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .modal-buttons button:first-child {
-    background-color: #4caf50; /* Vert pour sauvegarder */
-    color: white;
-  }
-  
-  .modal-buttons button:last-child {
-    background-color: #f44336; /* Rouge pour annuler */
-    color: white;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-buttons button:first-child {
+  background-color: #4caf50; /* Vert pour sauvegarder */
+  color: white;
+}
+
+.modal-buttons button:last-child {
+  background-color: #f44336; /* Rouge pour annuler */
+  color: white;
+}
+
+/* Styles pour le mode sombre */
+body.dark .modal-content {
+  background-color: #2d3748;
+  color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .modal-form label {
+  color: #f9f9f9;
+}
+
+body.dark .modal-buttons button:first-child {
+  background-color: #38a169; /* Vert foncé pour sauvegarder */
+}
+
+body.dark .modal-buttons button:last-child {
+  background-color: #e53e3e; /* Rouge foncé pour annuler */
+}

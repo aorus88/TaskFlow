@@ -18,6 +18,14 @@ mongoose.connect('mongodb://127.0.0.1:27017/taskflowDB')
     console.error('Erreur de connexion à MongoDB :', err);
 });
 
+//définir le shéma du temps 
+
+const sessionSchema = new mongoose.Schema({
+    duration: Number,
+    date: Date,
+    taskName: String,
+  });
+
 // 4) Définition du Schéma / Modèle Mongoose
 const subtaskSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -38,7 +46,8 @@ const taskSchema = new mongoose.Schema({
     totalTime: { type: Number, default: 0 }, // Temps total en minutes
     totalTimeEstimed: { type: Number, default: 0 }, // Temps total estimé en minutes
     currentSessionTime: { type: Number, default: 0 }, // Temps en cours en minutes
-    subtasks: { type: [subtaskSchema], default: [] }
+    subtasks: { type: [subtaskSchema], default: [] },
+    sessions: [sessionSchema], // Ajouter les sessions
 });
 
 const Task = mongoose.model('Task', taskSchema);
@@ -153,6 +162,26 @@ app.put('/tasks/:taskId/subtasks/:subtaskId', async (req, res) => {
     } catch (err) {
         console.error('Erreur lors de la mise à jour de la sous-tâche :', err);
         res.status(400).json({ error: 'Erreur lors de la mise à jour de la sous-tâche.' });
+    }
+});
+
+// g) Ajouter une session de temps à une tâche
+// g) Ajouter une session de temps à une tâche
+app.post('/tasks/:id/sessions', async (req, res) => {
+    const { id } = req.params;
+    const { duration, taskName } = req.body;
+    try {
+        const task = await Task.findById(id);
+        if (!task) {
+            return res.status(404).json({ error: 'Tâche non trouvée.' });
+        }
+        task.sessions.push({ duration, taskName });
+        task.totalTime += duration; // Mettre à jour le temps total
+        await task.save();
+        res.json(task);
+    } catch (err) {
+        console.error('Erreur lors de l\'ajout de la session :', err);
+        res.status(400).json({ error: 'Erreur lors de l\'ajout de la session.' });
     }
 });
 

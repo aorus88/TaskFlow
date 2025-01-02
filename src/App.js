@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState } from "react";
+import React, { useReducer, useEffect, useState, useCallback } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Archives from "./pages/Archives";
@@ -7,6 +7,7 @@ import FloatingMenu from "./components/FloatingMenu";
 import "./index.css";
 import "./timer.css";
 import taskReducer from "./reducers/taskReducer"; // Importer le reducer
+import { TimerProvider } from "./context/TimerContext"; // Importer le TimerProvider
 
 // Initial state
 const initialState = {
@@ -23,8 +24,10 @@ const App = () => {
     sortOrder: "newest",
   });
 
-  // Fetch tasks from the server
-  const fetchTasks = async (archived = false) => {
+  const [isDarkMode, setIsDarkMode] = useState(false); // État pour gérer le mode sombre
+
+  // Utilisez useCallback pour mémoriser la fonction fetchTasks
+  const fetchTasks = useCallback(async (archived = false) => {
     try {
       const response = await fetch(`http://192.168.50.241:4000/tasks?archived=${archived}`);
       if (!response.ok) {
@@ -43,7 +46,7 @@ const App = () => {
       // On peut choisir de remettre un tableau vide en cas d'erreur
       dispatch({ type: "SET_TASKS", payload: [] });
     }
-  };
+  }, []);
 
   // Add a new task
   const addTask = async (task) => {
@@ -184,7 +187,7 @@ const App = () => {
   };
 
   // Fetch consumption entries from the server
-  const fetchConsumptionEntries = async () => {
+  const fetchConsumptionEntries = useCallback(async () => {
     try {
       const response = await fetch('http://192.168.50.241:4000/consumption-entries');
       if (!response.ok) {
@@ -203,7 +206,7 @@ const App = () => {
       // On peut choisir de remettre un tableau vide en cas d'erreur
       dispatch({ type: "SET_CONSUMPTION_ENTRIES", payload: [] });
     }
-  };
+  }, []);
 
   // Add a new consumption entry
   const addConsumptionEntry = async (entry) => {
@@ -231,57 +234,74 @@ const App = () => {
   useEffect(() => {
     fetchTasks();
     fetchConsumptionEntries(); // Charger les entrées de consommation au démarrage
-  }, []);
+  }, [fetchTasks, fetchConsumptionEntries]);
+
+  // Fonction pour basculer entre le mode clair et le mode sombre
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    document.body.classList.toggle('dark', !isDarkMode);
+  };
+
+  // Fonction pour mettre à jour le temps d'une tâche
+  const updateTaskTime = (taskId, updatedTask) => {
+    dispatch({ type: "UPDATE_TASK_TIME", payload: { taskId, updatedTask } });
+  };
 
   // --- Rendu ---
   return (
-    <Router>
-      <div className="App">
-        <FloatingMenu addTask={addTask} />
+    <TimerProvider>
+      <Router>
+        <div className={`App ${isDarkMode ? 'dark' : ''}`}>
+          <FloatingMenu addTask={addTask} />
+          <button onClick={toggleDarkMode} className="dark-mode-toggle">
+            {isDarkMode ? 'Mode Clair' : 'Mode Sombre'}
+          </button>
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                tasks={state.tasks.filter((task) => task.archived === "open")}
-                archivedTasks={state.tasks.filter((task) => task.archived === "closed")} // Passer les tâches archivées
-                onAddTask={addTask}
-                onEditTask={updateTask}
-                onDeleteTask={deleteTask}
-                onArchiveTask={archiveTask}
-                onAddSubtask={addSubtask}
-                onDeleteSubtask={deleteSubtask}
-                onToggleSubtaskStatus={toggleSubtaskStatus} // Ajoutez cette ligne
-                onSaveTask={updateTask}
-                filter={filter}
-                setFilter={setFilter}
-                fetchTasks={fetchTasks} // Passez la fonction fetchTasks
-              />
-            }
-          />
-          <Route
-            path="/archives"
-            element={
-              <Archives
-                archivedTasks={state.tasks.filter((task) => task.archived?.trim() === "closed")}
-                handleDeleteTask={deleteTask}
-                onFetchArchivedTasks={() => fetchTasks(true)} // Ajoutez cette ligne pour passer la fonction de fetch
-              />
-            }
-          />
-          <Route
-            path="/fusion-tool"
-            element={
-              <FusionTool
-                entries={state.consumptionEntries}
-                onAddEntry={addConsumptionEntry}
-              />
-            } // Ajoutez la nouvelle route pour FusionTool
-          />
-        </Routes>
-      </div>
-    </Router>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  tasks={state.tasks.filter((task) => task.archived === "open")}
+                  archivedTasks={state.tasks.filter((task) => task.archived === "closed")} // Passer les tâches archivées
+                  onAddTask={addTask}
+                  onEditTask={updateTask}
+                  onDeleteTask={deleteTask}
+                  onArchiveTask={archiveTask}
+                  onAddSubtask={addSubtask}
+                  onDeleteSubtask={deleteSubtask}
+                  onToggleSubtaskStatus={toggleSubtaskStatus} // Ajoutez cette ligne
+                  onSaveTask={updateTask}
+                  filter={filter}
+                  setFilter={setFilter}
+                  fetchTasks={fetchTasks} // Passez la fonction fetchTasks
+                  updateTaskTime={updateTaskTime} // Passez la fonction updateTaskTime
+                />
+              }
+            />
+            <Route
+              path="/archives"
+              element={
+                <Archives
+                  archivedTasks={state.tasks.filter((task) => task.archived?.trim() === "closed")}
+                  handleDeleteTask={deleteTask}
+                  onFetchArchivedTasks={() => fetchTasks(true)} // Ajoutez cette ligne pour passer la fonction de fetch
+                />
+              }
+            />
+            <Route
+              path="/fusion-tool"
+              element={
+                <FusionTool
+                  entries={state.consumptionEntries}
+                  onAddEntry={addConsumptionEntry}
+                />
+              } // Ajoutez la nouvelle route pour FusionTool
+            />
+          </Routes>
+        </div>
+      </Router>
+    </TimerProvider>
   );
 };
 

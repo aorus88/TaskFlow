@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import TaskForm from "../components/TaskForm";
 import TaskFilters from "../components/TaskFilters";
 import TaskList from "../components/TaskList";
@@ -7,6 +7,7 @@ import PriorityPieChart from "../components/PriorityPieChart";
 import WeatherWidget from "../components/WeatherWidget";
 import Clock from "../components/Clock";
 import Statistics from "../components/Statistics"; // Importer le composant Statistics
+import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer"; // Importer le composant GlobalPomodoroTimer
 import "./Home.css";
 
 const Home = ({
@@ -22,17 +23,21 @@ const Home = ({
   filter,
   setFilter,
   onSaveTask, // Assurez-vous que cette prop est correctement passée
-  fetchTasks // Ajoutez cette ligne pour passer la fonction de fetch
+  fetchTasks, // Ajoutez cette ligne pour passer la fonction de fetch
+  updateTaskTime // Ajoutez cette ligne pour passer la fonction updateTaskTime
 }) => {
-  console.log("Home.js - Liste des tâches reçues :", tasks);
-
   const [selectedTask, setSelectedTask] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  // Utilisez useEffect pour recharger les tâches lorsque le composant est monté
-  useEffect(() => {
+  // Utilisez useCallback pour mémoriser la fonction fetchTasks
+  const fetchTasksCallback = useCallback(() => {
     fetchTasks();
   }, [fetchTasks]);
+
+  // Utilisez useEffect pour recharger les tâches lorsque le composant est monté
+  useEffect(() => {
+    fetchTasksCallback();
+  }, [fetchTasksCallback]);
 
   // Gestion de l'édition des tâches
   const handleEditTask = async (taskId, updatedFields) => {
@@ -51,51 +56,57 @@ const Home = ({
 
   return (
     <div className="home-page">
-
-      <h1>TaskFlow - V1.2.0
-        
+      <div className="header">
+        <h2>TaskFlow - V1.2.1</h2>
         <Clock />
-        
-      </h1>
-
-      {/* Widget Météo */}
-      <div
-        style={{
-          marginBottom: "20px",
-          padding: "6px",
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-        }}
-      >
-        <WeatherWidget />
       </div>
 
-      <div className="PriorityPieChart">
-        <PriorityPieChart tasks={tasks} />
-      </div>
+      <div className="main-content">
+        {/* Widget Météo */}
+        <div className="widget-container">
+          <WeatherWidget />
+        </div>
 
-      {/* Statistiques des tâches */}
-      <Statistics tasks={tasks} archivedTasks={archivedTasks} />
+        <div className="widget-container">
+          <PriorityPieChart tasks={tasks} />
+        </div>
+
+        {/* Statistiques des tâches */}
+        <div className="widget-container">
+          <Statistics tasks={tasks} archivedTasks={archivedTasks} />
+        </div>
+      </div>
 
       {/* Formulaire pour ajouter une tâche */}
-      <TaskForm onAddTask={onAddTask} />
+      <div className="task-form">
+        <TaskForm onAddTask={onAddTask} />
+      </div>
 
       {/* Filtres pour les tâches */}
-      <TaskFilters filter={filter} setFilter={setFilter} />
+      <div className="task-filters">
+        <TaskFilters filter={filter} setFilter={setFilter} />
+      </div>
+
+      {/* Minuteur Pomodoro */}
+      <div className="global-pomodoro-timer">
+        <GlobalPomodoroTimer tasks={tasks} updateTaskTime={updateTaskTime} />
+      </div>
 
       {/* Liste des tâches */}
-      <TaskList
-        tasks={tasks.filter((task) => task.archived === 'open')} // Filtrer les tâches actives
-        filter={filter} // Transmission de la prop filter pour le tri
-        onEditTask={onEditTask}
-        onSaveTask={onSaveTask}
-        onDeleteTask={onDeleteTask}
-        onArchiveTask={onArchiveTask}
-        onAddSubtask={onAddSubtask}
-        onDeleteSubtask={onDeleteSubtask}
-        onToggleSubtaskStatus={onToggleSubtaskStatus} // Ajoutez cette ligne
-        onUpdateTask={onSaveTask} // Ajoutez cette ligne
-      />
+      <div className="task-list">
+        <TaskList
+          tasks={tasks.filter((task) => task.archived === 'open')} // Filtrer les tâches actives
+          filter={filter} // Transmission de la prop filter pour le tri
+          onEditTask={onEditTask}
+          onSaveTask={onSaveTask}
+          onDeleteTask={onDeleteTask}
+          onArchiveTask={onArchiveTask}
+          onAddSubtask={onAddSubtask}
+          onDeleteSubtask={onDeleteSubtask}
+          onToggleSubtaskStatus={onToggleSubtaskStatus} // Ajoutez cette ligne
+          onUpdateTask={onSaveTask} // Ajoutez cette ligne
+        />
+      </div>
 
       {/* Modale pour éditer une tâche */}
       {isEditing && selectedTask && (

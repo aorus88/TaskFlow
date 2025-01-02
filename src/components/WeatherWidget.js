@@ -4,6 +4,7 @@ import "./WeatherWidget.css";
 const WeatherWidget = () => {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
+  const [time, setTime] = useState(new Date());
 
   const location = "Coppet";
   const apiKey = "6646ef98bb617a6aa6419692cb622d72";
@@ -30,6 +31,7 @@ const WeatherWidget = () => {
     if (condition.includes("fog")) return "Vents";
     return ""; // Classe par défaut
   };
+  
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -45,6 +47,12 @@ const WeatherWidget = () => {
       }
     };
     fetchWeather();
+
+    const interval = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(interval); // Nettoyage pour éviter les fuites de mémoire
   }, []);
 
   if (error) return <p>Erreur : {error}</p>;
@@ -58,21 +66,40 @@ const WeatherWidget = () => {
     weather.weather[0].description;
 
   const weatherIcon =
-    weatherClass === "sun"
+    weatherClass === "Ensoleillé"
       ? "☀️"
-      : weatherClass === "cloud"
+      : weatherClass === "Nuageux"
       ? "☁️"
-      : weatherClass === "rain"
+      : weatherClass === "Pluie"
       ? "🌧️"
-      : weatherClass === "snow"
+      : weatherClass === "Neige"
       ? "❄️"
-      : weatherClass === "wind"
+      : weatherClass === "Vents"
       ? "💨"
       : "🌈";
+
+  // Fonction pour obtenir l'emoji en fonction de l'heure actuelle
+  const getEmojiForTime = () => {
+    const hour = time.getHours();
+    if (hour >= 0 && hour < 4) {
+      return "🌙"; // Nuit
+    } else if (hour >= 4 && hour < 8) {
+      return "🌅"; // Aube
+    } else if (hour >= 8 && hour < 12) {
+      return "☀️"; // Matin
+    } else if (hour >= 12 && hour < 16) {
+      return "🌤️"; // Après-midi
+    } else if (hour >= 16 && hour < 20) {
+      return "🌇"; // Soir
+    } else {
+      return "🌃"; // Nuit
+    }
+  };
 
   return (
     <div className={`weather-widget ${weatherClass}`}>
       <div className="weather-widget-icon">{weatherIcon}</div>
+      <div className="time-emoji">{getEmojiForTime()}</div>
       <h3>Météo à {weather.name}</h3>
       <p>{translatedDescription}</p>
       <p>Température : {weather.main.temp}°C</p>

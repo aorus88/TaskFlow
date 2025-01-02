@@ -1,83 +1,112 @@
 /* TaskItem.css */
 
 .task-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    border-left: 6px solid transparent;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .task-item.low {
-    border-left-color: #4caf50;
-  }
-  
-  .task-item.medium {
-    border-left-color: #ffc107;
-  }
-  
-  .task-item.high {
-    border-left-color: #f44336;
-  }
-  
-  .task-item strong {
-    font-size: 1.2rem;
-    color: #333;
-  }
-  
-  .task-buttons {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .task-buttons button {
-    padding: 6px 12px;
-    font-size: 0.85rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .task-buttons .edit-button {
-    background-color: #eb8347;
-    color: white;
-  }
-  
-  .task-buttons .complete-button {
-    background-color: #45a045;
-    color: rgb(255, 255, 255);
-  }
-  
-  .task-buttons .delete-button {
-    background-color: #f44336;
-    color: white;
-  }
-  
-  .subtasks-section {
-    margin-top: 12px;
-  }
-  
-  .subtasks-section h4 {
-    font-size: 1.1rem;
-    color: #555;
-  }
-  
-  .subtask-list {
-    list-style: none;
-    padding: 0;
-    margin: 10px 0;
-  }
-  
-  .subtask-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 6px 8px;
-    background: #f9f9f9;
-    border-radius: 4px;
-    margin-bottom: 6px;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-left: 6px solid transparent;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-item.low {
+  border-left-color: #4caf50;
+}
+
+.task-item.medium {
+  border-left-color: #ffc107;
+}
+
+.task-item.high {
+  border-left-color: #f44336;
+}
+
+.task-item strong {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.task-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.task-buttons button {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.task-buttons .edit-button {
+  background-color: #eb8347;
+  color: white;
+}
+
+.task-buttons .complete-button {
+  background-color: #45a045;
+  color: rgb(255, 255, 255);
+}
+
+.task-buttons .delete-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.subtasks-section {
+  margin-top: 12px;
+}
+
+.subtasks-section h4 {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.subtask-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.subtask-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 8px;
+  background: #f9f9f9;
+  border-radius: 4px;
+}
+
+/* Styles pour le mode sombre */
+body.dark .task-item {
+  background: #2d3748;
+  color: #f9f9f9;
+}
+
+body.dark .task-item strong {
+  color: #f9f9f9;
+}
+
+body.dark .subtask-item {
+  background: #4a5568;
+  color: #f9f9f9;
+}
+
+body.dark .subtasks-section h4 {
+  color: #f9f9f9;
+}
+
+body.dark .task-buttons .edit-button {
+  background-color: #dd6b20;
+}
+
+body.dark .task-buttons .complete-button {
+  background-color: #38a169;
+}
+
+body.dark .task-buttons .delete-button {
+  background-color: #e53e3e;
+}

@@ -33,3 +33,15 @@
 .clock-container {
   animation: fadeIn 0.5s ease-in-out;
 }
+
+/* Styles pour le mode sombre */
+body.dark .clock-container {
+  background: #2d3748; /* Fond sombre */
+  color: #f9f9f9; /* Texte clair */
+  border: 1px solid #4a5568; /* Bordure subtile pour le mode sombre */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée pour le mode sombre */
+}
+
+body.dark .clock-time {
+  color: #f9f9f9; /* Texte clair */
+}

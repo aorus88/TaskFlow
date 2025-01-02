@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
-import "./timer.css"; // Assurez-vous que le fichier CSS est bien lié.
+import React, { useEffect, useContext } from "react";
+import "./GlobalPomodoroTimer.css"; // Assurez-vous que le fichier CSS est bien lié.
+import { TimerContext } from "../context/TimerContext"; // Importer le contexte
 
 const GlobalPomodoroTimer = ({ tasks, updateTaskTime }) => {
-  const [timeLeft, setTimeLeft] = useState(25 * 60);
-  const [isRunning, setIsRunning] = useState(false);
-  const [customDuration, setCustomDuration] = useState(25);
-  const [selectedTaskId, setSelectedTaskId] = useState(null);
+  const { timeLeft, setTimeLeft, isRunning, setIsRunning, customDuration, setCustomDuration, selectedTaskId, setSelectedTaskId, sessionTime, setSessionTime } = useContext(TimerContext);
 
   useEffect(() => {
     let timer;
@@ -13,51 +11,82 @@ const GlobalPomodoroTimer = ({ tasks, updateTaskTime }) => {
       timer = setInterval(() => {
         setTimeLeft((prevTime) => {
           if (prevTime > 0) {
+            setSessionTime((prevSessionTime) => prevSessionTime + 1);
             return prevTime - 1;
           } else {
-            setIsRunning(false);
-            return 0;
+            handleSessionEnd();
+            return customDuration * 60; // Redémarrer le décompte
           }
         });
       }, 1000);
     }
     return () => clearInterval(timer);
-  }, [isRunning]);
+  }, [isRunning, setTimeLeft, setSessionTime, customDuration]);
+
+  const handleSessionEnd = async () => {
+    if (!selectedTaskId) return;
+    const task = tasks.find((task) => task._id === selectedTaskId);
+    if (task) {
+      const sessionTimeInMinutes = Math.floor(sessionTime / 60); // Convertir le temps de session en minutes
+      const session = {
+        duration: sessionTimeInMinutes,
+        date: new Date(),
+        taskName: task.name,
+      };
+      const updatedTask = {
+        ...task,
+        totalTime: task.totalTime + sessionTimeInMinutes,
+        currentSessionTime: sessionTimeInMinutes, // Réinitialiser à la durée de la session actuelle
+        sessions: [...(task.sessions || []), session], // Ajouter la session à la liste des sessions
+      };
+      updateTaskTime(selectedTaskId, updatedTask);
+
+      // Envoyer les données au backend
+      try {
+        const response = await fetch(`http://192.168.50.241:4000/tasks/${selectedTaskId}/sessions`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(session),
+        });
+
+        if (!response.ok) {
+          throw new Error('Erreur lors de l\'ajout de la session.');
+        }
+
+        const updatedTaskFromBackend = await response.json();
+        console.log('Session ajoutée :', updatedTaskFromBackend);
+      } catch (error) {
+        console.error('Erreur :', error);
+      }
+    }
+    setSessionTime(0); // Réinitialiser le temps de session
+  };
 
   const startTimer = () => {
     if (!selectedTaskId) {
       alert("Veuillez sélectionner une tâche !");
       return;
     }
-    setTimeLeft(customDuration * 60);
     setIsRunning(true);
   };
 
-  const pauseTimer = () => setIsRunning(false);
+  const pauseTimer = () => setIsRunning(!isRunning);
 
   const resetTimer = () => {
     setIsRunning(false);
     setTimeLeft(customDuration * 60);
+    setSessionTime(0);
   };
 
-  const stopAndAssignTime = () => {
+  const stopAndAssignTime = async () => {
     if (!selectedTaskId) {
       alert("Veuillez sélectionner une tâche !");
       return;
     }
-
-    const timeSpent = customDuration * 60 - timeLeft;
-
-    if (timeSpent <= 0) {
-      alert("Aucun temps n'a été passé !");
-      setIsRunning(false);
-      setTimeLeft(customDuration * 60);
-      return;
-    }
-
     setIsRunning(false);
-    updateTaskTime(selectedTaskId, timeSpent);
-
+    await handleSessionEnd();
     setTimeLeft(customDuration * 60);
   };
 
@@ -72,17 +101,24 @@ const GlobalPomodoroTimer = ({ tasks, updateTaskTime }) => {
   }
 
   const progress = ((customDuration * 60 - timeLeft) / (customDuration * 60)) * 100;
+  const segments = 60; // Augmenter le nombre de segments pour une progression plus fluide
+  const segmentProgress = 100 / segments;
+  const activeSegments = Math.floor(progress / segmentProgress);
 
   return (
     <div className="global-pomodoro-timer">
-      <h4 className="timer-header">Minuteur Global</h4>
+      <h1 className="timer-header">Minuteur Global</h1>
       <div className="timer-container">
-        <div
-          className="progress-circle"
-          style={{ background: `conic-gradient(#4caf50 ${progress}%, #ddd ${progress}%)` }}
-        >
-          <span className="timer-display">{formatTime(timeLeft)}</span>
+        <div className="progress-bar-container">
+          {Array.from({ length: segments }).map((_, index) => (
+            <div
+              key={index}
+              className={`progress-bar-segment ${index < activeSegments ? "active" : "inactive"}`}
+              style={{ width: `${segmentProgress}%` }}
+            ></div>
+          ))}
         </div>
+        <span className="timer-display">{formatTime(timeLeft)}</span>
       </div>
       <select
         value={selectedTaskId || ""}
@@ -93,7 +129,7 @@ const GlobalPomodoroTimer = ({ tasks, updateTaskTime }) => {
           Sélectionnez une tâche
         </option>
         {tasks.map((task) => (
-          <option key={task.id} value={task.id}>
+          <option key={task._id} value={task._id}>
             {task.name}
           </option>
         ))}
@@ -111,7 +147,7 @@ const GlobalPomodoroTimer = ({ tasks, updateTaskTime }) => {
           Démarrer
         </button>
         <button onClick={pauseTimer} className="pause-button">
-          Pause
+          {isRunning ? "Pause" : "Reprendre"}
         </button>
         <button onClick={stopAndAssignTime} className="stop-button">
           Arrêter & Attribuer

@@ -1,18 +1,67 @@
 .home-page {
-    margin-left: 10%; /* Décale tout vers la droite */
-    padding: 20px; /* Ajoute de l'espace à l'intérieur */
-    box-sizing: border-box; /* Assure que les marges sont bien calculées */
-    margin-right: 10%; /* Décale tout vers la droite */
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Réduire l'espacement entre les sections */
+  margin: 10px; /* Réduire la marge */
+  padding: 10px; /* Réduire le padding */
+  box-sizing: border-box;
+}
 
-  .PriorityPieChart {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    zoom: 90%;
-  }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px; /* Réduire la marge en bas */
+}
 
-  
+.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Réduire l'espacement entre les widgets */
+}
+
+.widget-container {
+  flex: 1 1 calc(33.33% - 10px); /* Chaque widget prend 33.33% de la largeur moins l'espacement */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.task-form,
+.task-filters,
+.global-pomodoro-timer,
+.task-list {
+  flex: 1 1 100%; /* Prend toute la largeur */
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles pour le mode sombre */
+body.dark .home-page {
+  background-color: #1a202c;
+  color: #f9f9f9;
+}
+
+body.dark .header {
+  background-color: #2d3748;
+}
+
+body.dark .widget-container,
+body.dark .task-form,
+body.dark .task-filters,
+body.dark .global-pomodoro-timer,
+body.dark .task-list {
+  background-color: #2d3748;
+  color: #f9f9f9;
+}

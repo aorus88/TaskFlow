@@ -101,10 +101,10 @@ const TaskItem = ({
 
         {/* Affichage des données de temps */}
         <p>
-          <strong>Temps total :</strong> {task.totalTime || 0} minutes
+          <strong>Total sessions :</strong> {task.totalTime || 0} minutes
         </p>
         <p>
-          <strong>Session en cours :</strong> {task.currentSessionTime || 0} minutes
+          <strong>Dernière session :</strong> {task.currentSessionTime || 0} minutes
         </p>
 
         {/* Barre de progression */}

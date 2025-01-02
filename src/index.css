@@ -1,6 +1,7 @@
 /* Styles globaux personnalisés */
 body {
-  @apply bg-gray-50 text-gray-800; /* Fond clair et texte gris foncé */
+  background-color: #f9f9f9; /* Fond clair */
+  color: #333; /* Texte gris foncé */
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
@@ -9,7 +10,8 @@ body {
 
 /* Gestion du mode sombre */
 body.dark {
-  @apply bg-gray-900 text-gray-100;
+  background-color: #1a202c; /* Fond sombre */
+  color: #f9f9f9; /* Texte clair */
 }
 
 /* Supprimer les marges des ul/ol globalement */
@@ -44,6 +46,24 @@ h1, h2, h3, h4, h5, h6 {
 
 .floating-menu.closed ~ .content-container {
   padding-left: 50px; /* Ajuste l'espace pour le menu fermé */
+}
+
+/* Styles pour le bouton de basculement du mode sombre */
+.dark-mode-toggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.dark-mode-toggle:hover {
+  background-color: #45a045;
 }
 
 /*message d'info enregistrement - v.1.1.5*/

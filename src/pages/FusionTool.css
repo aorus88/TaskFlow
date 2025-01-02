@@ -68,3 +68,42 @@
 .sort-button:hover {
   background-color: #0056b3;
 }
+
+/* Styles pour le mode sombre */
+body.dark .fusion-tool {
+  border-color: #4a5568;
+  background-color: #2d3748;
+  color: #f9f9f9;
+}
+
+body.dark .fusion-form input,
+body.dark .fusion-form select {
+  background-color: #4a5568;
+  border-color: #718096;
+  color: #f9f9f9;
+}
+
+body.dark .fusion-form button {
+  background-color: #38a169;
+}
+
+body.dark .fusion-form button:hover {
+  background-color: #2f855a;
+}
+
+body.dark .fusion-table th {
+  background-color: #4a5568;
+}
+
+body.dark .fusion-table td {
+  background-color: #2d3748;
+  border-color: #4a5568;
+}
+
+body.dark .sort-button {
+  background-color: #3182ce;
+}
+
+body.dark .sort-button:hover {
+  background-color: #2b6cb0;
+}
