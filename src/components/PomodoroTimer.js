@@ -65,7 +65,6 @@ const PomodoroTimer = ({ tasks, updateTaskTime }) => {
       const updatedTask = await response.json();
   
       // Mettre à jour localement l'état des tâches
-      // Mettre à jour l'état local
       updateTaskTime(updatedTask._id, updatedTask);
       console.log("Session ajoutée :", updatedTask);
     } catch (error) {
@@ -74,8 +73,6 @@ const PomodoroTimer = ({ tasks, updateTaskTime }) => {
   
     setSessionTime(0); // Réinitialiser le temps de session
   };
-  
-  
 
   const startTimer = () => {
     if (!selectedTaskId) {

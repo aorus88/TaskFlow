@@ -141,7 +141,7 @@ const taskReducer = (state, action) => {
             ? {
                 ...task,
                 totalTime: action.payload.updatedTask.totalTime,
-                currentSessionTime: action.payload.updatedTask.currentSessionTime,
+                LastSessionTime: action.payload.updatedTask.LastSessionTime,
                 sessions: action.payload.updatedTask.sessions, // Mettre à jour les sessions
               }
             : task

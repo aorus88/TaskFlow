@@ -1,45 +1,75 @@
-import React from "react";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import "./PriorityPieChart.css"; // Importer le fichier CSS
-
-
-// Enregistrement des éléments nécessaires
-ChartJS.register(ArcElement, Tooltip, Legend);
+import React, { useEffect, useRef } from "react";
+import Chart from "chart.js/auto";
+import "./PriorityPieChart.css";
 
 const PriorityPieChart = ({ tasks }) => {
-  if (!tasks || tasks.length === 0) {
-    return <p>Aucune donnée pour afficher le diagramme.</p>;
-  }
+  const chartRef = useRef(null);
 
-  const priorities = ["low", "medium", "high"];
-  const priorityCounts = priorities.map(
-    priority => tasks.filter(task => task.priority === priority).length
-  );
+  useEffect(() => {
+    const ctx = chartRef.current.getContext("2d");
 
-  const data = {
-    labels: ["Low", "Medium", "High"],
-    datasets: [
-      {
-        data: priorityCounts,
-        backgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
+    const priorities = tasks.reduce(
+      (acc, task) => {
+        acc[task.priority]++;
+        return acc;
       },
-    ],
-  };
+      { low: 0, medium: 0, high: 0 }
+    );
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "bottom",
+    const data = {
+      labels: ["Faible", "Moyenne", "Haute"],
+      datasets: [
+        {
+          data: [priorities.low, priorities.medium, priorities.high],
+          backgroundColor: [
+            getComputedStyle(document.body).getPropertyValue("--color-low-priority"),
+            getComputedStyle(document.body).getPropertyValue("--color-medium-priority"),
+            getComputedStyle(document.body).getPropertyValue("--color-high-priority"),
+          ],
+          borderColor: "#1a202c", // Couleur de bordure pour le mode sombre
+          borderWidth: 1,
+          hoverOffset: 4, // Ajout d'un décalage au survol pour un meilleur effet visuel
+        },
+      ],
+    };
+
+    const options = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+          labels: {
+            color: getComputedStyle(document.body).getPropertyValue("--color-text"),
+            font: {
+              size: 14, // Taille de police pour les labels
+              family: 'Roboto', // Police pour les labels
+            },
+          },
+        },
+        tooltip: {
+          backgroundColor: getComputedStyle(document.body).getPropertyValue("--color-text"),
+          titleColor: getComputedStyle(document.body).getPropertyValue("--color-background"),
+          bodyColor: getComputedStyle(document.body).getPropertyValue("--color-background"),
+          borderColor: getComputedStyle(document.body).getPropertyValue("--color-border"),
+          borderWidth: 1,
+        },
       },
-    },
-  };
+    };
+
+    const chartInstance = new Chart(ctx, {
+      type: "pie",
+      data,
+      options,
+    });
+
+    return () => {
+      chartInstance.destroy();
+    };
+  }, [tasks]);
 
   return (
-    <div style={{ width: "200px", margin: "0 auto", zoom: "1" }}>
-      <h4>Répartition des Priorités</h4>
-      <Pie data={data} options={options} />
+    <div className="priority-pie-chart">
+      <canvas ref={chartRef}></canvas>
     </div>
   );
 };

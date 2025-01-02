@@ -11,7 +11,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px; /* Réduire la marge en bas */
+  margin-bottom: 0px; /* Réduire la marge en bas */
+  padding: 0px; /* Réduire le padding */
+  zoom: 50%; /* Réduire la taille du texte */
+
 }
 
 .main-content {
@@ -21,18 +24,19 @@
 }
 
 .widget-container {
-  flex: 1 1 calc(33.33% - 10px); /* Chaque widget prend 33.33% de la largeur moins l'espacement */
+  flex: 1 1 calc(50% - 10px); /* Chaque widget prend 50% de la largeur moins l'espacement */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 5px;
   box-sizing: border-box;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
 
 .task-form,
 .task-filters,
