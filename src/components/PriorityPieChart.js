@@ -37,7 +37,7 @@ const PriorityPieChart = ({ tasks }) => {
       responsive: true,
       plugins: {
         legend: {
-          position: "top",
+          position: "right", // Positionner la légende à droite
           labels: {
             color: getComputedStyle(document.body).getPropertyValue("--color-text"),
             font: {
@@ -52,6 +52,18 @@ const PriorityPieChart = ({ tasks }) => {
           bodyColor: getComputedStyle(document.body).getPropertyValue("--color-background"),
           borderColor: getComputedStyle(document.body).getPropertyValue("--color-border"),
           borderWidth: 1,
+        },
+        datalabels: {
+          display: true,
+          color: getComputedStyle(document.body).getPropertyValue("--color-text"),
+          font: {
+            size: 16,
+            weight: 'bold',
+          },
+          formatter: (value, context) => {
+            const label = context.chart.data.labels[context.dataIndex];
+            return `${label}: ${value}`;
+          },
         },
       },
     };

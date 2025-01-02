@@ -1,22 +1,23 @@
 .clock-container {
+  width: 100%; /* Étendre sur toute la largeur de la page */
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px auto;
-  font-size: 2rem;
-  font-weight: normal;
-  color: #333; /* Gris discret */
-  background: #f9f9f9; /* Fond clair */
-  padding: 10px 30px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Légère ombre pour la profondeur */
-  max-width: fit-content;
+  justify-content: center; /* Centrer le contenu horizontalement */
+  align-items: center; /* Centrer verticalement si nécessaire */
+  margin: 0 auto; /* Supprimer les marges externes */
+  background-color: #f9f9f9; /* Optionnel : couleur de fond */
+  padding: 0px 0; /* Espacement interne */
+  box-sizing: border-box; /* Inclure les bordures et marges dans la largeur totale */
 }
 
 .clock-time {
   font-family: "Arial", sans-serif; /* Police simple et courante */
-  letter-spacing: 0.03em; /* Espacement subtil */
+  letter-spacing: 0.8em; /* Espacement subtil */
   color: #555; /* Gris légèrement plus foncé pour le contraste */
+  font-size: 2em; /* Taille de police plus grande */
+  text-align: center; /* Centrer le texte horizontalement */
+  margin: 0; /* Supprimer les marges internes */
+  padding: 0; /* Supprimer les marges internes */
+  animation: fadeIn 0.5s ease-in-out; /* Animation de fade-in */
 }
 
 /* Style sobre avec une légère animation de fade-in au chargement */

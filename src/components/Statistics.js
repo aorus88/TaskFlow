@@ -38,9 +38,6 @@ const Statistics = ({ tasks, archivedTasks }) => {
         <h3>Statistiques des Tâches</h3>
         <p>Tâches ouvertes : {openTasks}</p>
         <p>Tâches terminées aujourd'hui : {completedToday}</p>
-        <p>Tâches à faible priorité : {lowPriorityTasks}</p>
-        <p>Tâches à priorité moyenne : {mediumPriorityTasks}</p>
-        <p>Tâches à haute priorité : {highPriorityTasks}</p>
       </div>
       <div className="pomodoro-timer-display">
         <h3>Durée Pomodoro restant</h3>

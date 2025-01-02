@@ -20,6 +20,7 @@ const WeatherWidget = () => {
     "snow": "Neige",
     "mist": "Brume",
     "fog": "Brouillard",
+    "light rain": "Pluie légère",
   };
 
   const getWeatherClass = (condition) => {

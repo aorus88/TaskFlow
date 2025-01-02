@@ -69,7 +69,7 @@ const Home = ({
   return (
     <div className="home-page">
       <div className="header">
-        <h4>TaskFlow - V1.2.1</h4>
+        <h3>TaskFlow - V1.2.2</h3>
         <Clock />
       </div>
 
