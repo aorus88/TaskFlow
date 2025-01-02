@@ -244,7 +244,13 @@ const App = () => {
 
   // Fonction pour mettre à jour le temps d'une tâche
   const updateTaskTime = (taskId, updatedTask) => {
+    console.log("Mise à jour de la tâche :", taskId, updatedTask); // Vérifie les données mises à jour
     dispatch({ type: "UPDATE_TASK_TIME", payload: { taskId, updatedTask } });
+  };
+
+  // Fonction pour définir la tâche sélectionnée
+  const setSelectedTaskId = (taskId) => {
+    dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId });
   };
 
   // --- Rendu ---
@@ -276,6 +282,7 @@ const App = () => {
                   setFilter={setFilter}
                   fetchTasks={fetchTasks} // Passez la fonction fetchTasks
                   updateTaskTime={updateTaskTime} // Passez la fonction updateTaskTime
+                  setSelectedTaskId={setSelectedTaskId} // Passez la fonction setSelectedTaskId
                 />
               }
             />

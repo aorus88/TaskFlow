@@ -7,7 +7,7 @@ import PriorityPieChart from "../components/PriorityPieChart";
 import WeatherWidget from "../components/WeatherWidget";
 import Clock from "../components/Clock";
 import Statistics from "../components/Statistics"; // Importer le composant Statistics
-import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer"; // Importer le composant GlobalPomodoroTimer
+import PomodoroTimer from "../components/PomodoroTimer"; // Importer le composant GlobalPomodoroTimer
 import "./Home.css";
 
 const Home = ({
@@ -24,7 +24,8 @@ const Home = ({
   setFilter,
   onSaveTask, // Assurez-vous que cette prop est correctement passée
   fetchTasks, // Ajoutez cette ligne pour passer la fonction de fetch
-  updateTaskTime // Ajoutez cette ligne pour passer la fonction updateTaskTime
+  updateTaskTime,
+  setSelectedTaskId // Ajoutez cette ligne pour passer la fonction setSelectedTaskId
 }) => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -54,6 +55,17 @@ const Home = ({
     setSelectedTask(null);
   };
 
+  // Fonction pour synchroniser immédiatement l'état local après une modification
+  const handleUpdateTask = (updatedTask) => {
+    updateTaskTime(updatedTask._id, updatedTask);
+  };
+
+  // Fonction pour ajouter une tâche et la sélectionner
+  const handleAddTask = async (task) => {
+    await onAddTask(task);
+    setSelectedTaskId(task._id); // Sélectionner la nouvelle tâche
+  };
+
   return (
     <div className="home-page">
       <div className="header">
@@ -79,7 +91,7 @@ const Home = ({
 
       {/* Formulaire pour ajouter une tâche */}
       <div className="task-form">
-        <TaskForm onAddTask={onAddTask} />
+        <TaskForm onAddTask={handleAddTask} />
       </div>
 
       {/* Filtres pour les tâches */}
@@ -88,8 +100,8 @@ const Home = ({
       </div>
 
       {/* Minuteur Pomodoro */}
-      <div className="global-pomodoro-timer">
-        <GlobalPomodoroTimer tasks={tasks} updateTaskTime={updateTaskTime} />
+      <div className="pomodoro-timer">
+        <PomodoroTimer tasks={tasks} updateTaskTime={handleUpdateTask} />
       </div>
 
       {/* Liste des tâches */}

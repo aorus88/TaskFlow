@@ -6,7 +6,7 @@ const cors = require('cors');
 const app = express();
 
 // 2) Middlewares
-app.use(cors());
+app.use(cors()); // Ajoutez cette ligne pour activer CORS
 app.use(express.json());
 
 // 3) Connexion à MongoDB
@@ -44,8 +44,7 @@ const taskSchema = new mongoose.Schema({
     addedAt: { type: Date, default: Date.now },
     categories: { type: [String], default: [] },
     totalTime: { type: Number, default: 0 }, // Temps total en minutes
-    totalTimeEstimed: { type: Number, default: 0 }, // Temps total estimé en minutes
-    currentSessionTime: { type: Number, default: 0 }, // Temps en cours en minutes
+    LastSessionTime: { type: Number, default: 0 }, // Temps en cours en minutes
     subtasks: { type: [subtaskSchema], default: [] },
     sessions: [sessionSchema], // Ajouter les sessions
 });
@@ -166,24 +165,65 @@ app.put('/tasks/:taskId/subtasks/:subtaskId', async (req, res) => {
 });
 
 // g) Ajouter une session de temps à une tâche
-// g) Ajouter une session de temps à une tâche
 app.post('/tasks/:id/sessions', async (req, res) => {
     const { id } = req.params;
-    const { duration, taskName } = req.body;
+    const { duration, date, taskName } = req.body;
+  
     try {
-        const task = await Task.findById(id);
-        if (!task) {
-            return res.status(404).json({ error: 'Tâche non trouvée.' });
+      console.log('Requête reçue pour ajouter une session :', { id, duration, date, taskName }); // Ajoutez ce log
+  
+      const task = await Task.findById(id);
+      if (!task) {app.post('/tasks/:id/sessions', async (req, res) => {
+        const { id } = req.params;
+        const { duration, date, taskName } = req.body;
+      
+        try {
+          // Vérifiez que la tâche existe
+          const task = await Task.findById(id);
+          if (!task) {
+            return res.status(404).json({ error: 'Task not found' });
+          }
+      
+          // Ajouter une nouvelle session
+          const newSession = { duration, date, taskName };
+          if (!task.sessions) {
+            task.sessions = []; // Initialiser les sessions si elles n'existent pas
+          }
+          task.sessions.push(newSession);
+      
+          // Recalculer le totalTime
+          task.totalTime = task.sessions.reduce((sum, session) => sum + session.duration, 0);
+      
+          // Sauvegarder la tâche mise à jour
+          await task.save();
+      
+          res.status(200).json(task); // Retourner la tâche mise à jour
+        } catch (error) {
+          console.error('Erreur lors de l’ajout de la session :', error);
+          res.status(500).json({ error: 'Internal Server Error' });
         }
-        task.sessions.push({ duration, taskName });
-        task.totalTime += duration; // Mettre à jour le temps total
-        await task.save();
-        res.json(task);
-    } catch (err) {
-        console.error('Erreur lors de l\'ajout de la session :', err);
-        res.status(400).json({ error: 'Erreur lors de l\'ajout de la session.' });
+      });
+      
+        console.error('Tâche non trouvée :', id); // Ajoutez ce log
+        return res.status(404).send({ error: 'Task not found' });
+      }
+  
+      // Ajouter la session
+      const session = { duration, date, taskName };
+      task.sessions.push(session);
+  
+      // Recalculer totalTime
+      task.totalTime = task.sessions.reduce((total, s) => total + s.duration, 0);
+  
+      await task.save();
+      console.log('Session ajoutée avec succès :', session); // Ajoutez ce log
+      res.status(200).send(task);
+    } catch (error) {
+      console.error('Erreur lors de l\'ajout de la session :', error); // Ajoutez ce log pour plus de détails
+      res.status(500).send({ error: 'Internal Server Error' });
     }
-});
+  });
+  
 
 // Routes pour les entrées de consommation de cigarettes
 // a) Récupérer toutes les entrées

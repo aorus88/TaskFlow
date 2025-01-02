@@ -12,6 +12,19 @@ const TaskItem = ({
   onToggleSubtaskStatus, // Ajoutez cette ligne
   isArchived,
 }) => {
+
+  // Utilisez useEffect pour afficher un message lorsque la tâche est mise à jour
+  useEffect(() => {
+    console.log("Task updated:", task);
+  }, [task]);
+  
+
+  // Récupérer la durée de la dernière session
+  const lastSessionDuration = task.sessions && task.sessions.length > 0
+    ? task.sessions[task.sessions.length - 1].duration
+    : 0;
+
+
   const [newSubtaskText, setNewSubtaskText] = useState("");
   const [expanded, setExpanded] = useState(false); // État pour gérer l'expansion des sous-tâches
 
@@ -68,6 +81,7 @@ const TaskItem = ({
     }
   };
 
+
   // Validation de la sous-tâche avec "Entrée"
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -81,6 +95,8 @@ const TaskItem = ({
       setExpanded(true);
     }
   }, [task.subtasks.length]);
+
+
 
   return (
     <li className="task-item">
@@ -104,7 +120,7 @@ const TaskItem = ({
           <strong>Total sessions :</strong> {task.totalTime || 0} minutes
         </p>
         <p>
-          <strong>Dernière session :</strong> {task.currentSessionTime || 0} minutes
+          <strong>Dernière session :</strong> {lastSessionDuration} minutes
         </p>
 
         {/* Barre de progression */}

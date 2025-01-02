@@ -1,3 +1,14 @@
+.pomodoro-timer {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+.timer-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4caf50;
+}
+
 .timer-container {
   display: flex;
   flex-direction: column;
@@ -63,13 +74,18 @@
   color: white;
 }
 
-.timer-buttons .reset-button {
+.timer-buttons .stop-button {
   background-color: #f44336;
   color: white;
 }
 
+.timer-buttons .reset-button {
+  background-color: #607d8b;
+  color: white;
+}
+
 /* Styles pour le mode sombre */
-body.dark .timer-container {
+body.dark .pomodoro-timer {
   background-color: #2d3748;
   color: #f9f9f9;
   border-color: #4a5568;
@@ -77,28 +93,6 @@ body.dark .timer-container {
 
 body.dark .timer-display {
   color: #f9f9f9;
-}
-
-body.dark .progress-bar-container {
-  width: 100%;
-  background-color: #ddd;
-  border-radius: 5px;
-  overflow: hidden;
-  display: flex;
-}
-
-.progress-bar-segment {
-  flex: 1;
-  height: 20px;
-  transition: background-color 0.3s ease;
-}
-
-.progress-bar-segment.active {
-  background-color: #4caf50;
-}
-
-.progress-bar-segment.inactive {
-  background-color: #ddd;
 }
 
 body.dark .progress-bar-container {
@@ -117,6 +111,10 @@ body.dark .timer-buttons .pause-button {
   background-color: #dd6b20;
 }
 
-body.dark .timer-buttons .reset-button {
+body.dark .timer-buttons .stop-button {
   background-color: #e53e3e;
+}
+
+body.dark .timer-buttons .reset-button {
+  background-color: #718096;
 }

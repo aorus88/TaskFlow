@@ -25,6 +25,13 @@ const taskReducer = (state, action) => {
       };
     }
 
+        // Ajouter un nouveau cas pour SET_SELECTED_TASK_ID (pour selection tâche minuteur pomodoro)
+        case "SET_SELECTED_TASK_ID":
+          return {
+            ...state,
+            selectedTaskId: action.payload,
+          };
+
 
 //    // 1a) NOUVELLE ACTION : SET_TASKS pour les consommations / FUSION-TOOL
     case "SET_CONSUMPTION_ENTRIES":
@@ -128,18 +135,18 @@ const taskReducer = (state, action) => {
     // ────────────────────────────────────────────────────
     case "UPDATE_TASK_TIME":
       return {
-      ...state,
-      tasks: state.tasks.map((task) =>
-        task.id === action.payload.taskId
-          ? {
-              ...task,
-              totalTime: action.payload.updatedTask.totalTime,
-              currentSessionTime: action.payload.updatedTask.currentSessionTime,
-              sessions: action.payload.updatedTask.sessions, // Mettre à jour les sessions
-            }
-          : task
-      ),
-    };
+        ...state,
+        tasks: state.tasks.map((task) =>
+          task.id === action.payload.taskId
+            ? {
+                ...task,
+                totalTime: action.payload.updatedTask.totalTime,
+                currentSessionTime: action.payload.updatedTask.currentSessionTime,
+                sessions: action.payload.updatedTask.sessions, // Mettre à jour les sessions
+              }
+            : task
+        ),
+      };
 
     // ────────────────────────────────────────────────────
     // 8) MODIFICATION D'UNE TÂCHE (EDIT)
