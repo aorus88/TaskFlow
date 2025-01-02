@@ -173,37 +173,7 @@ app.post('/tasks/:id/sessions', async (req, res) => {
       console.log('Requête reçue pour ajouter une session :', { id, duration, date, taskName }); // Ajoutez ce log
   
       const task = await Task.findById(id);
-      if (!task) {app.post('/tasks/:id/sessions', async (req, res) => {
-        const { id } = req.params;
-        const { duration, date, taskName } = req.body;
-      
-        try {
-          // Vérifiez que la tâche existe
-          const task = await Task.findById(id);
-          if (!task) {
-            return res.status(404).json({ error: 'Task not found' });
-          }
-      
-          // Ajouter une nouvelle session
-          const newSession = { duration, date, taskName };
-          if (!task.sessions) {
-            task.sessions = []; // Initialiser les sessions si elles n'existent pas
-          }
-          task.sessions.push(newSession);
-      
-          // Recalculer le totalTime
-          task.totalTime = task.sessions.reduce((sum, session) => sum + session.duration, 0);
-      
-          // Sauvegarder la tâche mise à jour
-          await task.save();
-      
-          res.status(200).json(task); // Retourner la tâche mise à jour
-        } catch (error) {
-          console.error('Erreur lors de l’ajout de la session :', error);
-          res.status(500).json({ error: 'Internal Server Error' });
-        }
-      });
-      
+      if (!task) {
         console.error('Tâche non trouvée :', id); // Ajoutez ce log
         return res.status(404).send({ error: 'Task not found' });
       }
@@ -223,7 +193,6 @@ app.post('/tasks/:id/sessions', async (req, res) => {
       res.status(500).send({ error: 'Internal Server Error' });
     }
   });
-  
 
 // Routes pour les entrées de consommation de cigarettes
 // a) Récupérer toutes les entrées
