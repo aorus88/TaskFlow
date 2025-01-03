@@ -11,6 +11,7 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
   const [totalTime, setTotalTime] = useState(task.totalTime || 0);
   const [currentSessionTime, setCurrentSessionTime] = useState(task.currentSessionTime || 0);
   const [newSubtask, setNewSubtask] = useState("");
+  const [showSessions, setShowSessions] = useState(false);
 
   // Fonction pour mettre à jour la tâche
   const handleUpdateTask = () => {
@@ -104,28 +105,29 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
               placeholder="ex: Travail, Personnel"
             />
           </label>
+
           <label>
-            Total sessions (minutes) :
-            <input
-              type="number"
-              value={totalTime}
-              onChange={(e) => setTotalTime(e.target.value)}
-              min="0"
-            />
-          </label>
+  Total sessions (minutes) :
+  <div className="readonly-value">
+    {totalTime}
+  </div>
+
+</label>
           <label>
             Dernière session (minutes) :
-            <input
-              type="number"
-              value={currentSessionTime}
-              onChange={(e) => setCurrentSessionTime(e.target.value)}
-              min="0"
-            />
-          </label>
+            <div className="readonly-value">
+              {currentSessionTime}
+            </div>
+            
+            </label>
+
+
         </form>
         <div className="modal-buttons">
           <button onClick={handleUpdateTask}>Sauvegarder</button>
           <button onClick={onClose}>Annuler</button>
+
+          
         </div>
 
         <div className="modal-subtasks">

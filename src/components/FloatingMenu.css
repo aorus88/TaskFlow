@@ -107,3 +107,12 @@
     font-weight: bold;
   }
   
+  /* Styles pour "Total sessions" en lecture seule */
+  .readonly-value {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    padding: 6px 10px;
+    display: inline-block;
+    color: #333;
+    border: 1px solid #ccc;
+  }

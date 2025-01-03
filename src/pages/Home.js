@@ -3,7 +3,6 @@ import TaskForm from "../components/TaskForm";
 import TaskFilters from "../components/TaskFilters";
 import TaskList from "../components/TaskList";
 import EditTaskModal from "../components/EditTaskModal";
-import PriorityPieChart from "../components/PriorityPieChart";
 import WeatherWidget from "../components/WeatherWidget";
 import Clock from "../components/Clock";
 import Statistics from "../components/Statistics"; // Importer le composant Statistics
@@ -67,58 +66,46 @@ const Home = ({
   };
 
   return (
-    <div className="home-page">
-      <div className="header">
-        <h3>TaskFlow - V1.2.2</h3>
-        <Clock />
-      </div>
+    <div className="home-container">
+    {/* Section supérieure : Horloge + Météo */}
+    <header className="header-section">
+    <h3>TaskFlow - V1.2.2</h3>
+      <Clock />
+      <WeatherWidget />
+    </header>
 
-      <div className="main-content">
-        {/* Widget Météo */}
-        <div className="widget-container">
-          <WeatherWidget />
-        </div>
+   {/* Section centrale : Statistiques + Pomodoro */}
+   <section className="stats-pomodoro-section">
+      <Statistics tasks={tasks} archivedTasks={archivedTasks} />
+      <PomodoroTimer
+        tasks={tasks}
+        updateTaskTime={updateTaskTime}
+        fetchTasks={fetchTasks}
+        setSelectedTaskId={setSelectedTaskId}
+      />
+    </section>
 
-        <div className="widget-container">
-          <PriorityPieChart tasks={tasks} />
-        </div>
+  {/* Section des tâches : Filtres, Formulaire, Liste */}
+  <section className="tasks-section">
+      <TaskFilters filter={filter} setFilter={setFilter} />
+      <TaskForm onAddTask={handleAddTask} />
+      <TaskList
+        tasks={tasks.filter((task) => task.archived === 'open')} // Filtrer les tâches actives
+        filter={filter} // Transmission de la prop filter pour le tri
+        onEditTask={(task) => {
+          setSelectedTask(task);
+          setIsEditing(true);
+        }}
+        onSaveTask={onSaveTask}
+        onDeleteTask={onDeleteTask}
+        onArchiveTask={onArchiveTask}
+        onAddSubtask={onAddSubtask}
+        onDeleteSubtask={onDeleteSubtask}
+        onToggleSubtaskStatus={onToggleSubtaskStatus}
+        onUpdateTask={onSaveTask} 
+      />
+    </section>
 
-        {/* Statistiques des tâches */}
-        <div className="widget-container">
-          <Statistics tasks={tasks} archivedTasks={archivedTasks} />
-        </div>
-      </div>
-
-      {/* Formulaire pour ajouter une tâche */}
-      <div className="task-form">
-        <TaskForm onAddTask={handleAddTask} />
-      </div>
-
-      {/* Filtres pour les tâches */}
-      <div className="task-filters">
-        <TaskFilters filter={filter} setFilter={setFilter} />
-      </div>
-
-      {/* Minuteur Pomodoro */}
-      <div className="pomodoro-timer">
-        <PomodoroTimer tasks={tasks} updateTaskTime={handleUpdateTask} reloadTasks={fetchTasks} /> {/* Ajoutez reloadTasks ici */}
-      </div>
-
-      {/* Liste des tâches */}
-      <div className="task-list">
-        <TaskList
-          tasks={tasks.filter((task) => task.archived === 'open')} // Filtrer les tâches actives
-          filter={filter} // Transmission de la prop filter pour le tri
-          onEditTask={onEditTask}
-          onSaveTask={onSaveTask}
-          onDeleteTask={onDeleteTask}
-          onArchiveTask={onArchiveTask}
-          onAddSubtask={onAddSubtask}
-          onDeleteSubtask={onDeleteSubtask}
-          onToggleSubtaskStatus={onToggleSubtaskStatus} // Ajoutez cette ligne
-          onUpdateTask={onSaveTask} // Ajoutez cette ligne
-        />
-      </div>
 
       {/* Modale pour éditer une tâche */}
       {isEditing && selectedTask && (

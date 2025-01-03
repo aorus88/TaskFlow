@@ -74,10 +74,18 @@
 
 .subtask-item {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 6px 8px;
-  background: #f9f9f9;
-  border-radius: 4px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  padding: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.subtask-item:hover {
+  background-color: #f1f1f1;
 }
 
 /* Styles pour le mode sombre */
@@ -91,8 +99,13 @@ body.dark .task-item strong {
 }
 
 body.dark .subtask-item {
-  background: #4a5568;
+  background: #2d3748;
+  border-color: #4a5568;
   color: #f9f9f9;
+}
+
+body.dark .subtask-item:hover {
+  background-color: #3b4452;
 }
 
 body.dark .subtasks-section h4 {

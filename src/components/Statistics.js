@@ -1,47 +1,57 @@
 import React, { useContext } from "react";
-import "./Statistics.css"; // Importer le fichier CSS
-import { TimerContext } from "../context/TimerContext"; // Importer le contexte du minuteur
+import "./Statistics.css";
+import { TimerContext } from "../context/TimerContext";
 
 const Statistics = ({ tasks, archivedTasks }) => {
-  console.log("Statistics.js - Tâches reçues :", tasks);
-  console.log("Statistics.js - Tâches archivées :", archivedTasks);
+  const { timeLeft } = useContext(TimerContext);
 
-  const { timeLeft } = useContext(TimerContext); // Utiliser le contexte du minuteur
+  // Tâches ouvertes (status !== 'closed')
+  const openTasks = tasks.filter((task) => task.status !== "closed");
 
-  const allTasks = [...tasks, ...archivedTasks]; // Combine tasks et archivedTasks
+  // Tâches terminées aujourd'hui (archivedAt === date du jour)
+  const today = new Date().toISOString().split("T")[0];
+  const completedToday = archivedTasks.filter((task) => {
+    return task.archivedAt && task.archivedAt.startsWith(today);
+  });
 
-  // Tâches ouvertes (statut différent de "closed")
-  const openTasks = tasks.filter((task) => task.status !== "closed").length;
+  // Tâches prio haute ouvertes
+  const highPriorityOpen = tasks.filter(
+    (task) => task.priority === "high" && task.status !== "closed"
+  );
 
-  // Calcul des priorités
-  const lowPriorityTasks = tasks.filter((task) => task.priority === "low").length;
-  const mediumPriorityTasks = tasks.filter((task) => task.priority === "medium").length;
-  const highPriorityTasks = tasks.filter((task) => task.priority === "high").length;
-
-  // Calcul des tâches terminées aujourd'hui
-  const completedToday = tasks.filter((task) => {
-    const taskDate = new Date(task.archivedAt);
-    const today = new Date();
-    return taskDate.toDateString() === today.toDateString();
-  }).length;
-
-  // Fonction pour formater le temps en minutes et secondes
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  // Format du temps
+  const formatTime = (secs) => {
+    const min = Math.floor(secs / 60);
+    const s = secs % 60;
+    return `${min.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
   };
 
   return (
     <div className="statistics-container">
-      <div className="statistics-content">
-        <h3>Statistiques des Tâches</h3>
-        <p>Tâches ouvertes : {openTasks}</p>
-        <p>Tâches terminées aujourd'hui : {completedToday}</p>
+      <div className="statistics-header">
+        <h2>Statistiques</h2>
       </div>
-      <div className="pomodoro-timer-display">
-        <h3>Durée Pomodoro restant</h3>
-        <p className="timer-display">{formatTime(timeLeft)}</p>
+
+      <div className="statistics-grid">
+        <div className="stat-card">
+          <h3>Tâches Ouvertes</h3>
+          <p>{openTasks.length}</p>
+        </div>
+
+        <div className="stat-card">
+          <h3>Tâches Terminées Aujourd'hui</h3>
+          <p>{completedToday.length}</p>
+        </div>
+
+        <div className="stat-card">
+          <h3>Tâches Priorité Haute (Ouvertes)</h3>
+          <p>{highPriorityOpen.length}</p>
+        </div>
+
+        <div className="stat-card">
+          <h3>Durée Pomodoro Restant</h3>
+          <p className="timer-display">{formatTime(timeLeft)}</p>
+        </div>
       </div>
     </div>
   );
