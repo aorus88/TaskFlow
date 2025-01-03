@@ -101,7 +101,7 @@ const Home = ({
 
       {/* Minuteur Pomodoro */}
       <div className="pomodoro-timer">
-        <PomodoroTimer tasks={tasks} updateTaskTime={handleUpdateTask} />
+        <PomodoroTimer tasks={tasks} updateTaskTime={handleUpdateTask} reloadTasks={fetchTasks} /> {/* Ajoutez reloadTasks ici */}
       </div>
 
       {/* Liste des tâches */}

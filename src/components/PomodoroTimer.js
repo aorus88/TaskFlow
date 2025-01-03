@@ -2,9 +2,11 @@ import React, { useEffect, useContext, useState } from "react";
 import "./PomodoroTimer.css"; // Assurez-vous que le fichier CSS est bien lié.
 import { TimerContext } from "../context/TimerContext"; // Importer le contexte
 
-const PomodoroTimer = ({ tasks, updateTaskTime }) => {
+const PomodoroTimer = ({ tasks, updateTaskTime, reloadTasks }) => { // Ajoutez reloadTasks ici
   const { timeLeft, setTimeLeft, isRunning, setIsRunning, customDuration, setCustomDuration, selectedTaskId, setSelectedTaskId, sessionTime, setSessionTime } = useContext(TimerContext);
   const [isPaused, setIsPaused] = useState(false);
+  const [sessionCount, setSessionCount] = useState(0); // Compteur de sessions
+  const [currentTaskIndex, setCurrentTaskIndex] = useState(null); // Index de la tâche actuelle
 
   useEffect(() => {
     console.log("Tâches disponibles :", tasks); // Vérifie si les tâches sont chargées
@@ -16,7 +18,7 @@ const PomodoroTimer = ({ tasks, updateTaskTime }) => {
             setSessionTime((prevSessionTime) => prevSessionTime + 1);
             return prevTime - 1;
           } else {
-            handleSessionEnd();
+            handleSessionEnd(prevTime);
             return customDuration * 60; // Redémarrer le décompte
           }
         });
@@ -26,29 +28,54 @@ const PomodoroTimer = ({ tasks, updateTaskTime }) => {
   }, [isRunning, isPaused, setTimeLeft, setSessionTime, customDuration]);
 
   useEffect(() => {
-    if (!selectedTaskId && tasks.length > 0) {
-      setSelectedTaskId(tasks[0]._id); // Réattribuer automatiquement si aucune sélection
-      console.log("Tâche par défaut réattribuée :", tasks[0]._id);
+    if (tasks && tasks.length > 0) {
+      if (currentTaskIndex === null || !tasks[currentTaskIndex]) {
+        setCurrentTaskIndex(0); // Initialiser avec la première tâche valide
+        setSelectedTaskId(tasks[0]._id); // Réattribuer automatiquement si aucune sélection
+        console.log("Tâche par défaut réattribuée :", tasks[0]._id);
+      }
+    } else {
+      setCurrentTaskIndex(null); // Réinitialiser si aucune tâche
     }
-  }, [tasks, selectedTaskId]);
+  }, [tasks, currentTaskIndex, setSelectedTaskId]);
 
   useEffect(() => {
     console.log("Valeur de selectedTaskId :", selectedTaskId);
-  }, [selectedTaskId]);
+    if (selectedTaskId) {
+      const selectedTask = tasks.find((task) => task._id === selectedTaskId);
+      if (selectedTask) {
+        setSessionCount(selectedTask.sessions.length); // Mettre à jour le compteur de sessions
+      }
+    }
+  }, [selectedTaskId, tasks]);
 
-  const handleSessionEnd = async () => {
-    if (!selectedTaskId) return;
-  
-    const sessionTimeInMinutes = Math.floor(sessionTime / 60); // Convertir en minutes
+  const handleSessionEnd = async (prevTime) => {
+    if (currentTaskIndex === null || !tasks[currentTaskIndex]) {
+      console.error("Aucune tâche sélectionnée ou l'index est invalide.");
+      return;
+    }
+
+    const selectedTask = tasks[currentTaskIndex];
+
+    if (!selectedTask || !selectedTask._id) {
+      console.error("ID de la tâche sélectionnée introuvable.");
+      return;
+    }
+
+    const sessionTimeInMinutes = Math.floor((customDuration * 60 - prevTime) / 60); // Convertir en minutes
     const session = {
       duration: sessionTimeInMinutes,
       date: new Date(),
-      taskName: tasks.find((task) => task._id === selectedTaskId)?.name,
+      archivedAt: new Date(), // Ajouter la date de fin de session
+      taskName: selectedTask.name,
     };
-  
+
+    console.log("ID de la tâche sélectionnée :", selectedTask._id); // Log ID de la tâche sélectionnée
+    console.log("Session à envoyer :", session); // Log des données de la session
+
     try {
       const response = await fetch(
-        `http://192.168.50.241:4000/tasks/${selectedTaskId}/sessions`,
+        `http://192.168.50.241:4000/tasks/${selectedTask._id}/sessions`,
         {
           method: "POST",
           headers: {
@@ -57,32 +84,39 @@ const PomodoroTimer = ({ tasks, updateTaskTime }) => {
           body: JSON.stringify(session),
         }
       );
-  
+
       if (!response.ok) {
         throw new Error("Erreur lors de l'ajout de la session au backend.");
       }
-  
+
       const updatedTask = await response.json();
-  
+
       // Mettre à jour localement l'état des tâches
       updateTaskTime(updatedTask._id, updatedTask);
       console.log("Session ajoutée :", updatedTask);
+
+      // Mettre à jour le compteur de sessions
+      setSessionCount(updatedTask.sessions.length);
+
+      // Recharger les tâches pour mettre à jour les données
+      reloadTasks();
     } catch (error) {
       console.error("Erreur :", error);
     }
-  
+
     setSessionTime(0); // Réinitialiser le temps de session
+    setTimeLeft(customDuration * 60); // Réinitialiser le minuteur
   };
 
   const startTimer = () => {
-    if (!selectedTaskId) {
+    if (currentTaskIndex === null || !tasks[currentTaskIndex]) {
       alert("Veuillez sélectionner une tâche avant de démarrer le minuteur !");
       console.error("Aucune tâche sélectionnée !");
       return;
     }
     setIsRunning(true);
     setIsPaused(false);
-    console.log("Minuteur démarré pour la tâche :", selectedTaskId);
+    console.log("Minuteur démarré pour la tâche :", tasks[currentTaskIndex]._id);
   };
 
   const pauseResumeTimer = () => {
@@ -96,14 +130,14 @@ const PomodoroTimer = ({ tasks, updateTaskTime }) => {
   };
 
   const stopAndAssignTime = async () => {
-    if (!selectedTaskId) {
+    if (currentTaskIndex === null || !tasks[currentTaskIndex]) {
       alert("Veuillez sélectionner une tâche avant d'arrêter !");
       console.error("Aucune tâche sélectionnée !");
       return;
     }
 
     setIsRunning(false);
-    await handleSessionEnd();
+    await handleSessionEnd(timeLeft);
     setTimeLeft(customDuration * 60);
   };
 
@@ -138,8 +172,10 @@ const PomodoroTimer = ({ tasks, updateTaskTime }) => {
         <span className="timer-display">{formatTime(timeLeft)}</span>
       </div>
       <select
-        value={selectedTaskId || ""}
+        value={currentTaskIndex !== null ? tasks[currentTaskIndex]._id : ""}
         onChange={(e) => {
+          const index = tasks.findIndex(task => task._id === e.target.value);
+          setCurrentTaskIndex(index);
           setSelectedTaskId(e.target.value);
           console.log("Tâche sélectionnée :", e.target.value); // Log ID sélectionné
         }}
@@ -148,7 +184,7 @@ const PomodoroTimer = ({ tasks, updateTaskTime }) => {
         <option value="" disabled>
           Sélectionnez une tâche
         </option>
-        {tasks.map((task) => (
+        {tasks.map((task, index) => (
           <option key={task._id} value={task._id}>
             {task.name}
           </option>
@@ -166,7 +202,7 @@ const PomodoroTimer = ({ tasks, updateTaskTime }) => {
         <button 
           onClick={startTimer} 
           className="start-button"
-          disabled={!selectedTaskId}
+          disabled={currentTaskIndex === null}
         > 
           Démarrer
         </button>
@@ -188,6 +224,9 @@ const PomodoroTimer = ({ tasks, updateTaskTime }) => {
         >
           Réinitialiser
         </button>
+      </div>
+      <div className="session-info">
+        <p>Sessions complétées : {sessionCount}</p>
       </div>
     </div>
   );
