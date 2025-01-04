@@ -1,28 +1,21 @@
 import React, { useState, useEffect } from "react";
 import TaskItem from "../components/TaskItem";
-import "./Archives.css"; // Importer les styles spécifiques
+import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer"; // Importer le composant GlobalPomodoroTimer
+import "./Archives.css";
 
 const Archives = ({ 
   archivedTasks, 
   handleDeleteTask,
-  onFetchArchivedTasks // <-- Nouvelle prop pour charger les archives depuis l'API 
+  onFetchArchivedTasks 
 }) => {
   const [feedbackMessage, setFeedbackMessage] = useState("");
-  const [sortOrder, setSortOrder] = useState("desc"); // État pour trier les tâches
+  const [sortOrder, setSortOrder] = useState("desc");
 
-  // Charger les tâches archivées quand on arrive sur la page
   useEffect(() => {
     if (onFetchArchivedTasks) {
-      onFetchArchivedTasks(true); // Passez true pour charger les tâches archivées
+      onFetchArchivedTasks(true);
     }
-  }, []); // Ajoutez un tableau de dépendances vide pour appeler une seule fois
-
-  // Suppression d'une tâche archivée
-  //const handleDeleteArchivedTask = (taskId) => {
-   // handleDeleteTask(taskId, true); // true = tâche archivée
-    //setFeedbackMessage("Tâche archivée supprimée avec succès !");
-   // setTimeout(() => setFeedbackMessage(""), 3000);
-  //};
+  }, []);
 
   console.log("Archives.js - Tâches archivées reçues :", archivedTasks);
 
@@ -42,7 +35,6 @@ const Archives = ({
     }).format(parsedDate);
   };
 
-  // Tri des tâches archivées
   const sortedTasks = [...archivedTasks].sort((a, b) => {
     const dateA = new Date(a.archivedAt);
     const dateB = new Date(b.archivedAt);
@@ -53,8 +45,9 @@ const Archives = ({
     <div className="archives-page">
       <h1>Tâches Archivées</h1>
 
-      {/* Affichage du message de feedback */}
       {feedbackMessage && <div className="feedback-message">{feedbackMessage}</div>}
+
+      <GlobalPomodoroTimer isPreview={true} /> {/* Afficher un aperçu du minuteur */}
 
       <div className="archived-tasks">
         <div className="archived-tasks-header">
