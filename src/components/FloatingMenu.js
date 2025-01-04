@@ -39,7 +39,11 @@ const FloatingMenu = () => {
               </Link>
             </li>
 
-
+            <li>
+              <Link to="/sessions" className="menu-link" onClick={handleLinkClick}>
+                📅 Sessions
+              </Link>
+            </li>
 
           </ul>
         </>

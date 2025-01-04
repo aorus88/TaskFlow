@@ -26,6 +26,8 @@ const sessionSchema = new mongoose.Schema({
     taskName: String,
   });
 
+const Session = mongoose.model('Session', sessionSchema);
+
 // 4) Définition du Schéma / Modèle Mongoose
 const subtaskSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -68,13 +70,13 @@ app.get('/tasks', async (req, res) => {
     const { archived } = req.query;
     const filter = archived === 'true' ? { archived: 'closed' } : { archived: 'open' };
     try {
-        const tasks = await Task.find(filter);
-        console.log("Backend - Tâches récupérées :", tasks); // Ajoutez ce log
-        res.json(tasks);
+      const tasks = await Task.find(filter);
+      console.log("Backend - Tâches récupérées :", tasks); // Ajoutez ce log
+      res.json(tasks);
     } catch (err) {
-        res.status(500).json({ error: 'Erreur lors de la récupération des tâches.' });
+      res.status(500).json({ error: 'Erreur lors de la récupération des tâches.' });
     }
-});
+  });
 
 // b) Ajouter une nouvelle tâche
 app.post('/tasks', async (req, res) => {
@@ -191,6 +193,29 @@ app.post('/tasks/:id/sessions', async (req, res) => {
     } catch (error) {
       console.error('Erreur lors de l\'ajout de la session :', error); // Ajoutez ce log pour plus de détails
       res.status(500).send({ error: 'Internal Server Error' });
+    }
+  });
+
+// Route pour récupérer les sessions d'une tâche spécifique
+app.get('/tasks/:id/sessions', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const task = await Task.findById(id);
+    if (!task) {
+      return res.status(404).json({ error: 'Tâche non trouvée.' });
+    }
+    res.json(task.sessions);
+  } catch (err) {
+    res.status(500).json({ error: 'Erreur lors de la récupération des sessions.' });
+  }
+});
+
+app.get('/sessions', async (req, res) => {
+    try {
+      const sessions = await Session.find();
+      res.json(sessions);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
     }
   });
 

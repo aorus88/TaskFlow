@@ -1,3 +1,4 @@
+// filepath: /src/context/TimerContext.js
 import React, { createContext, useState, useEffect } from 'react';
 
 export const TimerContext = createContext();

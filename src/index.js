@@ -1,9 +1,7 @@
-//"Point d'entrée de l'application, ce fichier monte le composant App dans le DOM. 
-// Il initialise également le mode strict de React pour aider à 
-// détecter les problèmes potentiels dans l'application."
-
+// filepath: /src/index.js
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter as Router } from "react-router-dom";
 import "./index.css"; // Import des styles globaux
 import App from "./App";
 
@@ -18,6 +16,8 @@ const root = ReactDOM.createRoot(rootElement);
 
 root.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </React.StrictMode>
 );

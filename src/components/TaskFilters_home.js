@@ -1,16 +1,12 @@
 import React from "react";
 import "./Tasks.css"; // Centralisation des styles dans un fichier commun
 
-const TaskFilters = ({ filter = {}, setFilter = () => {} }) => {
+const TaskFilters_home = ({ filter = {}, setFilter = () => {} }) => {
   // Gestion des changements de filtres
   const handleChange = (key, value) => {
     setFilter({ ...filter, [key]: value });
   };
 
-
-
-
-  
   return (
     <div className="task-filters">
       <h3>Filtres</h3>
@@ -43,18 +39,6 @@ const TaskFilters = ({ filter = {}, setFilter = () => {} }) => {
           </label>
         </div>
 
-  
-
-        {/* Application logique pour le statut */}
-        {filter.status === "open" && (
-          // Filtre les tâches avec le statut 'open'
-          <p>Affiche uniquement les tâches non archivées.</p>
-        )}
-        {filter.status === "closed" && (
-          // Filtre les tâches avec le statut 'closed'
-          <p>Affiche uniquement les tâches archivées.</p>
-        )}
-
         {/* Filtre du plus récent ou plus ancien (ordre) */}
         <div className="filter-group">
           <label>
@@ -73,4 +57,4 @@ const TaskFilters = ({ filter = {}, setFilter = () => {} }) => {
   );
 };
 
-export default TaskFilters;
+export default TaskFilters_home;

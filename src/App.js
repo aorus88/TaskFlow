@@ -1,9 +1,11 @@
 import React, { useReducer, useEffect, useState, useCallback } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Archives from "./pages/Archives";
 import FusionTool from "./pages/FusionTool"; // Importer le nouveau composant
+import Sessions from "./pages/Sessions"; // Importer le nouveau composant
 import FloatingMenu from "./components/FloatingMenu";
+import GlobalPomodoroTimer from "./components/GlobalPomodoroTimer"; // Importer le composant GlobalPomodoroTimer
 import "./index.css";
 import "./timer.css";
 import taskReducer from "./reducers/taskReducer"; // Importer le reducer
@@ -256,58 +258,63 @@ const App = () => {
   // --- Rendu ---
   return (
     <TimerProvider>
-      <Router>
-        <div className={`App ${isDarkMode ? 'dark' : ''}`}>
-          <FloatingMenu addTask={addTask} />
-          <button onClick={toggleDarkMode} className="dark-mode-toggle">
-            {isDarkMode ? 'Mode Clair' : 'Mode Sombre'}
-          </button>
+      <div className={`App ${isDarkMode ? 'dark' : ''}`}>
+        <FloatingMenu addTask={addTask} />
+        <button onClick={toggleDarkMode} className="dark-mode-toggle">
+          {isDarkMode ? 'Mode Clair' : 'Mode Sombre'}
+        </button>
 
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Home
-                  tasks={state.tasks.filter((task) => task.archived === "open")}
-                  archivedTasks={state.tasks.filter((task) => task.archived === "closed")} // Passer les tâches archivées
-                  onAddTask={addTask}
-                  onEditTask={updateTask}
-                  onDeleteTask={deleteTask}
-                  onArchiveTask={archiveTask}
-                  onAddSubtask={addSubtask}
-                  onDeleteSubtask={deleteSubtask}
-                  onToggleSubtaskStatus={toggleSubtaskStatus} // Ajoutez cette ligne
-                  onSaveTask={updateTask}
-                  filter={filter}
-                  setFilter={setFilter}
-                  fetchTasks={fetchTasks} // Passez la fonction fetchTasks
-                  updateTaskTime={updateTaskTime} // Passez la fonction updateTaskTime
-                  setSelectedTaskId={setSelectedTaskId} // Passez la fonction setSelectedTaskId
-                />
-              }
-            />
-            <Route
-              path="/archives"
-              element={
-                <Archives
-                  archivedTasks={state.tasks.filter((task) => task.archived?.trim() === "closed")}
-                  handleDeleteTask={deleteTask}
-                  onFetchArchivedTasks={() => fetchTasks(true)} // Ajoutez cette ligne pour passer la fonction de fetch
-                />
-              }
-            />
-            <Route
-              path="/fusion-tool"
-              element={
-                <FusionTool
-                  entries={state.consumptionEntries}
-                  onAddEntry={addConsumptionEntry}
-                />
-              } // Ajoutez la nouvelle route pour FusionTool
-            />
-          </Routes>
-        </div>
-      </Router>
+        {/* Afficher le GlobalPomodoroTimer en permanence */}
+        <GlobalPomodoroTimer />
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                tasks={state.tasks.filter((task) => task.archived === "open")}
+                archivedTasks={state.tasks.filter((task) => task.archived === "closed")} // Passer les tâches archivées
+                onAddTask={addTask}
+                onEditTask={updateTask}
+                onDeleteTask={deleteTask}
+                onArchiveTask={archiveTask}
+                onAddSubtask={addSubtask}
+                onDeleteSubtask={deleteSubtask}
+                onToggleSubtaskStatus={toggleSubtaskStatus} // Ajoutez cette ligne
+                onSaveTask={updateTask}
+                filter={filter}
+                setFilter={setFilter}
+                fetchTasks={fetchTasks} // Passez la fonction fetchTasks
+                updateTaskTime={updateTaskTime} // Passez la fonction updateTaskTime
+                setSelectedTaskId={setSelectedTaskId} // Passez la fonction setSelectedTaskId
+              />
+            }
+          />
+          <Route
+            path="/archives"
+            element={
+              <Archives
+                archivedTasks={state.tasks.filter((task) => task.archived?.trim() === "closed")}
+                handleDeleteTask={deleteTask}
+                onFetchArchivedTasks={() => fetchTasks(true)} // Ajoutez cette ligne pour passer la fonction de fetch
+              />
+            }
+          />
+          <Route
+            path="/fusion-tool"
+            element={
+              <FusionTool
+                entries={state.consumptionEntries}
+                onAddEntry={addConsumptionEntry}
+              />
+            } // Ajoutez la nouvelle route pour FusionTool
+          />
+          <Route
+            path="/sessions"
+            element={<Sessions />} // Ajoutez la nouvelle route pour Sessions
+          />
+        </Routes>
+      </div>
     </TimerProvider>
   );
 };

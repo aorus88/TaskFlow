@@ -24,7 +24,6 @@ const TaskItem = ({
     ? task.sessions[task.sessions.length - 1].duration
     : 0;
 
-
   const [newSubtaskText, setNewSubtaskText] = useState("");
   const [expanded, setExpanded] = useState(false); // État pour gérer l'expansion des sous-tâches
 
@@ -81,7 +80,6 @@ const TaskItem = ({
     }
   };
 
-
   // Validation de la sous-tâche avec "Entrée"
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -96,8 +94,6 @@ const TaskItem = ({
     }
   }, [task.subtasks.length]);
 
-
-
   return (
     <li className="task-item">
       <div>
@@ -105,8 +101,6 @@ const TaskItem = ({
         <p>Échéance : {formatDate(task.date)}</p>
         <p>
         <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
-        
-        
         </p>
 
         {/* Affichage des catégories */}

@@ -1,31 +1,12 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./PomodoroTimer.css"; // Assurez-vous que le fichier CSS est bien lié.
 import { TimerContext } from "../context/TimerContext"; // Importer le contexte
 
-const PomodoroTimer = ({ tasks, updateTaskTime, reloadTasks }) => { // Ajoutez reloadTasks ici
+const PomodoroTimer = ({ tasks }) => {
   const { timeLeft, setTimeLeft, isRunning, setIsRunning, customDuration, setCustomDuration, selectedTaskId, setSelectedTaskId, sessionTime, setSessionTime } = useContext(TimerContext);
   const [isPaused, setIsPaused] = useState(false);
   const [sessionCount, setSessionCount] = useState(0); // Compteur de sessions
   const [currentTaskIndex, setCurrentTaskIndex] = useState(null); // Index de la tâche actuelle
-
-  useEffect(() => {
-    console.log("Tâches disponibles :", tasks); // Vérifie si les tâches sont chargées
-    let timer;
-    if (isRunning && !isPaused) {
-      timer = setInterval(() => {
-        setTimeLeft((prevTime) => {
-          if (prevTime > 0) {
-            setSessionTime((prevSessionTime) => prevSessionTime + 1);
-            return prevTime - 1;
-          } else {
-            handleSessionEnd(prevTime);
-            return customDuration * 60; // Redémarrer le décompte
-          }
-        });
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [isRunning, isPaused, setTimeLeft, setSessionTime, customDuration]);
 
   useEffect(() => {
     if (tasks && tasks.length > 0) {
@@ -49,65 +30,6 @@ const PomodoroTimer = ({ tasks, updateTaskTime, reloadTasks }) => { // Ajoutez r
     }
   }, [selectedTaskId, tasks]);
 
-  const handleSessionEnd = async (prevTime) => {
-    if (currentTaskIndex === null || !tasks[currentTaskIndex]) {
-      console.error("Aucune tâche sélectionnée ou l'index est invalide.");
-      return;
-    }
-
-    const selectedTask = tasks[currentTaskIndex];
-
-    if (!selectedTask || !selectedTask._id) {
-      console.error("ID de la tâche sélectionnée introuvable.");
-      return;
-    }
-
-    const sessionTimeInMinutes = Math.floor((customDuration * 60 - prevTime) / 60); // Convertir en minutes
-    const session = {
-      duration: sessionTimeInMinutes,
-      date: new Date(),
-      archivedAt: new Date(), // Ajouter la date de fin de session
-      taskName: selectedTask.name,
-    };
-
-    console.log("ID de la tâche sélectionnée :", selectedTask._id); // Log ID de la tâche sélectionnée
-    console.log("Session à envoyer :", session); // Log des données de la session
-
-    try {
-      const response = await fetch(
-        `http://192.168.50.241:4000/tasks/${selectedTask._id}/sessions`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(session),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Erreur lors de l'ajout de la session au backend.");
-      }
-
-      const updatedTask = await response.json();
-
-      // Mettre à jour localement l'état des tâches
-      updateTaskTime(updatedTask._id, updatedTask);
-      console.log("Session ajoutée :", updatedTask);
-
-      // Mettre à jour le compteur de sessions
-      setSessionCount(updatedTask.sessions.length);
-
-      // Recharger les tâches pour mettre à jour les données
-      reloadTasks();
-    } catch (error) {
-      console.error("Erreur :", error);
-    }
-
-    setSessionTime(0); // Réinitialiser le temps de session
-    setTimeLeft(customDuration * 60); // Réinitialiser le minuteur
-  };
-
   const startTimer = () => {
     if (currentTaskIndex === null || !tasks[currentTaskIndex]) {
       alert("Veuillez sélectionner une tâche avant de démarrer le minuteur !");
@@ -129,7 +51,7 @@ const PomodoroTimer = ({ tasks, updateTaskTime, reloadTasks }) => { // Ajoutez r
     setSessionTime(0);
   };
 
-  const stopAndAssignTime = async () => {
+  const stopAndAssignTime = () => {
     if (currentTaskIndex === null || !tasks[currentTaskIndex]) {
       alert("Veuillez sélectionner une tâche avant d'arrêter !");
       console.error("Aucune tâche sélectionnée !");
@@ -137,7 +59,6 @@ const PomodoroTimer = ({ tasks, updateTaskTime, reloadTasks }) => { // Ajoutez r
     }
 
     setIsRunning(false);
-    await handleSessionEnd(timeLeft);
     setTimeLeft(customDuration * 60);
   };
 
