@@ -42,6 +42,32 @@ const Sessions = () => {
     fetchTasksAndSessions();
   }, []);
 
+    // Fonction pour supprimer une session
+    const handleDeleteSession = async (taskId, sessionId) => {
+      if (!window.confirm('Êtes-vous sûr de vouloir supprimer cette session ?')) {
+        return;
+      }
+  
+      try {
+        const response = await fetch(
+          `http://192.168.50.241:4000/tasks/${taskId}/sessions/${sessionId}`,
+          {
+            method: 'DELETE',
+          }
+        );
+  
+        if (!response.ok) {
+          throw new Error('Erreur lors de la suppression de la session');
+        }
+  
+        // Mettre à jour l'état local après la suppression
+        setSessions(sessions.filter(session => session._id !== sessionId));
+      } catch (error) {
+        console.error('Erreur:', error);
+        alert('Erreur lors de la suppression de la session');
+      }
+    };
+
   // Fonction pour filtrer les sessions en fonction des filtres
   const filteredSessions = sessions.filter((session) => {
     if (filter.date && new Date(session.date).toISOString().split('T')[0] !== filter.date) {
@@ -77,6 +103,12 @@ const Sessions = () => {
               <p>Durée : {session.duration} minutes</p>
               <p>Date session : {format(new Date(session.date), "d MMMM yyyy", { locale: fr })}</p>
               <p>Heure session : {format(new Date(session.date), "HH:mm:ss", { locale: fr })}</p>
+              <button 
+                className="delete-button"
+                onClick={() => handleDeleteSession(session.taskId, session._id)}
+              >
+                Supprimer
+              </button>
             </li>
           ))
         ) : (

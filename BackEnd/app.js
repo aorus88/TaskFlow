@@ -219,6 +219,24 @@ app.get('/sessions', async (req, res) => {
     }
   });
 
+  //route pour supprimer les sessions d'une tâche spécifique 
+  app.delete('/tasks/:taskId/sessions/:sessionId', async (req, res) => {
+    const { taskId, sessionId } = req.params;
+    try {
+      const task = await Task.findById(taskId);
+      if (!task) {
+        return res.status(404).json({ error: 'Tâche non trouvée.' });
+      }
+      
+      task.sessions = task.sessions.filter(session => session._id.toString() !== sessionId);
+      await task.save();
+      
+      res.json({ message: 'Session supprimée avec succès.' });
+    } catch (err) {
+      res.status(500).json({ error: 'Erreur lors de la suppression de la session.' });
+    }
+  });
+
 // Routes pour les entrées de consommation de cigarettes
 // a) Récupérer toutes les entrées
 app.get('/consumption-entries', async (req, res) => {

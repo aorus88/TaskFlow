@@ -41,6 +41,20 @@
     font-size: 1rem;
     color: #666;
   }
+
+  .delete-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .delete-button:hover {
+    background-color: #d32f2f;
+  }
   
   /* Styles pour le mode sombre */
   body.dark .sessions-page {
@@ -56,4 +70,12 @@
   body.dark .session-item h3,
   body.dark .session-item p {
     color: #f9f9f9;
+  }
+
+  body.dark .delete-button {
+    background-color: #e53e3e;
+  }
+  
+  body.dark .delete-button:hover {
+    background-color: #c53030;
   }
