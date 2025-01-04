@@ -158,7 +158,7 @@ const PomodoroTimer = ({ tasks, updateTaskTime, reloadTasks }) => { // Ajoutez r
 
   return (
     <div className="pomodoro-timer">
-      <h1 className="timer-header">Minuteur Pomodoro</h1>
+      <h1 className="timer-header">Minuteur Pomodoro 🏔️</h1>
       <div className="timer-container">
         <div className="progress-bar-container">
           {Array.from({ length: segments }).map((_, index) => (

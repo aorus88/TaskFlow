@@ -29,7 +29,7 @@ const Statistics = ({ tasks, archivedTasks }) => {
   return (
     <div className="statistics-container">
       <div className="statistics-header">
-        <h2>Statistiques</h2>
+        <h2>Statistiques 📈</h2>
       </div>
 
       <div className="statistics-grid">
@@ -56,7 +56,7 @@ const Statistics = ({ tasks, archivedTasks }) => {
             {timeLeft > 0 ? "Temps restant" : "Temps écoulé"}
           </p>
 
-          
+
         </div>
       </div>
     </div>

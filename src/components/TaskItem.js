@@ -104,7 +104,9 @@ const TaskItem = ({
         <strong>{task.name}</strong>
         <p>Échéance : {formatDate(task.date)}</p>
         <p>
-                    <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
+        <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
+        
+        
         </p>
 
         {/* Affichage des catégories */}
