@@ -7,13 +7,15 @@
   background-color: #f9f9f9; /* Optionnel : couleur de fond */
   padding: 0px 0; /* Espacement interne */
   box-sizing: border-box; /* Inclure les bordures et marges dans la largeur totale */
+  animation: fadeIn 0.5s ease-in-out;
+  
 }
 
 .clock-time {
   font-family: "Arial", sans-serif; /* Police simple et courante */
-  letter-spacing: 0.8em; /* Espacement subtil */
+  letter-spacing: 0.5em; /* Espacement subtil */
   color: #555; /* Gris légèrement plus foncé pour le contraste */
-  font-size: 2em; /* Taille de police plus grande */
+  font-size: 1em; /* Taille de police plus grande */
   text-align: center; /* Centrer le texte horizontalement */
   margin: 0; /* Supprimer les marges internes */
   padding: 0; /* Supprimer les marges internes */
@@ -30,10 +32,6 @@
   }
 }
 
-.clock-container {
-  animation: fadeIn 0.5s ease-in-out;
-}
-
 /* Styles pour le mode sombre */
 body.dark .clock-container {
   background: #2d3748; /* Fond sombre */
@@ -42,5 +40,5 @@ body.dark .clock-container {
 }
 
 body.dark .clock-time {
-  color: #f9f9f9; /* Texte clair */
+  color: #b6a7a7; /* Texte clair */
 }

@@ -7,13 +7,14 @@
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease, color 0.3s ease;
+  zoom: 0.8 !important;
 }
 
 .timer-header {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #4caf50;
-  margin-bottom: 20px;
+  margin-bottom: 2px;
 }
 
 .timer-container {
@@ -57,6 +58,7 @@
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: 5px;
+  width: 50%;
 }
 
 .duration-input {
@@ -65,6 +67,7 @@
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: 5px;
+  width: 45%;
 }
 
 .timer-buttons {
@@ -161,7 +164,7 @@ body.dark .session-info {
 /* Media Queries pour l'adaptabilité mobile */
 @media (max-width: 768px) {
   .pomodoro-timer {
-    padding: 10px;
+    padding: 60px;
   }
 
   .timer-header {

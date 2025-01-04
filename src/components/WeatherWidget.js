@@ -99,11 +99,13 @@ const WeatherWidget = () => {
 
   return (
     <div className={`weather-widget ${weatherClass}`}>
-      <div className="weather-widget-icon">{weatherIcon}</div>
-      <div className="time-emoji">{getEmojiForTime()}</div>
+      <div className="weather-widget-icon">{weatherIcon} {getEmojiForTime()}  </div>      
       <h3>Météo à {weather.name}</h3>
-      <p>{translatedDescription}</p>
-      <p>Température : {weather.main.temp}°C</p>
+      <p>{translatedDescription}    
+      </p>
+      <p>Température : {weather.main.temp}°C - Ressenti : {weather.main.feels_like}°C - Humidité : {weather.main.humidity}%</p>
+      <p></p>
+
     </div>
   );
 };

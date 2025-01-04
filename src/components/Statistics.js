@@ -51,6 +51,12 @@ const Statistics = ({ tasks, archivedTasks }) => {
         <div className="stat-card">
           <h3>Durée Pomodoro Restant</h3>
           <p className="timer-display">{formatTime(timeLeft)}</p>
+
+          <p className="timer-note">
+            {timeLeft > 0 ? "Temps restant" : "Temps écoulé"}
+          </p>
+
+          
         </div>
       </div>
     </div>

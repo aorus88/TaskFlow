@@ -14,7 +14,8 @@ const Clock = () => {
 
 
   return (
-    <div className="clock-container">
+    <div className="clock-container"
+          >
       
       
       <span className="clock-time">

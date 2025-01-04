@@ -69,11 +69,9 @@ const Home = ({
     <div className="home-container">
     {/* Section supérieure : Horloge + Météo */}
     <header className="header-section">
-    <h3>TaskFlow - V1.2.2</h3>
-      <Clock />
-      <WeatherWidget />
+    <h3>TaskFlow - V1.2.2 - <Clock /><WeatherWidget /></h3>
     </header>
-
+    
    {/* Section centrale : Statistiques + Pomodoro */}
    <section className="stats-pomodoro-section">
       <Statistics tasks={tasks} archivedTasks={archivedTasks} />

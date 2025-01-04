@@ -7,6 +7,10 @@ const TaskFilters = ({ filter = {}, setFilter = () => {} }) => {
     setFilter({ ...filter, [key]: value });
   };
 
+
+
+
+  
   return (
     <div className="task-filters">
       <h3>Filtres</h3>
