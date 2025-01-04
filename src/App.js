@@ -14,6 +14,7 @@ import { TimerProvider } from "./context/TimerContext";
 const initialState = {
   tasks: [],
   consumptionEntries: [],
+  selectedTaskId: null
 };
 
 const App = () => {
@@ -41,7 +42,6 @@ const App = () => {
       dispatch({ type: "SET_TASKS", payload: data });
     } catch (error) {
       console.error("Erreur lors du chargement des tâches :", error);
-      dispatch({ type: "SET_TASKS", payload: [] });
     }
   }, []);
 
@@ -212,7 +212,15 @@ const App = () => {
         <button onClick={toggleDarkMode} className="dark-mode-toggle">
           {isDarkMode ? 'Mode Clair' : 'Mode Sombre'}
         </button>
-        <GlobalPomodoroTimer />
+        <GlobalPomodoroTimer
+       tasks={state.tasks}
+       updateTaskTime={updateTaskTime}
+       fetchTasks={fetchTasks} // Passer fetchTasks comme prop
+       setSelectedTaskId={(taskId) => dispatch({ 
+        type: "SET_SELECTED_TASK_ID", 
+        payload: taskId 
+      })}
+     />
         <Routes>
           <Route
             path="/"

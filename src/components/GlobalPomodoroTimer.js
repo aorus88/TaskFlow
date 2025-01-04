@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState, useRef, useCallback } from "rea
 import { TimerContext } from "../context/TimerContext";
 import "./GlobalPomodoroTimer.css";
 
-const GlobalPomodoroTimer = ({ tasks = [], isPreview = false }) => {
+const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
   const {
     timeLeft,
     setTimeLeft,
@@ -35,7 +35,17 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false }) => {
       setCurrentTaskIndex(index);
       console.log("Dernière tâche restaurée:", lastSelectedTaskId);
     }
-  }, [tasks]);
+  }, [tasks, setSelectedTaskId]);
+
+  // Mettre à jour le compte des sessions
+  useEffect(() => {
+    if (selectedTaskId && tasks.length > 0) {
+      const selectedTask = tasks.find(task => task._id === selectedTaskId);
+      if (selectedTask && selectedTask.sessions) {
+        setSessionCount(selectedTask.sessions.length);
+      }
+    }
+  }, [selectedTaskId, tasks]);
 
   // Gérer le timer avec durée précise
   useEffect(() => {
@@ -51,7 +61,6 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false }) => {
             return customDuration * 60 - elapsedTime;
           } else {
             if (!sessionEnded && !isSubmitting.current) {
-              console.log(`Session terminée. Durée totale: ${elapsedTime} secondes`);
               handleSessionEnd(elapsedTime);
               setSessionEnded(true);
             }
@@ -66,19 +75,8 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false }) => {
         clearInterval(timerRef.current);
       }
     };
-  }, [isRunning, isPaused, customDuration, sessionEnded]);
+  }, [isRunning, isPaused, customDuration, sessionEnded, sessionTime, setSessionTime]);
 
-  // Mettre à jour le compte des sessions
-  useEffect(() => {
-    if (selectedTaskId && tasks.length > 0) {
-      const selectedTask = tasks.find((task) => task._id === selectedTaskId);
-      if (selectedTask) {
-        setSessionCount(selectedTask.sessions.length);
-      }
-    }
-  }, [selectedTaskId, tasks]);
-
-  // Gérer la fin de session
   const handleSessionEnd = async (totalSeconds = 0) => {
     if (!selectedTaskId || isSubmitting.current) {
       return;
@@ -115,13 +113,17 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false }) => {
       setSessionTime(0);
       setSessionEnded(false);
 
+      // Actualiser les données après l'ajout de la session
+      if (fetchTasks) {
+        await fetchTasks();
+      }
+
       // Redémarrer uniquement si ce n'est pas un arrêt manuel
       if (!isManualStop) {
         console.log("Redémarrage automatique du timer");
-        setIsRunning(true);
+        setTimeout(() => setIsRunning(true), 1000);
       } else {
         console.log("Arrêt manuel - pas de redémarrage");
-        setIsRunning(false);
       }
 
     } catch (error) {
@@ -141,7 +143,6 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false }) => {
     setIsRunning(true);
     setIsPaused(false);
     setSessionEnded(false);
-    setIsManualStop(false);
   }, [selectedTaskId, setIsRunning]);
 
   const pauseResumeTimer = useCallback(() => {

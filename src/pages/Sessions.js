@@ -101,8 +101,8 @@ const Sessions = () => {
             <li key={session._id} className="session-item">
               <h3>{session.taskName}</h3>
               <p>Durée : {session.duration} minutes</p>
-              <p>Date session : {format(new Date(session.date), "d MMMM yyyy", { locale: fr })}</p>
-              <p>Heure session : {format(new Date(session.date), "HH:mm:ss", { locale: fr })}</p>
+              <p>Date de session : {format(new Date(session.date), "d MMMM yyyy", { locale: fr })}</p>
+              <p>Heure de fin  : {format(new Date(session.date), "HH:mm:ss", { locale: fr })}</p>
               <button 
                 className="delete-button"
                 onClick={() => handleDeleteSession(session.taskId, session._id)}
