@@ -1,4 +1,4 @@
-// filepath: /src/context/TimerContext.js
+
 import React, { createContext, useState, useEffect } from 'react';
 
 export const TimerContext = createContext();
@@ -25,6 +25,7 @@ export const TimerProvider = ({ children }) => {
     return savedSessionTime !== null ? JSON.parse(savedSessionTime) : 0;
   });
 
+  // Synchronize with local storage
   useEffect(() => {
     localStorage.setItem('timeLeft', JSON.stringify(timeLeft));
   }, [timeLeft]);
@@ -45,6 +46,12 @@ export const TimerProvider = ({ children }) => {
     localStorage.setItem('sessionTime', JSON.stringify(sessionTime));
   }, [sessionTime]);
 
+  const resetTimer = () => {
+    setTimeLeft(customDuration * 60);
+    setSessionTime(0);
+    setIsRunning(false);
+  };
+
   return (
     <TimerContext.Provider
       value={{
@@ -58,6 +65,7 @@ export const TimerProvider = ({ children }) => {
         setSelectedTaskId,
         sessionTime,
         setSessionTime,
+        resetTimer, // Added resetTimer to allow resetting from the context
       }}
     >
       {children}

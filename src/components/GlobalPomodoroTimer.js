@@ -1,8 +1,18 @@
+
 import React, { useEffect, useContext, useState } from "react";
 import { TimerContext } from "../context/TimerContext";
 
 const GlobalPomodoroTimer = () => {
-  const { timeLeft, setTimeLeft, isRunning, setIsRunning, customDuration, selectedTaskId, sessionTime, setSessionTime } = useContext(TimerContext);
+  const {
+    timeLeft,
+    setTimeLeft,
+    isRunning,
+    setIsRunning,
+    customDuration,
+    selectedTaskId,
+    sessionTime,
+    setSessionTime,
+  } = useContext(TimerContext);
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
@@ -15,8 +25,8 @@ const GlobalPomodoroTimer = () => {
             return prevTime - 1;
           } else {
             clearInterval(timer);
-            handleSessionEnd();
-            return customDuration * 60; // Redémarrer le décompte
+            handleSessionEnd(); // Trigger session end only once
+            return customDuration * 60; // Restart timer for new session
           }
         });
       }, 1000);
@@ -30,15 +40,16 @@ const GlobalPomodoroTimer = () => {
       return;
     }
 
-    const sessionTimeInMinutes = Math.floor((customDuration * 60 - timeLeft) / 60); // Convertir en minutes
-    const session = {
-      duration: sessionTimeInMinutes,
-      date: new Date(),
-      archivedAt: new Date(), // Ajouter la date de fin de session
-      taskName: selectedTaskId,
-    };
-
     try {
+      // Prevent redundant calls by stopping the timer immediately
+      setIsRunning(false);
+
+      const sessionTimeInMinutes = Math.floor(sessionTime / 60); // Convert session time to minutes
+      const session = {
+        duration: sessionTimeInMinutes,
+        date: new Date(),
+      };
+
       const response = await fetch(
         `http://192.168.50.241:4000/tasks/${selectedTaskId}/sessions`,
         {
@@ -54,16 +65,17 @@ const GlobalPomodoroTimer = () => {
         throw new Error("Erreur lors de l'ajout de la session au backend.");
       }
 
-      // Redémarrer le décompte pour une nouvelle session
+      // Reset timer and session for the next cycle
       setTimeLeft(customDuration * 60);
       setSessionTime(0);
-      setIsRunning(true);
+
+      console.log("Session ajoutée avec succès :", session);
     } catch (error) {
       console.error("Erreur lors de l'ajout de la session :", error);
     }
   };
 
-  return null; // Ce composant ne rend rien visuellement
+  return null; // This component does not render anything visually
 };
 
 export default GlobalPomodoroTimer;

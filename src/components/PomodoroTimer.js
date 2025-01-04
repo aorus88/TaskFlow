@@ -1,31 +1,30 @@
-import React, { useContext, useEffect, useState } from "react";
-import "./PomodoroTimer.css"; // Assurez-vous que le fichier CSS est bien lié.
-import { TimerContext } from "../context/TimerContext"; // Importer le contexte
+
+import React, { useState, useEffect, useContext } from "react";
+import { TimerContext } from "../context/TimerContext";
 
 const PomodoroTimer = ({ tasks }) => {
-  const { timeLeft, setTimeLeft, isRunning, setIsRunning, customDuration, setCustomDuration, selectedTaskId, setSelectedTaskId, sessionTime, setSessionTime } = useContext(TimerContext);
+  const {
+    timeLeft,
+    setTimeLeft,
+    isRunning,
+    setIsRunning,
+    customDuration,
+    setCustomDuration, // Assurez-vous que setCustomDuration est importé
+    selectedTaskId,
+    setSelectedTaskId,
+    sessionTime,
+    setSessionTime,
+  } = useContext(TimerContext);
   const [isPaused, setIsPaused] = useState(false);
-  const [sessionCount, setSessionCount] = useState(0); // Compteur de sessions
-  const [currentTaskIndex, setCurrentTaskIndex] = useState(null); // Index de la tâche actuelle
+  const [currentTaskIndex, setCurrentTaskIndex] = useState(null);
+  const [sessionCount, setSessionCount] = useState(0);
 
+  // Synchronize selected task session count
   useEffect(() => {
-    if (tasks && tasks.length > 0) {
-      if (currentTaskIndex === null || !tasks[currentTaskIndex]) {
-        setCurrentTaskIndex(0); // Initialiser avec la première tâche valide
-        setSelectedTaskId(tasks[0]._id); // Réattribuer automatiquement si aucune sélection
-        console.log("Tâche par défaut réattribuée :", tasks[0]._id);
-      }
-    } else {
-      setCurrentTaskIndex(null); // Réinitialiser si aucune tâche
-    }
-  }, [tasks, currentTaskIndex, setSelectedTaskId]);
-
-  useEffect(() => {
-    console.log("Valeur de selectedTaskId :", selectedTaskId);
-    if (selectedTaskId) {
+    if (selectedTaskId && tasks.length > 0) {
       const selectedTask = tasks.find((task) => task._id === selectedTaskId);
       if (selectedTask) {
-        setSessionCount(selectedTask.sessions.length); // Mettre à jour le compteur de sessions
+        setSessionCount(selectedTask.sessions.length);
       }
     }
   }, [selectedTaskId, tasks]);
