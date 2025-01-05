@@ -55,10 +55,9 @@ const TaskForm = ({ onAddTask }) => {
 
   return (
     <div className="task-form">
-      <h3>Ajouter une nouvelle tâche</h3>
       <form onKeyDown={handleKeyDown} className="task-form">
         <label>
-          Nom de la tâche :
+          Tâche :
           <input
             type="text"
             value={formData.name}
@@ -67,7 +66,7 @@ const TaskForm = ({ onAddTask }) => {
         </label>
 
         <label>
-          Date d'échéance:
+          Echéance :
           <input
             type="date"
             value={formData.date}
@@ -76,7 +75,7 @@ const TaskForm = ({ onAddTask }) => {
         </label>
 
         <label>
-          Heure :
+          Echéance (heure) :
           <input
             type="time"
             value={formData.time}
@@ -97,7 +96,7 @@ const TaskForm = ({ onAddTask }) => {
         </label>
 
         <button type="button" onClick={handleAddTask}>
-          Ajouter la tâche
+          Ajouter une tâche
         </button>
       </form>
     </div>
