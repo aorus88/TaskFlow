@@ -69,10 +69,6 @@ const Home = ({
   return (
     <div className="home-container">
     <header className="header-section">
-      <div className="header-title">
-        <Clock /> 
-        TaskFlow V1.2.6
-      </div>
       <WeatherWidget />
     </header>
       

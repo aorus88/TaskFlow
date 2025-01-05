@@ -160,6 +160,20 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode, customDuration }) => {
           <p>{progress.toFixed(2)}%</p>
         </div>
 
+        <div className="stat-card">
+          <h3>Mode Sombre</h3>
+          <button onClick={toggleDarkMode} className="dark-mode-button">
+            {isDarkMode ? "🌞" : "🌚"}
+          </button>
+          <div/>
+        </div>
+
+      <div className="stat-card">
+        <h3> Horloge 🕰️</h3>
+        <p>{new Date().toLocaleTimeString()}</p>
+        <div/>
+      </div>
+
         
       </div>
     </div>

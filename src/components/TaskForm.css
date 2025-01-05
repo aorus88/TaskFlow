@@ -1,16 +1,19 @@
 /* Style de base du formulaire */
 .task-form {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 15px;
-  padding: 16px;
+  flex-direction: stretch;
+  align-items: stretch;
+  gap: 20px;
+  padding: 12px;
   background: #fff;
   border: 1px solid #dddddd00;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  zoom: 0.9;
+  zoom: 1.0; /* Rétablir la taille */
+  width: 100%; /* Assurez-vous que le formulaire prend toute la largeur disponible */
+  max-width: 100%; /* Empêcher le débordement */
+  box-sizing: border-box; /* Inclure le padding et la bordure dans la largeur totale */
 }
 
 /* Groupes de formulaire */
