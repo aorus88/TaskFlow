@@ -117,8 +117,14 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
       if (fetchTasks) {
         await fetchTasks();
       }
+  
+
+       // Redémarrer une nouvelle session automatiquement
+       if (!isManualStop) {
+        startTimer();
+      }
     } catch (error) {
-      console.error("Erreur:", error);
+      console.error("Erreur lors de l'ajout de la session:", error);
     } finally {
       isSubmitting.current = false;
       setIsManualStop(false);

@@ -6,6 +6,7 @@ import FusionTool from "./pages/FusionTool";
 import Sessions from "./pages/Sessions";
 import FloatingMenu from "./components/FloatingMenu";
 import GlobalPomodoroTimer from "./components/GlobalPomodoroTimer";
+import FeedbackMessage from "./components/FeedbackMessage";
 import "./index.css";
 import "./timer.css";
 import taskReducer from "./reducers/taskReducer";
@@ -19,14 +20,21 @@ const initialState = {
 
 const App = () => {
   const [state, dispatch] = useReducer(taskReducer, initialState);
+  const [feedback, setFeedback] = useState({ show: false, message: '', type: '' });
   const [filter, setFilter] = useState({
     priority: "",
     date: "",
     status: "",
     sortOrder: "newest",
   });
-
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const showFeedback = (message, type = 'success') => {
+    setFeedback({ show: true, message, type });
+    setTimeout(() => {
+      setFeedback({ show: false, message: '', type: '' });
+    }, 3000);
+  };
 
   const fetchTasks = useCallback(async (archived = false) => {
     try {

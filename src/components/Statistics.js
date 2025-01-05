@@ -149,11 +149,6 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
           <p>🏔️ {formatTime(averageSessionTimePerDay)}</p>
         </div>
 
-        <div className="stat-card">
-          <button onClick={toggleDarkMode} className="dark-mode-toggle">
-            {isDarkMode ? 'Mode Clair' : 'Mode Sombre'}
-          </button>
-        </div>
 
         
       </div>
