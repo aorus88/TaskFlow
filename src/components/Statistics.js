@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import "./Statistics.css";
 import { TimerContext } from "../context/TimerContext";
 
-const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
+const Statistics = ({ tasks, isDarkMode, toggleDarkMode, customDuration }) => {
   const { timeLeft } = useContext(TimerContext);
 
   // Définition des dates repères
@@ -87,6 +87,9 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
     return `${hours}h ${minutes}min ${seconds}sec`;
   };
 
+  // Calcul de la progression des sessions
+  const progress = ((customDuration * 60 - timeLeft) / (customDuration * 60)) * 100;
+
   return (
     <div className="statistics-container">
       <div className="statistics-header">
@@ -149,6 +152,13 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
           <p>🏔️ {formatTime(averageSessionTimePerDay)}</p>
         </div>
 
+        <div className="stat-card">
+          <h3>Progression de la session</h3>
+          <div className="progress-bar-container">
+            <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+          </div>
+          <p>{progress.toFixed(2)}%</p>
+        </div>
 
         
       </div>

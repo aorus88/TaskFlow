@@ -6,7 +6,7 @@ import FusionTool from "./pages/FusionTool";
 import Sessions from "./pages/Sessions";
 import FloatingMenu from "./components/FloatingMenu";
 import GlobalPomodoroTimer from "./components/GlobalPomodoroTimer";
-import FeedbackMessage from "./components/FeedbackMessage";
+import FeedbackMessage from './components/FeedbackMessage';
 import "./index.css";
 import "./timer.css";
 import taskReducer from "./reducers/taskReducer";
@@ -20,7 +20,7 @@ const initialState = {
 
 const App = () => {
   const [state, dispatch] = useReducer(taskReducer, initialState);
-  const [feedback, setFeedback] = useState({ show: false, message: '', type: '' });
+  const [feedback, setFeedback] = useState({ message: '', type: '' });
   const [filter, setFilter] = useState({
     priority: "",
     date: "",
@@ -29,11 +29,12 @@ const App = () => {
   });
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const showFeedback = (message, type = 'success') => {
-    setFeedback({ show: true, message, type });
+
+  const showFeedback = (message, type) => {
+    setFeedback({ message, type });
     setTimeout(() => {
-      setFeedback({ show: false, message: '', type: '' });
-    }, 3000);
+      setFeedback({ message: '', type: '' });
+    }, 3000); // Le message disparaîtra après 3 secondes
   };
 
   const fetchTasks = useCallback(async (archived = false) => {
@@ -221,6 +222,7 @@ const App = () => {
   return (
     <TimerProvider>
       <div className={`App ${isDarkMode ? 'dark' : ''}`}>
+      <FeedbackMessage message={feedback.message} type={feedback.type} />
         <FloatingMenu addTask={addTask} />
         <button onClick={toggleDarkMode} className="dark-mode-toggle">
           {isDarkMode ? 'Mode Clair' : 'Mode Sombre'}
