@@ -64,7 +64,7 @@ export const TimerProvider = ({ children }) => {
         setSelectedTaskId,
         sessionTime,
         setSessionTime,
-        resetTimer, // Added resetTimer to allow resetting from the context
+        resetTimer,
       }}
     >
       {children}

@@ -1,19 +1,17 @@
 /* Conteneur principal */
 .weather-widget {
   display: flex;
-  flex-direction: column; /* Aligne les éléments verticalement */
-  justify-content: center; /* Centre le contenu verticalement */
-  align-items: center; /* Centre le contenu horizontalement */
-  width: 100%; /* Occupe 100% de la largeur parent */
-  margin: 0 auto; /* Centre horizontalement */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
   padding: 20px;
-  border-radius: 12px; /* Coins arrondis */
-  background-color: #f9f9f9; /* Couleur de fond */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Ombre douce */
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease, color 0.3s ease;
-  zoom: 0.8 !important; /* Zoom pour les navigateurs WebKit */
-
-
+  zoom: 0.8 !important;
 }
 
 /* En-tête de la météo (icône et emoji) */
@@ -50,11 +48,9 @@
 
 /* Styles pour le mode sombre */
 body.dark .weather-widget {
-  background-color: #2d3748;
-  color: #635e59;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  width: 100%;
-  margin: 0 auto;
+  background-color: #1e1e1e;
+  border-color: #2d2d2d;
+  color: #912222;
 }
 
 /* Styles dynamiques pour les conditions météorologiques */

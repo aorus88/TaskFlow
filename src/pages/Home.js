@@ -37,6 +37,12 @@ const Home = ({
     fetchTasksCallback();
   }, [fetchTasksCallback]);
 
+  // Log pour vérifier les tâches reçues
+  useEffect(() => {
+    console.log("Home.js - Tâches reçues :", tasks);
+    console.log("Home.js - Tâches archivées reçues :", archivedTasks);
+  }, [tasks, archivedTasks]);
+
   const handleEditTask = async (taskId, updatedFields) => {
     try {
       await onEditTask(taskId, updatedFields);
@@ -62,19 +68,23 @@ const Home = ({
 
   return (
     <div className="home-container">
-      <header className="header-section">
-        <h3>TaskFlow - V1.2.5 <Clock /><WeatherWidget /></h3>
-      </header>
+    <header className="header-section">
+      <div className="header-title">
+        <Clock /> 
+        TaskFlow V1.2.6
+      </div>
+      <WeatherWidget />
+    </header>
       
       <section className="stats-pomodoro-section">
-  <Statistics tasks={tasks} archivedTasks={archivedTasks} />
-  <GlobalPomodoroTimer
-    tasks={tasks}
-    updateTaskTime={updateTaskTime}
-    fetchTasks={fetchTasks}
-    setSelectedTaskId={setSelectedTaskId}
-  />
-</section>
+        <Statistics tasks={tasks} />
+        <GlobalPomodoroTimer
+          tasks={tasks}
+          updateTaskTime={updateTaskTime}
+          fetchTasks={fetchTasks}
+          setSelectedTaskId={setSelectedTaskId}
+        />
+      </section>
 
       <section className="tasks-section">
         <TaskFilters filter={filter} setFilter={setFilter} />

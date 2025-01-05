@@ -1,6 +1,6 @@
 // filepath: /src/components/TaskFilters_Sessions.js
 import React, { useEffect, useState } from "react";
-import "./Tasks.css"; // Centralisation des styles dans un fichier commun
+import "./TaskFilters_Sessions.css"; // Centralisation des styles dans un fichier commun
 
 const TaskFilters_Sessions = ({ filter = {}, setFilter = () => {}, tasks = [] }) => {
   const [categories, setCategories] = useState([]);

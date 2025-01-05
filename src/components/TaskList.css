@@ -1,58 +1,92 @@
+/* Container de la liste */
 .task-list-container {
-  margin: 10px 0; /* Réduire la marge */
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
+/* Liste des tâches */
 .task-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
+/* Style des éléments de la liste */
 .task-item {
-  padding: 8px; /* Réduire le padding */
-  margin-bottom: 5px;
+  background-color: #f9f9f9;
   border: 1px solid #ddd;
+  border-left: 4px solid transparent;
   border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  margin-bottom: 8px;
+  padding: 12px;
+  transition: all 0.2s ease;
 }
 
-.task-item:hover {
-  background-color: #f0f0f0;
-}
-
+/* Boutons d'action */
 .task-buttons {
-  margin-top: 5px; /* Réduire la marge */
   display: flex;
-  gap: 5px; /* Réduire l'espacement */
+  gap: 8px;
+  margin-top: 8px;
 }
 
-.edit-button,
-.delete-button {
-  padding: 4px 8px; /* Réduire le padding */
+.task-buttons button {
+  padding: 6px 12px;
   border: none;
   border-radius: 4px;
+  font-size: 13px;
   cursor: pointer;
-  font-size: 0.85em; /* Réduire la taille de la police */
+  transition: all 0.2s ease;
 }
 
 .edit-button {
-  background-color: #ffa500; /* Orange */
+  background-color: #007acc;
   color: white;
-}
-
-.edit-button:hover {
-  background-color: #ff8c00; /* Plus foncé pour l'édition */
-}
-
-.complete-button:hover {
-  background-color: darkgreen;
 }
 
 .delete-button {
-  background-color: #f44336; /* Rouge */
+  background-color: #e51400;
   color: white;
 }
 
-.delete-button:hover {
-  background-color: #d32f2f; /* Plus foncé pour la suppression */
+.complete-button {
+  background-color: #388a34;
+  color: white;
+}
+
+/* Mode sombre - Style VS Code */
+body.dark .task-list-container {
+  background-color: #1e1e1e;
+  border-color: #2d2d2d;
+}
+
+body.dark .task-item {
+  background-color: #252526;
+  border-color: #2d2d2d;
+  color: #cccccc;
+}
+
+body.dark.modal-open .task-item:hover {
+  transform: none;
+  border-left-color: transparent;
+}
+
+/* Animation d'apparition */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.task-item {
+  animation: slideIn 0.3s ease-out;
 }

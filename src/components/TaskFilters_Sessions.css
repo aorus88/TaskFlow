@@ -1,0 +1,66 @@
+.task-filters {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .filter-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .filter-group label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  .filter-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #ffffff;
+    cursor: pointer;
+  }
+  
+  .filter-group select:focus {
+    border-color: #007acc;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
+  }
+  
+  /* Mode sombre VS Code */
+  body.dark .task-filters {
+    background-color: #1e1e1e;
+    border-color: #2d2d2d;
+  }
+  
+  body.dark .filter-group label {
+    color: #cccccc;
+  }
+  
+  body.dark .filter-group select {
+    background-color: #252526;
+    border-color: #2d2d2d;
+    color: #cccccc;
+  }
+  
+  body.dark .filter-group select:focus {
+    border-color: #007acc;
+    box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
+  }
+  
+  body.dark .filter-group select option {
+    background-color: #252526;
+    color: #cccccc;
+  }

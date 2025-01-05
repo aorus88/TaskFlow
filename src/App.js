@@ -45,6 +45,11 @@ const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    fetchTasks();
+    fetchTasks(true); // Fetch archived tasks as well
+  }, [fetchTasks]);
+
   const addTask = async (task) => {
     try {
       const response = await fetch('http://192.168.50.241:4000/tasks', {
@@ -217,8 +222,7 @@ const App = () => {
             path="/"
             element={
               <Home
-                tasks={state.tasks.filter((task) => task.archived === "open")}
-                archivedTasks={state.tasks.filter((task) => task.archived === "closed")}
+                tasks={state.tasks} // Passer toutes les tâches sans filtre
                 onAddTask={addTask}
                 onEditTask={updateTask}
                 onDeleteTask={deleteTask}

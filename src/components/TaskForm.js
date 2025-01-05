@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Tasks.css"; // Centralisation des styles
+import "./TaskForm.css"; // Centralisation des styles
 
 const TaskForm = ({ onAddTask }) => {
   const [formData, setFormData] = useState({

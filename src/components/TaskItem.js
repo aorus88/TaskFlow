@@ -17,6 +17,16 @@ const TaskItem = ({
   useEffect(() => {
     console.log("Task updated:", task);
   }, [task]);
+
+   // Ajouter la fonction de formatage de temps (hh:mm)
+   const formatTime = (minutes) => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    if (hours > 0) {
+      return `${hours}h ${mins}min`;
+    }
+    return `${mins}min`;
+  };
   
 
   // Récupérer la durée de la dernière session
@@ -112,10 +122,10 @@ const TaskItem = ({
 
         {/* Affichage des données de temps */}
         <p>
-          <strong>Total sessions :</strong> {task.totalTime || 0} minutes
+          <strong>Total sessions :</strong> {formatTime(task.totalTime || 0)}
         </p>
         <p>
-          <strong>Dernière session :</strong> {lastSessionDuration} minutes
+          <strong>Dernière session :</strong> {formatTime(lastSessionDuration)}
         </p>
 
         {/* Barre de progression */}

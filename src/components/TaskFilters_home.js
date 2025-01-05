@@ -1,5 +1,5 @@
 import React from "react";
-import "./Tasks.css"; // Centralisation des styles dans un fichier commun
+import "./TaskFilters_home.css"; // Centralisation des styles dans un fichier commun
 
 const TaskFilters_home = ({ filter = {}, setFilter = () => {} }) => {
   // Gestion des changements de filtres

@@ -24,6 +24,14 @@
   margin-bottom: 10px;
 }
 
+.modal-form input,
+.modal-form select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
 .modal-buttons {
   margin-top: 20px;
   display: flex;
@@ -38,31 +46,46 @@
   cursor: pointer;
 }
 
+.modal-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 .modal-buttons button:first-child {
-  background-color: #4caf50; /* Vert pour sauvegarder */
+  background-color: #007acc; /* Bleu VS Code */
   color: white;
 }
 
 .modal-buttons button:last-child {
-  background-color: #f44336; /* Rouge pour annuler */
+  background-color: #e51400; /* Rouge VS Code */
   color: white;
 }
 
 /* Styles pour le mode sombre */
 body.dark .modal-content {
-  background-color: #2d3748;
-  color: #f9f9f9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background-color: #1e1e1e;
+  border-color: #2d2d2d;
+  color: #d4d4d4;
 }
 
 body.dark .modal-form label {
-  color: #f9f9f9;
+  color: #d4d4d4;
 }
 
+body.dark .modal-form input,
+body.dark .modal-form select {
+  background-color: #252526;
+  border-color: #2d2d2d;
+  color: #d4d4d4;
+}
+
+
 body.dark .modal-buttons button:first-child {
-  background-color: #38a169; /* Vert foncé pour sauvegarder */
+  background-color: #005c99; /* Vert foncé pour sauvegarder */
 }
 
 body.dark .modal-buttons button:last-child {
-  background-color: #e53e3e; /* Rouge foncé pour annuler */
+  background-color: #b31200; /* Rouge foncé pour annuler */
 }

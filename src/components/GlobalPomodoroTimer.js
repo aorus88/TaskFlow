@@ -117,15 +117,6 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
       if (fetchTasks) {
         await fetchTasks();
       }
-
-      // Redémarrer uniquement si ce n'est pas un arrêt manuel
-      if (!isManualStop) {
-        console.log("Redémarrage automatique du timer");
-        setTimeout(() => setIsRunning(true), 1000);
-      } else {
-        console.log("Arrêt manuel - pas de redémarrage");
-      }
-
     } catch (error) {
       console.error("Erreur:", error);
     } finally {
@@ -134,7 +125,6 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
     }
   };
 
-  // Actions du timer
   const startTimer = useCallback(() => {
     if (!selectedTaskId) {
       alert("Veuillez sélectionner une tâche");

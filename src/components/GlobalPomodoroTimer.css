@@ -1,14 +1,14 @@
 /* Styles de base du timer */
 .pomodoro-timer {
-    width: 100%;
-    max-width: 600px;
-    background-color: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
-    transition: all 0.3s ease;
-  }
+  width: 100%;
+  max-width: 600px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  transition: all 0.3s ease;
+}
   
   /* Style spécifique pour le timer flottant (hors page Home) */
   .pomodoro-timer.floating {
@@ -177,45 +177,66 @@
   
   /* Mode sombre */
   body.dark .pomodoro-timer {
-    background-color: #2d3748;
-    color: #f9f9f9;
-  }
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+}
   
-  body.dark .timer-header {
-    border-bottom-color: #4a5568;
-  }
+body.dark .timer-header {
+  border-bottom-color: #2d2d2d;
+}
   
-  body.dark .timer-header h1 {
-    color: #f9f9f9;
-  }
+body.dark .timer-header h1 {
+  color: #cccccc;
+}
   
-  body.dark .minimize-button {
-    color: #f9f9f9;
-  }
+body.dark .minimize-button {
+  color: #cccccc;
+}
   
-  body.dark .minimize-button:hover {
-    background-color: #4a5568;
-  }
+body.dark .minimize-button:hover {
+  background-color: #2d2d2d;
+}
   
-  body.dark .timer-display {
-    color: #f9f9f9;
-  }
+body.dark .timer-display {
+  color: #cccccc;
+}
   
-  body.dark .progress-bar-container {
-    background-color: #4a5568;
-  }
+body.dark .progress-bar-container {
+  background-color: #2d2d2d;
+}
   
-  body.dark .progress-bar-segment.inactive {
-    background-color: #2d3748;
-  }
+body.dark .progress-bar-segment.active {
+  background-color: #388a34;
+}
+
+body.dark .progress-bar-segment.inactive {
+  background-color: #252526;
+}
   
-  body.dark .task-selector,
-  body.dark .duration-input {
-    background-color: #4a5568;
-    border-color: #718096;
-    color: #f9f9f9;
-  }
+body.dark .task-selector,
+body.dark .duration-input {
+    background-color: #252526;
+    border-color: #2d2d2d;
+    color: #d4d4d4;
+}
   
-  body.dark .session-info {
-    border-top-color: #4a5568;
-  }
+body.dark .session-info {
+  border-top-color: #2d2d2d;
+}
+
+/* Couleurs des boutons en mode sombre */
+body.dark .start-button {
+  background-color: #388a34;
+}
+
+body.dark .pause-button {
+  background-color: #007acc;
+}
+
+body.dark .stop-button {
+  background-color: #e51400;
+}
+
+body.dark .reset-button {
+  background-color: #2d2d2d;
+}

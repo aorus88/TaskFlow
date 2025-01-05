@@ -1,51 +1,81 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Statistics.css";
 import { TimerContext } from "../context/TimerContext";
 
-const Statistics = ({ tasks }) => {
+const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
   const { timeLeft } = useContext(TimerContext);
 
-  // Tâches ouvertes (status !== 'closed' et pas de archivedAt)
-  const openTasks = tasks.filter((task) => task.status !== "closed" && !task.archivedAt);
+  // Définition des dates repères
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  // Tâches terminées aujourd'hui (archivedAt === date du jour et archived === 'closed')
-  const today = new Date().toISOString().split("T")[0];
-  const completedToday = tasks.filter((task) => {
-    const archivedDate = task.archivedAt ? new Date(task.archivedAt).toISOString().split("T")[0] : null;
-    return archivedDate === today && task.archived === "closed";
-  });
+  const endOfDay = new Date(today);
+  endOfDay.setHours(23, 59, 59, 999);
 
-  // Tâches prio haute ouvertes
-  const highPriorityOpen = tasks.filter(
-    (task) => task.priority === "high" && task.status !== "closed" && !task.archivedAt
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  // Définition des tâches filtrées
+  const openTasks = tasks.filter((task) => 
+    task.status !== "closed" && !task.archivedAt
   );
 
-  // Sessions du jour
-  const sessionsToday = tasks.flatMap(task => task.sessions || [])
-    .filter(session => new Date(session.date).toISOString().split("T")[0] === today);
+  const completedToday = tasks.filter((task) => {
+    if (!task.archivedAt || task.archived !== "closed") return false;
+    const archivedDate = new Date(task.archivedAt);
+    return archivedDate >= today && archivedDate <= endOfDay;
+  });
 
-  // Sessions de la semaine
-  const startOfWeek = new Date();
-  startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
-  const sessionsThisWeek = tasks.flatMap(task => task.sessions || [])
-    .filter(session => new Date(session.date) >= startOfWeek);
+  const createdToday = tasks.filter((task) => {
+    if (!task.addedAt) return false;
+    const addedDate = new Date(task.addedAt);
+    return addedDate >= today && addedDate <= endOfDay;
+  });
+
+  const highMediumPriorityOpen = tasks.filter((task) => 
+    (task.priority === "high" || task.priority === "medium") 
+    && task.status !== "closed" 
+    && !task.archivedAt
+  );
+
+  // Debug logs
+  useEffect(() => {
+    console.log("Date actuelle:", today);
+    console.log("Tâches archivées:", tasks.filter(task => task.archivedAt));
+    console.log("Tâches créées:", tasks.filter(task => task.addedAt));
+  }, [tasks]);
+
+  // Sessions du jour
+  const sessionsToday = tasks.flatMap((task) => task.sessions || [])
+    .filter((session) => {
+      const sessionDate = new Date(session.date);
+      return sessionDate >= today && sessionDate < new Date(today.getTime() + 86400000);
+    });
+
+  // Sessions d'hier
+  const sessionsYesterday = tasks.flatMap((task) => task.sessions || [])
+    .filter((session) => {
+      const sessionDate = new Date(session.date);
+      return sessionDate >= yesterday && sessionDate < today;
+    });
+
+  // Sessions totales
+  const totalSessions = tasks.flatMap(task => task.sessions || []);
 
   // Calcul du temps total des sessions du jour
   const totalSessionTimeToday = sessionsToday.reduce((total, session) => total + session.duration, 0);
 
-  // Calcul du temps total des sessions de la semaine
-  const totalSessionTimeThisWeek = sessionsThisWeek.reduce((total, session) => total + session.duration, 0);
-
   // Calcul du temps moyen par session
-  const averageSessionTime = sessionsThisWeek.length > 0 ? totalSessionTimeThisWeek / sessionsThisWeek.length : 0;
+  const averageSessionTime = totalSessions.length > 0 ? totalSessions.reduce((total, session) => total + session.duration, 0) / totalSessions.length : 0;
 
   // Calcul du temps moyen par jour
-  const averageSessionTimePerDay = sessionsThisWeek.length > 0 ? totalSessionTimeThisWeek / sessionsThisWeek.length : 0;
+  const daysWithSessions = [...new Set(totalSessions.map(session => new Date(session.date).toISOString().split("T")[0]))].length;
+  const averageSessionTimePerDay = daysWithSessions > 0 ? totalSessions.reduce((total, session) => total + session.duration, 0) / daysWithSessions : 0;
 
   // Format du temps en heures et minutes
   const formatTime = (mins) => {
     const hours = Math.floor(mins / 60);
-    const minutes = mins % 60;
+    const minutes = Math.round(mins % 60);
     return `${hours}h ${minutes}min`;
   };
 
@@ -75,8 +105,13 @@ const Statistics = ({ tasks }) => {
         </div>
 
         <div className="stat-card">
-          <h3>Tâches Priorité Haute (Ouvertes)</h3>
-          <p>🔴 {highPriorityOpen.length}</p>
+          <h3>Tâches Créées Aujourd'hui</h3>
+          <p>🆕 {createdToday.length}</p>
+        </div>
+
+        <div className="stat-card">
+          <h3>Tâches Priorité Haute et Moyenne (Ouvertes)</h3>
+          <p>🔴🟠 {highMediumPriorityOpen.length}</p>
         </div>
 
         <div className="stat-card">
@@ -85,37 +120,42 @@ const Statistics = ({ tasks }) => {
         </div>
 
         <div className="stat-card">
-          <h3>Temps Total Sessions (Aujourd'hui)</h3>
+          <h3>Sessions Hier</h3>
+          <p>⏱️ {sessionsYesterday.length}</p>
+        </div>
+
+        <div className="stat-card">
+          <h3>Total sessions (Aujourd'hui)</h3>
           <p>🕒 {formatTime(totalSessionTimeToday)}</p>
         </div>
 
         <div className="stat-card">
-          <h3>Sessions de la Semaine</h3>
-          <p>📅 {sessionsThisWeek.length}</p>
+          <h3>Sessions Totales</h3>
+          <p>📊 {totalSessions.length}</p>
         </div>
 
         <div className="stat-card">
-          <h3>Temps Total Sessions (Semaine)</h3>
-          <p>🕒 {formatTime(totalSessionTimeThisWeek)}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Durée Pomodoro Restant</h3>
+          <h3>Time Left ⏯️</h3>
           <p className="timer-display">{formatTimeWithSeconds(timeLeft)}</p>
-          <p className="timer-note">
-            {timeLeft > 0 ? "Temps restant" : "Temps écoulé"}
-          </p>
         </div>
 
         <div className="stat-card">
-          <h3>Temps Moyen par Session</h3>
-          <p>⏲️ {formatTime(averageSessionTime)}</p>
+          <h3>Moyenne Pomodoro par session</h3>
+          <p>🏔️ {formatTime(averageSessionTime)}</p>
         </div>
 
         <div className="stat-card">
-          <h3>Temps Moyen par Jour</h3>
-          <p>⏲️ {formatTime(averageSessionTimePerDay)}</p>
+          <h3>Moyenne Pomodoro par jour</h3>
+          <p>🏔️ {formatTime(averageSessionTimePerDay)}</p>
         </div>
+
+        <div className="stat-card">
+          <button onClick={toggleDarkMode} className="dark-mode-toggle">
+            {isDarkMode ? 'Mode Clair' : 'Mode Sombre'}
+          </button>
+        </div>
+
+        
       </div>
     </div>
   );

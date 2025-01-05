@@ -7,14 +7,22 @@
   box-sizing: border-box;
 }
 
-.header {
+.header-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0px; /* Réduire la marge en bas */
-  padding: 0px; /* Réduire le padding */
-  zoom: 50%; /* Réduire la taille du texte */
+  padding: 10px 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
 
+.header-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  margin: 0 auto;
 }
 
 .main-content {
@@ -68,4 +76,10 @@ body.dark .global-pomodoro-timer,
 body.dark .task-list {
   background-color: #2d3748;
   color: #f9f9f9;
+}
+
+body.dark .header-section {
+  background-color: #1e1e1e;
+  border-color: #2d2d2d;
+  color: #cccccc;
 }

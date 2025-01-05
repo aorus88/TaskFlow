@@ -1,11 +1,11 @@
 .statistics-container {
-  background-color: #ffffff; 
+  background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-  zoom: 0.8 !important; 
+  transition: all 0.3s ease;
+  zoom: 0.8 !important;
 }
 
 .statistics-header {
@@ -30,11 +30,12 @@
   border-radius: 8px;
   padding: 12px;
   text-align: center;
-  transition: box-shadow 0.3s ease;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
 }
 
 .stat-card:hover {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border-color: #007acc;
 }
 
 .stat-card h3 {
@@ -55,21 +56,48 @@
   font-size: 1.2rem;
 }
 
-/* Mode sombre */
+/* Mode sombre inspiré de VS Code */
 body.dark .statistics-container {
-  background-color: #2d3748;
-  border-color: #4a5568;
+  background-color: #1e1e1e; /* Fond principal VS Code */
+  border-color: #2d2d2d;
 }
 
 body.dark .statistics-header h2 {
-  color: #f9f9f9;
+  color: #cccccc; /* Couleur de texte VS Code */
 }
 
 body.dark .stat-card {
-  background-color: #4a5568;
+  background-color: #252526; /* Couleur de fond des panneaux VS Code */
+  border: 1px solid #2d2d2d;
 }
 
-body.dark .stat-card h3,
+body.dark .stat-card:hover {
+  background-color: #2d2d2d;
+  border-color: #007acc; /* Bleu VS Code */
+}
+
+body.dark .stat-card h3 {
+  color: #cccccc;
+}
+
 body.dark .stat-card p {
-  color: #f9f9f9;
+  color: #d4d4d4; /* Couleur de texte principale VS Code */
+}
+
+body.dark .timer-display {
+  color: #007acc; /* Bleu VS Code pour mettre en valeur */
+}
+
+body.dark .timer-note {
+  color: #6a9955; /* Vert VS Code pour les commentaires */
+}
+
+/* Animation subtile au survol */
+.stat-card {
+  transform: translateY(0);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
 }
