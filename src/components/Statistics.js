@@ -36,8 +36,21 @@ const Statistics = ({ tasks }) => {
   // Calcul du temps total des sessions de la semaine
   const totalSessionTimeThisWeek = sessionsThisWeek.reduce((total, session) => total + session.duration, 0);
 
-  // Format du temps en heures, minutes et secondes
-  const formatTime = (secs) => {
+  // Calcul du temps moyen par session
+  const averageSessionTime = sessionsThisWeek.length > 0 ? totalSessionTimeThisWeek / sessionsThisWeek.length : 0;
+
+  // Calcul du temps moyen par jour
+  const averageSessionTimePerDay = sessionsThisWeek.length > 0 ? totalSessionTimeThisWeek / sessionsThisWeek.length : 0;
+
+  // Format du temps en heures et minutes
+  const formatTime = (mins) => {
+    const hours = Math.floor(mins / 60);
+    const minutes = mins % 60;
+    return `${hours}h ${minutes}min`;
+  };
+
+  // Format du temps en heures, minutes et secondes pour la durée Pomodoro
+  const formatTimeWithSeconds = (secs) => {
     const hours = Math.floor(secs / 3600);
     const minutes = Math.floor((secs % 3600) / 60);
     const seconds = secs % 60;
@@ -73,7 +86,7 @@ const Statistics = ({ tasks }) => {
 
         <div className="stat-card">
           <h3>Temps Total Sessions (Aujourd'hui)</h3>
-          <p>🕒 {formatTime(totalSessionTimeToday * 60)}</p>
+          <p>🕒 {formatTime(totalSessionTimeToday)}</p>
         </div>
 
         <div className="stat-card">
@@ -83,15 +96,25 @@ const Statistics = ({ tasks }) => {
 
         <div className="stat-card">
           <h3>Temps Total Sessions (Semaine)</h3>
-          <p>🕒 {formatTime(totalSessionTimeThisWeek * 60)}</p>
+          <p>🕒 {formatTime(totalSessionTimeThisWeek)}</p>
         </div>
 
         <div className="stat-card">
           <h3>Durée Pomodoro Restant</h3>
-          <p className="timer-display">{formatTime(timeLeft)}</p>
+          <p className="timer-display">{formatTimeWithSeconds(timeLeft)}</p>
           <p className="timer-note">
             {timeLeft > 0 ? "Temps restant" : "Temps écoulé"}
           </p>
+        </div>
+
+        <div className="stat-card">
+          <h3>Temps Moyen par Session</h3>
+          <p>⏲️ {formatTime(averageSessionTime)}</p>
+        </div>
+
+        <div className="stat-card">
+          <h3>Temps Moyen par Jour</h3>
+          <p>⏲️ {formatTime(averageSessionTimePerDay)}</p>
         </div>
       </div>
     </div>
