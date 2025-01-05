@@ -212,15 +212,6 @@ const App = () => {
         <button onClick={toggleDarkMode} className="dark-mode-toggle">
           {isDarkMode ? 'Mode Clair' : 'Mode Sombre'}
         </button>
-        <GlobalPomodoroTimer
-       tasks={state.tasks}
-       updateTaskTime={updateTaskTime}
-       fetchTasks={fetchTasks} // Passer fetchTasks comme prop
-       setSelectedTaskId={(taskId) => dispatch({ 
-        type: "SET_SELECTED_TASK_ID", 
-        payload: taskId 
-      })}
-     />
         <Routes>
           <Route
             path="/"
