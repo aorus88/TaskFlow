@@ -63,7 +63,7 @@ const Home = ({
   return (
     <div className="home-container">
       <header className="header-section">
-        <h3>TaskFlow - V1.2.2 - <Clock /><WeatherWidget /></h3>
+        <h3>TaskFlow - V1.2.5 <Clock /><WeatherWidget /></h3>
       </header>
       
       <section className="stats-pomodoro-section">

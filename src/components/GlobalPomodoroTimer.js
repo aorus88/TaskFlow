@@ -161,7 +161,7 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
     }
   }, [customDuration, setTimeLeft, setSessionTime]);
 
-  const stopAndAssignTime = useCallback(() => {
+  const completeAndAssignTime = useCallback(() => {
     if (!selectedTaskId) {
       alert("Veuillez sélectionner une tâche");
       return;
@@ -250,16 +250,16 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
 
         <div className="timer-buttons">
           <button onClick={startTimer} className="start-button" disabled={!selectedTaskId || isRunning}>
-            Démarrer
+            Démarrer ⏱️
           </button>
           <button onClick={pauseResumeTimer} className="pause-button" disabled={!isRunning}>
-            {isPaused ? "Reprendre" : "Pause"}
+            {isPaused ? "Reprendre ⏯️" : "Pause ⏸️"}
           </button>
-          <button onClick={stopAndAssignTime} className="stop-button" disabled={!selectedTaskId}>
-            Arrêter & Attribuer
+          <button onClick={completeAndAssignTime} className="stop-button" disabled={!selectedTaskId}>
+            Terminé ✅ - ⏯️
           </button>
           <button onClick={resetTimer} className="reset-button">
-            Réinitialiser
+            Réinitialiser 🛑
           </button>
         </div>
 
