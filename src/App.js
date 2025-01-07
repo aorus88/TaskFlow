@@ -224,9 +224,6 @@ const App = () => {
       <div className={`App ${isDarkMode ? 'dark' : ''}`}>
       <FeedbackMessage message={feedback.message} type={feedback.type} />
         <FloatingMenu addTask={addTask} />
-        <button onClick={toggleDarkMode} className="dark-mode-toggle">
-          {isDarkMode ? 'Mode Clair' : 'Mode Sombre'}
-        </button>
         <Routes>
           <Route
             path="/"
@@ -246,6 +243,8 @@ const App = () => {
                 fetchTasks={fetchTasks}
                 updateTaskTime={updateTaskTime}
                 setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
+                isDarkMode={isDarkMode} // Passer l'état isDarkMode
+                toggleDarkMode={toggleDarkMode} // Passer la fonction toggleDarkMode
               />
             }
           />
@@ -261,6 +260,8 @@ const App = () => {
           />
           <Route path="/fusion-tool" element={<FusionTool entries={state.consumptionEntries} onAddEntry={addConsumptionEntry} />} />
           <Route path="/sessions" element={<Sessions />} />
+
+          
         </Routes>
       </div>
     </TimerProvider>

@@ -24,7 +24,10 @@ const Home = ({
   onSaveTask,
   fetchTasks,
   updateTaskTime,
-  setSelectedTaskId
+  setSelectedTaskId,
+  isDarkMode,
+  toggleDarkMode,
+  
 }) => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -73,7 +76,11 @@ const Home = ({
     </header>
       
       <section className="stats-pomodoro-section">
-        <Statistics tasks={tasks} />
+        <Statistics 
+        tasks={tasks} 
+        isDarkMode={isDarkMode} // Passer l'état isDarkMode
+        toggleDarkMode={toggleDarkMode} // Passer la fonction toggleDarkMode
+        />
         <GlobalPomodoroTimer
           tasks={tasks}
           updateTaskTime={updateTaskTime}

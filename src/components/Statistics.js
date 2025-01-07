@@ -161,9 +161,11 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode, customDuration }) => {
         </div>
 
         <div className="stat-card">
-          <h3>Mode Sombre</h3>
+          <h3>Dark Mode</h3>
           <button onClick={toggleDarkMode} className="dark-mode-button">
-            {isDarkMode ? "🌞" : "🌚"}
+
+            
+            {isDarkMode ? "🌚" : "🌞"}
           </button>
           <div/>
         </div>

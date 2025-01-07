@@ -106,29 +106,36 @@ const TaskItem = ({
 
   return (
     <li className="task-item">
-      <div>
-        <strong>{task.name}</strong>
+      <div className="task-content">
+        <div className="task-item-header">
+          <strong className="task-name">{task.name}</strong>
+          <div className="task-buttons">
+            <button className="edit-button" onClick={() => openEditModal(task)}>
+              Éditer
+            </button>
+            <button className="complete-button" onClick={() => onArchiveTask(task.id)}>
+              Terminé
+            </button>
+            <button className="delete-button" onClick={() => onDeleteTask(task.id, isArchived)}>
+              Supprimer
+            </button>
+          </div>
+        </div>
         <p>Échéance : {formatDate(task.date)}</p>
         <p>
-        <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
+          <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
         </p>
-
-        {/* Affichage des catégories */}
         {task.categories && task.categories.length > 0 && (
           <p>
             <strong>Catégories :</strong> {task.categories.join(", ")}
           </p>
         )}
-
-        {/* Affichage des données de temps */}
         <p>
           <strong>Total sessions :</strong> {formatTime(task.totalTime || 0)}
         </p>
         <p>
           <strong>Dernière session :</strong> {formatTime(lastSessionDuration)}
         </p>
-
-        {/* Barre de progression */}
         <div className="progress-bar">
           <div
             className="progress-bar-fill"
@@ -136,76 +143,52 @@ const TaskItem = ({
           ></div>
         </div>
         <p>Progression : {Math.round(calculateProgress())}%</p>
-      </div>
-
-      {/* Boutons d'action */}
-      <div className="task-buttons">
-        <button className="edit-button" onClick={() => openEditModal(task)}>
-          Éditer
-        </button>
-        <button className="complete-button" onClick={() => onArchiveTask(task.id)}>
-          Terminé
-        </button>
-        <button className="delete-button" onClick={() => onDeleteTask(task.id, isArchived)}>
-          Supprimer
-        </button>
-      </div>
-
-      {/* Sous-tâches */}
-      {task.subtasks.length > 0 && (
-        <div>
-          <button onClick={() => setExpanded(!expanded)}>
-            {expanded ? "Masquer les sous-tâches" : "Voir les sous-tâches"}
-          </button>
-
-          {expanded && (
-            <div className="subtasks-section">
-              <h4>Sous-tâches :</h4>
-              <ul className="subtask-list">
+        {task.subtasks.length > 0 && (
+          <div className="subtasks-section">
+            <button onClick={() => setExpanded(!expanded)}>
+              {expanded ? "Masquer les sous-tâches" : "Voir les sous-tâches"}
+            </button>
+            {expanded && (
+              <div className="subtask-list">
                 {task.subtasks.map((subtask) => (
-                  <li key={subtask.id} className="subtask-item">
+                  <div key={subtask.id} className="subtask-item">
                     <input
                       type="checkbox"
                       checked={subtask.archived === "closed"}
                       onChange={() => onToggleSubtaskStatus(task.id, subtask.id, subtask.archived === "open" ? "closed" : "open")}
                     />
                     {subtask.name}
-                    <button
-                      className="delete-button"
-                      onClick={() => onDeleteSubtask(task.id, subtask.id)}
-                    >
-                      Supprimer
+                    <button className="edit-icon" onClick={() => openEditModal(subtask)}>
+                      ✏️
                     </button>
-                  </li>
+                    <button className="delete-icon" onClick={() => onDeleteSubtask(task.id, subtask.id)}>
+                      🗑️
+                    </button>
+                  </div>
                 ))}
-              </ul>
-
-              {/* Champ de saisie pour ajouter une sous-tâche */}
-              <input
-                type="text"
-                value={newSubtaskText}
-                onChange={(e) => setNewSubtaskText(e.target.value)}
-                onKeyDown={handleKeyPress}
-                placeholder="Nouvelle sous-tâche..."
-              />
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Composant de modale */}
-      {isModalOpen && (
-        <EditTaskModal
-          task={selectedTask} // Tâche actuelle
-          onClose={closeEditModal} // Fonction pour fermer la modale
-          onSave={(updatedTask) => {
-            onUpdateTask(updatedTask.id, updatedTask); // Appelle la fonction de mise à jour avec l'ID et les champs mis à jour
-            closeEditModal(); // Ferme la modale après la sauvegarde
-          }}
-        />
-      )}
+                <input
+                  type="text"
+                  value={newSubtaskText}
+                  onChange={(e) => setNewSubtaskText(e.target.value)}
+                  onKeyDown={handleKeyPress}
+                  placeholder="Nouvelle sous-tâche..."
+                />
+              </div>
+            )}
+          </div>
+        )}
+        {isModalOpen && (
+          <EditTaskModal
+            task={selectedTask}
+            onClose={closeEditModal}
+            onSave={(updatedTask) => {
+              onUpdateTask(updatedTask.id, updatedTask);
+              closeEditModal();
+            }}
+          />
+        )}
+      </div>
     </li>
   );
-};
-
+}
 export default TaskItem;
