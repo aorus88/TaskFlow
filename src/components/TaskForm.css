@@ -12,8 +12,7 @@
   transition: all 0.3s ease;
   zoom: 1.0; /* Rétablir la taille */
   width: 100%; /* Assurez-vous que le formulaire prend toute la largeur disponible */
-  max-width: 100%; /* Empêcher le débordement */
-  box-sizing: border-box; /* Inclure le padding et la bordure dans la largeur totale */
+  max-width: 150%; /* Empêcher le débordement */
 }
 
 /* Groupes de formulaire */
@@ -29,6 +28,7 @@
   font-size: 0.9rem;
   color: #333;
 }
+
 
 /* Champs de saisie */
 .task-form input,

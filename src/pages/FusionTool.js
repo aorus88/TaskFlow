@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./FusionTool.css"; // Importer les styles spécifiques
+import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer"; // Importer le composant GlobalPomodoroTimer
 
 const FusionTool = ({ entries, onAddEntry }) => {
   const [formData, setFormData] = useState({
@@ -43,6 +44,8 @@ const FusionTool = ({ entries, onAddEntry }) => {
 
   return (
     <div className="fusion-tool">
+      <GlobalPomodoroTimer isPreview={true} /> {/* Conserver minuterie pomodoro sur fusion-tool  */}
+
       <h1>Suivi de Consommation de Cigarettes</h1>
       <form className="fusion-form">
         <label>
@@ -68,16 +71,21 @@ const FusionTool = ({ entries, onAddEntry }) => {
             onChange={(e) => handleChange("mood", e.target.value)}
           >
             <option value="">Sélectionnez</option>
-            <option value="heureux">Heureux</option>
-            <option value="triste">Triste</option>
-            <option value="stressé">Stressé</option>
-            <option value="calme">Calme</option>
-            <option value="fatigué">Fatigué</option>
-            <option value="énergique">Énergique</option>
-            <option value="anxieux">Anxieux</option>
-            <option value="colère">Colère</option>
-            <option value="ennuyé">Ennuyé</option>
-            <option value="excité">Excité</option>
+            <option value="heureux">Heureux 😀</option>
+            <option value="triste">Triste 😭</option>
+            <option value="stressé">Stressé 😣</option>
+            <option value="calme">Calme 😌</option>
+            <option value="fatigué">Fatigué 😴</option>
+            <option value="énergique">Énergique 😜</option>
+            <option value="anxieux">Anxieux 😖</option>
+            <option value="colère">Colère 😡</option>
+            <option value="ennuyé">Ennuyé 😩</option>
+            <option value="excité">Excité 🥳</option>
+            <option value="déprimé">Déprimé 😵</option>
+            <option value="détendu">Détendu 😌</option>
+            <option value="nerveux">Nerveux 😵‍💫</option>
+            <option value="apathique">Apathique 😵</option>
+            <option value="Indécis">Indécis 🧐</option>
           </select>
         </label>
         <label>

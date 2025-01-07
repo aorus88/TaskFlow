@@ -4,6 +4,8 @@ import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import TaskFilters_Sessions from '../components/TaskFilters_Sessions'; // Importer le nouveau composant TaskFilters_Sessions
 import './Sessions.css';
+import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer"; // Importer le composant GlobalPomodoroTimer
+
 
 const Sessions = () => {
   const [sessions, setSessions] = useState([]);
@@ -91,6 +93,8 @@ const Sessions = () => {
 
   return (
     <div className="sessions-page">
+     <GlobalPomodoroTimer isPreview={true} /> {/* Conserver minuterie pomodoro sur fusion-tool  */}
+
       <div className="sessions-header">
         <h1>Archive des sessions</h1>
       </div>

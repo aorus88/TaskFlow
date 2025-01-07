@@ -38,6 +38,17 @@
     color: rgb(242, 235, 235);;
 
   }
+
+  .menu-version {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgb(242, 235, 235);;
+
+  }
   
   /* Liste des liens */
   .menu-list {

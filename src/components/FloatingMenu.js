@@ -19,7 +19,8 @@ const FloatingMenu = () => {
 
       {isOpen && (
         <>
-          <h2 className="menu-title">TaskFlow 🛖</h2>
+          <h2 className="menu-title">TaskFlow 🛖 </h2>
+          <h3 className="menu-version">v1.2.6</h3>
           <ul className="menu-list">
             <li>
               <Link to="/" className="menu-link" onClick={handleLinkClick}>

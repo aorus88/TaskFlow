@@ -10,7 +10,8 @@
   padding: 16px;
   margin-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  zoom: 0.75;
+  zoom: 0.8;
+
 }
 
 .task-item.low {
