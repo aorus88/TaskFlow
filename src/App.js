@@ -28,7 +28,17 @@ const App = () => {
     sortOrder: "newest",
   });
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const taskCategories = ["Travail", "Personnel", "Santé", "Finance", "Éducation", "Divertissement", "Maison", "Achats", "Autre"];
+  const taskCategories = [
+    "Travail",
+    "Personnel", 
+    "Santé", 
+    "Finance", 
+    "Éducation", 
+    "Divertissement", 
+    "Maison", 
+    "Achats", 
+    "TaskFlow", 
+    "Autre"];
 
   const showFeedback = (message, type) => {
     setFeedback({ message, type });

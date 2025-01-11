@@ -32,6 +32,12 @@ const TaskList = ({
     if (filter.search && filter.search.trim() !== "") {
       return task.name.toLowerCase().includes(filter.search.toLowerCase());
     }
+
+      // Ajout du filtre des catégories
+  if (filter.categories && task.categories) {
+    return task.categories.includes(filter.categories);
+  }
+
     return true;
   });
 
@@ -80,18 +86,11 @@ const TaskList = ({
             onAddSubtask={onAddSubtask}
             onDeleteSubtask={onDeleteSubtask}
             onToggleSubtaskStatus={onToggleSubtaskStatus}
+            onUpdateTask={onSaveTask}
             isArchived={isArchived}
           />
         ))}
       </ul>
-
-      {isEditing && selectedTask && (
-        <EditTaskModal
-          task={selectedTask}
-          onClose={handleCloseModal}
-          onSave={handleSaveTask}
-        />
-      )}
     </div>
   );
 };

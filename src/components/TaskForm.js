@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./TaskForm.css"; // Centralisation des styles
 import { ca } from "date-fns/locale";
 
-const TaskForm = ({ onAddTask }) => {
+const TaskForm = ({ onAddTask, taskCategories }) => {
   const [formData, setFormData] = useState({
     name: "",
     date: new Date().toISOString().split("T")[0],
@@ -105,18 +105,13 @@ const TaskForm = ({ onAddTask }) => {
         value={formData.categories}
         onChange={(e) => handleChange("categories", e.target.value)}
       >
-        <option value="">Aucune</option>
-        <option value="Travail">Travail</option>
-        <option value="Personnel">Personnel</option>
-        <option value="Santé">Santé</option>
-        <option value="Finance">Finance</option>
-        <option value="Éducation">Éducation</option>
-        <option value="Divertissement">Divertissement</option>
-        <option value="Maison">Maison</option>
-        <option value="Achats">Achats</option>
-        <option value="Autre">Autre</option>
-      </select>
-
+            <option value="">Aucune</option>
+            {taskCategories.map((categories) => (
+              <option key={categories} value={categories}>
+                {categories}
+              </option>
+            ))}
+          </select>
         </label>
 
         <button type="button" onClick={handleAddTask}>

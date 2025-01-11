@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import "./EditTaskModal.css"; // Fichier CSS pour le style de la modale
 
 const EditTaskModal = ({ task, onClose, onSave, taskCategories = [] }) => {
-  const [name, setName] = useState(task.name);
-  const [date, setDate] = useState(task.date);
-  const [priority, setPriority] = useState(task.priority);
+ // Initialiser les catégories avec la valeur actuelle de la tâche
+ const [name, setName] = useState(task.name);
+ const [date, setDate] = useState(task.date);
+ const [priority, setPriority] = useState(task.priority);
+
+  // Assurez-vous que categories est initialisé correctement
   const [categories, setCategories] = useState(task.categories || "");
   const [totalTime, setTotalTime] = useState(task.totalTime || 0);
   const [currentSessionTime, setCurrentSessionTime] = useState(task.currentSessionTime || 0);
   const [newSubtask, setNewSubtask] = useState("");
-  const [showSessions, setShowSessions] = useState(false);
 
   // Fonction pour mettre à jour la tâche
   const handleUpdateTask = () => {
@@ -30,7 +32,6 @@ const EditTaskModal = ({ task, onClose, onSave, taskCategories = [] }) => {
 
     // Appelle la fonction "onSave" pour transmettre les modifications au parent
     onSave(updatedTask);
-
     // Ferme la modale
     onClose();
   };
@@ -94,20 +95,23 @@ const EditTaskModal = ({ task, onClose, onSave, taskCategories = [] }) => {
               <option value="high">Haute</option>
             </select>
           </label>
+
           <label>
-            Catégories :
-            <select
-              value={categories || ""}
-              onChange={(e) => setCategories(e.target.value)}
-            >
-              <option value="">Toutes</option>
-              {taskCategories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </label>
+          Catégories :
+          <select
+            value={categories}
+            onChange={(e) => setCategories(e.target.value)}
+          >
+            <option value="">Aucune</option>
+            {taskCategories && taskCategories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </label>
+
+
           <label>
             Total sessions (minutes) :
             <div className="readonly-value">

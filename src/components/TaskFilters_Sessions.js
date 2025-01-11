@@ -74,13 +74,13 @@ const TaskFilters_Sessions = ({ filter = {}, setFilter = () => {}, tasks = [] })
           <label>
             Catégorie :
             <select
-              value={filter.category || ""}
-              onChange={(e) => handleChange("category", e.target.value)}
+              value={filter.categories || ""}
+              onChange={(e) => handleChange("categories", e.target.value)}
             >
               <option value="">Toutes</option>
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
+              {categories.map((categories) => (
+                <option key={categories} value={categories}>
+                  {categories}
                 </option>
               ))}
             </select>

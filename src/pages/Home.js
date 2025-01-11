@@ -77,7 +77,7 @@ const Home = ({
       return false;
     }
     if (filter.categories && !task.categories.includes(filter.categories)) {
-      return false;
+      return task.categories.includes(filter.categories);
     }
     if (filter.search && !task.name.toLowerCase().includes(filter.search.toLowerCase())) {
       return false;
@@ -137,6 +137,7 @@ const Home = ({
           task={selectedTask}
           onClose={() => setIsEditing(false)}
           onSave={handleSaveTask}
+          taskCategories={taskCategories}
         />
       )}
     </div>
