@@ -18,8 +18,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/taskflowDB')
     console.error('Erreur de connexion à MongoDB :', err);
 });
 
-//définir le shéma du temps 
-
+//définir le shéma du temps de session
 const sessionSchema = new mongoose.Schema({
     duration: Number,
     date: Date,
@@ -78,7 +77,10 @@ app.get('/tasks', async (req, res) => {
     }
   });
 
-// b) Ajouter une nouvelle tâche
+// routes pour ajouter des tâches à TaskFlow
+
+// 1)
+//  Ajouter une nouvelle tâche
 app.post('/tasks', async (req, res) => {
     const { name, date, priority, categories, subtasks } = req.body;
     try {
@@ -96,7 +98,8 @@ app.post('/tasks', async (req, res) => {
     }
 });
 
-// c) Mettre à jour une tâche
+// 2)
+// Mettre à jour une tâche
 app.put('/tasks/:id', async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
@@ -108,7 +111,8 @@ app.put('/tasks/:id', async (req, res) => {
     }
 });
 
-// d) Supprimer une tâche
+// 3)
+//  Supprimer une tâche
 app.delete('/tasks/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -119,7 +123,8 @@ app.delete('/tasks/:id', async (req, res) => {
     }
 });
 
-// e) Ajouter une sous-tâche à une tâche existante
+// 1a)
+//  Ajouter une sous-tâche à une tâche existante
 app.post('/tasks/:id/subtasks', async (req, res) => {
     const { id } = req.params;
     const { name, priority } = req.body;
@@ -143,7 +148,9 @@ app.post('/tasks/:id/subtasks', async (req, res) => {
     }
 });
 
-// f) Mettre à jour le statut d'une sous-tâche
+
+//  1b) 
+//  Mettre à jour le statut d'une sous-tâche
 app.put('/tasks/:taskId/subtasks/:subtaskId', async (req, res) => {
     const { taskId, subtaskId } = req.params;
     const { archived } = req.body;
@@ -166,7 +173,35 @@ app.put('/tasks/:taskId/subtasks/:subtaskId', async (req, res) => {
     }
 });
 
-// g) Ajouter une session de temps à une tâche
+/// 1c)
+//  Route pour supprimer une sous-tache 
+
+app.delete('/tasks/:taskId/subtasks/:subtaskId', async (req, res) => {
+    const { taskId, subtaskId } = req.params;
+    try {
+      const task = await Task.findById(taskId);
+      if (!task) {
+        return res.status(404).json({ error: 'Tâche non trouvée.' });
+      }
+      const subtask = task.subtasks.id(subtaskId);
+      if (!subtask) {
+        return res.status(404).json({ error: 'Sous-tâche non trouvée.' });
+      }
+      subtask.remove();
+      await task.save();
+      res.json({ message: 'Sous-tâche supprimée avec succès.' });
+    } catch (err) {
+      console.error('Erreur lors de la suppression de la sous-tâche :', err);
+      res.status(500).json({ error: 'Erreur lors de la suppression de la sous-tâche.' });
+    }
+  });
+
+
+
+// routes pour les sessions - pomodoro timer
+
+// 2a) 
+// Ajouter une session de temps à une tâche
 app.post('/tasks/:id/sessions', async (req, res) => {
     const { id } = req.params;
     const { duration, date, taskName } = req.body;
@@ -196,7 +231,8 @@ app.post('/tasks/:id/sessions', async (req, res) => {
     }
   });
 
-// Route pour récupérer les sessions d'une tâche spécifique
+//  2b)
+//  Route pour récupérer les sessions d'une tâche spécifique
 app.get('/tasks/:id/sessions', async (req, res) => {
   const { id } = req.params;
   try {
@@ -219,6 +255,7 @@ app.get('/sessions', async (req, res) => {
     }
   });
 
+  //2c)
   //route pour supprimer les sessions d'une tâche spécifique 
   app.delete('/tasks/:taskId/sessions/:sessionId', async (req, res) => {
     const { taskId, sessionId } = req.params;
@@ -237,8 +274,10 @@ app.get('/sessions', async (req, res) => {
     }
   });
 
+
 // Routes pour les entrées de consommation de cigarettes
-// a) Récupérer toutes les entrées
+
+// 3a) Récupérer toutes les entrées
 app.get('/consumption-entries', async (req, res) => {
     try {
         const entries = await ConsumptionEntry.find();
@@ -287,6 +326,11 @@ app.delete('/consumption-entries/:id', async (req, res) => {
         res.status(500).json({ error: 'Erreur lors de la suppression de l\'entrée.' });
     }
 });
+
+
+
+
+
 
 // 6) Exportation de l'application
 module.exports = app;

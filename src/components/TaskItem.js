@@ -4,55 +4,52 @@ import EditTaskModal from "./EditTaskModal"; // Import de la modale
 
 const TaskItem = ({
   task,
-  onUpdateTask, // Ajoutez cette ligne
+  onUpdateTask,
   onDeleteTask,
   onArchiveTask,
   onAddSubtask,
   onDeleteSubtask,
-  onToggleSubtaskStatus, // Ajoutez cette ligne
+  onToggleSubtaskStatus,
   isArchived,
 }) => {
-
-  // Utilisez useEffect pour afficher un message lorsque la tâche est mise à jour
-  useEffect(() => {
-    console.log("Task updated:", task);
-  }, [task]);
-
-   // Ajouter la fonction de formatage de temps (hh:mm)
-   const formatTime = (minutes) => {
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    if (hours > 0) {
-      return `${hours}h ${mins}min`;
-    }
-    return `${mins}min`;
-  };
-  
-
-  // Récupérer la durée de la dernière session
-  const lastSessionDuration = task.sessions && task.sessions.length > 0
-    ? task.sessions[task.sessions.length - 1].duration
-    : 0;
-
   const [newSubtaskText, setNewSubtaskText] = useState("");
-  const [expanded, setExpanded] = useState(false); // État pour gérer l'expansion des sous-tâches
+  const [expanded, setExpanded] = useState(false); // Initialiser expanded à false
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [hiddenSubtasks, setHiddenSubtasks] = useState([]);
 
-  const [isModalOpen, setIsModalOpen] = useState(false); // État pour gérer l'ouverture de la modale
-  const [selectedTask, setSelectedTask] = useState(null); // État pour stocker la tâche en cours d'édition
-
-  // Fonction pour ouvrir la modale
   const openEditModal = (task) => {
-    setSelectedTask(task); // Définit la tâche à modifier
-    setIsModalOpen(true); // Ouvre la modale
+    setSelectedTask(task);
+    setIsModalOpen(true);
   };
 
-  // Fonction pour fermer la modale
   const closeEditModal = () => {
-    setSelectedTask(null); // Réinitialise la tâche sélectionnée
-    setIsModalOpen(false); // Ferme la modale
+    setSelectedTask(null);
+    setIsModalOpen(false);
   };
 
-  // Fonction pour formater les dates au format jj.mm.aaaa
+  const handleAddSubtask = () => {
+    if (!newSubtaskText.trim()) return;
+    onAddSubtask(task.id, {
+      id: Date.now(),
+      name: newSubtaskText,
+      completed: false,
+      archived: "open",
+    });
+    setNewSubtaskText("");
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleAddSubtask();
+    }
+  };
+
+  useEffect(() => {
+    const savedHiddenSubtasks = JSON.parse(localStorage.getItem(`hiddenSubtasks-${task.id}`)) || [];
+    setHiddenSubtasks(savedHiddenSubtasks);
+  }, [task.id]);
+
   const formatDate = (dateString) => {
     if (!dateString) return "Date inconnue";
     const date = new Date(dateString);
@@ -62,47 +59,41 @@ const TaskItem = ({
     return `${day}.${month}.${year}`;
   };
 
-  // Calculer le pourcentage de progression des sous-tâches
   const calculateProgress = () => {
     const totalSubtasks = task.subtasks.length;
     const completedSubtasks = task.subtasks.filter((subtask) => subtask.archived === "closed").length;
     return totalSubtasks > 0 ? (completedSubtasks / totalSubtasks) * 100 : 0;
   };
 
-  // Fonction pour vérifier l'unicité des sous-tâches
-  const isSubtaskUnique = (task, subtaskName) => {
-    return !task.subtasks.some(subtask => subtask.name === subtaskName);
+  const formatTime = (minutes) => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    if (hours > 0) {
+      return `${hours}h ${mins}min`;
+    }
+    return `${mins}min`;
   };
 
-  // Ajouter une sous-tâche
-  const handleAddSubtask = () => {
-    if (!newSubtaskText.trim()) return;
-    if (isSubtaskUnique(task, newSubtaskText)) {
-      onAddSubtask(task.id, {
-        id: Date.now(),
-        name: newSubtaskText,
-        completed: false,
-        archived: "open", // Nouveau champ
-      });
-      setNewSubtaskText("");
-    } else {
-      console.error('La sous-tâche existe déjà.');
+  const lastSessionDuration = task.sessions && task.sessions.length > 0
+    ? task.sessions[task.sessions.length - 1].duration
+    : 0;
+
+  const handleToggleSubtaskStatus = (taskId, subtaskId, status) => {
+    onToggleSubtaskStatus(taskId, subtaskId, status);
+    if (status === "closed") {
+      setTimeout(() => {
+        setHiddenSubtasks((prev) => {
+          const updatedHiddenSubtasks = [...prev, subtaskId];
+          localStorage.setItem(`hiddenSubtasks-${taskId}`, JSON.stringify(updatedHiddenSubtasks));
+          return updatedHiddenSubtasks;
+        });
+      }, 5000); // Masquer la sous-tâche après 5 secondes
     }
   };
 
-  // Validation de la sous-tâche avec "Entrée"
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleAddSubtask();
-    }
+  const handleDeleteSubtask = (taskId, subtaskId) => {
+    onDeleteSubtask(taskId, subtaskId);
   };
-
-  // Utilisez useEffect pour initialiser expanded à true si des sous-tâches existent
-  useEffect(() => {
-    if (task.subtasks.length > 0) {
-      setExpanded(true);
-    }
-  }, [task.subtasks.length]);
 
   return (
     <li className="task-item">
@@ -136,13 +127,16 @@ const TaskItem = ({
         <p>
           <strong>Dernière session :</strong> {formatTime(lastSessionDuration)}
         </p>
-        <div className="progress-bar">
+
+        <div className="progress-bar-taskitem">
           <div
-            className="progress-bar-fill"
+            className="progress-bar-taskitem-fill"
             style={{ width: `${calculateProgress()}%` }}
           ></div>
         </div>
         <p>Progression : {Math.round(calculateProgress())}%</p>
+
+        
         {task.subtasks.length > 0 && (
           <div className="subtasks-section">
             <button onClick={() => setExpanded(!expanded)}>
@@ -151,20 +145,22 @@ const TaskItem = ({
             {expanded && (
               <div className="subtask-list">
                 {task.subtasks.map((subtask) => (
-                  <div key={subtask.id} className="subtask-item">
-                    <input
-                      type="checkbox"
-                      checked={subtask.archived === "closed"}
-                      onChange={() => onToggleSubtaskStatus(task.id, subtask.id, subtask.archived === "open" ? "closed" : "open")}
-                    />
-                    {subtask.name}
-                    <button className="edit-icon" onClick={() => openEditModal(subtask)}>
-                      ✏️
-                    </button>
-                    <button className="delete-icon" onClick={() => onDeleteSubtask(task.id, subtask.id)}>
-                      🗑️
-                    </button>
-                  </div>
+                  !hiddenSubtasks.includes(subtask.id) && (
+                    <div key={subtask.id} className="subtask-item">
+                      <input
+                        type="checkbox"
+                        checked={subtask.archived === "closed"}
+                        onChange={() => handleToggleSubtaskStatus(task.id, subtask.id, subtask.archived === "open" ? "closed" : "open")}
+                      />
+                      {subtask.name}
+                      <button className="edit-icon" onClick={() => openEditModal(subtask)}>
+                        ✏️
+                      </button>
+                      <button className="delete-icon" onClick={() => handleDeleteSubtask(task.id, subtask.id)}>
+                        🗑️
+                      </button>
+                    </div>
+                  )
                 ))}
                 <input
                   type="text"
@@ -190,5 +186,6 @@ const TaskItem = ({
       </div>
     </li>
   );
-}
+};
+
 export default TaskItem;

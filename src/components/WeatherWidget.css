@@ -49,7 +49,7 @@
 body.dark .weather-widget {
   background-color: #1e1e1e;
   border-color: #2d2d2d;
-  color: #912222;
+  color: #fdfdfd;
 }
 
 /* Styles dynamiques pour les conditions météorologiques */
@@ -74,6 +74,16 @@ body.dark .weather-widget {
 }
 
 .weather-widget.Vents {
+  background: linear-gradient(to right, #bdc3c7, #2c3e50);
+  color: #333;
+}
+
+.weather-widget.Orages {
+  background: linear-gradient(to right, #f3904f, #3b4371);
+  color: #fff;
+}
+
+.weather-widget.brouillard {
   background: linear-gradient(to right, #bdc3c7, #2c3e50);
   color: #333;
 }

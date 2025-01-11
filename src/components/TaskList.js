@@ -11,9 +11,9 @@ const TaskList = ({
   onDeleteTask,
   onSaveTask,
   onArchiveTask,
-  onToggleSubtaskStatus, // Ajoutez cette ligne
-  isArchived = false, // Indique si les tâches affichées sont des archives
-  filter = {}, // Ajoutez une valeur par défaut pour filter
+  onToggleSubtaskStatus,
+  isArchived = false,
+  filter = {},
 }) => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -60,17 +60,15 @@ const TaskList = ({
       name: updatedTask.name,
       date: updatedTask.date,
       priority: updatedTask.priority,
-      // ...et tout ce que tu veux mettre à jour
     });
     setIsEditing(false);
     setSelectedTask(null);
-    // Puis on ferme la modale
     handleCloseModal();
   };
 
   return (
-    <div className="task-list">
-      <ul>
+    <div className="task-list-container">
+      <ul className="task-list">
         {sortedTasks.map((task) => (
           <TaskItem
             key={task.id}
@@ -81,20 +79,17 @@ const TaskList = ({
             onArchiveTask={onArchiveTask}
             onAddSubtask={onAddSubtask}
             onDeleteSubtask={onDeleteSubtask}
-            onToggleSubtaskStatus={onToggleSubtaskStatus} // Ajoutez cette ligne
-            onUpdateTask={onSaveTask} // Ajoutez cette ligne
+            onToggleSubtaskStatus={onToggleSubtaskStatus}
             isArchived={isArchived}
           />
         ))}
       </ul>
 
-      {/* Modale d'édition */}
       {isEditing && selectedTask && (
         <EditTaskModal
           task={selectedTask}
           onClose={handleCloseModal}
-          onSave={handleSaveTask}  
-          /* ICI on transmet handleSaveTask */
+          onSave={handleSaveTask}
         />
       )}
     </div>

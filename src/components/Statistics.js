@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import "./Statistics.css";
 import { TimerContext } from "../context/TimerContext";
 
-const Statistics = ({ tasks, isDarkMode, toggleDarkMode, customDuration }) => {
+const Statistics = ({ tasks, isDarkMode, toggleDarkMode, }) => {
   const { timeLeft } = useContext(TimerContext);
 
   // Définition des dates repères
@@ -20,17 +20,6 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode, customDuration }) => {
     task.status !== "closed" && !task.archivedAt
   );
 
-  const completedToday = tasks.filter((task) => {
-    if (!task.archivedAt || task.archived !== "closed") return false;
-    const archivedDate = new Date(task.archivedAt);
-    return archivedDate >= today && archivedDate <= endOfDay;
-  });
-
-  const createdToday = tasks.filter((task) => {
-    if (!task.addedAt) return false;
-    const addedDate = new Date(task.addedAt);
-    return addedDate >= today && addedDate <= endOfDay;
-  });
 
   const highMediumPriorityOpen = tasks.filter((task) => 
     (task.priority === "high" || task.priority === "medium") 
@@ -56,21 +45,15 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode, customDuration }) => {
   const sessionsYesterday = tasks.flatMap((task) => task.sessions || [])
     .filter((session) => {
       const sessionDate = new Date(session.date);
-      return sessionDate >= yesterday && sessionDate < today;
+      return sessionDate >= yesterday && sessionDate < new Date(today.getTime() + 86400000);
     });
 
-  // Sessions totales
-  const totalSessions = tasks.flatMap(task => task.sessions || []);
 
   // Calcul du temps total des sessions du jour
   const totalSessionTimeToday = sessionsToday.reduce((total, session) => total + session.duration, 0);
 
-  // Calcul du temps moyen par session
-  const averageSessionTime = totalSessions.length > 0 ? totalSessions.reduce((total, session) => total + session.duration, 0) / totalSessions.length : 0;
-
-  // Calcul du temps moyen par jour
-  const daysWithSessions = [...new Set(totalSessions.map(session => new Date(session.date).toISOString().split("T")[0]))].length;
-  const averageSessionTimePerDay = daysWithSessions > 0 ? totalSessions.reduce((total, session) => total + session.duration, 0) / daysWithSessions : 0;
+  // Calcul du temps total des sessions d'hier
+  const totalSessionTimeYesterday = sessionsYesterday.reduce((total, session) => total + session.duration, 0);
 
   // Format du temps en heures et minutes
   const formatTime = (mins) => {
@@ -87,13 +70,21 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode, customDuration }) => {
     return `${hours}h ${minutes}min ${seconds}sec`;
   };
 
-  // Calcul de la progression des sessions
-  const progress = ((customDuration * 60 - timeLeft) / (customDuration * 60)) * 100;
+// Calcul de la progression des sessions
+const customDuration = 25; // durée personnalisée en minutes
+const totalSessionTime = customDuration * 60; // conversion en secondes
+const timeElapsed = totalSessionTime - timeLeft; // temps écoulé en secondes
+const progress = (timeElapsed / totalSessionTime) * 100; // pourcentage de progression
+const percentage = progress.toFixed(2); // formatage à deux décimales
 
+  // Vérification pour éviter NaN
+  const validProgress = isNaN(progress) ? 0 : progress;
+
+  
   return (
     <div className="statistics-container">
       <div className="statistics-header">
-        <h2>Statistiques 📈</h2>
+        <h2>Statistiques 📈 - TaskFlow 1.2.6</h2>
       </div>
 
       <div className="statistics-grid">
@@ -103,65 +94,38 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode, customDuration }) => {
         </div>
 
         <div className="stat-card">
-          <h3>Tâches Terminées Aujourd'hui</h3>
-          <p>✅ {completedToday.length}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Tâches Créées Aujourd'hui</h3>
-          <p>🆕 {createdToday.length}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Tâches Priorité Haute et Moyenne (Ouvertes)</h3>
+          <h3>Hautes / Moyennes (Ouvertes)</h3>
           <p>🔴🟠 {highMediumPriorityOpen.length}</p>
         </div>
+    
 
         <div className="stat-card">
-          <h3>Sessions du Jour</h3>
-          <p>⏱️ {sessionsToday.length}</p>
+          <h3>Sessions (Hier) </h3>
+          <p>⏱️ {formatTime(totalSessionTimeYesterday)}</p>
         </div>
 
         <div className="stat-card">
-          <h3>Sessions Hier</h3>
-          <p>⏱️ {sessionsYesterday.length}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Total sessions (Aujourd'hui)</h3>
+          <h3>Sessions (Aujourd'hui)</h3>
           <p>🕒 {formatTime(totalSessionTimeToday)}</p>
         </div>
 
-        <div className="stat-card">
-          <h3>Sessions Totales</h3>
-          <p>📊 {totalSessions.length}</p>
-        </div>
 
         <div className="stat-card">
-          <h3>Time Left ⏯️</h3>
+          <h3>⏯️</h3>
           <p className="timer-display">{formatTimeWithSeconds(timeLeft)}</p>
         </div>
 
-        <div className="stat-card">
-          <h3>Moyenne Pomodoro par session</h3>
-          <p>🏔️ {formatTime(averageSessionTime)}</p>
-        </div>
 
-        <div className="stat-card">
-          <h3>Moyenne Pomodoro par jour</h3>
-          <p>🏔️ {formatTime(averageSessionTimePerDay)}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Progression de la session</h3>
+     <div className="stat-card">
+          <h3>⏯️</h3>
           <div className="progress-bar-container">
-            <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+            <div className="progress-bar" style={{ width: `${validProgress}%` }}></div>
           </div>
-          <p>{progress.toFixed(2)}%</p>
+          <p>{validProgress.toFixed(2)}%</p>
         </div>
 
         <div className="stat-card">
-          <h3>Dark Mode</h3>
+          <h3>Mode sombre</h3>
           <button onClick={toggleDarkMode} className="dark-mode-button">
 
             

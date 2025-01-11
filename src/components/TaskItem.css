@@ -1,5 +1,6 @@
 /* Conteneur principal de la tâche */
 .task-item {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -8,52 +9,53 @@
   padding: 16px;
   margin-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  zoom: 0.8;
+  zoom: 0.9;
+}
+
+
+
+/* Contenu de la tâche */
+.task-content {
+  position: relative;
+}
+
+/* Style sombre pour task-content */
+body.dark .task-content {
+  color: #fdfdfd;
 }
 
 /* En-tête de la tâche */
 .task-item-header {
-  font-size: 1.2em;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Style pour le nom de la tâche */
 .task-name {
-  font-size: 1.2em;
+  font-size: 1.3em;
   font-weight: bold;
   color: #333;
   margin-bottom: 8px;
 }
 
-/* Style pour les informations de la tâche */
-.task-item p {
-  margin: 4px 0;
-  color: #555;
-}
-
-/* Barre de progression */
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  background: #e0e0e0;
-  border-radius: 4px;
-  overflow: hidden;
-  margin: 8px 0;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  background: #76c7c0;
-  transition: width 0.3s ease;
+/* Style sombre pour task-name */
+body.dark .task-name {
+  color: #fdfdfd;
 }
 
 /* Boutons d'action */
 .task-buttons {
+  position: absolute;
+  top: 16px;
+  right: 16px;
   display: flex;
   gap: 8px;
-  margin-top: 10px;
+}
+
+/* Mode sombre pour les boutons d'action */
+body.dark .task-buttons {
+  color: #fdfdfd;
 }
 
 .task-buttons button {
@@ -82,6 +84,39 @@
 
 .task-buttons button:hover {
   opacity: 0.8;
+}
+
+/* Style pour les informations de la tâche */
+.task-item p {
+  margin: 2px 0;
+  color: #050404c7;
+}
+
+/* Style sombre pour les informations de la tâche */
+body.dark .task-item p {
+  color: #e6cbcbc7;
+}
+
+/* Barre de progression */
+.progress-bar-taskitem {
+  height: 10px;
+  width: 100%;
+  background: #e0e0e0;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 5px;
+  margin-top: 5px;
+
+}
+
+.progress-bar-taskitem-fill {
+  height: 100%;
+width: 50%;
+  zoom: 0.5 ;
+  background: #3782bb;
+  transition: width 0.3s ease;
+
 }
 
 /* Conteneur des sous-tâches */

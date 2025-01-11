@@ -20,7 +20,6 @@ const FloatingMenu = () => {
       {isOpen && (
         <>
           <h2 className="menu-title">TaskFlow 🛖 </h2>
-          <h3 className="menu-version">v1.2.6</h3>
           <ul className="menu-list">
             <li>
               <Link to="/" className="menu-link" onClick={handleLinkClick}>
@@ -30,19 +29,19 @@ const FloatingMenu = () => {
 
             <li>
               <Link to="/archives" className="menu-link" onClick={handleLinkClick}>
-                📁 Archives
+                ✅ Tâches terminées
               </Link>
             </li>
 
             <li>
               <Link to="/fusion-tool" className="menu-link" onClick={handleLinkClick}>
-                📊 Fusion Tool
+                🚬 Historique de consommation
               </Link>
             </li>
 
             <li>
               <Link to="/sessions" className="menu-link" onClick={handleLinkClick}>
-                📅 Sessions
+                ⏱️ Sessions
               </Link>
             </li>
 

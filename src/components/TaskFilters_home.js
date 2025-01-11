@@ -52,6 +52,38 @@ const TaskFilters_home = ({ filter = {}, setFilter = () => {} }) => {
             </select>
           </label>
         </div>
+
+        {/* Filtre de recherche */}
+        <div className="filter-group">
+          <label>
+            Recherche :
+            <input
+              type="text"
+              value={filter.search || ""}
+              onChange={(e) => handleChange("search", e.target.value)}
+              placeholder="Rechercher une tâche..."
+            />
+          </label>
+          </div>
+
+        {/* Filtre de catégorie */}
+        <div className="filter-group">
+          <label>
+            Catégorie :
+            <select
+              value={filter.category || ""}
+              onChange={(e) => handleChange("category", e.target.value)}
+            >
+              <option value="">Toutes</option>
+              <option value="work">Travail</option>
+              <option value="personal">Personnel</option>
+              <option value="other">Autre</option>
+            </select>
+          </label>
+          </div>
+
+
+
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import Statistics from '../components/Statistics';
 
 export const TimerContext = createContext();
 
@@ -65,7 +66,7 @@ export const TimerProvider = ({ children }) => {
         sessionTime,
         setSessionTime,
         resetTimer,
-      }}
+      }}S
     >
       {children}
     </TimerContext.Provider>

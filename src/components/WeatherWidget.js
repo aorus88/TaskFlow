@@ -21,6 +21,9 @@ const WeatherWidget = () => {
     "mist": "Brume",
     "fog": "Brouillard",
     "light rain": "Pluie légère",
+    "overcast clouds": "Nuages couverts",
+    "freezing" : "Gel",
+    "drizzle" : "Brouillard",
   };
 
   const getWeatherClass = (condition) => {
@@ -30,6 +33,8 @@ const WeatherWidget = () => {
     if (condition.includes("snow")) return "Neige";
     if (condition.includes("wind")) return "Vents";
     if (condition.includes("fog")) return "Vents";
+    if (condition.includes("freezing")) return "Gel";
+    if (condition.includes("drizzle")) return "Brouillard";
     return ""; // Classe par défaut
   };
   
@@ -38,7 +43,7 @@ const WeatherWidget = () => {
     const fetchWeather = async () => {
       try {
         const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${apiKey}`
+          `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${apiKey}&lang=fr`
         );
         if (!response.ok) throw new Error(`Erreur API : ${response.status}`);
         const data = await response.json();
@@ -77,6 +82,10 @@ const WeatherWidget = () => {
       ? "❄️"
       : weatherClass === "Vents"
       ? "💨"
+      : weatherClass === "Gel"
+      ? "❄️"
+      : weatherClass === "Brouillard"
+      ? "🌫️"
       : "🌈";
 
   // Fonction pour obtenir l'emoji en fonction de l'heure actuelle

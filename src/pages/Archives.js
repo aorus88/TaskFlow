@@ -41,6 +41,17 @@ const Archives = ({
     return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
   });
 
+  // Filtrer les sous-tâches archivées
+  const archivedSubtasks = archivedTasks.flatMap(task =>
+    task.subtasks.filter(subtask => subtask.archived === "closed").map(subtask => ({
+      ...subtask,
+      parentTaskName: task.name,
+      parentTaskId: task._id,
+    }))
+  );
+
+  console.log("Sous-tâches archivées :", archivedSubtasks);
+
   return (
     <div className="archives-page">
       <h1>Tâches Archivées</h1>
@@ -63,7 +74,7 @@ const Archives = ({
         </div>
         <ul className="archived-tasks-list">
           {sortedTasks.map((task) => (
-            <li key={task.id} className="archived-task-item">
+            <li key={task._id} className="archived-task-item">
               <div className="task-header">
                 <strong>Statut :</strong> 🔴 Closed
                 <div className="task-details">
@@ -82,12 +93,31 @@ const Archives = ({
               </div>
               <div className="task-time-spent">
                 <span>
-                  {Math.floor((task.timeSpent || 0) / 60)} min passées
+                  {Math.floor((task.totalTime || 0) / 60)} min passées
                 </span>
-
-                  <hr className="task-separator" />
+                <hr className="task-separator" />
               </div>
-            
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="archived-subtasks">
+        <h2 className="archived-subtasks-title">Sous-tâches Archivées</h2>
+        <ul className="archived-subtasks-list">
+          {archivedSubtasks.map((subtask) => (
+            <li key={subtask._id} className="archived-subtask-item">
+              <div className="subtask-header">
+                <strong>Sous-tâche :</strong> {subtask.name}
+                <div className="subtask-details">
+                  <span className="subtask-parent-task">
+                    Tâche parente : {subtask.parentTaskName}
+                  </span>
+                </div>
+              </div>
+              <div className="subtask-archived-date">
+                Archivé le : {formatDate(subtask.archivedAt)}
+              </div>
             </li>
           ))}
         </ul>

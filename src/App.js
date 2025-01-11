@@ -154,9 +154,19 @@ const App = () => {
       console.error('Erreur :', error);
     }
   };
-
-  const deleteSubtask = (taskId, subtaskId) => {
-    dispatch({ type: "DELETE_SUBTASK", payload: { taskId, subtaskId } });
+  
+  const deleteSubtask = async (taskId, subtaskId) => {
+    try {
+      const response = await fetch(`http://192.168.50.241:4000/tasks/${taskId}/subtasks/${subtaskId}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error('Erreur lors de la suppression de la sous-tâche.');
+      }
+      await fetchTasks();
+    } catch (error) {
+      console.error('Erreur :', error);
+    }
   };
 
   const fetchConsumptionEntries = useCallback(async () => {
@@ -225,6 +235,9 @@ const App = () => {
       <FeedbackMessage message={feedback.message} type={feedback.type} />
         <FloatingMenu addTask={addTask} />
         <Routes>
+         
+        
+         
           <Route
             path="/"
             element={
@@ -257,6 +270,7 @@ const App = () => {
                 onFetchArchivedTasks={() => fetchTasks(true)}
               />
             }
+
           />
           <Route path="/fusion-tool" element={<FusionTool entries={state.consumptionEntries} onAddEntry={addConsumptionEntry} />} />
           <Route path="/sessions" element={<Sessions />} />
