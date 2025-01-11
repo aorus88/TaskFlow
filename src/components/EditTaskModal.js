@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import "./EditTaskModal.css"; // Fichier CSS pour le style de la modale
 
-const EditTaskModal = ({ task, onClose, onSave }) => {
+const EditTaskModal = ({ task, onClose, onSave, taskCategories = [] }) => {
   const [name, setName] = useState(task.name);
   const [date, setDate] = useState(task.date);
   const [priority, setPriority] = useState(task.priority);
-  const [categories, setCategories] = useState(
-    Array.isArray(task.categories) ? task.categories.join(", ") : ""
-  );
+  const [categories, setCategories] = useState(task.categories || "");
   const [totalTime, setTotalTime] = useState(task.totalTime || 0);
   const [currentSessionTime, setCurrentSessionTime] = useState(task.currentSessionTime || 0);
   const [newSubtask, setNewSubtask] = useState("");
@@ -25,7 +23,7 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
       name,
       date,
       priority,
-      categories: categories.split(",").map((cat) => cat.trim()), // Transforme les catégories en tableau
+      categories, // Utiliser les catégories sélectionnées
       totalTime: parseInt(totalTime, 10), // Convertit le temps total en entier
       currentSessionTime: parseInt(currentSessionTime, 10), // Convertit le temps de session en entier
     };
@@ -97,39 +95,36 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
             </select>
           </label>
           <label>
-            Catégories (séparées par des virgules) :
-            <input
-              type="text"
-              value={categories}
+            Catégories :
+            <select
+              value={categories || ""}
               onChange={(e) => setCategories(e.target.value)}
-              placeholder="ex: Travail, Personnel"
-            />
+            >
+              <option value="">Toutes</option>
+              {taskCategories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
           </label>
-
           <label>
-  Total sessions (minutes) :
-  <div className="readonly-value">
-    {totalTime}
-  </div>
-
-</label>
+            Total sessions (minutes) :
+            <div className="readonly-value">
+              {totalTime}
+            </div>
+          </label>
           <label>
             Dernière session (minutes) :
             <div className="readonly-value">
               {currentSessionTime}
             </div>
-            
-            </label>
-
-
+          </label>
         </form>
         <div className="modal-buttons">
           <button onClick={handleUpdateTask}>Sauvegarder</button>
           <button onClick={onClose}>Annuler</button>
-
-          
         </div>
-
         <div className="modal-subtasks">
           <form onKeyDown={handleKeyDown} className="modal-form">
             <input

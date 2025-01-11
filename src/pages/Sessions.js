@@ -14,7 +14,7 @@ const Sessions = () => {
     date: '',
     sortOrder: 'newest',
     taskId: '',
-    category: '',
+    categories: '',
   });
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const Sessions = () => {
     if (filter.taskId && session.taskId !== filter.taskId) {
       return false;
     }
-    if (filter.category && !session.categories.includes(filter.category)) {
+    if (filter.categories && !session.categories.includes(filter.categories)) {
       return false;
     }
     return true;

@@ -28,7 +28,7 @@ const App = () => {
     sortOrder: "newest",
   });
   const [isDarkMode, setIsDarkMode] = useState(false);
-
+  const taskCategories = ["Travail", "Personnel", "Santé", "Finance", "Éducation", "Divertissement", "Maison", "Achats", "Autre"];
 
   const showFeedback = (message, type) => {
     setFeedback({ message, type });
@@ -232,17 +232,14 @@ const App = () => {
   return (
     <TimerProvider>
       <div className={`App ${isDarkMode ? 'dark' : ''}`}>
-      <FeedbackMessage message={feedback.message} type={feedback.type} />
+        <FeedbackMessage message={feedback.message} type={feedback.type} />
         <FloatingMenu addTask={addTask} />
         <Routes>
-         
-        
-         
           <Route
             path="/"
             element={
               <Home
-                tasks={state.tasks} // Passer toutes les tâches sans filtre
+                tasks={state.tasks}
                 onAddTask={addTask}
                 onEditTask={updateTask}
                 onDeleteTask={deleteTask}
@@ -256,8 +253,9 @@ const App = () => {
                 fetchTasks={fetchTasks}
                 updateTaskTime={updateTaskTime}
                 setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
-                isDarkMode={isDarkMode} // Passer l'état isDarkMode
-                toggleDarkMode={toggleDarkMode} // Passer la fonction toggleDarkMode
+                isDarkMode={isDarkMode}
+                toggleDarkMode={toggleDarkMode}
+                taskCategories={taskCategories} // Passer les catégories en prop
               />
             }
           />

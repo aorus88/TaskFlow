@@ -6,7 +6,7 @@ import EditTaskModal from "../components/EditTaskModal";
 import WeatherWidget from "../components/WeatherWidget";
 import Clock from "../components/Clock";
 import Statistics from "../components/Statistics";
-import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer"; // Importer le composant GlobalPomodoroTimer
+import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer";
 import "./Home.css";
 
 const Home = ({
@@ -27,7 +27,7 @@ const Home = ({
   setSelectedTaskId,
   isDarkMode,
   toggleDarkMode,
-  
+  taskCategories,
 }) => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -40,7 +40,6 @@ const Home = ({
     fetchTasksCallback();
   }, [fetchTasksCallback]);
 
-  // Log pour vérifier les tâches reçues
   useEffect(() => {
     console.log("Home.js - Tâches reçues :", tasks);
     console.log("Home.js - Tâches archivées reçues :", archivedTasks);
@@ -66,20 +65,44 @@ const Home = ({
 
   const handleAddTask = async (task) => {
     await onAddTask(task);
-    setSelectedTaskId(task._id);
+    setSelectedTaskId(task.id);
   };
+
+  // Appliquer les filtres aux tâches
+  const filteredTasks = tasks.filter((task) => {
+    if (filter.priority && task.priority !== filter.priority) {
+      return false;
+    }
+    if (filter.date && task.date !== filter.date) {
+      return false;
+    }
+    if (filter.categories && !task.categories.includes(filter.categories)) {
+      return false;
+    }
+    if (filter.search && !task.name.toLowerCase().includes(filter.search.toLowerCase())) {
+      return false;
+    }
+    return true;
+  });
+
+  // Trier les tâches filtrées
+  const sortedTasks = filteredTasks.sort((a, b) => {
+    const dateA = new Date(a.addedAt);
+    const dateB = new Date(b.addedAt);
+    return filter.sortOrder === "newest" ? dateB - dateA : dateA - dateB;
+  });
 
   return (
     <div className="home-container">
-    <header className="header-section">
-      <WeatherWidget />
-    </header>
+      <header className="header-section">
+        <WeatherWidget />
+      </header>
       
       <section className="stats-pomodoro-section">
         <Statistics 
-        tasks={tasks} 
-        isDarkMode={isDarkMode} // Passer l'état isDarkMode
-        toggleDarkMode={toggleDarkMode} // Passer la fonction toggleDarkMode
+          tasks={tasks} 
+          isDarkMode={isDarkMode}
+          toggleDarkMode={toggleDarkMode}
         />
         <GlobalPomodoroTimer
           tasks={tasks}
@@ -90,8 +113,8 @@ const Home = ({
       </section>
 
       <section className="tasks-section">
-        <TaskFilters filter={filter} setFilter={setFilter} />
-        <TaskForm onAddTask={handleAddTask} />
+        <TaskFilters filter={filter} setFilter={setFilter} taskCategories={taskCategories} />
+        <TaskForm onAddTask={handleAddTask} taskCategories={taskCategories} />
         <TaskList
           tasks={tasks.filter((task) => task.archived === 'open')}
           filter={filter}
@@ -117,6 +140,7 @@ const Home = ({
         />
       )}
     </div>
+
   );
 };
 

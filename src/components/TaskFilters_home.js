@@ -1,7 +1,6 @@
 import React from "react";
-import "./TaskFilters_home.css"; // Centralisation des styles dans un fichier commun
 
-const TaskFilters_home = ({ filter = {}, setFilter = () => {} }) => {
+const TaskFilters_home = ({ filter = {}, setFilter = () => {}, taskCategories = [] }) => {
   // Gestion des changements de filtres
   const handleChange = (key, value) => {
     setFilter({ ...filter, [key]: value });
@@ -64,26 +63,28 @@ const TaskFilters_home = ({ filter = {}, setFilter = () => {} }) => {
               placeholder="Rechercher une tâche..."
             />
           </label>
-          </div>
+        </div>
 
         {/* Filtre de catégorie */}
         <div className="filter-group">
           <label>
-            Catégorie :
+            Catégories :
             <select
-              value={filter.category || ""}
-              onChange={(e) => handleChange("category", e.target.value)}
+              value={filter.categories || ""}
+              onChange={(e) => handleChange("categories", e.target.value)}
             >
               <option value="">Toutes</option>
-              <option value="work">Travail</option>
-              <option value="personal">Personnel</option>
-              <option value="other">Autre</option>
+              {taskCategories.map((categories) => (<option key={categories} value={categories}>
+                  {categories}
+                </option>
+              ))}
             </select>
+
+
+
+            
           </label>
-          </div>
-
-
-
+        </div>
       </div>
     </div>
   );

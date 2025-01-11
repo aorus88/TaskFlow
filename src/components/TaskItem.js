@@ -173,13 +173,13 @@ const TaskItem = ({
             )}
           </div>
         )}
-        {isModalOpen && (
-          <EditTaskModal
-            task={selectedTask}
-            onClose={closeEditModal}
-            onSave={(updatedTask) => {
-              onUpdateTask(updatedTask.id, updatedTask);
-              closeEditModal();
+      {isModalOpen && (
+        <EditTaskModal
+          task={selectedTask} // Tâche actuelle
+          onClose={closeEditModal} // Fonction pour fermer la modale
+          onSave={(updatedTask) => {
+            onUpdateTask(updatedTask.id, updatedTask); // Appelle la fonction de mise à jour avec l'ID et les champs mis à jour
+            closeEditModal(); // Ferme la modale après la sauvegarde
             }}
           />
         )}
