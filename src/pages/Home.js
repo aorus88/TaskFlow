@@ -119,6 +119,7 @@ const Home = ({
         <TaskList
           tasks={tasks.filter((task) => task.archived === 'open')}
           filter={filter}
+          taskCategories={taskCategories} // Passer les catégories à TaskList
           onEditTask={(task) => {
             setSelectedTask(task);
             setIsEditing(true);

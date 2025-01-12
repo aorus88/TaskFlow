@@ -14,6 +14,7 @@ const TaskList = ({
   onToggleSubtaskStatus,
   isArchived = false,
   filter = {},
+  taskCategories,
 }) => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -79,6 +80,7 @@ const TaskList = ({
           <TaskItem
             key={task.id}
             task={task}
+            taskCategories={taskCategories}
             onEditTask={onEditTask}
             onSaveTask={onSaveTask}
             onDeleteTask={onDeleteTask}

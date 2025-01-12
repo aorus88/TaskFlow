@@ -1,9 +1,29 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Statistics.css";
 import { TimerContext } from "../context/TimerContext";
 
 const Statistics = ({ tasks, isDarkMode, toggleDarkMode, selectedTaskId, }) => {
   const { timeLeft } = useContext(TimerContext);
+  
+  // Ajout de l'état pour l'heure actuelle
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+    // Mise à jour de l'heure chaque seconde
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setCurrentTime(new Date());
+      }, 1000);
+      return () => clearInterval(interval);
+    }, []);
+  
+    // Fonction pour formater l'heure
+    const formatClock = (time) => {
+      return time.toLocaleTimeString('fr-FR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+    };
 
     // Trouver la tâche sélectionnée
     const selectedTask = tasks.find(task => task._id === selectedTaskId);
@@ -88,7 +108,8 @@ const percentage = progress.toFixed(2); // formatage à deux décimales
   return (
     <div className="statistics-container">
       <div className="statistics-header">
-        <h2>Statistiques 📈 - TaskFlow 1.2.7</h2>
+        <h2>📈 Statistiques  - ⛩️ TaskFlow 1.2.8 -  🕒 {formatClock(currentTime)}       
+           </h2>
       </div>
 
       <div className="statistics-grid">
@@ -110,18 +131,18 @@ const percentage = progress.toFixed(2); // formatage à deux décimales
 
         <div className="stat-card">
           <h3>Sessions (Aujourd'hui)</h3>
-          <p>🕒 {formatTime(totalSessionTimeToday)}</p>
+          <p>⏱️ {formatTime(totalSessionTimeToday)}</p>
         </div>
 
 
         <div className="stat-card">
-          <h3>⏯️</h3>
+          <h3>⌛</h3>
           <p className="timer-display">{formatTimeWithSeconds(timeLeft)}</p>
         </div>
 
 
      <div className="stat-card">
-          <h3>⏯️</h3>
+          <h3>⌛</h3>
           <div className="progress-bar-container">
             <div className="progress-bar" style={{ width: `${validProgress}%` }}
             ></div>
@@ -138,12 +159,6 @@ const percentage = progress.toFixed(2); // formatage à deux décimales
             {isDarkMode ? "🌚" : "🌞"}
           </button>
           <div/>
-        </div>
-
-      <div className="stat-card">
-        <h3> Horloge 🕰️</h3>
-        <p>{new Date().toLocaleTimeString()}</p>
-        <div/>
       </div>
 
         

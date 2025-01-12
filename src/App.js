@@ -30,14 +30,15 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const taskCategories = [
     "Travail 💼",
-    "Personnel", 
-    "Santé ⛩️", 
-    "Finance 💵", 
-    "Divertissement ", 
-    "Maison", 
-    "Achats", 
-    "TaskFlow ✨ ", 
-    "Autre"];
+    "Personnel 🐈",
+    "Santé - Fusion-Tool 🧬",
+    "Finances 💵",
+    "Jeux vidéos 🎮",
+    "Maison 🏠",
+    "Achats 🛒",
+    "TaskFlow ⛩️",
+    "Autre 📝"
+];
 
   const showFeedback = (message, type) => {
     setFeedback({ message, type });

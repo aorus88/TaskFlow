@@ -25,6 +25,15 @@ export const TimerProvider = ({ children }) => {
     return savedSessionTime !== null ? JSON.parse(savedSessionTime) : 0;
   });
 
+  const [clock, setClock] = useState(() => {
+    const savedClock = localStorage.getItem('clock');
+    return savedClock !== null ? JSON.parse(savedClock) : new Date().toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  });
+
   // Synchronize with local storage
   useEffect(() => {
     localStorage.setItem('timeLeft', JSON.stringify(timeLeft));
@@ -46,6 +55,10 @@ export const TimerProvider = ({ children }) => {
     localStorage.setItem('sessionTime', JSON.stringify(sessionTime));
   }, [sessionTime]);
 
+  useEffect(() => {
+    localStorage.setItem('clock', JSON.stringify(clock));
+  }, [clock]);
+
   const resetTimer = () => {
     setTimeLeft(customDuration * 60);
     setSessionTime(0);
@@ -66,7 +79,8 @@ export const TimerProvider = ({ children }) => {
         sessionTime,
         setSessionTime,
         resetTimer,
-      }}S
+        clock,
+      }}
     >
       {children}
     </TimerContext.Provider>

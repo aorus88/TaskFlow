@@ -11,6 +11,7 @@ const TaskItem = ({
   onDeleteSubtask,
   onToggleSubtaskStatus,
   isArchived,
+  taskCategories,
 }) => {
   const [newSubtaskText, setNewSubtaskText] = useState("");
   const [expanded, setExpanded] = useState(false); // Initialiser expanded à false
@@ -194,10 +195,12 @@ const TaskItem = ({
       {isModalOpen && (
         <EditTaskModal
           task={selectedTask} // Tâche actuelle
+          taskCategories={taskCategories} // Catégories de tâches
           onClose={closeEditModal} // Fonction pour fermer la modale
           onSave={(updatedTask) => {
             onUpdateTask(updatedTask.id, updatedTask); // Appelle la fonction de mise à jour avec l'ID et les champs mis à jour
             closeEditModal(); // Ferme la modale après la sauvegarde
+          
             }}
           />
         )}

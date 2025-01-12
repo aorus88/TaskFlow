@@ -5,7 +5,7 @@ const EditTaskModal = ({ task, onClose, onSave, taskCategories = [] }) => {
   const [name, setName] = useState(task.name);
   const [date, setDate] = useState(task.date);
   const [priority, setPriority] = useState(task.priority);
-  const [categories, setCategories] = useState(task.categories);
+  const [categories, setCategories] = useState(task.categories || "");
   const [totalTime, setTotalTime] = useState(task.totalTime || 0);
   const [currentSessionTime, setCurrentSessionTime] = useState(task.currentSessionTime || 0);
   const [newSubtask, setNewSubtask] = useState("");
@@ -105,13 +105,13 @@ const EditTaskModal = ({ task, onClose, onSave, taskCategories = [] }) => {
           <label>
           Catégories :
             <select
-              value={categories || ""}
+              value={categories}
               onChange={(e) => setCategories(e.target.value)}
             >
               <option value="">Aucune</option>
-              {taskCategories && taskCategories.map((categories) => (
-                <option key={categories} value={categories}>
-                  {categories}
+              {taskCategories && taskCategories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
                 </option>
               ))}
             </select>
