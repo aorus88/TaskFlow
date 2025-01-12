@@ -1,4 +1,5 @@
 import React from "react";
+import "./TaskFilters_home.css";
 
 const TaskFilters_home = ({ filter = {}, setFilter = () => {}, taskCategories = [] }) => {
   // Gestion des changements de filtres
@@ -7,8 +8,6 @@ const TaskFilters_home = ({ filter = {}, setFilter = () => {}, taskCategories = 
   };
 
   return (
-    <div className="task-filters">
-      <h3>Filtres</h3>
       <div className="filter-container">
         {/* Filtre de priorité */}
         <div className="filter-group">
@@ -86,7 +85,6 @@ const TaskFilters_home = ({ filter = {}, setFilter = () => {}, taskCategories = 
           </label>
         </div>
       </div>
-    </div>
   );
 };
 

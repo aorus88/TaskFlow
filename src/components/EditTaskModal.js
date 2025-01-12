@@ -1,19 +1,26 @@
-import React, { useState } from "react";
-import "./EditTaskModal.css"; // Fichier CSS pour le style de la modale
+import React, { useState, useEffect } from "react";
+import "./EditTaskModal.css";
 
 const EditTaskModal = ({ task, onClose, onSave, taskCategories = [] }) => {
- // Initialiser les catégories avec la valeur actuelle de la tâche
- const [name, setName] = useState(task.name);
- const [date, setDate] = useState(task.date);
- const [priority, setPriority] = useState(task.priority);
-
-  // Assurez-vous que categories est initialisé correctement
-  const [categories, setCategories] = useState(task.categories || "");
+  const [name, setName] = useState(task.name);
+  const [date, setDate] = useState(task.date);
+  const [priority, setPriority] = useState(task.priority);
+  const [categories, setCategories] = useState(task.categories);
   const [totalTime, setTotalTime] = useState(task.totalTime || 0);
   const [currentSessionTime, setCurrentSessionTime] = useState(task.currentSessionTime || 0);
   const [newSubtask, setNewSubtask] = useState("");
 
-  // Fonction pour mettre à jour la tâche
+  // Ajout du useEffect pour initialiser les catégories
+  useEffect(() => {
+    // Mise à jour des states quand la tâche change
+    setName(task.name);
+    setDate(task.date);
+    setPriority(task.priority);
+    setCategories(task.categories);
+    setTotalTime(task.totalTime || 0);
+    setCurrentSessionTime(task.currentSessionTime || 0);
+  }, [task]);
+
   const handleUpdateTask = () => {
     if (!name.trim()) {
       alert("Le nom de la tâche est requis.");
@@ -25,14 +32,13 @@ const EditTaskModal = ({ task, onClose, onSave, taskCategories = [] }) => {
       name,
       date,
       priority,
-      categories, // Utiliser les catégories sélectionnées
-      totalTime: parseInt(totalTime, 10), // Convertit le temps total en entier
-      currentSessionTime: parseInt(currentSessionTime, 10), // Convertit le temps de session en entier
+      categories: categories, // S'assurer que c'est une valeur scalaire
+      totalTime: parseInt(totalTime, 10),
+      currentSessionTime: parseInt(currentSessionTime, 10),
     };
 
-    // Appelle la fonction "onSave" pour transmettre les modifications au parent
+    console.log('Catégories mises à jour:', categories); // Debug
     onSave(updatedTask);
-    // Ferme la modale
     onClose();
   };
 
@@ -50,14 +56,13 @@ const EditTaskModal = ({ task, onClose, onSave, taskCategories = [] }) => {
     }
   };
 
-  // Gestion de la touche Entrée
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // Empêche le comportement par défaut du formulaire
+      e.preventDefault();
       if (newSubtask.trim()) {
-        handleAddSubtask(); // Ajoute la sous-tâche
+        handleAddSubtask();
       } else {
-        handleUpdateTask(); // Sauvegarde les modifications
+        handleUpdateTask();
       }
     }
   };
@@ -96,33 +101,30 @@ const EditTaskModal = ({ task, onClose, onSave, taskCategories = [] }) => {
             </select>
           </label>
 
+
           <label>
           Catégories :
-          <select
-            value={categories}
-            onChange={(e) => setCategories(e.target.value)}
-          >
-            <option value="">Aucune</option>
-            {taskCategories && taskCategories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </label>
+            <select
+              value={categories || ""}
+              onChange={(e) => setCategories(e.target.value)}
+            >
+              <option value="">Aucune</option>
+              {taskCategories && taskCategories.map((categories) => (
+                <option key={categories} value={categories}>
+                  {categories}
+                </option>
+              ))}
+            </select>
+          </label>
 
 
           <label>
             Total sessions (minutes) :
-            <div className="readonly-value">
-              {totalTime}
-            </div>
+            <div className="readonly-value">{totalTime}</div>
           </label>
           <label>
             Dernière session (minutes) :
-            <div className="readonly-value">
-              {currentSessionTime}
-            </div>
+            <div className="readonly-value">{currentSessionTime}</div>
           </label>
         </form>
         <div className="modal-buttons">
@@ -137,7 +139,9 @@ const EditTaskModal = ({ task, onClose, onSave, taskCategories = [] }) => {
               onChange={(e) => setNewSubtask(e.target.value)}
               placeholder="Nom de la sous-tâche"
             />
-            <button type="button" onClick={handleAddSubtask}>Ajouter</button>
+            <button type="button" onClick={handleAddSubtask}>
+              Ajouter
+            </button>
           </form>
         </div>
       </div>

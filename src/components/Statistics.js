@@ -2,8 +2,12 @@ import React, { useContext, useEffect } from "react";
 import "./Statistics.css";
 import { TimerContext } from "../context/TimerContext";
 
-const Statistics = ({ tasks, isDarkMode, toggleDarkMode, }) => {
+const Statistics = ({ tasks, isDarkMode, toggleDarkMode, selectedTaskId, }) => {
   const { timeLeft } = useContext(TimerContext);
+
+    // Trouver la tâche sélectionnée
+    const selectedTask = tasks.find(task => task._id === selectedTaskId);
+    const selectedTaskName = selectedTask ? selectedTask.name : "Aucune tâche sélectionnée";
 
   // Définition des dates repères
   const today = new Date();
@@ -71,7 +75,7 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode, }) => {
   };
 
 // Calcul de la progression des sessions
-const customDuration = 25; // durée personnalisée en minutes
+const customDuration = "customDuration" in localStorage ? JSON.parse(localStorage.getItem("customDuration")) : 25;
 const totalSessionTime = customDuration * 60; // conversion en secondes
 const timeElapsed = totalSessionTime - timeLeft; // temps écoulé en secondes
 const progress = (timeElapsed / totalSessionTime) * 100; // pourcentage de progression
@@ -84,7 +88,7 @@ const percentage = progress.toFixed(2); // formatage à deux décimales
   return (
     <div className="statistics-container">
       <div className="statistics-header">
-        <h2>Statistiques 📈 - TaskFlow 1.2.6</h2>
+        <h2>Statistiques 📈 - TaskFlow 1.2.7</h2>
       </div>
 
       <div className="statistics-grid">
@@ -119,9 +123,11 @@ const percentage = progress.toFixed(2); // formatage à deux décimales
      <div className="stat-card">
           <h3>⏯️</h3>
           <div className="progress-bar-container">
-            <div className="progress-bar" style={{ width: `${validProgress}%` }}></div>
+            <div className="progress-bar" style={{ width: `${validProgress}%` }}
+            ></div>
           </div>
           <p>{validProgress.toFixed(2)}%</p>
+          <p className="selected-task-name">{selectedTaskName}</p>
         </div>
 
         <div className="stat-card">

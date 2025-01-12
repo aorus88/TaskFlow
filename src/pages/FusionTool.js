@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./FusionTool.css"; // Importer les styles spécifiques
 import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer"; // Importer le composant GlobalPomodoroTimer
 
-const FusionTool = ({ entries, onAddEntry }) => {
+const FusionTool = ({ entries, onAddEntry,}) => {
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split("T")[0],
     time: new Date().toLocaleTimeString("fr-FR", {
@@ -22,6 +22,8 @@ const FusionTool = ({ entries, onAddEntry }) => {
     });
   };
 
+  const today = new Date().toISOString().split("T")[0]; // Récupérer la date actuelle
+
   const handleAddEntry = () => {
     onAddEntry({ ...formData, id: Date.now(), createdAt: new Date().toISOString() });
     setFormData({
@@ -33,6 +35,15 @@ const FusionTool = ({ entries, onAddEntry }) => {
       mood: "",
       consumption: "yes",
     });
+  };
+  // Fonction pour calculer les stats du jour
+  const getTodayStats = () => {
+    const todayEntries = entries.filter(entry => entry.date === today);
+    const totalConsumption = todayEntries.filter(entry => entry.consumption === "yes").length;
+    return {
+      total: todayEntries.length,
+      consumed: totalConsumption
+    };
   };
 
   // Fonction pour trier les entrées de consommation
@@ -103,6 +114,24 @@ const FusionTool = ({ entries, onAddEntry }) => {
         </button>
       </form>
 
+ {/* Nouvelle section stats */}
+ <div className="stats-today">
+        <h3>Statistiques du jour</h3>
+        <div className="stats-container">
+          <div className="stat-item">
+            <span className="stat-label">Nombre d'entrées aujourd'hui:</span>
+            <span className="stat-value">{getTodayStats().total}</span>
+          </div>
+          <div className="stat-item">
+            <span className="stat-label">Consommations aujourd'hui:</span>
+            <span className="stat-value">{getTodayStats().consumed}</span>
+          </div>
+        </div>
+      </div>
+
+
+
+
       <h2>Historique des Consommations</h2>
       <button
         className="sort-button"
@@ -112,6 +141,8 @@ const FusionTool = ({ entries, onAddEntry }) => {
       >
         Trier : {sortOrder === "desc" ? "Du plus récent" : "Du plus ancien"}
       </button>
+
+
       <table className="fusion-table">
         <thead>
           <tr>

@@ -1,7 +1,6 @@
 /* Styles globaux personnalisés */
 body {
-    background-color: #f9f9f9; /* Fond clair */
-    color: #333; /* Texte gris foncé */
+    background-color: whitesmoke; /* Fond clair */
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
@@ -11,7 +10,7 @@ body {
   /* Gestion du mode sombre */
   body.dark {
     background-color: #1a202c; /* Fond sombre */
-    color: #f9f9f9; /* Texte clair */
+
   }
   
   /* Supprimer les marges des ul/ol globalement */

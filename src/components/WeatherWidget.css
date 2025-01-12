@@ -8,7 +8,7 @@
   margin: 0 auto;
   padding: 20px;
   border-radius: 12px;
-  background-color: #ffffff;
+  background-color: #ffffff00;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -22,19 +22,24 @@
   margin-bottom: 10px;
 }
 
-
+/* Taille de l'icône météo et de l'emoji */
 .weather-widget-icon {
-  font-size: 2rem;
+  font-size: 3.5rem;
 }
 
-/* Emoji de l'heure */
-.time-emoji {
-  font-size: 2rem;
+.weather-widget-location {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.weather-widget-temperature {
+  font-size: 2.5rem;
+  font-weight: bold;
 }
 
 /* Détails météo */
 .weather-details h3 {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   margin-bottom: 5px;
   text-align: center;
 }
@@ -49,7 +54,7 @@
 body.dark .weather-widget {
   background-color: #1e1e1e;
   border-color: #2d2d2d;
-  color: #fdfdfd;
+  color: #151010c9;
 }
 
 /* Styles dynamiques pour les conditions météorologiques */

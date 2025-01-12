@@ -1,37 +1,42 @@
 .statistics-container {
-  background-color: #ffffff;
-  border: 1px solid #ddd;
+  background-color: whitesmoke;
+  border: 1px solid rgba(0, 0, 0, 0.077);
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  zoom: 0.8 !important;
+  zoom : 0.85;
 }
 
 .statistics-header {
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 2px;
+  font-size: 0.95rem;
 }
 
 .statistics-header h2 {
   margin: 0;
-  font-size: 1.5rem;
   color: #333;
+
+  
 }
 
 .statistics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
+  gap: 18px;
+  font-size: 0.95rem;
 }
 
 .stat-card {
-  background-color: #f9f9f9;
+  background-color: rgba(226, 231, 244, 0.893);
+  border-color: black;
   border-radius: 8px;
   padding: 12px;
   text-align: center;
   transition: all 0.3s ease;
-  border: 1px solid transparent;
+  color:#110909
+  
 }
 
 .stat-card:hover {
@@ -41,42 +46,43 @@
 .stat-card h3 {
   margin: 0;
   margin-bottom: 8px;
-  font-size: 1.1rem;
-  color: #555;
+
+  color: #110909;
 }
 
 .stat-card p {
   margin: 0;
-  font-size: 1.3rem;
-  color: #333;
+  color: #110909;
+  font-size: 1.2rem;
+  
 }
 
-.timer-display {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #2d3748;
-}
 
 .progress-bar-container {
   background-color: #f0f0f0;
   border-radius: 10px;
   overflow: hidden;
-  height: 14px;
+  height: 20px; /* Augmenter la hauteur */
   margin: 10px 0;
+  
+
 }
 
 .progress-bar {
   height: 100%;
-  width: 50%;
+  width: 100%;
+  font-size: 1.2rem;
   background-color: #4CAF50;
-  transition: width 0.3s ease;
+  transition: width 3s ease;
+
+ 
   
 }
 
 /* Mode sombre inspiré de VS Code */
 body.dark .statistics-container {
-  background-color: #1e1e1e; /* Fond principal VS Code */
-  border-color: #2d2d2d;
+  background-color: #1a202c; /* Fond principal VS Code */
+  border-color: #000000;
 }
 
 body.dark .statistics-header h2 {
@@ -84,25 +90,25 @@ body.dark .statistics-header h2 {
 }
 
 body.dark .stat-card {
-  background-color: #252526; /* Couleur de fond des panneaux VS Code */
-  border: 1px solid #2d2d2d;
+  background-color: #6b6565; /* Couleur de fond des panneaux VS Code */
+  border: 3px solid #4d9ae785;
 }
 
 body.dark .stat-card:hover {
-  background-color: #2d2d2d;
-  border-color: #007acc; /* Bleu VS Code */
+  background-color: #eae2e289;
+  border-color: #252526; /* Bleu VS Code */
 }
 
 body.dark .stat-card h3 {
-  color: #cccccc;
+  color: #000000;
 }
 
 body.dark .stat-card p {
-  color: #d4d4d4; /* Couleur de texte principale VS Code */
+  color: #000000; /* Couleur de texte principale VS Code */
 }
 
 body.dark .timer-display {
-  color: #007acc; /* Bleu VS Code pour mettre en valeur */
+  color: #252526; /* Bleu VS Code pour mettre en valeur */
 }
 
 body.dark .timer-note {
@@ -121,6 +127,7 @@ body.dark .timer-note {
 
 body.dark .progress-bar-container {
   background-color: #2d2d2d;
+  height: 20px; /* Assurez-vous que la hauteur est également augmentée en mode sombre */
 }
 
 body.dark .progress-bar {

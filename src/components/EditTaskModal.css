@@ -8,15 +8,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999; /* Plus haut que le reste du contenu */
 }
 
 .modal-content {
+  position: relative;
   background: white;
   padding: 20px;
   border-radius: 8px;
   width: 400px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10000; /* Plus haut que modal-overlay */
+  transform: none !important; /* Empêcher les transformations héritées */
+  transition: none !important; /* Désactiver les transitions héritées */
+}
+
+/* Désactiver les effets de survol des éléments parents */
+.modal-overlay *:hover {
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 .modal-form label {
@@ -81,11 +91,20 @@ body.dark .modal-form select {
   color: #d4d4d4;
 }
 
-
 body.dark .modal-buttons button:first-child {
   background-color: #005c99; /* Vert foncé pour sauvegarder */
 }
 
 body.dark .modal-buttons button:last-child {
   background-color: #b31200; /* Rouge foncé pour annuler */
+}
+
+/* Désactiver les interactions avec les éléments en arrière-plan */
+body.modal-open {
+  pointer-events: none; /* Désactive les interactions */
+}
+
+body.modal-open .modal-overlay,
+body.modal-open .modal-content {
+  pointer-events: auto; /* Réactive les interactions pour l'overlay et la modale */
 }

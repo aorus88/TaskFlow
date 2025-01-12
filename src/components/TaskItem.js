@@ -18,6 +18,24 @@ const TaskItem = ({
   const [selectedTask, setSelectedTask] = useState(null);
   const [hiddenSubtasks, setHiddenSubtasks] = useState([]);
 
+    // Fonction pour calculer les jours restants
+    const calculateDaysRemaining = () => {
+      if (!task.date) return null;
+      
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const dueDate = new Date(task.date);
+      dueDate.setHours(0, 0, 0, 0);
+      
+      const diffTime = dueDate - today;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      if (diffDays < 0) return "En retard";
+      if (diffDays === 0) return "Aujourd'hui";
+      if (diffDays === 1) return "Demain";
+      return `${diffDays} jours restants`;
+    };
+
   const openEditModal = (task) => {
     setSelectedTask(task);
     setIsModalOpen(true);
@@ -112,7 +130,7 @@ const TaskItem = ({
             </button>
           </div>
         </div>
-        <p>Échéance : {formatDate(task.date)}</p>
+        Échéance : {calculateDaysRemaining() || "Pas de date"}
         <p>
           <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
         </p>

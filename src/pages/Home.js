@@ -103,6 +103,7 @@ const Home = ({
           tasks={tasks} 
           isDarkMode={isDarkMode}
           toggleDarkMode={toggleDarkMode}
+          setSelectedTaskId={setSelectedTaskId}
         />
         <GlobalPomodoroTimer
           tasks={tasks}
