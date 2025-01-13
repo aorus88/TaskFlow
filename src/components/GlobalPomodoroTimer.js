@@ -348,7 +348,7 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
             {isPaused ? "Reprendre ⏯️" : "Pause ⏸️"}
           </button>
           <button onClick={completeAndAssignTime} className="stop-button" disabled={!selectedTaskId}>
-            Terminé ✅ - ⏯️
+            Terminé ✅
           </button>
           <button onClick={resetTimer} className="reset-button">
             Réinitialiser 🛑

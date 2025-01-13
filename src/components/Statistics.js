@@ -127,7 +127,7 @@ const getSelectedTaskName = () => {
   return (
     <div className="statistics-container">
       <div className="statistics-header">
-        <h2>📈 Statistiques  - ⛩️ TaskFlow 1.2.9 -  🕒 {formatClock(currentTime)}       
+        <h2>📈 Statistiques  - ⛩️ TaskFlow 1.3.0 -  🕒 {formatClock(currentTime)}       
            </h2>
       </div>
 

@@ -90,7 +90,7 @@ body.dark .statistics-header h2 {
 }
 
 body.dark .stat-card {
-  background-color: #6b6565; /* Couleur de fond des panneaux VS Code */
+  background-color: #ca4444; /* Couleur de fond des panneaux VS Code */
   border: 3px solid #4d9ae785;
 }
 
@@ -100,11 +100,11 @@ body.dark .stat-card:hover {
 }
 
 body.dark .stat-card h3 {
-  color: #000000;
+  color: #ffffff;
 }
 
 body.dark .stat-card p {
-  color: #000000; /* Couleur de texte principale VS Code */
+  color: #ffffffe3; /* Couleur de texte principale VS Code */
 }
 
 body.dark .timer-display {
