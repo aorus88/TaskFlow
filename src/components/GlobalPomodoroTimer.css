@@ -240,3 +240,31 @@ body.dark .stop-button {
 body.dark .reset-button {
   background-color: #2d2d2d;
 }
+
+
+.pomodoro-timer.docked {
+  position: hide;
+  bottom: 0;
+  right: 20px;
+  transform: none;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.dock-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #666;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.dock-button:hover {
+  background-color: #f0f0f0;
+}

@@ -37,7 +37,7 @@ const App = () => {
     "Maison 🏠",
     "Achats 🛒",
     "TaskFlow ⛩️",
-    "Autre 📝"
+    "Autre 📝",
 ];
 
   const showFeedback = (message, type) => {

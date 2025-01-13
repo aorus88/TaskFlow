@@ -34,6 +34,7 @@ const subtaskSchema = new mongoose.Schema({
     addedAt: { type: Date, default: Date.now },
     archivedAt: { type: Date, default: null },
     archived: { type: String, enum: ['open', 'closed'], default: 'open' }, // Nouveau champ
+    sessions: [sessionSchema], // Ajouter les sessions
 });
 
 const taskSchema = new mongoose.Schema({
@@ -203,33 +204,28 @@ app.delete('/tasks/:taskId/subtasks/:subtaskId', async (req, res) => {
 // 2a) 
 // Ajouter une session de temps à une tâche
 app.post('/tasks/:id/sessions', async (req, res) => {
-    const { id } = req.params;
-    const { duration, date, taskName } = req.body;
-  
-    try {
-      console.log('Requête reçue pour ajouter une session :', { id, duration, date, taskName }); // Ajoutez ce log
-  
-      const task = await Task.findById(id);
-      if (!task) {
-        console.error('Tâche non trouvée :', id); // Ajoutez ce log
-        return res.status(404).send({ error: 'Task not found' });
-      }
-  
-      // Ajouter la session
-      const session = { duration, date, taskName };
-      task.sessions.push(session);
-  
-      // Recalculer totalTime
-      task.totalTime = task.sessions.reduce((total, s) => total + s.duration, 0);
-  
-      await task.save();
-      console.log('Session ajoutée avec succès :', session); // Ajoutez ce log
-      res.status(200).send(task);
-    } catch (error) {
-      console.error('Erreur lors de l\'ajout de la session :', error); // Ajoutez ce log pour plus de détails
-      res.status(500).send({ error: 'Internal Server Error' });
+  try {
+    const { type, targetId } = req.body;
+    const session = {
+      duration: req.body.duration,
+      date: req.body.date,
+      type: type,
+      targetId: targetId
+    };
+
+    const task = await Task.findById(type === 'task' ? targetId : req.params.id);
+    if (!task) {
+      return res.status(404).json({ message: "Tâche non trouvée" });
     }
-  });
+
+    task.sessions.push(session);
+    await task.save();
+
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 //  2b)
 //  Route pour récupérer les sessions d'une tâche spécifique

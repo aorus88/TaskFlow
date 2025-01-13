@@ -104,6 +104,9 @@ const Sessions = () => {
           sortedSessions.map((session) => (
             <li key={session._id} className="session-item">
               <h3>{session.taskName}</h3>
+
+
+              <p> Catégories : {session.categories.join(', ')}</p>
               <p>Durée : {session.duration} minutes</p>
               <p>Date de session : {format(new Date(session.date), "d MMMM yyyy", { locale: fr })}</p>
               <p>Heure de fin  : {format(new Date(session.date), "HH:mm:ss", { locale: fr })}</p>

@@ -92,6 +92,13 @@ const Home = ({
     return filter.sortOrder === "newest" ? dateB - dateA : dateA - dateB;
   });
 
+  // Ajout d'un effet pour mettre à jour les tâches après une session
+  useEffect(() => {
+    if (fetchTasks) {
+      fetchTasks();
+    }
+  }, [fetchTasks]);
+
   return (
     <div className="home-container">
       <header className="header-section">
@@ -120,6 +127,7 @@ const Home = ({
           tasks={tasks.filter((task) => task.archived === 'open')}
           filter={filter}
           taskCategories={taskCategories} // Passer les catégories à TaskList
+          onUpdateTaskTime={updateTaskTime}
           onEditTask={(task) => {
             setSelectedTask(task);
             setIsEditing(true);

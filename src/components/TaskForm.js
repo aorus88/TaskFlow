@@ -27,12 +27,17 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
     }
 
     if (typeof onAddTask === "function") {
+      if (!formData.categories) {
+        alert("Veuillez sélectionner une catégorie.");
+        return;
+      }
+
       onAddTask({
         ...formData,
         id: Date.now(),
         subtasks: [], // Nouveau tableau par défaut
         timeSpent: 0, // Initialisation à 0
-        status: "closed", // Statut par défaut
+        status: "open", // Statut par défaut
         addedAt: new Date().toISOString(), // Date et heure d'ajout
         categories: formData.categories, // Ajout de la catégorie
       });
@@ -42,7 +47,7 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
         date: new Date().toISOString().split("T")[0],
         time: "23:59",
         priority: "low",
-        categories: "personal", // Réinitialisation de la catégorie
+        categories: "Personnel 🐈", // Réinitialisation de la catégorie
       });
     } else {
       console.error("onAddTask n'est pas défini ou n'est pas une fonction valide.");
@@ -105,7 +110,7 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
         value={formData.categories}
         onChange={(e) => handleChange("categories", e.target.value)}
       >
-            <option value="">Aucune</option>
+            <option value="Personnel 🐈">Personnel 🐈</option>
             {taskCategories.map((categories) => (
               <option key={categories} value={categories}>
                 {categories}

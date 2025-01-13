@@ -12,6 +12,7 @@ const TaskList = ({
   onSaveTask,
   onArchiveTask,
   onToggleSubtaskStatus,
+  onUpdateTaskTime, // Ajout de cette prop
   isArchived = false,
   filter = {},
   taskCategories,
@@ -35,12 +36,14 @@ const TaskList = ({
     }
 
       // Ajout du filtre des catégories
-  if (filter.categories && task.categories) {
-    return task.categories.includes(filter.categories);
-  }
-
-    return true;
-  });
+      if (filter.categories && filter.categories.length > 0) {
+        return filter.categories.some(category => 
+          task.categories.includes(category)
+        );
+      }
+    
+      return true;
+    });
 
   // Fonction pour trier les tâches par date d'ajout
   const sortedTasks = filteredTasks.sort((a, b) => {
@@ -89,6 +92,7 @@ const TaskList = ({
             onDeleteSubtask={onDeleteSubtask}
             onToggleSubtaskStatus={onToggleSubtaskStatus}
             onUpdateTask={onSaveTask}
+            onUpdateTaskTime={onUpdateTaskTime} // Passage de la prop
             isArchived={isArchived}
           />
         ))}

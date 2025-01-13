@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Statistics.css";
 import { TimerContext } from "../context/TimerContext";
 
-const Statistics = ({ tasks, isDarkMode, toggleDarkMode, selectedTaskId, }) => {
-  const { timeLeft } = useContext(TimerContext);
+const Statistics = ({ tasks, isDarkMode, toggleDarkMode, }) => {
+  const { timeLeft, selectedTaskId } = useContext(TimerContext);
   
   // Ajout de l'état pour l'heure actuelle
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -24,10 +24,6 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode, selectedTaskId, }) => {
         second: '2-digit'
       });
     };
-
-    // Trouver la tâche sélectionnée
-    const selectedTask = tasks.find(task => task._id === selectedTaskId);
-    const selectedTaskName = selectedTask ? selectedTask.name : "Aucune tâche sélectionnée";
 
   // Définition des dates repères
   const today = new Date();
@@ -104,11 +100,34 @@ const percentage = progress.toFixed(2); // formatage à deux décimales
   // Vérification pour éviter NaN
   const validProgress = isNaN(progress) ? 0 : progress;
 
+// Ajouter cette fonction pour obtenir le nom de la tâche/sous-tâche sélectionnée
+const getSelectedTaskName = () => {
+  if (!selectedTaskId) return "Aucune tâche sélectionnée";
+  
+  // Nettoyer le selectedTaskId des guillemets supplémentaires
+  const cleanTaskId = selectedTaskId.replace(/"/g, '');
+  const [type, id] = cleanTaskId.split('-');
+  
+  if (type === 'subtask') {
+    const parentTask = tasks.find(task => 
+      task.subtasks?.some(subtask => subtask._id === id)
+    );
+    if (parentTask) {
+      const subtask = parentTask.subtasks.find(st => st._id === id);
+      return subtask ? `📌 ${parentTask.name} > ${subtask.name}` : "Sous-tâche non trouvée";
+    }
+  } else {
+    const task = tasks.find(t => t._id === id);
+    return task ? `⛩️ ${task.name}` : "Tâche non trouvée";
+  }
+  return "Tâche non trouvée";
+};
+
   
   return (
     <div className="statistics-container">
       <div className="statistics-header">
-        <h2>📈 Statistiques  - ⛩️ TaskFlow 1.2.8 -  🕒 {formatClock(currentTime)}       
+        <h2>📈 Statistiques  - ⛩️ TaskFlow 1.2.9 -  🕒 {formatClock(currentTime)}       
            </h2>
       </div>
 
@@ -142,14 +161,13 @@ const percentage = progress.toFixed(2); // formatage à deux décimales
 
 
      <div className="stat-card">
-          <h3>⌛</h3>
-          <div className="progress-bar-container">
-            <div className="progress-bar" style={{ width: `${validProgress}%` }}
-            ></div>
-          </div>
-          <p>{validProgress.toFixed(2)}%</p>
-          <p className="selected-task-name">{selectedTaskName}</p>
-        </div>
+     <h3>⌛</h3>
+      <div className="progress-bar-container">
+        <div className="progress-bar" style={{ width: `${validProgress}%` }}></div>
+      </div>
+      <p>{validProgress.toFixed(2)}%</p>
+      <p className="selected-task-name">{getSelectedTaskName()}</p>
+    </div>
 
         <div className="stat-card">
           <h3>Mode sombre</h3>

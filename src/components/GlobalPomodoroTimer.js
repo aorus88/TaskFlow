@@ -2,6 +2,25 @@ import React, { useEffect, useContext, useState, useRef, useCallback } from "rea
 import { TimerContext } from "../context/TimerContext";
 import "./GlobalPomodoroTimer.css";
 
+
+// Sons de notification
+const NOTIFICATION_SOUNDS = {
+  sessionComplete: '/sounds/session-complete.mp3',
+};
+
+const playSound = (soundType) => {
+  try {
+    const audio = new Audio(NOTIFICATION_SOUNDS[soundType]);
+    audio.play().catch(error => {
+      console.warn("Erreur lors de la lecture du son:", error);
+    });
+  } catch (error) {
+    console.warn("Le navigateur ne supporte pas la lecture audio:", error);
+  }
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
 const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
   const {
     timeLeft,
@@ -10,8 +29,8 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
     setIsRunning,
     customDuration,
     setCustomDuration,
-    selectedTaskId,
-    setSelectedTaskId,
+    selectedTaskId, // Utilisation depuis le contexte
+    setSelectedTaskId, // Utilisation depuis le contexte
     sessionTime,
     setSessionTime,
   } = useContext(TimerContext);
@@ -21,28 +40,73 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
   const [currentTaskIndex, setCurrentTaskIndex] = useState(null);
   const [sessionCount, setSessionCount] = useState(0);
   const [sessionEnded, setSessionEnded] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(() => {
+    const saved = localStorage.getItem('pomodoroMinimized');
+    return saved ? JSON.parse(saved) : true;
+  });
   const [isManualStop, setIsManualStop] = useState(false);
+  const [isFloating, setIsFloating] = useState(() => {
+    const saved = localStorage.getItem('pomodoroPosition');
+    return saved ? JSON.parse(saved) : true;
+  });
+
+  // Mettre à jour le gestionnaire pour sauvegarder l'état
+  const handleMinimize = () => {
+    setIsMinimized(prev => {
+      const newValue = !prev;
+      localStorage.setItem('pomodoroMinimized', JSON.stringify(newValue));
+      return newValue;
+    });
+  };
+
   const isSubmitting = useRef(false);
   const timerRef = useRef(null);
 
-  // Restaurer la dernière tâche sélectionnée
+  // Sauvegarder la position du pomodoro
+  const togglePosition = () => {
+    setIsFloating(prev => {
+      const newValue = !prev;
+      localStorage.setItem('pomodoroPosition', JSON.stringify(newValue));
+      return newValue;
+    });
+  };
+
+  // Restaurer la dernière tâche ou sous-tâche sélectionnée
   useEffect(() => {
     const lastSelectedTaskId = localStorage.getItem('lastSelectedTaskId');
-    if (lastSelectedTaskId && tasks.some(task => task._id === lastSelectedTaskId)) {
-      setSelectedTaskId(lastSelectedTaskId);
-      const index = tasks.findIndex(task => task._id === lastSelectedTaskId);
-      setCurrentTaskIndex(index);
-      console.log("Dernière tâche restaurée:", lastSelectedTaskId);
+    if (lastSelectedTaskId) {
+      const [type, id] = lastSelectedTaskId.split('-');
+      const taskExists = type === 'task' 
+        ? tasks.some(task => task._id === id)
+        : tasks.some(task => task.subtasks?.some(subtask => subtask._id === id));
+      
+      if (taskExists) {
+        setSelectedTaskId(lastSelectedTaskId);
+        console.log("Dernière tâche/sous-tâche restaurée:", lastSelectedTaskId);
+      }
     }
-  }, [tasks, setSelectedTaskId]);
+  }, [tasks]);
 
   // Mettre à jour le compte des sessions
   useEffect(() => {
     if (selectedTaskId && tasks.length > 0) {
-      const selectedTask = tasks.find(task => task._id === selectedTaskId);
-      if (selectedTask && selectedTask.sessions) {
-        setSessionCount(selectedTask.sessions.length);
+      const [type, id] = selectedTaskId.split('-');
+      if (type === 'task') {
+        const selectedTask = tasks.find(task => task._id === id);
+        if (selectedTask) {
+          const taskSessions = selectedTask.sessions.filter(s => s.type === 'task');
+          setSessionCount(taskSessions.length);
+        }
+      } else {
+        const parentTask = tasks.find(task => 
+          task.subtasks?.some(subtask => subtask._id === id)
+        );
+        if (parentTask) {
+          const subtaskSessions = parentTask.sessions.filter(s => 
+            s.type === 'subtask' && s.targetId === id
+          );
+          setSessionCount(subtaskSessions.length);
+        }
       }
     }
   }, [selectedTaskId, tasks]);
@@ -63,6 +127,7 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
             if (!sessionEnded && !isSubmitting.current) {
               handleSessionEnd(elapsedTime);
               setSessionEnded(true);
+              startNewSession(); // Démarrer nouvelle session
             }
             return 0;
           }
@@ -85,17 +150,29 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
     try {
       isSubmitting.current = true;
       setIsRunning(false);
+      playSound('sessionComplete'); // Ajouter le son
 
-      const sessionTimeInMinutes = Math.max(Math.ceil(totalSeconds / 60), 1);
-      console.log(`Temps de session: ${totalSeconds} secondes (${sessionTimeInMinutes} minutes)`);
+      const [type, id] = selectedTaskId.split('-');
+     // Arrondir au nombre de minutes sans ajouter de minute supplémentaire
+     const sessionTimeInMinutes = Math.floor(totalSeconds / 60);
+
+      const parentTaskId = type === 'subtask' 
+        ? tasks.find(task => task.subtasks?.some(st => st._id === id))?._id
+        : id;
+
+      if (!parentTaskId) {
+        throw new Error("Tâche parente non trouvée");
+      }
 
       const session = {
         duration: sessionTimeInMinutes,
         date: new Date(),
+        type: type,
+        targetId: id
       };
 
       const response = await fetch(
-        `http://192.168.50.241:4000/tasks/${selectedTaskId}/sessions`,
+        `http://192.168.50.241:4000/tasks/${parentTaskId}/sessions`,
         {
           method: "POST",
           headers: {
@@ -113,23 +190,27 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
       setSessionTime(0);
       setSessionEnded(false);
 
-      // Actualiser les données après l'ajout de la session
       if (fetchTasks) {
         await fetchTasks();
       }
-  
-
-       // Redémarrer une nouvelle session automatiquement
-       if (!isManualStop) {
-        startTimer();
-      }
     } catch (error) {
-      console.error("Erreur lors de l'ajout de la session:", error);
+      console.error("Erreur:", error);
     } finally {
       isSubmitting.current = false;
-      setIsManualStop(false);
     }
   };
+
+  const startNewSession = useCallback(() => {
+    if (!isManualStop) {
+      setTimeout(() => {
+        setTimeLeft(customDuration * 60);
+        setSessionTime(0);
+        setSessionEnded(false);
+        setIsRunning(true);
+        playSound('sessionComplete'); // Ajouter le son
+      }, 1000);
+    }
+  }, [customDuration, isManualStop, setTimeLeft, setSessionTime, setIsRunning]);
 
   const startTimer = useCallback(() => {
     if (!selectedTaskId) {
@@ -171,7 +252,6 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
     if (minutes > 0) {
       setCustomDuration(minutes);
       setTimeLeft(minutes * 60);
-      console.log(`Durée définie: ${minutes} minutes (${minutes * 60} secondes)`);
     }
   }, [setCustomDuration, setTimeLeft]);
 
@@ -191,15 +271,24 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
   const activeSegments = Math.floor(progress / segmentProgress);
 
   return (
-    <div className={`pomodoro-timer ${!isPreview ? 'floating' : ''} ${isMinimized ? 'minimized' : ''}`}>
+    <div className={`pomodoro-timer ${!isPreview ? (isFloating ? 'floating' : 'docked') : ''} ${isMinimized ? 'minimized' : ''}`}>
       <div className="timer-header">
-        <h1>Minuteur Pomodoro 🏔️</h1>
-        <button 
-          className="minimize-button"
-          onClick={() => setIsMinimized(!isMinimized)}
-        >
-          {isMinimized ? '🔼' : '🔽'}
-        </button>
+        <h1>{formatTime(timeLeft)} ⏱️</h1>
+        <h3></h3>
+        <div className="timer-controls">
+          <button 
+            className="dock-button"
+            onClick={togglePosition}
+          >
+            {isFloating ? '📌' : '🔓'}
+          </button>
+          <button 
+            className="minimize-button"
+            onClick={() => setIsMinimized(!isMinimized)}
+          >
+            {isMinimized ? '🔼' : '🔽'}
+          </button>
+        </div>
       </div>
 
       <div className={`timer-content ${isMinimized ? 'hidden' : ''}`}>
@@ -219,19 +308,26 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
         <select
           value={selectedTaskId || ""}
           onChange={(e) => {
-            const taskId = e.target.value;
-            const index = tasks.findIndex(task => task._id === taskId);
-            setCurrentTaskIndex(index);
-            setSelectedTaskId(taskId);
-            localStorage.setItem('lastSelectedTaskId', taskId);
+            setSelectedTaskId(e.target.value);
+            localStorage.setItem('lastSelectedTaskId', e.target.value);
           }}
           className="task-selector"
         >
           <option value="" disabled>Sélectionnez une tâche</option>
           {tasks.map((task) => (
-            <option key={task._id} value={task._id}>
-              {task.name}
-            </option>
+            <React.Fragment key={task._id}>
+              <option value={`task-${task._id}`}>
+                {task.name}
+              </option>
+              {/* Filtrer les sous-tâches non archivées */}
+              {task.subtasks
+            ?.filter(subtask => subtask.archived !== "closed")
+            .map((subtask) => (
+              <option key={subtask._id} value={`subtask-${subtask._id}`}>
+                ├─ {subtask.name}
+              </option>
+            ))}
+        </React.Fragment>
           ))}
         </select>
 
@@ -265,6 +361,6 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
       </div>
     </div>
   );
-};
+}
 
 export default GlobalPomodoroTimer;

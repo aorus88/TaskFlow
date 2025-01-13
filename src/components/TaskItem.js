@@ -114,6 +114,33 @@ const TaskItem = ({
     onDeleteSubtask(taskId, subtaskId);
   };
 
+  // Mise à jour de calculateTotalTime
+const calculateTotalTime = (task) => {
+  if (!task.sessions) return 0;
+  
+  let total = 0;
+  
+  // Sessions de la tâche principale
+  const taskSessions = task.sessions.filter(s => !s.type || s.type === 'task');
+  total += taskSessions.reduce((acc, session) => acc + session.duration, 0);
+  
+  // Sessions des sous-tâches
+  const subtaskSessions = task.sessions.filter(s => s.type === 'subtask');
+  total += subtaskSessions.reduce((acc, session) => acc + session.duration, 0);
+  
+  return total;
+};
+
+// 2. Ajout d'une fonction pour calculer le temps par sous-tâche
+const calculateSubtaskTime = (task, subtaskId) => {
+  const subtaskSessions = task.sessions.filter(s => 
+    s.type === 'subtask' && s.targetId === subtaskId
+  );
+  return subtaskSessions.reduce((acc, session) => acc + session.duration, 0);
+};
+
+
+
   return (
     <li className="task-item">
       <div className="task-content">
@@ -141,7 +168,7 @@ const TaskItem = ({
           </p>
         )}
         <p>
-          <strong>Total sessions :</strong> {formatTime(task.totalTime || 0)}
+          <strong>Temps total :</strong> {formatTime(calculateTotalTime(task))}
         </p>
         <p>
           <strong>Dernière session :</strong> {formatTime(lastSessionDuration)}
@@ -172,11 +199,14 @@ const TaskItem = ({
                         onChange={() => handleToggleSubtaskStatus(task.id, subtask.id, subtask.archived === "open" ? "closed" : "open")}
                       />
                       {subtask.name}
+                      <span className="subtask-time">
+                        {formatTime(calculateSubtaskTime(task, subtask._id))}
+                      </span>
                       <button className="edit-icon" onClick={() => openEditModal(subtask)}>
                         ✏️
                       </button>
                       <button className="delete-icon" onClick={() => handleDeleteSubtask(task.id, subtask.id)}>
-                        🗑️
+                       ❌
                       </button>
                     </div>
                   )
