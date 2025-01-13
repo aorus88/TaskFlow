@@ -1,8 +1,52 @@
 import React, { useState } from "react";
 import "./FusionTool.css"; // Importer les styles spécifiques
 import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer"; // Importer le composant GlobalPomodoroTimer
+import { Bar } from 'react-chartjs-2'; // Importer le composant Bar de react-chartjs-2
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js'; // Importer les composants nécessaires de Chart.js
 
-const FusionTool = ({ entries, onAddEntry,}) => {
+// Enregistrer les composants nécessaires de Chart.js
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+const StatCard = ({ label, value, emoji, color }) => {
+  return (
+    <div className="stat-card" style={{ borderColor: color, backgroundColor: `${color}33` }}>
+      <h3 className="stat-card-label">{label}</h3>
+      <p className="stat-card-value" style={{ color: color }}>
+        {value} {emoji}
+      </p>
+    </div>
+  );
+};
+
+const BarChartCard = ({ label, data, color }) => {
+  const chartData = {
+    labels: data.map((entry) => entry.date),
+    datasets: [
+      {
+        label: 'Consommations',
+        data: data.map((entry) => entry.count),
+        backgroundColor: color,
+      },
+    ],
+  };
+
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
+  return (
+    <div className="stat-card" style={{ borderColor: color, backgroundColor: `${color}33` }}>
+      <h3 className="stat-card-label">{label}</h3>
+      <Bar data={chartData} options={options} />
+    </div>
+  );
+};
+
+const FusionTool = ({ entries, onAddEntry, onDeleteEntry }) => {
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split("T")[0],
     time: new Date().toLocaleTimeString("fr-FR", {
@@ -23,6 +67,12 @@ const FusionTool = ({ entries, onAddEntry,}) => {
   };
 
   const today = new Date().toISOString().split("T")[0]; // Récupérer la date actuelle
+  const yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split("T")[0]; // Récupérer la date d'hier
+  const dayBeforeYesterday = new Date(new Date().setDate(new Date().getDate() - 2)).toISOString().split("T")[0]; // Récupérer la date d'avant-hier
+  const sevenDaysAgo = new Date(new Date().setDate(new Date().getDate() - 7)).toISOString().split("T")[0]; // Récupérer la date d'il y a 7 jours
+  const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split("T")[0]; // Début du mois
+  const startOfLastMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1).toISOString().split("T")[0]; // Début du mois dernier
+  const endOfLastMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 0).toISOString().split("T")[0]; // Fin du mois dernier
 
   const handleAddEntry = () => {
     onAddEntry({ ...formData, id: Date.now(), createdAt: new Date().toISOString() });
@@ -36,13 +86,37 @@ const FusionTool = ({ entries, onAddEntry,}) => {
       consumption: "yes",
     });
   };
-  // Fonction pour calculer les stats du jour
-  const getTodayStats = () => {
-    const todayEntries = entries.filter(entry => entry.date === today);
-    const totalConsumption = todayEntries.filter(entry => entry.consumption === "yes").length;
+
+  const handleDeleteEntry = (id) => {
+    console.log("ID à supprimer:", id); // Ajouter un log pour vérifier l'ID
+    if (typeof onDeleteEntry === "function") {
+      onDeleteEntry(id);
+    } else {
+      console.error("onDeleteEntry n'est pas défini ou n'est pas une fonction valide.");
+    }
+  };
+
+  // Fonction pour calculer les stats globales
+  const getGlobalStats = () => {
+    const totalEntries = entries.length;
+    const todayEntries = entries.filter(entry => entry.date.split('T')[0] === today).length;
+    const yesterdayEntries = entries.filter(entry => entry.date.split('T')[0] === yesterday).length;
+    const dayBeforeYesterdayEntries = entries.filter(entry => entry.date.split('T')[0] === dayBeforeYesterday).length;
+    const sevenDaysAgoEntries = entries.filter(entry => entry.date.split('T')[0] === sevenDaysAgo).length;
+    const nonConsumptionEntries = entries.filter(entry => entry.consumption === "no").length;
+    const nonConsumptionTodayEntries = entries.filter(entry => entry.date.split('T')[0] === today && entry.consumption === "no").length;
+    const thisMonthEntries = entries.filter(entry => entry.date.split('T')[0] >= startOfMonth).length;
+    const lastMonthEntries = entries.filter(entry => entry.date.split('T')[0] >= startOfLastMonth && entry.date.split('T')[0] <= endOfLastMonth).length;
     return {
-      total: todayEntries.length,
-      consumed: totalConsumption
+      totalEntries,
+      todayEntries,
+      yesterdayEntries,
+      dayBeforeYesterdayEntries,
+      sevenDaysAgoEntries,
+      nonConsumptionEntries,
+      nonConsumptionTodayEntries,
+      thisMonthEntries,
+      lastMonthEntries
     };
   };
 
@@ -52,6 +126,50 @@ const FusionTool = ({ entries, onAddEntry,}) => {
     const dateB = new Date(b.createdAt);
     return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
   });
+
+  const globalStats = getGlobalStats();
+
+  // Déterminer l'emoji et la couleur en fonction du nombre d'entrées
+  const getEmojiAndColor = (count) => {
+    if (count < 2) {
+      return { emoji: "😊", color: "green" };
+    } else if (count >= 2 && count <= 6) {
+      return { emoji: "😐", color: "orange" };
+    } else {
+      return { emoji: "😟", color: "red" };
+    }
+  };
+
+  const todayStats = getEmojiAndColor(globalStats.todayEntries);
+  const yesterdayStats = getEmojiAndColor(globalStats.yesterdayEntries);
+  const dayBeforeYesterdayStats = getEmojiAndColor(globalStats.dayBeforeYesterdayEntries);
+  const sevenDaysAgoStats = getEmojiAndColor(globalStats.sevenDaysAgoEntries);
+
+  // Calculer les consommations sur les 10 derniers jours
+  const getLast10DaysStats = () => {
+    const last10Days = [];
+    for (let i = 9; i >= 0; i--) {
+      const date = new Date(new Date().setDate(new Date().getDate() - i)).toISOString().split("T")[0];
+      const count = entries.filter(entry => entry.date.split('T')[0] === date).length;
+      last10Days.push({ date, count });
+    }
+    return last10Days;
+  };
+
+  const last10DaysStats = getLast10DaysStats();
+
+  // Déterminer les emojis de récompense pour les moments sans fumée aujourd'hui
+  const getRewardEmoji = (count) => {
+    if (count > 10) {
+      return "🏆 Objectif rempli !";
+    } else if (count > 5) {
+      return "🎉 Étape supérieure !";
+    } else if (count > 2) {
+      return "👏 Bien joué !";
+    } else {
+      return "";
+    }
+  };
 
   return (
     <div className="fusion-tool">
@@ -114,23 +232,22 @@ const FusionTool = ({ entries, onAddEntry,}) => {
         </button>
       </form>
 
- {/* Nouvelle section stats */}
- <div className="stats-today">
-        <h3>Statistiques du jour</h3>
+      {/* Nouvelle section stats globales */}
+      <div className="stats-global">
+        <h3>Statistiques Globales</h3>
         <div className="stats-container">
-          <div className="stat-item">
-            <span className="stat-label">Nombre d'entrées aujourd'hui:</span>
-            <span className="stat-value">{getTodayStats().total}</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-label">Consommations aujourd'hui:</span>
-            <span className="stat-value">{getTodayStats().consumed}</span>
-          </div>
+          <StatCard label="Total" value={globalStats.totalEntries} emoji="📊" color="blue" />
+          <StatCard label="Total ce mois-ci" value={globalStats.thisMonthEntries} emoji="📅" color="blue" />
+          <StatCard label="Total le mois dernier" value={globalStats.lastMonthEntries} emoji="📅" color="blue" />
+          <StatCard label="Total aujourd'hui" value={globalStats.todayEntries} emoji={todayStats.emoji} color={todayStats.color} />
+          <StatCard label="Total hier" value={globalStats.yesterdayEntries} emoji={yesterdayStats.emoji} color={yesterdayStats.color} />
+          <StatCard label="Total avant-hier" value={globalStats.dayBeforeYesterdayEntries} emoji={dayBeforeYesterdayStats.emoji} color={dayBeforeYesterdayStats.color} />
+          <StatCard label="Total il y a 7 jours" value={globalStats.sevenDaysAgoEntries} emoji={sevenDaysAgoStats.emoji} color={sevenDaysAgoStats.color} />
+          <StatCard label="Total sans fumée" value={globalStats.nonConsumptionEntries} emoji="⛩️" color="green" />
+          <StatCard label="Total sans fumée aujourd'hui" value={globalStats.nonConsumptionTodayEntries} emoji={`⛩️ ${getRewardEmoji(globalStats.nonConsumptionTodayEntries)}`} color="green" />
+          <BarChartCard label="Consommations sur 10 jours" data={last10DaysStats} color="blue" />
         </div>
       </div>
-
-
-
 
       <h2>Historique des Consommations</h2>
       <button
@@ -142,7 +259,6 @@ const FusionTool = ({ entries, onAddEntry,}) => {
         Trier : {sortOrder === "desc" ? "Du plus récent" : "Du plus ancien"}
       </button>
 
-
       <table className="fusion-table">
         <thead>
           <tr>
@@ -150,6 +266,7 @@ const FusionTool = ({ entries, onAddEntry,}) => {
             <th>Heure</th>
             <th>Humeur</th>
             <th>Consommation</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -159,6 +276,9 @@ const FusionTool = ({ entries, onAddEntry,}) => {
               <td>{entry.time}</td>
               <td>{entry.mood}</td>
               <td>{entry.consumption === "yes" ? "Oui" : "Non"}</td>
+              <td>
+                <button onClick={() => handleDeleteEntry(entry.id)}>Supprimer</button>
+              </td>
             </tr>
           ))}
         </tbody>

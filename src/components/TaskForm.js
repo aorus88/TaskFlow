@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./TaskForm.css"; // Centralisation des styles
-import { ca } from "date-fns/locale";
 
 const TaskForm = ({ onAddTask, taskCategories }) => {
   const [formData, setFormData] = useState({
@@ -8,7 +7,7 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
     date: new Date().toISOString().split("T")[0],
     time: "23:59",
     priority: "medium",
-    categories: "personnal", // Ajout de la catégorie par défaut
+    categories: "Personnel 🐈", // Ajout de la catégorie par défaut
   });
 
   // Fonction pour gérer les changements dans le formulaire
@@ -46,7 +45,7 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
         name: "",
         date: new Date().toISOString().split("T")[0],
         time: "23:59",
-        priority: "low",
+        priority: "medium",
         categories: "Personnel 🐈", // Réinitialisation de la catégorie
       });
     } else {
@@ -105,11 +104,11 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
         </label>
 
         <label>
-      Catégories :
-      <select
-        value={formData.categories}
-        onChange={(e) => handleChange("categories", e.target.value)}
-      >
+          Catégories :
+          <select
+            value={formData.categories}
+            onChange={(e) => handleChange("categories", e.target.value)}
+          >
             <option value="Personnel 🐈">Personnel 🐈</option>
             {taskCategories.map((categories) => (
               <option key={categories} value={categories}>

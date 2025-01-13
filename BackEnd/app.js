@@ -315,6 +315,7 @@ app.put('/consumption-entries/:id', async (req, res) => {
 // d) Supprimer une entrée
 app.delete('/consumption-entries/:id', async (req, res) => {
     const { id } = req.params;
+    const updates = req.body;
     try {
         await ConsumptionEntry.findByIdAndDelete(id);
         res.json({ message: 'Entrée supprimée avec succès.' });

@@ -24,9 +24,9 @@ body.dark .task-item {
   position: relative;
 }
 
-/* Mode sombre - contenu */
+/* Mode sombre - titre échéance */ 
 body.dark .task-content {
-  color: #e2e8f0;
+  color: #e4a736;
 }
 
 /* En-tête de la tâche */
@@ -47,47 +47,13 @@ body.dark .task-content {
 
 /* Mode sombre - nom de la tâche */
 body.dark .task-name {
-  color: #e2e8f0;
+  color: #babaa8;
 }
 
-
-/* Boutons d'action */
-.task-buttons {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
 
 /* Mode sombre pour les boutons d'action */
 body.dark .task-buttons {
-  color: #fdfdfd;
-}
-
-  .task-buttons button {
-    padding: 8px;
-    min-width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-.task-buttons .edit-button {
-  background-color: #eb8347;
-  color: white;
-}
-
-.task-buttons .complete-button {
-  background-color: #45a045;
-  color: white;
-}
-
-.task-buttons .delete-button {
-  background-color: #e51400;
-  color: white;
+  color: #090502;
 }
 
 .task-buttons button:hover {
@@ -107,73 +73,75 @@ body.dark .delete-button {
   background-color: #c53030;
 }
 
-/* Style pour les informations de la tâche */
+/* Style pour priorité, catégories, temps total , dernière session */
 .task-item p {
   margin: 2px 0;
   color: #050404c7;
 }
 
-/* Mode sombre - informations de la tâche */
+/* Mode sombre -  Style pour priorité, catégories, temps total , dernière session */
 body.dark .task-item p {
-  color: #9dbae1d5;
+  color: #fefefea9;
 }
 
 
 /* Barre de progression */
 .progress-bar-taskitem {
-  height: 10px;
-  width: 100%;
-  background: #e0e0e0;
-  border-radius: 2px;
+  height: 18px;
+  width: 60%;
+  background: #63626238;
+  border-radius: 20px;
   overflow: hidden;
   position: relative;
   margin-bottom: 5px;
   margin-top: 5px;
 
+
 }
 
 .progress-bar-taskitem-fill {
   height: 100%;
-width: 50%;
+  width: 40%;
   zoom: 0.5 ;
-  background: #37bb37;
+  background: #258125;
   transition: width 3s ease;
   
 
 }
 
 /* Conteneur des sous-tâches */
-.subtasks-section {
-  margin-top: 10px;
-}
 
-.subtasks-section h4 {
-  margin-bottom: 8px;
-  color: #333;
-}
-
-.subtask-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
 
 .subtask-item {
   display: flex;
   align-items: center;
-  background: #f9f9f9;
+  background: #ffffff27;
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 8px;
   transition: background-color 0.3s ease;
 }
 
+.dark .subtask-item {
+  background: #1a202c;
+  border-color: #2d3748;
+  color: #40ec658b;
+}
+
 .subtask-item:hover {
-  background-color: #f1f1f1;
+  background-color: #3381e8b7;
+}
+
+.dark .subtask-item:hover {
+  background-color: #1681ce9d;
 }
 
 .subtask-item input[type="checkbox"] {
   margin-right: 8px;
+}
+
+.dark.substak-item input[type="checkbox"] {
+  border-color: #2d3748;
 }
 
 .subtask-item button {
@@ -182,6 +150,10 @@ width: 50%;
   cursor: pointer;
   margin-left: 8px;
   color: #e51400;
+}
+
+.dark .subtask-item button {
+  color: #4299e1;
 }
 
 .subtask-item button:hover {
@@ -196,21 +168,43 @@ width: 50%;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 0.85rem;
+  color:#000000;
+  background-color: #5c5e5c4b;
 }
 
+.dark .subtasks-section input[type="text"] {
+  border-color: #2d3748;
+  background-color: #1a202c;
+  color: #7faae2;
+}
+
+
+/* Boutons d'action */
+.task-buttons {
+  position: absolute;
+  right: 0;
+  top: 35%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transform: translateY(-50%);
+}
 
 /* Media queries pour les appareils mobiles */
 @media screen and (max-width: 768px) {
   .task-item {
     padding: 16px 12px;
+    position: relative; /* Assurer que les boutons sont positionnés correctement */
   }
 
   .task-buttons {
-    position: relative;
-    top: 0;
+    position: absolute;
     right: 0;
-    justify-content: flex-end;
-    margin-top: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    flex-direction: column;
+    gap: 8px;
+    zoom: 0.9;
   }
 
   /* Augmenter la zone de touch pour iOS */
@@ -219,6 +213,10 @@ width: 50%;
     min-width: 30px;
     height: 30px;
     margin: 2px;
+  }
+
+  .subtask-list {
+    padding-right: 50px; /* Ajouter un padding pour éviter que les sous-tâches ne soient cachées par les boutons */
   }
 }
 

@@ -108,11 +108,78 @@ body.dark .sort-button:hover {
   background-color: #2b6cb0;
 }
 
+/* Styles pour StatCard */
+.stat-card {
+  background-color: #f9f9f9;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
 
+.stat-card-label {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
 
---> statistiques de la fusion des outils
+.stat-card-value {
+  margin: 0;
+  font-size: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
 
-.stats-today {
+.stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.1));
+  z-index: 0;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover::before {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.2));
+}
+
+.stat-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Mode sombre */
+body.dark .stat-card {
+  background-color: #1e1e1e;
+  border-color: #2d2d2d;
+  color: #d4d4d4;
+}
+
+body.dark .stat-card-label {
+  color: #cccccc;
+}
+
+body.dark .stat-card-value {
+  color: #ccaa00;
+}
+
+body.dark .stat-card::before {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3));
+}
+
+body.dark .stat-card:hover::before {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.4));
+}
+
+/* Styles pour les sections de statistiques */
+.stats-today,
+.stats-global {
   background-color: #ffffff;
   border-radius: 8px;
   padding: 20px;
@@ -120,46 +187,19 @@ body.dark .sort-button:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-body.dark .stats-today {
+body.dark .stats-today,
+body.dark .stats-global {
   background-color: #1a202c;
   color: #e2e8f0;
 }
 
 .stats-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   margin-top: 10px;
 }
 
 .stat-item {
   flex: 1;
-  padding: 10px;
-  border-radius: 6px;
-  background-color: #f7fafc;
-}
-
-body.dark .stat-item {
-  background-color: #2d3748;
-}
-
-.stat-label {
-  display: block;
-  font-size: 0.9rem;
-  color: #4a5568;
-  margin-bottom: 5px;
-}
-
-body.dark .stat-label {
-  color: #a0aec0;
-}
-
-.stat-value {
-  display: block;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #2d3748;
-}
-
-body.dark .stat-value {
-  color: #e2e8f0;
-}
+  padding: 10px;  border-radius: 6px;  background-color: #f7fafc;}body.dark .stat-item {  background-color: #2d3748;}.stat-label {  display: block;  font-size: 0.9rem;  color: #4a5568;  margin-bottom: 5px;}body.dark .stat-label {  color: #a0aec0;}.stat-value {  display: block;  font-size: 1.5rem;  font-weight: 600;  color: #2d3748;}body.dark .stat-value {  color: #e2e8f0;}/* Adaptation mobile */@media screen and (max-width: 768px) {  .stats-container {    flex-direction: column;    gap: 15px;  }  .fusion-form {    gap: 8px;  }  .fusion-form label {    font-size: 0.9rem;  }  .fusion-form input,  .fusion-form select {    padding: 6px;    font-size: 0.9rem;  }  .fusion-form button {    padding: 8px 12px;    font-size: 0.9rem;  }  .sort-button {    padding: 8px 12px;    font-size: 0.9rem;  }  .stat-card {    padding: 12px;  }  .stat-card-label {    font-size: 0.9rem;  }  .stat-card-value {    font-size: 1.2rem;  }}

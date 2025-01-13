@@ -213,6 +213,22 @@ const App = () => {
     }
   };
 
+  const deleteConsumptionEntry = async (entry) => {
+    try {
+      const response = await fetch(`http://192.168.50.241:4000/consumption-entries/`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry),
+      });
+      if (!response.ok) {
+        throw new Error('Erreur lors de la suppression de l\'entrée de consommation.');
+      }
+      await fetchConsumptionEntries();
+    } catch (error) {
+      console.error('Erreur :', error);
+    }
+  };
+
   useEffect(() => {
     fetchTasks();
     fetchConsumptionEntries();
@@ -278,9 +294,16 @@ const App = () => {
                 onFetchArchivedTasks={() => fetchTasks(true)}
               />
             }
+      
 
           />
-          <Route path="/fusion-tool" element={<FusionTool entries={state.consumptionEntries} onAddEntry={addConsumptionEntry} />} />
+          <Route path="/fusion-tool" 
+          element={
+          <FusionTool 
+          entries={state.consumptionEntries} 
+          onAddEntry={addConsumptionEntry} 
+          onDeleteEntry={deleteConsumptionEntry}
+          />} />
           <Route path="/sessions" element={<Sessions />} />
 
           

@@ -19,6 +19,25 @@ const TaskItem = ({
   const [selectedTask, setSelectedTask] = useState(null);
   const [hiddenSubtasks, setHiddenSubtasks] = useState([]);
 
+  // Sons de notification
+const NOTIFICATION_SOUNDS = {
+  sessionComplete: '/sounds/session-complete.mp3',
+};
+
+const playSound = (soundType) => {
+  try {
+    const audio = new Audio(NOTIFICATION_SOUNDS[soundType]);
+    audio.play().catch(error => {
+      console.warn("Erreur lors de la lecture du son:", error);
+    });
+  } catch (error) {
+    console.warn("Le navigateur ne supporte pas la lecture audio:", error);
+  }
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+
     // Fonction pour calculer les jours restants
     const calculateDaysRemaining = () => {
       if (!task.date) return null;
@@ -150,7 +169,10 @@ const calculateSubtaskTime = (task, subtaskId) => {
             <button className="edit-button" onClick={() => openEditModal(task)}>
               Éditer
             </button>
-            <button className="complete-button" onClick={() => onArchiveTask(task.id)}>
+            <button className="complete-button" onClick={() => { 
+              onArchiveTask(task.id);
+              playSound('sessionComplete'); // Ajouter le son ici
+            }}>
               Terminé
             </button>
             <button className="delete-button" onClick={() => onDeleteTask(task.id, isArchived)}>
@@ -190,27 +212,29 @@ const calculateSubtaskTime = (task, subtaskId) => {
             </button>
             {expanded && (
               <div className="subtask-list">
-                {task.subtasks.map((subtask) => (
-                  !hiddenSubtasks.includes(subtask.id) && (
-                    <div key={subtask.id} className="subtask-item">
-                      <input
-                        type="checkbox"
-                        checked={subtask.archived === "closed"}
-                        onChange={() => handleToggleSubtaskStatus(task.id, subtask.id, subtask.archived === "open" ? "closed" : "open")}
-                      />
-                      {subtask.name}
-                      <span className="subtask-time">
-                        {formatTime(calculateSubtaskTime(task, subtask._id))}
-                      </span>
-                      <button className="edit-icon" onClick={() => openEditModal(subtask)}>
-                        ✏️
-                      </button>
-                      <button className="delete-icon" onClick={() => handleDeleteSubtask(task.id, subtask.id)}>
-                       ❌
-                      </button>
-                    </div>
-                  )
-                ))}
+                {task.subtasks
+                  .filter((subtask) => subtask.archived === "open")
+                  .map((subtask) => (
+                    !hiddenSubtasks.includes(subtask.id) && (
+                      <div key={subtask.id} className="subtask-item">
+                        <input
+                          type="checkbox"
+                          checked={subtask.archived === "closed"}
+                          onChange={() => handleToggleSubtaskStatus(task.id, subtask.id, subtask.archived === "open" ? "closed" : "open")}
+                        />
+                        {subtask.name}
+                        <span className="subtask-time">
+                          {formatTime(calculateSubtaskTime(task, subtask._id))}
+                        </span>
+                        <button className="edit-icon" onClick={() => openEditModal(subtask)}>
+                          ✏️
+                        </button>
+                        <button className="delete-icon" onClick={() => handleDeleteSubtask(task.id, subtask.id)}>
+                         ❌
+                        </button>
+                      </div>
+                    )
+                  ))}
                 <input
                   type="text"
                   value={newSubtaskText}
