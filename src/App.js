@@ -167,10 +167,13 @@ const App = () => {
   
   const deleteSubtask = async (taskId, subtaskId) => {
     try {
+      console.log(`Suppression de la sous-tâche ${subtaskId} de la tâche ${taskId}`);
       const response = await fetch(`http://192.168.50.241:4000/tasks/${taskId}/subtasks/${subtaskId}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Erreur lors de la suppression de la sous-tâche :', errorText);
         throw new Error('Erreur lors de la suppression de la sous-tâche.');
       }
       await fetchTasks();

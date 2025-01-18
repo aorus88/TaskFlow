@@ -176,26 +176,28 @@ app.put('/tasks/:taskId/subtasks/:subtaskId', async (req, res) => {
 
 /// 1c)
 //  Route pour supprimer une sous-tache 
-
 app.delete('/tasks/:taskId/subtasks/:subtaskId', async (req, res) => {
-    const { taskId, subtaskId } = req.params;
-    try {
-      const task = await Task.findById(taskId);
-      if (!task) {
-        return res.status(404).json({ error: 'Tâche non trouvée.' });
-      }
-      const subtask = task.subtasks.id(subtaskId);
-      if (!subtask) {
-        return res.status(404).json({ error: 'Sous-tâche non trouvée.' });
-      }
-      subtask.remove();
-      await task.save();
-      res.json({ message: 'Sous-tâche supprimée avec succès.' });
-    } catch (err) {
-      console.error('Erreur lors de la suppression de la sous-tâche :', err);
-      res.status(500).json({ error: 'Erreur lors de la suppression de la sous-tâche.' });
+  const { taskId, subtaskId } = req.params;
+  try {
+    console.log(`Suppression de la sous-tâche ${subtaskId} de la tâche ${taskId}`);
+    const task = await Task.findById(taskId);
+    if (!task) {
+      console.error('Tâche non trouvée.');
+      return res.status(404).json({ error: 'Tâche non trouvée.' });
     }
-  });
+    const subtask = task.subtasks.id(subtaskId);
+    if (!subtask) {
+      console.error('Sous-tâche non trouvée.');
+      return res.status(404).json({ error: 'Sous-tâche non trouvée.' });
+    }
+    task.subtasks.pull(subtaskId); // Utiliser la méthode pull pour supprimer la sous-tâche
+    await task.save();
+    res.json({ message: 'Sous-tâche supprimée avec succès.' });
+  } catch (err) {
+    console.error('Erreur lors de la suppression de la sous-tâche :', err);
+    res.status(500).json({ error: 'Erreur lors de la suppression de la sous-tâche.', details: err.message });
+  }
+});
 
 
 
