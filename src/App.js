@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
 import Archives from "./pages/Archives";
 import FusionTool from "./pages/FusionTool";
+import VersionHistory from "./pages/VersionHistory";
 import "./timer.css";
 import Sessions from "./pages/Sessions";
 import FloatingMenu from "./components/FloatingMenu";
@@ -333,7 +334,15 @@ const App = () => {
                   showFeedback={showFeedback}
                 />
               }
+
             />
+              <Route
+              path="/VersionHistory"
+              element={
+                <VersionHistory
+                />} />
+
+
           </Routes>
         </div>
       </TimerProvider>

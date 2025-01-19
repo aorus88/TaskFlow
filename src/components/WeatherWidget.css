@@ -6,7 +6,7 @@
   align-items: center;
   width: 100%;
   margin: 0 auto;
-  padding: 20px;
+  padding: 4px;
   border-radius: 12px;
   background-color: #ffffff00;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -24,7 +24,7 @@
 
 /* Taille de l'icône météo et de l'emoji */
 .weather-widget-icon {
-  font-size: 3.5rem;
+  font-size: 2.5rem;
 }
 
 .weather-widget-location {

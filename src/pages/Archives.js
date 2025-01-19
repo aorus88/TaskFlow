@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDrag, useDrop, DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer"; // Importer le composant GlobalPomodoroTimer
+import { SelectedTaskContext } from "../context/SelectedTaskContext"; // Importer le contexte
 import "./Archives.css";
 
 const ItemType = {
@@ -86,11 +87,13 @@ const Archives = ({
   archivedTasks, 
   archivedSubtasksWithOpenParent = [], // Default to an empty array if undefined
   handleDeleteTask,
-  onFetchArchivedTasks 
+  onFetchArchivedTasks,
+  showFeedback
 }) => {
   const [sortOrder, setSortOrder] = useState("desc");
   const [searchTerm, setSearchTerm] = useState("");
   const [tasks, setTasks] = useState(archivedTasks);
+  const { selectedTaskId, setSelectedTaskId } = useContext(SelectedTaskContext); // Utiliser le contexte
 
   useEffect(() => {
     if (onFetchArchivedTasks) {
@@ -129,21 +132,17 @@ const Archives = ({
   return (
     <DndProvider backend={HTML5Backend}>
       <GlobalPomodoroTimer 
-      isPreview={true} 
-      tasks={tasks}
-      
+        tasks={tasks}
+        fetchTasks={onFetchArchivedTasks}
+        setSelectedTaskId={setSelectedTaskId}
+        selectedTaskId={selectedTaskId}
+        showFeedback={showFeedback}
       /> {/* Afficher un aperçu du minuteur */}
-
 
       <div className="archives-page">
         <h1>✅ Tâches terminées</h1>
 
-
-        
-
         <div className="archived-tasks-header">
-          
-
           <input
             type="text"
             placeholder="Rechercher une tâche..."

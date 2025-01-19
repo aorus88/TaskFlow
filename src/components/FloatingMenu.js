@@ -45,6 +45,13 @@ const FloatingMenu = () => {
               </Link>
             </li>
 
+            <li>
+            <Link to="/VersionHistory" className="menu-link" onClick={handleLinkClick}>
+                🕒 Historique des versions
+              </Link>
+            </li>
+
+
         
 
           </ul>

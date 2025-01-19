@@ -5,25 +5,24 @@
   padding: 16px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  zoom : 0.85;
+  margin-top: 2px;
+  zoom: 0.8;
 }
 
 .statistics-header {
   text-align: center;
-  margin-bottom: 2px;
+  margin-bottom: 20px;
   font-size: 0.95rem;
 }
 
 .statistics-header h2 {
   margin: 0;
   color: #333;
-
-  
 }
 
 .statistics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 18px;
   font-size: 0.95rem;
 }
@@ -35,8 +34,7 @@
   padding: 12px;
   text-align: center;
   transition: all 0.3s ease;
-  color:#110909
-  
+  color: #110909;
 }
 
 .stat-card:hover {
@@ -46,7 +44,6 @@
 .stat-card h3 {
   margin: 0;
   margin-bottom: 8px;
-
   color: #110909;
 }
 
@@ -54,22 +51,60 @@
   margin: 0;
   color: #110909;
   font-size: 1.2rem;
-  
 }
 
 .stat-card-meteo {
-zoom: 0.5   ;
+  zoom: 0.5;
 }
 
+.stat-card-weather {
+  grid-column: span 3;
+  min-width: 200px;
+  text-align: center;
+}
+
+/* Styles dynamiques pour les conditions météorologiques */
+.weather-widget.Ensoleillé {
+  background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+  color: #333;
+}
+
+.weather-widget.Nuageux {
+  background: linear-gradient(to right, #bdc3c7, #2c3e50);
+  color: #fff;
+}
+
+.weather-widget.Pluie {
+  background: linear-gradient(to right, #4ca1af, #c4e0e5);
+  color: #fff;
+}
+
+.weather-widget.Neige {
+  background: linear-gradient(to right, #e6dada, #274046);
+  color: #333;
+}
+
+.weather-widget.Vents {
+  background: linear-gradient(to right, #bdc3c7, #2c3e50);
+  color: #333;
+}
+
+.weather-widget.Orages {
+  background: linear-gradient(to right, #f3904f, #3b4371);
+  color: #fff;
+}
+
+.weather-widget.Brouillard {
+  background: linear-gradient(to right, #bdc3c7, #2c3e50);
+  color: #333;
+}
 
 .progress-bar-container {
   background-color: #f0f0f0;
   border-radius: 10px;
   overflow: hidden;
-  height: 20px; /* Augmenter la hauteur */
+  height: 20px;
   margin: 10px 0;
-  
-
 }
 
 .progress-bar {
@@ -78,29 +113,26 @@ zoom: 0.5   ;
   font-size: 1.2rem;
   background-color: #4CAF50;
   transition: width 3s ease;
-
- 
-  
 }
 
 /* Mode sombre inspiré de VS Code */
 body.dark .statistics-container {
-  background-color: #1a202c; /* Fond principal VS Code */
+  background-color: #1a202c;
   border-color: #000000;
 }
 
 body.dark .statistics-header h2 {
-  color: #cccccc; /* Couleur de texte VS Code */
+  color: #cccccc;
 }
 
 body.dark .stat-card {
-  background-color: #ca4444; /* Couleur de fond des panneaux VS Code */
+  background-color: #ca4444;
   border: 3px solid #4d9ae785;
 }
 
 body.dark .stat-card:hover {
   background-color: #eae2e289;
-  border-color: #252526; /* Bleu VS Code */
+  border-color: #252526;
 }
 
 body.dark .stat-card h3 {
@@ -108,18 +140,17 @@ body.dark .stat-card h3 {
 }
 
 body.dark .stat-card p {
-  color: #ffffffe3; /* Couleur de texte principale VS Code */
+  color: #ffffffe3;
 }
 
 body.dark .timer-display {
-  color: #252526; /* Bleu VS Code pour mettre en valeur */
+  color: #252526;
 }
 
 body.dark .timer-note {
-  color: #6a9955; /* Vert VS Code pour les commentaires */
+  color: #6a9955;
 }
 
-/* Animation subtile au survol */
 .stat-card {
   transform: translateY(0);
   transition: transform 0.2s ease, border-color 0.2s ease;
@@ -131,7 +162,7 @@ body.dark .timer-note {
 
 body.dark .progress-bar-container {
   background-color: #2d2d2d;
-  height: 20px; /* Assurez-vous que la hauteur est également augmentée en mode sombre */
+  height: 20px;
 }
 
 body.dark .progress-bar {

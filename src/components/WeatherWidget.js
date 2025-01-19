@@ -22,8 +22,6 @@ const WeatherWidget = () => {
     "fog": "Brouillard",
     "light rain": "Pluie légère",
     "overcast clouds": "Nuages couverts",
-    "freezing" : "Gel",
-    "drizzle" : "Brouillard",
   };
 
   const getWeatherClass = (condition) => {
@@ -32,12 +30,11 @@ const WeatherWidget = () => {
     if (condition.includes("rain")) return "Pluie";
     if (condition.includes("snow")) return "Neige";
     if (condition.includes("wind")) return "Vents";
-    if (condition.includes("fog")) return "Vents";
+    if (condition.includes("fog")) return "Brouillard";
     if (condition.includes("freezing")) return "Gel";
     if (condition.includes("drizzle")) return "Brouillard";
     return ""; // Classe par défaut
   };
-  
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -110,11 +107,9 @@ const WeatherWidget = () => {
     <div className={`weather-widget ${weatherClass}`}>
       <div className="weather-widget-icon">{weatherIcon} {getEmojiForTime()}  </div>      
       <div className="weather-widget-location">{location}</div>
-      <div classeName="weather-widget-temperature">{weather.main.temp}° C - Température</div>
+      <div className="weather-widget-temperature">{weather.main.temp}° C - Température</div>
       <div className="weather-widget-ressenti">{weather.main.feels_like}° C - Ressenti</div>
       <div className="weather-widget-humidity">{weather.main.humidity}% - Humidité</div>
-      
-
     </div>
   );
 };

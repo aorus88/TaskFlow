@@ -85,64 +85,74 @@ const TaskForm = ({ onAddTask, taskCategories, showFeedback }) => {
   return (
     <div className="task-form">
       <form onKeyDown={handleKeyDown} className="task-form">
-        <label>
-          Tâche :
-          <input
-            type="text"
-            value={formData.name}
-            onChange={(e) => handleChange("name", e.target.value)}
-          />
-          {errors.name && <span className="error-message">{errors.name}</span>}
-        </label>
+        <div className="form-group-task">
+          <label>
+            Tâche :
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) => handleChange("name", e.target.value)}
+            />
+            {errors.name && <span className="error-message">{errors.name}</span>}
+          </label>
+        </div>
 
-        <label>
-          Echéance :
-          <input
-            type="date"
-            value={formData.date}
-            onChange={(e) => handleChange("date", e.target.value)}
-          />
-          {errors.date && <span className="error-message">{errors.date}</span>}
-        </label>
+        <div className="form-group">
+          <label>
+            Echéance :
+            <input
+              type="date"
+              value={formData.date}
+              onChange={(e) => handleChange("date", e.target.value)}
+            />
+            {errors.date && <span className="error-message">{errors.date}</span>}
+          </label>
+        </div>
 
-        <label>
-          Echéance (heure) :
-          <input
-            type="time"
-            value={formData.time}
-            onChange={(e) => handleChange("time", e.target.value)}
-          />
-          {errors.time && <span className="error-message">{errors.time}</span>}
-        </label>
+        <div className="form-group">
+          <label>
+            Echéance (heure) :
+            <input
+              type="time"
+              value={formData.time}
+              onChange={(e) => handleChange("time", e.target.value)}
+            />
+            {errors.time && <span className="error-message">{errors.time}</span>}
+          </label>
+        </div>
 
-        <label>
-          Priorité :
-          <select
-            value={formData.priority}
-            onChange={(e) => handleChange("priority", e.target.value)}
-          >
-            <option value="low">Faible</option>
-            <option value="medium">Moyenne</option>
-            <option value="high">Élevée</option>
-          </select>
-          {errors.priority && <span className="error-message">{errors.priority}</span>}
-        </label>
+        <div className="form-group">
+          <label>
+            Priorité :
+            <select
+              value={formData.priority}
+              onChange={(e) => handleChange("priority", e.target.value)}
+            >
+              <option value="low">Faible</option>
+              <option value="medium">Moyenne</option>
+              <option value="high">Élevée</option>
+            </select>
+            {errors.priority && <span className="error-message">{errors.priority}</span>}
+          </label>
+        </div>
 
-        <label>
-          Catégories :
-          <select
-            value={formData.categories}
-            onChange={(e) => handleChange("categories", e.target.value)}
-          >
-            <option value="Personnel 🐈">Personnel 🐈</option>
-            {taskCategories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-          {errors.categories && <span className="error-message">{errors.categories}</span>}
-        </label>
+        <div className="form-group">
+          <label>
+            Catégories :
+            <select
+              value={formData.categories}
+              onChange={(e) => handleChange("categories", e.target.value)}
+            >
+              <option value="Personnel 🐈">Personnel 🐈</option>
+              {taskCategories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            {errors.categories && <span className="error-message">{errors.categories}</span>}
+          </label>
+        </div>
 
         <button type="button" onClick={handleAddTask}>
           Ajouter une tâche

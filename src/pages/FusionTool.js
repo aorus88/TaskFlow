@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./FusionTool.css"; // Importer les styles spécifiques
 import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer"; // Importer le composant GlobalPomodoroTimer
 import { Bar } from 'react-chartjs-2'; // Importer le composant Bar de react-chartjs-2
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js'; // Importer les composants nécessaires de Chart.js
+import { SelectedTaskContext } from "../context/SelectedTaskContext"; // Importer le contexte
 
 // Enregistrer les composants nécessaires de Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -18,6 +19,8 @@ const StatCard = ({ label, value, emoji, color }) => {
   );
 };
 
+
+
 const BarChartCard = ({ label, data, color }) => {
   const chartData = {
     labels: data.map((entry) => entry.date),
@@ -25,16 +28,92 @@ const BarChartCard = ({ label, data, color }) => {
       {
         label: 'Consommations',
         data: data.map((entry) => entry.count),
-        backgroundColor: color,
+        backgroundColor: data.map((entry) => entry.count > 5 ? 'rgba(255, 99, 132, 0.2)' : color),
+        borderColor: data.map((entry) => entry.count > 5 ? 'rgb(255, 185, 99)' : color),
+        borderWidth: 1,
       },
     ],
   };
 
   const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: {
+          font: {
+            size: 15,
+          },
+          color: '#333',
+        },
+      },
+      title: {
+        display: true,
+        text: 'Graphique des Consommations',
+        font: {
+          size: 18,
+        },
+        color: '#333',
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            let label = context.dataset.label || '';
+            if (label) {
+              label += ': ';
+            }
+            if (context.parsed.y !== null) {
+              label += context.parsed.y;
+            }
+            return label;
+          },
+        },
+      },
+    },
     scales: {
       y: {
         beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Nombre de consommations',
+          color: '#333',
+          font: {
+            size: 14,
+          },
+        },
+        ticks: {
+          color: '#333',
+          font: {
+            size: 12,
+          },
+        },
+        grid: {
+          color: 'rgba(0, 0, 0, 0.1)',
+        },
       },
+      x: {
+        title: {
+          display: true,
+          text: 'Date',
+          color: '#333',
+          font: {
+            size: 14,
+          },
+        },
+        ticks: {
+          color: '#333',
+          font: {
+            size: 12,
+          },
+        },
+        grid: {
+          color: 'rgba(0, 0, 0, 0.1)',
+        },
+      },
+    },
+    animation: {
+      duration: 1000,
+      easing: 'easeInOutBounce',
     },
   };
 
@@ -46,7 +125,9 @@ const BarChartCard = ({ label, data, color }) => {
   );
 };
 
-const FusionTool = ({ entries, onAddEntry, onDeleteEntry }) => {
+const FusionTool = ({ entries, onAddEntry, onDeleteEntry, showFeedback }) => {
+  const [tasks, setTasks] = useState([]);
+  const { selectedTaskId, setSelectedTaskId } = useContext(SelectedTaskContext); // Utiliser le contexte
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split("T")[0],
     time: new Date().toLocaleTimeString("fr-FR", {
@@ -73,6 +154,7 @@ const FusionTool = ({ entries, onAddEntry, onDeleteEntry }) => {
   const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split("T")[0]; // Début du mois
   const startOfLastMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1).toISOString().split("T")[0]; // Début du mois dernier
   const endOfLastMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 0).toISOString().split("T")[0]; // Fin du mois dernier
+
 
   const handleAddEntry = () => {
     onAddEntry({ ...formData, id: Date.now(), createdAt: new Date().toISOString() });
@@ -171,11 +253,34 @@ const FusionTool = ({ entries, onAddEntry, onDeleteEntry }) => {
     }
   };
 
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch('http://192.168.50.241:4000/tasks');
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      const data = await response.json();
+      setTasks(data);
+    } catch (error) {
+      console.error("Erreur lors du chargement des tâches :", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
   return (
     <div className="fusion-tool">
-      <GlobalPomodoroTimer isPreview={true} /> {/* Conserver minuterie pomodoro sur fusion-tool  */}
+      <GlobalPomodoroTimer 
+        tasks={tasks}
+        fetchTasks={fetchTasks}
+        setSelectedTaskId={setSelectedTaskId}
+        selectedTaskId={selectedTaskId}
+        showFeedback={showFeedback}
+      /> {/* Conserver minuterie pomodoro sur fusion-tool  */}
 
-      <h1>Suivi de Consommation de Cigarettes</h1>
+      <h1>Fusion-Tool 🚬</h1>
       <form className="fusion-form">
         <label>
           Date :
@@ -236,15 +341,16 @@ const FusionTool = ({ entries, onAddEntry, onDeleteEntry }) => {
       <div className="stats-global">
         <h3>Statistiques Globales</h3>
         <div className="stats-container">
-          <StatCard label="Total" value={globalStats.totalEntries} emoji="📊" color="blue" />
-          <StatCard label="Total ce mois-ci" value={globalStats.thisMonthEntries} emoji="📅" color="blue" />
-          <StatCard label="Total le mois dernier" value={globalStats.lastMonthEntries} emoji="📅" color="blue" />
+          <StatCard label="Total ce mois-ci" value={globalStats.thisMonthEntries} emoji="📊" color="blue" />
+          <StatCard label="Total le mois dernier" value={globalStats.lastMonthEntries} emoji="📊" color="blue" />
           <StatCard label="Total aujourd'hui" value={globalStats.todayEntries} emoji={todayStats.emoji} color={todayStats.color} />
           <StatCard label="Total hier" value={globalStats.yesterdayEntries} emoji={yesterdayStats.emoji} color={yesterdayStats.color} />
           <StatCard label="Total avant-hier" value={globalStats.dayBeforeYesterdayEntries} emoji={dayBeforeYesterdayStats.emoji} color={dayBeforeYesterdayStats.color} />
           <StatCard label="Total il y a 7 jours" value={globalStats.sevenDaysAgoEntries} emoji={sevenDaysAgoStats.emoji} color={sevenDaysAgoStats.color} />
           <StatCard label="Total sans fumée" value={globalStats.nonConsumptionEntries} emoji="⛩️" color="green" />
           <StatCard label="Total sans fumée aujourd'hui" value={globalStats.nonConsumptionTodayEntries} emoji={`⛩️ ${getRewardEmoji(globalStats.nonConsumptionTodayEntries)}`} color="green" />
+          </div>
+          <div className="stats-chart-container">
           <BarChartCard label="Consommations sur 10 jours" data={last10DaysStats} color="blue" />
         </div>
       </div>

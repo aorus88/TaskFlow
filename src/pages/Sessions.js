@@ -9,6 +9,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 import 'moment/locale/fr'; // Importer la locale française pour moment
 
+
 const localizer = momentLocalizer(moment);
 
 const Sessions = () => {
@@ -89,21 +90,23 @@ const Sessions = () => {
 
     // Fonction pour obtenir la couleur de la session en fonction de la catégorie
     const getSessionStyle = (categories) => {
-      if (categories.includes("Travail 💼")) return { backgroundColor: 'rgba(255, 215, 0, 0.5)' }; // Or transparent
-      if (categories.includes("Personnel 🐈")) return { backgroundColor: 'rgba(255, 182, 193, 0.5)', color: "#000000" }; // Rose clair transparent
-      if (categories.includes("Santé - Fusion-Tool 🧬")) return { backgroundColor: 'rgba(173, 216, 230, 0.5)' }; // Bleu clair transparent
-      if (categories.includes("Finances 💵")) return { backgroundColor: 'rgba(144, 238, 144, 0.5)' }; // Vert clair transparent
-      if (categories.includes("Jeux vidéos 🎮")) return { backgroundColor: 'rgba(221, 160, 221, 0.5)', color: "#000000" }; // Violet clair transparent
-      if (categories.includes("Maison 🏠")) return { backgroundColor: 'rgba(255, 228, 181, 0.5)', color: "#000000" }; // Beige transparent
-      if (categories.includes("Achats 🛒")) return { backgroundColor: 'rgba(255, 179, 71, 0.5)' }; // Orange clair transparent
-      if (categories.includes("TaskFlow ⛩️")) return { backgroundColor: 'rgba(224, 255, 255, 0.5)', color: '#000000' }; // Cyan clair transparent avec texte noir
-      if (categories.includes("Autre 📝")) return { backgroundColor: 'rgba(211, 211, 211, 0.5)' }; // Gris clair transparent
+      if (categories.includes("Travail 💼")) return { backgroundColor: 'rgba(255, 223, 186, 0.3)' }; // Beige clair transparent
+      if (categories.includes("Personnel 🐈")) return { backgroundColor: 'rgba(255, 192, 203, 0.3)', color: "#000000" }; // Rose clair transparent
+      if (categories.includes("Santé - Fusion-Tool 🧬")) return { backgroundColor: 'rgba(173, 216, 230, 0.3)' }; // Bleu clair transparent
+      if (categories.includes("Finances 💵")) return { backgroundColor: 'rgba(144, 238, 144, 0.3)' }; // Vert clair transparent
+      if (categories.includes("Jeux vidéos 🎮")) return { backgroundColor: 'rgba(221, 160, 221, 0.3)', color: "#000000" }; // Violet clair transparent
+      if (categories.includes("Maison 🏠")) return { backgroundColor: 'rgba(255, 228, 181, 0.3)', color: "#000000" }; // Beige transparent
+      if (categories.includes("Achats 🛒")) return { backgroundColor: 'rgba(255, 165, 0, 0.3)' }; // Orange clair transparent
+      if (categories.includes("TaskFlow ⛩️")) return { backgroundColor: 'rgba(72, 209, 204, 0.3)', color: '#000000' }; // Cyan clair transparent avec texte noir
+      if (categories.includes("Autre 📝")) return { backgroundColor: 'rgba(211, 211, 211, 0.3)' }; // Gris clair transparent
       return { backgroundColor: '#FFFFFF' }; // Blanc
     };
 
   return (
     <div className="sessions-page">
       <GlobalPomodoroTimer 
+        tasks={tasks}
+        selectedTaskId={filter.taskId}
       /* Conserver minuterie pomodoro sur fusion-tool  */
 
        />
@@ -150,7 +153,10 @@ const Sessions = () => {
            />
 
 
-          <TaskFilters_Sessions filter={filter} setFilter={setFilter} tasks={tasks} /> {/* Passer les tâches */}
+          <TaskFilters_Sessions 
+          filter={filter} 
+          setFilter={setFilter} 
+          tasks={tasks} /> {/* Passer les tâches */}
 
 
       <ul className="sessions-list">

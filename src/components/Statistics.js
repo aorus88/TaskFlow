@@ -1,31 +1,30 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Statistics.css";
-import "./WeatherWidget.css";
 import WeatherWidget from "../components/WeatherWidget";
 import { TimerContext } from "../context/TimerContext";
 
-const Statistics = ({ tasks, isDarkMode, toggleDarkMode, }) => {
+const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
   const { timeLeft, selectedTaskId } = useContext(TimerContext);
   
   // Ajout de l'état pour l'heure actuelle
   const [currentTime, setCurrentTime] = useState(new Date());
 
-    // Mise à jour de l'heure chaque seconde
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setCurrentTime(new Date());
-      }, 1000);
-      return () => clearInterval(interval);
-    }, []);
+  // Mise à jour de l'heure chaque seconde
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
   
-    // Fonction pour formater l'heure
-    const formatClock = (time) => {
-      return time.toLocaleTimeString('fr-FR', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      });
-    };
+  // Fonction pour formater l'heure
+  const formatClock = (time) => {
+    return time.toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  };
 
   // Définition des dates repères
   const today = new Date();
@@ -41,7 +40,6 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode, }) => {
   const openTasks = tasks.filter((task) => 
     task.status !== "closed" && !task.archivedAt
   );
-
 
   const highMediumPriorityOpen = tasks.filter((task) => 
     (task.priority === "high" || task.priority === "medium") 
@@ -70,7 +68,6 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode, }) => {
       return sessionDate >= yesterday && sessionDate < new Date(today.getTime() + 86400000);
     });
 
-
   // Calcul du temps total des sessions du jour
   const totalSessionTimeToday = sessionsToday.reduce((total, session) => total + session.duration, 0);
 
@@ -92,44 +89,43 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode, }) => {
     return `${hours}h ${minutes}min ${seconds}sec`;
   };
 
-// Calcul de la progression des sessions
-const customDuration = "customDuration" in localStorage ? JSON.parse(localStorage.getItem("customDuration")) : 25;
-const totalSessionTime = customDuration * 60; // conversion en secondes
-const timeElapsed = totalSessionTime - timeLeft; // temps écoulé en secondes
-const progress = (timeElapsed / totalSessionTime) * 100; // pourcentage de progression
-const percentage = progress.toFixed(2); // formatage à deux décimales
+  // Calcul de la progression des sessions
+  const customDuration = "customDuration" in localStorage ? JSON.parse(localStorage.getItem("customDuration")) : 25;
+  const totalSessionTime = customDuration * 60; // conversion en secondes
+  const timeElapsed = totalSessionTime - timeLeft; // temps écoulé en secondes
+  const progress = (timeElapsed / totalSessionTime) * 100; // pourcentage de progression
+  const percentage = progress.toFixed(2); // formatage à deux décimales
 
   // Vérification pour éviter NaN
   const validProgress = isNaN(progress) ? 0 : progress;
 
-// Ajouter cette fonction pour obtenir le nom de la tâche/sous-tâche sélectionnée
-const getSelectedTaskName = () => {
-  if (!selectedTaskId) return "Aucune tâche sélectionnée";
-  
-  // Nettoyer le selectedTaskId des guillemets supplémentaires
-  const cleanTaskId = selectedTaskId.replace(/"/g, '');
-  const [type, id] = cleanTaskId.split('-');
-  
-  if (type === 'subtask') {
-    const parentTask = tasks.find(task => 
-      task.subtasks?.some(subtask => subtask._id === id)
-    );
-    if (parentTask) {
-      const subtask = parentTask.subtasks.find(st => st._id === id);
-      return subtask ? `📌 ${parentTask.name} > ${subtask.name}` : "Sous-tâche non trouvée";
+  // Ajouter cette fonction pour obtenir le nom de la tâche/sous-tâche sélectionnée
+  const getSelectedTaskName = () => {
+    if (!selectedTaskId) return "Aucune tâche sélectionnée";
+    
+    // Nettoyer le selectedTaskId des guillemets supplémentaires
+    const cleanTaskId = selectedTaskId.replace(/"/g, '');
+    const [type, id] = cleanTaskId.split('-');
+    
+    if (type === 'subtask') {
+      const parentTask = tasks.find(task => 
+        task.subtasks?.some(subtask => subtask._id === id)
+      );
+      if (parentTask) {
+        const subtask = parentTask.subtasks.find(st => st._id === id);
+        return subtask ? `📌 ${parentTask.name} > ${subtask.name}` : "Sous-tâche non trouvée";
+      }
+    } else {
+      const task = tasks.find(t => t._id === id);
+      return task ? `⛩️ ${task.name}` : "Tâche non trouvée";
     }
-  } else {
-    const task = tasks.find(t => t._id === id);
-    return task ? `⛩️ ${task.name}` : "Tâche non trouvée";
-  }
-  return "Tâche non trouvée";
-};
+    return "Tâche non trouvée";
+  };
 
-  
   return (
     <div className="statistics-container">
       <div className="statistics-header">
-        <h2>📈 Statistiques  - ⛩️ TaskFlow 1.3.1 -  🕒 {formatClock(currentTime)}   
+        <h2>📈 Statistiques  - ⛩️ TaskFlow 1.3.2 -  🕒 {formatClock(currentTime)}   
        
         <div className="dark-mode-toggle">
           <h3>Mode sombre</h3>
@@ -150,9 +146,6 @@ const getSelectedTaskName = () => {
           <p>🔴🟠 {highMediumPriorityOpen.length}</p>
         </div>
 
- 
-    
-
         <div className="stat-card">
           <h3>Sessions (Hier) </h3>
           <p>⏱️ {formatTime(totalSessionTimeYesterday)}</p>
@@ -160,33 +153,22 @@ const getSelectedTaskName = () => {
           <p>⏱️ {formatTime(totalSessionTimeToday)}</p>
         </div>
 
-
-
-
-     <div className="stat-card">
-     <h3>⌛</h3>
-      <div className="progress-bar-container">
-        <div className="progress-bar" style={{ width: `${validProgress}%` }}></div>
-      </div>
-      <p>{validProgress.toFixed(2)}%</p>
-      <p className="selected-task-name">{getSelectedTaskName()}</p>
-      <h3>⌛</h3>
-      <p className="timer-display">{formatTimeWithSeconds(timeLeft)}</p>
-    </div>
-
- 
         <div className="stat-card">
-          <div className="weather-widget-container">
-          <WeatherWidget />
+          <h3>⌛</h3>
+          <div className="progress-bar-container">
+            <div className="progress-bar" style={{ width: `${validProgress}%` }}></div>
           </div>
+          <p>{validProgress.toFixed(2)}%</p>
+          <p className="selected-task-name">{getSelectedTaskName()}</p>
+          <h3>⌛</h3>
+          <p className="timer-display">{formatTimeWithSeconds(timeLeft)}</p>
         </div>
 
-
+        <div className="stat-card-weather">
+          <WeatherWidget />
+        </div>
       </div>
-
-        
-      </div>
-
+    </div>
   );
 };
 
