@@ -57,6 +57,10 @@
   
 }
 
+.stat-card-meteo {
+zoom: 0.5   ;
+}
+
 
 .progress-bar-container {
   background-color: #f0f0f0;

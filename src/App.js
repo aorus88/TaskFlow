@@ -1,16 +1,17 @@
 import React, { useReducer, useEffect, useState, useCallback } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
 import Archives from "./pages/Archives";
 import FusionTool from "./pages/FusionTool";
+import "./timer.css";
 import Sessions from "./pages/Sessions";
 import FloatingMenu from "./components/FloatingMenu";
 import GlobalPomodoroTimer from "./components/GlobalPomodoroTimer";
-import FeedbackMessage from './components/FeedbackMessage';
 import "./index.css";
-import "./timer.css";
 import taskReducer from "./reducers/taskReducer";
 import { TimerProvider } from "./context/TimerContext";
+import FeedbackMessage from './components/FeedbackMessage'; // Importer le composant FeedbackMessage
+import { SelectedTaskProvider } from './context/SelectedTaskContext'; // Importer le contexte
 
 const initialState = {
   tasks: [],
@@ -38,7 +39,7 @@ const App = () => {
     "Achats 🛒",
     "TaskFlow ⛩️",
     "Autre 📝",
-];
+  ];
 
   const showFeedback = (message, type) => {
     setFeedback({ message, type });
@@ -98,6 +99,7 @@ const App = () => {
       await fetchTasks();
     } catch (error) {
       console.error('Erreur :', error);
+      showFeedback('Erreur lors de la modification de la tâche.', 'error');
     }
   };
 
@@ -112,6 +114,7 @@ const App = () => {
       await fetchTasks();
     } catch (error) {
       console.error('Erreur :', error);
+      showFeedback('Erreur lors de la suppression de la tâche.', 'error');
     }
   };
 
@@ -128,6 +131,7 @@ const App = () => {
       await fetchTasks();
     } catch (error) {
       console.error('Erreur :', error);
+      showFeedback('Erreur lors de l\'archivage de la tâche.', 'error');
     }
   };
 
@@ -179,6 +183,7 @@ const App = () => {
       await fetchTasks();
     } catch (error) {
       console.error('Erreur :', error);
+      showFeedback('Erreur lors de la suppression de la sous-tâche.', 'error');
     }
   };
 
@@ -259,60 +264,80 @@ const App = () => {
   };
 
   return (
-    <TimerProvider>
-      <div className={`App ${isDarkMode ? 'dark' : ''}`}>
-        <FeedbackMessage message={feedback.message} type={feedback.type} />
-        <FloatingMenu addTask={addTask} />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                tasks={state.tasks}
-                onAddTask={addTask}
-                onEditTask={updateTask}
-                onDeleteTask={deleteTask}
-                onArchiveTask={archiveTask}
-                onAddSubtask={addSubtask}
-                onDeleteSubtask={deleteSubtask}
-                onToggleSubtaskStatus={toggleSubtaskStatus}
-                onSaveTask={updateTask}
-                filter={filter}
-                setFilter={setFilter}
-                fetchTasks={fetchTasks}
-                updateTaskTime={updateTaskTime}
-                setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
-                isDarkMode={isDarkMode}
-                toggleDarkMode={toggleDarkMode}
-                taskCategories={taskCategories} // Passer les catégories en prop
-              />
-            }
-          />
-          <Route
-            path="/archives"
-            element={
-              <Archives
-                archivedTasks={state.tasks.filter((task) => task.archived?.trim() === "closed")}
-                handleDeleteTask={deleteTask}
-                onFetchArchivedTasks={() => fetchTasks(true)}
-              />
-            }
-      
-
-          />
-          <Route path="/fusion-tool" 
-          element={
-          <FusionTool 
-          entries={state.consumptionEntries} 
-          onAddEntry={addConsumptionEntry} 
-          onDeleteEntry={deleteConsumptionEntry}
-          />} />
-          <Route path="/sessions" element={<Sessions />} />
-
-          
-        </Routes>
-      </div>
-    </TimerProvider>
+    <SelectedTaskProvider>
+      <TimerProvider>
+        <div className={`App ${isDarkMode ? 'dark' : ''}`}>
+          <FeedbackMessage message={feedback.message} type={feedback.type} />
+          <FloatingMenu addTask={addTask} />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  tasks={state.tasks}
+                  onAddTask={addTask}
+                  onEditTask={updateTask}
+                  onDeleteTask={deleteTask}
+                  onArchiveTask={archiveTask}
+                  onAddSubtask={addSubtask}
+                  onDeleteSubtask={deleteSubtask}
+                  onToggleSubtaskStatus={toggleSubtaskStatus}
+                  onSaveTask={updateTask}
+                  filter={filter}
+                  setFilter={setFilter}
+                  fetchTasks={fetchTasks}
+                  updateTaskTime={updateTaskTime}
+                  setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
+                  isDarkMode={isDarkMode}
+                  toggleDarkMode={toggleDarkMode}
+                  taskCategories={taskCategories} // Passer les catégories en prop
+                  showFeedback={showFeedback} // Passer la fonction showFeedback en prop
+                />
+              }
+            />
+            <Route
+              path="/archives"
+              element={
+                <Archives
+                  archivedTasks={state.tasks.filter((task) => task.archived?.trim() === "closed")}
+                  archivedSubtasksWithOpenParent={state.tasks.flatMap(task =>
+                    task.subtasks.filter(subtask => subtask.archived === "closed" && task.archived !== "closed").map(subtask => ({
+                      ...subtask,
+                      parentTaskName: task.name,
+                      parentTaskId: task._id,
+                    }))
+                  )}
+                  handleDeleteTask={deleteTask}
+                  onFetchArchivedTasks={() => fetchTasks(true)}
+                  showFeedback={showFeedback}
+                />
+              }
+            />
+            <Route
+              path="/fusion-tool"
+              element={
+                <FusionTool
+                  entries={state.consumptionEntries}
+                  onAddEntry={addConsumptionEntry}
+                  onDeleteEntry={deleteConsumptionEntry}
+                  showFeedback={showFeedback}
+                />
+              }
+            />
+            <Route
+              path="/sessions"
+              element={
+                <Sessions
+                  tasks={state.tasks}
+                  fetchTasks={fetchTasks}
+                  showFeedback={showFeedback}
+                />
+              }
+            />
+          </Routes>
+        </div>
+      </TimerProvider>
+    </SelectedTaskProvider>
   );
 };
 

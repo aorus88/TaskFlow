@@ -79,3 +79,13 @@ body.dark .delete-button {
 body.dark .delete-button:hover {
   background-color: #b31200;
 }
+
+body.dark .legend li:nth-child(1) { background-color: #FFD700; } /* Travail 💼 */
+body.dark .legend li:nth-child(2) { background-color: #FFB6C1; } /* Personnel 🐈 */
+body.dark .legend li:nth-child(3) { background-color: #ADD8E6; } /* Santé - Fusion-Tool 🧬 */
+body.dark .legend li:nth-child(4) { background-color: #90EE90; } /* Finances 💵 */
+body.dark .legend li:nth-child(5) { background-color: #DDA0DD; } /* Jeux vidéos 🎮 */
+body.dark .legend li:nth-child(6) { background-color: #FFE4B5; } /* Maison 🏠 */
+body.dark .legend li:nth-child(7) { background-color: #FFB347; } /* Achats 🛒 */
+body.dark .legend li:nth-child(8) { background-color: #E0FFFF; } /* TaskFlow ⛩️ */
+body.dark .legend li:nth-child(9) { background-color: #D3D3D3; } /* Autre 📝 */

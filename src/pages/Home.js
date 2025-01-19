@@ -28,6 +28,7 @@ const Home = ({
   isDarkMode,
   toggleDarkMode,
   taskCategories,
+  showFeedback,
 }) => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -101,9 +102,7 @@ const Home = ({
 
   return (
     <div className="home-container">
-      <header className="header-section">
-        <WeatherWidget />
-      </header>
+
       
       <section className="stats-pomodoro-section">
         <Statistics 
@@ -111,18 +110,31 @@ const Home = ({
           isDarkMode={isDarkMode}
           toggleDarkMode={toggleDarkMode}
           setSelectedTaskId={setSelectedTaskId}
+          showFeedback={showFeedback}
         />
         <GlobalPomodoroTimer
           tasks={tasks}
           updateTaskTime={updateTaskTime}
           fetchTasks={fetchTasks}
           setSelectedTaskId={setSelectedTaskId}
+          showFeedback={showFeedback}
         />
       </section>
 
       <section className="tasks-section">
-        <TaskFilters filter={filter} setFilter={setFilter} taskCategories={taskCategories} />
-        <TaskForm onAddTask={handleAddTask} taskCategories={taskCategories} />
+
+        <TaskForm 
+        onAddTask={handleAddTask} 
+        taskCategories={taskCategories} 
+        showFeedback={showFeedback}
+        />
+
+<TaskFilters 
+        filter={filter} 
+        setFilter={setFilter} 
+        taskCategories={taskCategories} />
+
+
         <TaskList
           tasks={tasks.filter((task) => task.archived === 'open')}
           filter={filter}
@@ -139,6 +151,7 @@ const Home = ({
           onDeleteSubtask={onDeleteSubtask}
           onToggleSubtaskStatus={onToggleSubtaskStatus}
           onUpdateTask={onSaveTask} 
+          showFeedback={showFeedback}
         />
       </section>
 
@@ -148,6 +161,7 @@ const Home = ({
           onClose={() => setIsEditing(false)}
           onSave={handleSaveTask}
           taskCategories={taskCategories}
+          showFeedback={showFeedback}
         />
       )}
     </div>

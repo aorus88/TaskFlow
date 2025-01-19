@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Statistics.css";
+import "./WeatherWidget.css";
+import WeatherWidget from "../components/WeatherWidget";
 import { TimerContext } from "../context/TimerContext";
 
 const Statistics = ({ tasks, isDarkMode, toggleDarkMode, }) => {
@@ -127,7 +129,16 @@ const getSelectedTaskName = () => {
   return (
     <div className="statistics-container">
       <div className="statistics-header">
-        <h2>📈 Statistiques  - ⛩️ TaskFlow 1.3.0 -  🕒 {formatClock(currentTime)}       
+        <h2>📈 Statistiques  - ⛩️ TaskFlow 1.3.1 -  🕒 {formatClock(currentTime)}   
+       
+        <div className="dark-mode-toggle">
+          <h3>Mode sombre</h3>
+          <button onClick={toggleDarkMode} className="dark-mode-button">
+            {isDarkMode ? "🌚" : "🌞"}
+          </button>
+          <div/>
+        
+        </div>    
            </h2>
       </div>
 
@@ -135,29 +146,21 @@ const getSelectedTaskName = () => {
         <div className="stat-card">
           <h3>Tâches Ouvertes</h3>
           <p>📋 {openTasks.length}</p>
-        </div>
-
-        <div className="stat-card">
           <h3>Hautes / Moyennes (Ouvertes)</h3>
           <p>🔴🟠 {highMediumPriorityOpen.length}</p>
         </div>
+
+ 
     
 
         <div className="stat-card">
           <h3>Sessions (Hier) </h3>
           <p>⏱️ {formatTime(totalSessionTimeYesterday)}</p>
-        </div>
-
-        <div className="stat-card">
           <h3>Sessions (Aujourd'hui)</h3>
           <p>⏱️ {formatTime(totalSessionTimeToday)}</p>
         </div>
 
 
-        <div className="stat-card">
-          <h3>⌛</h3>
-          <p className="timer-display">{formatTimeWithSeconds(timeLeft)}</p>
-        </div>
 
 
      <div className="stat-card">
@@ -167,21 +170,23 @@ const getSelectedTaskName = () => {
       </div>
       <p>{validProgress.toFixed(2)}%</p>
       <p className="selected-task-name">{getSelectedTaskName()}</p>
+      <h3>⌛</h3>
+      <p className="timer-display">{formatTimeWithSeconds(timeLeft)}</p>
     </div>
 
+ 
         <div className="stat-card">
-          <h3>Mode sombre</h3>
-          <button onClick={toggleDarkMode} className="dark-mode-button">
+          <div className="weather-widget-container">
+          <WeatherWidget />
+          </div>
+        </div>
 
-            
-            {isDarkMode ? "🌚" : "🌞"}
-          </button>
-          <div/>
+
       </div>
 
         
       </div>
-    </div>
+
   );
 };
 

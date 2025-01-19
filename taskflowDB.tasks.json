@@ -1,0 +1,7812 @@
+[{
+  "_id": {
+    "$oid": "67798ca581a14f2e2cd69f84"
+  },
+  "name": "OverWatch",
+  "date": {
+    "$date": "2025-12-31T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": null,
+  "archived": "open",
+  "categories": [
+    "Jeux vidéos 🎮"
+  ],
+  "totalTime": 455,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "test1",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-11T18:49:59.215Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-11T18:50:02.181Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "6782bd5779e4a9c82a2e9254"
+      }
+    },
+    {
+      "name": "323",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-12T00:47:19.656Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-13T12:44:27.956Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "6783111779e4a9c82a33bfde"
+      }
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-04T19:31:49.913Z"
+  },
+  "sessions": [
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T20:21:43.325Z"
+      },
+      "_id": {
+        "$oid": "6779985781a14f2e2cd6ae53"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T20:21:55.326Z"
+      },
+      "_id": {
+        "$oid": "6779986381a14f2e2cd6ae57"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T20:23:33.152Z"
+      },
+      "_id": {
+        "$oid": "677998c481a14f2e2cd6b1be"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T20:24:33.803Z"
+      },
+      "_id": {
+        "$oid": "6779990181a14f2e2cd6b1c4"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T20:25:34.390Z"
+      },
+      "_id": {
+        "$oid": "6779993e81a14f2e2cd6b1cb"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T20:26:35.175Z"
+      },
+      "_id": {
+        "$oid": "6779997a81a14f2e2cd6b38f"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T20:27:35.757Z"
+      },
+      "_id": {
+        "$oid": "677999b781a14f2e2cd6b55a"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T20:28:36.361Z"
+      },
+      "_id": {
+        "$oid": "677999f481a14f2e2cd6b564"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T20:29:36.989Z"
+      },
+      "_id": {
+        "$oid": "67799a3081a14f2e2cd6b56f"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T20:30:37.606Z"
+      },
+      "_id": {
+        "$oid": "67799a6d81a14f2e2cd6b57b"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T20:31:38.174Z"
+      },
+      "_id": {
+        "$oid": "67799aa981a14f2e2cd6b588"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T20:32:39.211Z"
+      },
+      "_id": {
+        "$oid": "67799ae781a14f2e2cd6b76a"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-04T20:33:40.888Z"
+      },
+      "_id": {
+        "$oid": "67799b2481a14f2e2cd6b951"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T20:33:50.982Z"
+      },
+      "_id": {
+        "$oid": "67799b2e81a14f2e2cd6bb40"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T20:37:37.092Z"
+      },
+      "_id": {
+        "$oid": "67799c1081a14f2e2cd6c0f3"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T20:40:38.229Z"
+      },
+      "_id": {
+        "$oid": "67799cc581a14f2e2cd6c2e9"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T20:43:38.739Z"
+      },
+      "_id": {
+        "$oid": "67799d7a81a14f2e2cd6c2fc"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T20:46:39.965Z"
+      },
+      "_id": {
+        "$oid": "67799e2f81a14f2e2cd6c66d"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T20:49:40.101Z"
+      },
+      "_id": {
+        "$oid": "67799ee381a14f2e2cd6c682"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T20:52:41.149Z"
+      },
+      "_id": {
+        "$oid": "67799f9881a14f2e2cd6c698"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T20:55:42.203Z"
+      },
+      "_id": {
+        "$oid": "6779a04d81a14f2e2cd6c6af"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T20:58:43.089Z"
+      },
+      "_id": {
+        "$oid": "6779a10281a14f2e2cd6cd9e"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:01:43.631Z"
+      },
+      "_id": {
+        "$oid": "6779a1b781a14f2e2cd6ce23"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:04:43.746Z"
+      },
+      "_id": {
+        "$oid": "6779a26b81a14f2e2cd6ce3d"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:07:44.440Z"
+      },
+      "_id": {
+        "$oid": "6779a32081a14f2e2cd6cecc"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:10:44.598Z"
+      },
+      "_id": {
+        "$oid": "6779a3d481a14f2e2cd6cee8"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:13:44.769Z"
+      },
+      "_id": {
+        "$oid": "6779a48881a14f2e2cd6cf05"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:16:45.394Z"
+      },
+      "_id": {
+        "$oid": "6779a53d81a14f2e2cd6cfa3"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:19:45.570Z"
+      },
+      "_id": {
+        "$oid": "6779a5f181a14f2e2cd6cfc2"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:22:45.695Z"
+      },
+      "_id": {
+        "$oid": "6779a6a581a14f2e2cd6cfe2"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:25:45.820Z"
+      },
+      "_id": {
+        "$oid": "6779a75981a14f2e2cd6d003"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:28:46.045Z"
+      },
+      "_id": {
+        "$oid": "6779a80d81a14f2e2cd6d0b5"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:31:46.253Z"
+      },
+      "_id": {
+        "$oid": "6779a8c181a14f2e2cd6d0d8"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:34:46.319Z"
+      },
+      "_id": {
+        "$oid": "6779a97581a14f2e2cd6d0fc"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:37:47.194Z"
+      },
+      "_id": {
+        "$oid": "6779aa2a81a14f2e2cd6d1bd"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:40:47.380Z"
+      },
+      "_id": {
+        "$oid": "6779aadf81a14f2e2cd6d1e3"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:43:47.524Z"
+      },
+      "_id": {
+        "$oid": "6779ab9381a14f2e2cd6d20a"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:46:49.313Z"
+      },
+      "_id": {
+        "$oid": "6779ac4881a14f2e2cd6d408"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-04T21:46:49.313Z"
+      },
+      "_id": {
+        "$oid": "6779ac4881a14f2e2cd6d42f"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:49:49.437Z"
+      },
+      "_id": {
+        "$oid": "6779acfd81a14f2e2cd6d459"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:52:39.002Z"
+      },
+      "_id": {
+        "$oid": "6779ada681a14f2e2cd6d538"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:55:53.482Z"
+      },
+      "_id": {
+        "$oid": "6779ae6981a14f2e2cd6d6d6"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T21:58:53.574Z"
+      },
+      "_id": {
+        "$oid": "6779af1d81a14f2e2cd6d703"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T22:01:53.720Z"
+      },
+      "_id": {
+        "$oid": "6779afd181a14f2e2cd6d731"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T22:04:54.166Z"
+      },
+      "_id": {
+        "$oid": "6779b08581a14f2e2cd6d824"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T22:07:55.853Z"
+      },
+      "_id": {
+        "$oid": "6779b13b81a14f2e2cd6d91d"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-04T22:07:55.853Z"
+      },
+      "_id": {
+        "$oid": "6779b13b81a14f2e2cd6d94c"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T22:10:56.880Z"
+      },
+      "_id": {
+        "$oid": "6779b1f081a14f2e2cd6d97e"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-04T22:13:59.758Z"
+      },
+      "_id": {
+        "$oid": "6779b2a781a14f2e2cd6dc9d"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-04T22:17:02.549Z"
+      },
+      "_id": {
+        "$oid": "6779b35e81a14f2e2cd6def2"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T22:17:02.548Z"
+      },
+      "_id": {
+        "$oid": "6779b35e81a14f2e2cd6df25"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T22:20:02.788Z"
+      },
+      "_id": {
+        "$oid": "6779b41281a14f2e2cd6df5b"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T22:23:02.869Z"
+      },
+      "_id": {
+        "$oid": "6779b4c681a14f2e2cd6df92"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T22:26:02.922Z"
+      },
+      "_id": {
+        "$oid": "6779b57a81a14f2e2cd6dfca"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T22:29:03.914Z"
+      },
+      "_id": {
+        "$oid": "6779b62f81a14f2e2cd6e003"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T22:32:04.914Z"
+      },
+      "_id": {
+        "$oid": "6779b6e481a14f2e2cd6e03d"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T22:35:05.050Z"
+      },
+      "_id": {
+        "$oid": "6779b79881a14f2e2cd6e078"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T22:38:06.085Z"
+      },
+      "_id": {
+        "$oid": "6779b84d81a14f2e2cd6e0b4"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T22:41:06.181Z"
+      },
+      "_id": {
+        "$oid": "6779b90181a14f2e2cd6e0f1"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T22:44:06.375Z"
+      },
+      "_id": {
+        "$oid": "6779b9b581a14f2e2cd6e12f"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T22:44:20.701Z"
+      },
+      "_id": {
+        "$oid": "6779b9c481a14f2e2cd6e16e"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:53:57.411Z"
+      },
+      "_id": {
+        "$oid": "6779d82481a14f2e2cd726cd"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:54:41.012Z"
+      },
+      "_id": {
+        "$oid": "6779d85081a14f2e2cd72b14"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:12:07.773Z"
+      },
+      "_id": {
+        "$oid": "6779dc6681a14f2e2cd75c30"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:12:13.746Z"
+      },
+      "_id": {
+        "$oid": "6779dc6c81a14f2e2cd75f3b"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:12:37.733Z"
+      },
+      "_id": {
+        "$oid": "6779dc8481a14f2e2cd7632c"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:28:52.865Z"
+      },
+      "_id": {
+        "$oid": "6779e05481a14f2e2cd76b02"
+      }
+    },
+    {
+      "duration": 31,
+      "date": {
+        "$date": "2025-01-05T20:20:55.544Z"
+      },
+      "_id": {
+        "$oid": "677ae9a881a14f2e2cdb855a"
+      }
+    },
+    {
+      "duration": 31,
+      "date": {
+        "$date": "2025-01-05T20:51:26.929Z"
+      },
+      "_id": {
+        "$oid": "677af0d081a14f2e2cdb8b5f"
+      }
+    },
+    {
+      "duration": 22,
+      "date": {
+        "$date": "2025-01-05T21:13:24.375Z"
+      },
+      "_id": {
+        "$oid": "677af5f581a14f2e2cdb8cce"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-07T20:57:27.002Z"
+      },
+      "_id": {
+        "$oid": "677d953681a14f2e2cdec3a1"
+      }
+    },
+    {
+      "duration": 18,
+      "date": {
+        "$date": "2025-01-07T21:15:14.240Z"
+      },
+      "_id": {
+        "$oid": "677d996181a14f2e2cdec54b"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-10T21:33:22.117Z"
+      },
+      "_id": {
+        "$oid": "6781921f8309e2b396643d41"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-10T21:58:40.897Z"
+      },
+      "_id": {
+        "$oid": "6781980e8309e2b396644489"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-10T22:23:58.068Z"
+      },
+      "_id": {
+        "$oid": "67819dfb8309e2b39664463c"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-10T22:49:17.095Z"
+      },
+      "_id": {
+        "$oid": "6781a3ea8309e2b3966447f1"
+      }
+    },
+    {
+      "duration": 15,
+      "date": {
+        "$date": "2025-01-10T23:04:10.770Z"
+      },
+      "_id": {
+        "$oid": "6781a7678309e2b3966450b5"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:31:59.118Z"
+      },
+      "_id": {
+        "$oid": "6782c72e79e4a9c82a2ec91b"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-11T19:32:22.949Z"
+      },
+      "_id": {
+        "$oid": "6782c74579e4a9c82a2ece20"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-11T21:35:12.578Z"
+      },
+      "_id": {
+        "$oid": "6782e40f79e4a9c82a3120ec"
+      }
+    },
+    {
+      "duration": 15,
+      "date": {
+        "$date": "2025-01-11T21:49:57.553Z"
+      },
+      "_id": {
+        "$oid": "6782e78479e4a9c82a3126da"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-13T14:11:43.259Z"
+      },
+      "_id": {
+        "$oid": "67851f1f1d0402e2bff19574"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-13T15:08:00.182Z"
+      },
+      "_id": {
+        "$oid": "67852c4f1d0402e2bff2ee0e"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-16T21:47:00.214Z"
+      },
+      "_id": {
+        "$oid": "67897e54e1d43b41106d5015"
+      }
+    },
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-18T18:48:33.323Z"
+      },
+      "_id": {
+        "$oid": "678bf781e1d43b41106ee986"
+      }
+    },
+    {
+      "duration": 19,
+      "date": {
+        "$date": "2025-01-18T19:09:24.415Z"
+      },
+      "_id": {
+        "$oid": "678bfc64e1d43b41106ef4ba"
+      }
+    }
+  ],
+  "__v": 86
+},
+{
+  "_id": {
+    "$oid": "67798e3981a14f2e2cd6a14e"
+  },
+  "name": "TaskFlow",
+  "date": {
+    "$date": "2025-01-19T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": null,
+  "archived": "open",
+  "categories": [
+    "TaskFlow ⛩️"
+  ],
+  "totalTime": 1650,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "Git_save",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-05T14:17:23.315Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-10T17:06:44.332Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "677a947381a14f2e2cd8ad10"
+      }
+    },
+    {
+      "name": "sdsd",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-05T14:46:57.871Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-10T19:31:59.152Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "677a9b6181a14f2e2cd8c956"
+      }
+    },
+    {
+      "name": "Déterminer suite du projet ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-06T16:32:43.959Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-12T00:36:53.202Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "677c05ab81a14f2e2cdd531d"
+      }
+    },
+    {
+      "name": "Gestion des sous tâches ? ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-06T16:32:54.931Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-12T00:36:30.511Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "677c05b681a14f2e2cdd5569"
+      }
+    },
+    {
+      "name": "Revoir tasklist?  ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-06T16:33:16.881Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-10T19:44:50.018Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "677c05cc81a14f2e2cdd57b7"
+      }
+    },
+    {
+      "name": "Pomodoro sur toutes les pages ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-06T16:33:28.994Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-10T19:35:45.431Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "677c05d881a14f2e2cdd5a07"
+      }
+    },
+    {
+      "name": "Dark thème. Intégration ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-06T16:33:46.758Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-12T00:35:24.603Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "677c05ea81a14f2e2cdd5c59"
+      }
+    },
+    {
+      "name": "Écriture styles mobile 📲 ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-06T16:34:04.328Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-11T15:37:18.139Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "677c05fc81a14f2e2cdd5ead"
+      }
+    },
+    {
+      "name": "Journal de bord ? ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-06T21:42:54.625Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-12T00:36:54.597Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "677c4e5e81a14f2e2cdd99b4"
+      }
+    },
+    {
+      "name": "test1",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-07T19:48:19.656Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-10T19:32:26.472Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "677d850381a14f2e2cde7d6a"
+      }
+    },
+    {
+      "name": "test",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-07T20:11:44.939Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-10T19:32:27.194Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "677d8a8081a14f2e2cde8d79"
+      }
+    },
+    {
+      "name": "tes",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-11T13:43:38.089Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-11T13:43:41.023Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "6782758a79e4a9c82a2b9fdb"
+      }
+    },
+    {
+      "name": "test",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-11T20:02:57.128Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-11T20:03:02.035Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "6782ce7179e4a9c82a2fce22"
+      }
+    },
+    {
+      "name": "sdsd",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-11T20:03:14.747Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-11T20:03:16.378Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "6782ce8279e4a9c82a2fd58b"
+      }
+    },
+    {
+      "name": "sdsdsd",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-11T20:03:28.404Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-11T20:03:32.609Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "6782ce9079e4a9c82a2fe006"
+      }
+    },
+    {
+      "name": "- ajouter une durée aux sous-tâches ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-12T00:35:45.619Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-12T00:35:52.746Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "67830e6179e4a9c82a336409"
+      }
+    },
+    {
+      "name": "vérifier suppression des sous tâches ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-12T00:36:23.700Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-18T19:30:50.967Z"
+      },
+      "archived": "closed",
+      "sessions": [],
+      "_id": {
+        "$oid": "67830e8779e4a9c82a337495"
+      }
+    },
+    {
+      "name": "ajouter les sous tâches à l'historique ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-12T00:36:40.724Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67830e9879e4a9c82a337b82"
+      }
+    },
+    {
+      "name": "gestion des catégories ; finaliser implémentation ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-12T00:37:10.885Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67830eb679e4a9c82a3385eb"
+      }
+    },
+    {
+      "name": "garder le pomodoro fermé lors du changement de page ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-12T11:46:26.493Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "6783ab9279e4a9c82a35ad78"
+      }
+    },
+    {
+      "name": "Ipad implémentation salon - commun",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-12T11:49:09.869Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "6783ac3579e4a9c82a35b7b6"
+      }
+    },
+    {
+      "name": "Idées de Gamification pour TaskFlow",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:44:03.680Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850a9379e4a9c82a36d4a3"
+      }
+    },
+    {
+      "name": "Intégration CRM ? ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:47:53.502Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850b7979e4a9c82a36ecd9"
+      }
+    },
+    {
+      "name": "Fusion-Tool : system du 3/8 ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:50:23.075Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850c0f79e4a9c82a3705fa"
+      }
+    },
+    {
+      "name": "Publication de la version 1.2.9 / remaniement tasklist.js / CSS ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T17:21:11.218Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67854b871d0402e2bff4c28c"
+      }
+    },
+    {
+      "name": "Ajout du temps depuis dernière consommation ",
+      "priority": "low",
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "678bd0bee1d43b41106eb735"
+      },
+      "addedAt": {
+        "$date": "2025-01-18T16:03:10.273Z"
+      },
+      "sessions": []
+    },
+    {
+      "name": "te",
+      "priority": "low",
+      "archivedAt": {
+        "$date": "2025-01-18T19:29:00.675Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "678c00e81a6c582f1c1d579f"
+      },
+      "addedAt": {
+        "$date": "2025-01-18T19:28:40.983Z"
+      },
+      "sessions": []
+    },
+    {
+      "name": "t",
+      "priority": "low",
+      "archivedAt": {
+        "$date": "2025-01-18T19:29:03.693Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "678c00f21a6c582f1c1d626f"
+      },
+      "addedAt": {
+        "$date": "2025-01-18T19:28:50.067Z"
+      },
+      "sessions": []
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-04T19:38:33.214Z"
+  },
+  "sessions": [
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-04T19:41:42.083Z"
+      },
+      "_id": {
+        "$oid": "67798ef581a14f2e2cd6a3e0"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-04T19:43:43.262Z"
+      },
+      "_id": {
+        "$oid": "67798f6f81a14f2e2cd6a46d"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-04T19:45:42.267Z"
+      },
+      "_id": {
+        "$oid": "67798fe681a14f2e2cd6a472"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-04T19:45:46.992Z"
+      },
+      "_id": {
+        "$oid": "67798fea81a14f2e2cd6a478"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T23:31:19.929Z"
+      },
+      "_id": {
+        "$oid": "6779c4c781a14f2e2cd6e726"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T23:34:20.433Z"
+      },
+      "_id": {
+        "$oid": "6779c57b81a14f2e2cd6e72e"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T23:37:21.129Z"
+      },
+      "_id": {
+        "$oid": "6779c63081a14f2e2cd6e737"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T23:40:21.498Z"
+      },
+      "_id": {
+        "$oid": "6779c6e481a14f2e2cd6e741"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T23:43:24.014Z"
+      },
+      "_id": {
+        "$oid": "6779c79b81a14f2e2cd6ea0d"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T23:46:28.303Z"
+      },
+      "_id": {
+        "$oid": "6779c85381a14f2e2cd6ec9a"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T23:49:32.692Z"
+      },
+      "_id": {
+        "$oid": "6779c90c81a14f2e2cd6ee11"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-04T23:52:39.741Z"
+      },
+      "_id": {
+        "$oid": "6779c9c781a14f2e2cd6f0b4"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-04T23:55:36.072Z"
+      },
+      "_id": {
+        "$oid": "6779ca7781a14f2e2cd6f489"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-04T23:58:40.285Z"
+      },
+      "_id": {
+        "$oid": "6779cb2f81a14f2e2cd6f4e4"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T00:01:44.667Z"
+      },
+      "_id": {
+        "$oid": "6779cbe881a14f2e2cd6f541"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T00:04:48.829Z"
+      },
+      "_id": {
+        "$oid": "6779cca081a14f2e2cd6f5a0"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T00:06:06.763Z"
+      },
+      "_id": {
+        "$oid": "6779ccee81a14f2e2cd6f601"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:06:38.399Z"
+      },
+      "_id": {
+        "$oid": "6779cd0d81a14f2e2cd6f664"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:06:49.250Z"
+      },
+      "_id": {
+        "$oid": "6779cd1881a14f2e2cd6f6c9"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:07:04.556Z"
+      },
+      "_id": {
+        "$oid": "6779cd2781a14f2e2cd6f730"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:07:21.598Z"
+      },
+      "_id": {
+        "$oid": "6779cd3881a14f2e2cd6f799"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:07:25.903Z"
+      },
+      "_id": {
+        "$oid": "6779cd3d81a14f2e2cd6f804"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:07:27.728Z"
+      },
+      "_id": {
+        "$oid": "6779cd3f81a14f2e2cd6f871"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:07:30.294Z"
+      },
+      "_id": {
+        "$oid": "6779cd4181a14f2e2cd6f8e0"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:07:32.617Z"
+      },
+      "_id": {
+        "$oid": "6779cd4381a14f2e2cd6f951"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:07:47.873Z"
+      },
+      "_id": {
+        "$oid": "6779cd5381a14f2e2cd6f9c4"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:07:51.383Z"
+      },
+      "_id": {
+        "$oid": "6779cd5681a14f2e2cd6fa39"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:07:54.181Z"
+      },
+      "_id": {
+        "$oid": "6779cd5981a14f2e2cd6fab0"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:08:08.135Z"
+      },
+      "_id": {
+        "$oid": "6779cd6781a14f2e2cd6fb29"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:08:22.510Z"
+      },
+      "_id": {
+        "$oid": "6779cd7581a14f2e2cd6fba4"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:08:57.075Z"
+      },
+      "_id": {
+        "$oid": "6779cd9881a14f2e2cd6fc21"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T00:11:27.633Z"
+      },
+      "_id": {
+        "$oid": "6779ce2e81a14f2e2cd6fe16"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:11:31.946Z"
+      },
+      "_id": {
+        "$oid": "6779ce3381a14f2e2cd6fe97"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T00:12:44.542Z"
+      },
+      "_id": {
+        "$oid": "6779ce7b81a14f2e2cd6ff1a"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:12:49.612Z"
+      },
+      "_id": {
+        "$oid": "6779ce8081a14f2e2cd6ff9f"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:14:32.903Z"
+      },
+      "_id": {
+        "$oid": "6779cee881a14f2e2cd70026"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:15:12.590Z"
+      },
+      "_id": {
+        "$oid": "6779cf0f81a14f2e2cd700af"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:15:23.813Z"
+      },
+      "_id": {
+        "$oid": "6779cf1b81a14f2e2cd7013a"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T00:18:27.497Z"
+      },
+      "_id": {
+        "$oid": "6779cfd281a14f2e2cd701c7"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T00:21:31.401Z"
+      },
+      "_id": {
+        "$oid": "6779d08a81a14f2e2cd70256"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T00:24:35.232Z"
+      },
+      "_id": {
+        "$oid": "6779d14281a14f2e2cd702e7"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T00:27:40.082Z"
+      },
+      "_id": {
+        "$oid": "6779d1fb81a14f2e2cd7037a"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:41:40.444Z"
+      },
+      "_id": {
+        "$oid": "6779d54381a14f2e2cd70d72"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T00:45:17.606Z"
+      },
+      "_id": {
+        "$oid": "6779d61c81a14f2e2cd71499"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T00:46:40.293Z"
+      },
+      "_id": {
+        "$oid": "6779d66f81a14f2e2cd71532"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:46:48.345Z"
+      },
+      "_id": {
+        "$oid": "6779d67781a14f2e2cd715cd"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:46:57.457Z"
+      },
+      "_id": {
+        "$oid": "6779d68081a14f2e2cd7166a"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:46:58.911Z"
+      },
+      "_id": {
+        "$oid": "6779d68281a14f2e2cd71709"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:46:59.939Z"
+      },
+      "_id": {
+        "$oid": "6779d68381a14f2e2cd717aa"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T00:50:27.340Z"
+      },
+      "_id": {
+        "$oid": "6779d75281a14f2e2cd71ca5"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:52:43.345Z"
+      },
+      "_id": {
+        "$oid": "6779d7da81a14f2e2cd720cc"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:55:03.199Z"
+      },
+      "_id": {
+        "$oid": "6779d86681a14f2e2cd72d16"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:56:04.448Z"
+      },
+      "_id": {
+        "$oid": "6779d8a381a14f2e2cd730ef"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:57:05.670Z"
+      },
+      "_id": {
+        "$oid": "6779d8e081a14f2e2cd732fe"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:58:07.336Z"
+      },
+      "_id": {
+        "$oid": "6779d91e81a14f2e2cd736e7"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T00:59:07.883Z"
+      },
+      "_id": {
+        "$oid": "6779d95b81a14f2e2cd73721"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:00:08.473Z"
+      },
+      "_id": {
+        "$oid": "6779d99781a14f2e2cd7375c"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:00:25.898Z"
+      },
+      "_id": {
+        "$oid": "6779d9a981a14f2e2cd7397e"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:00:27.517Z"
+      },
+      "_id": {
+        "$oid": "6779d9aa81a14f2e2cd739bb"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:01:28.594Z"
+      },
+      "_id": {
+        "$oid": "6779d9e781a14f2e2cd73be7"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:02:29.196Z"
+      },
+      "_id": {
+        "$oid": "6779da2481a14f2e2cd74278"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:02:33.373Z"
+      },
+      "_id": {
+        "$oid": "6779da2881a14f2e2cd742b8"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:03:14.746Z"
+      },
+      "_id": {
+        "$oid": "6779da5281a14f2e2cd748e7"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:04:17.537Z"
+      },
+      "_id": {
+        "$oid": "6779da9081a14f2e2cd74ba6"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:05:19.523Z"
+      },
+      "_id": {
+        "$oid": "6779dace81a14f2e2cd74c69"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:06:21.380Z"
+      },
+      "_id": {
+        "$oid": "6779db0c81a14f2e2cd74d2e"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:07:24.731Z"
+      },
+      "_id": {
+        "$oid": "6779db4b81a14f2e2cd75103"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:07:30.208Z"
+      },
+      "_id": {
+        "$oid": "6779db5181a14f2e2cd751cc"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:07:31.623Z"
+      },
+      "_id": {
+        "$oid": "6779db5281a14f2e2cd75297"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:08:35.822Z"
+      },
+      "_id": {
+        "$oid": "6779db9381a14f2e2cd75364"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:09:38.615Z"
+      },
+      "_id": {
+        "$oid": "6779dbd181a14f2e2cd75433"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:10:41.119Z"
+      },
+      "_id": {
+        "$oid": "6779dc1081a14f2e2cd75504"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:11:03.061Z"
+      },
+      "_id": {
+        "$oid": "6779dc2681a14f2e2cd755d7"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:11:10.856Z"
+      },
+      "_id": {
+        "$oid": "6779dc2e81a14f2e2cd756ac"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:11:46.711Z"
+      },
+      "_id": {
+        "$oid": "6779dc5181a14f2e2cd759ad"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:11:56.307Z"
+      },
+      "_id": {
+        "$oid": "6779dc5b81a14f2e2cd75a86"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:12:00.177Z"
+      },
+      "_id": {
+        "$oid": "6779dc5f81a14f2e2cd75b61"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:12:24.482Z"
+      },
+      "_id": {
+        "$oid": "6779dc7781a14f2e2cd76258"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:14:43.530Z"
+      },
+      "_id": {
+        "$oid": "6779dd0281a14f2e2cd76652"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T01:20:48.593Z"
+      },
+      "_id": {
+        "$oid": "6779de6f81a14f2e2cd7685a"
+      }
+    },
+    {
+      "duration": 5,
+      "date": {
+        "$date": "2025-01-05T01:24:58.877Z"
+      },
+      "_id": {
+        "$oid": "6779df6a81a14f2e2cd76940"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T01:27:03.287Z"
+      },
+      "_id": {
+        "$oid": "6779dfe681a14f2e2cd76a28"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:30:03.191Z"
+      },
+      "_id": {
+        "$oid": "6779e09a81a14f2e2cd76bed"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:31:05.829Z"
+      },
+      "_id": {
+        "$oid": "6779e0d981a14f2e2cd76cda"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:32:08.372Z"
+      },
+      "_id": {
+        "$oid": "6779e11781a14f2e2cd76dc9"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:33:11.045Z"
+      },
+      "_id": {
+        "$oid": "6779e15681a14f2e2cd76eba"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:34:18.820Z"
+      },
+      "_id": {
+        "$oid": "6779e19981a14f2e2cd777ee"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:35:21.506Z"
+      },
+      "_id": {
+        "$oid": "6779e1d881a14f2e2cd77a2d"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:36:24.223Z"
+      },
+      "_id": {
+        "$oid": "6779e21781a14f2e2cd77b24"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:37:27.103Z"
+      },
+      "_id": {
+        "$oid": "6779e25681a14f2e2cd77c1d"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:38:29.756Z"
+      },
+      "_id": {
+        "$oid": "6779e29481a14f2e2cd77d18"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:39:33.354Z"
+      },
+      "_id": {
+        "$oid": "6779e2d481a14f2e2cd78093"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:40:36.064Z"
+      },
+      "_id": {
+        "$oid": "6779e31381a14f2e2cd78192"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:41:38.700Z"
+      },
+      "_id": {
+        "$oid": "6779e35181a14f2e2cd78293"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:42:42.313Z"
+      },
+      "_id": {
+        "$oid": "6779e39181a14f2e2cd78620"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:43:48.214Z"
+      },
+      "_id": {
+        "$oid": "6779e3d381a14f2e2cd78725"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:44:50.849Z"
+      },
+      "_id": {
+        "$oid": "6779e41181a14f2e2cd7882c"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:45:53.568Z"
+      },
+      "_id": {
+        "$oid": "6779e45081a14f2e2cd78935"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:46:56.126Z"
+      },
+      "_id": {
+        "$oid": "6779e48f81a14f2e2cd78a40"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:47:58.747Z"
+      },
+      "_id": {
+        "$oid": "6779e4cd81a14f2e2cd78b4d"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:49:15.494Z"
+      },
+      "_id": {
+        "$oid": "6779e51a81a14f2e2cd791a0"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:50:18.152Z"
+      },
+      "_id": {
+        "$oid": "6779e55981a14f2e2cd792b1"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:51:20.936Z"
+      },
+      "_id": {
+        "$oid": "6779e59881a14f2e2cd793c4"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:52:23.788Z"
+      },
+      "_id": {
+        "$oid": "6779e5d681a14f2e2cd794d9"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:53:27.435Z"
+      },
+      "_id": {
+        "$oid": "6779e61681a14f2e2cd799fd"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:54:30.169Z"
+      },
+      "_id": {
+        "$oid": "6779e65581a14f2e2cd79b16"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:55:33.340Z"
+      },
+      "_id": {
+        "$oid": "6779e69481a14f2e2cd79c31"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:56:37.280Z"
+      },
+      "_id": {
+        "$oid": "6779e6d481a14f2e2cd7a00c"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:57:40.021Z"
+      },
+      "_id": {
+        "$oid": "6779e71381a14f2e2cd7a12b"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:58:42.680Z"
+      },
+      "_id": {
+        "$oid": "6779e75181a14f2e2cd7a24c"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T01:59:45.607Z"
+      },
+      "_id": {
+        "$oid": "6779e79081a14f2e2cd7a639"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T02:00:41.229Z"
+      },
+      "_id": {
+        "$oid": "6779e7c881a14f2e2cd7aa2c"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T02:02:14.524Z"
+      },
+      "_id": {
+        "$oid": "6779e82581a14f2e2cd7ab53"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T02:03:23.308Z"
+      },
+      "_id": {
+        "$oid": "6779e86a81a14f2e2cd7af50"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T02:10:47.491Z"
+      },
+      "_id": {
+        "$oid": "6779ea2681a14f2e2cd7c62b"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T02:12:51.057Z"
+      },
+      "_id": {
+        "$oid": "6779eaa281a14f2e2cd7c758"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T02:14:55.633Z"
+      },
+      "_id": {
+        "$oid": "6779eb1e81a14f2e2cd7ca79"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T02:16:58.896Z"
+      },
+      "_id": {
+        "$oid": "6779eb9981a14f2e2cd7cbaa"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T12:10:39.151Z"
+      },
+      "_id": {
+        "$oid": "677a76c181a14f2e2cd7e128"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T12:10:53.486Z"
+      },
+      "_id": {
+        "$oid": "677a76cf81a14f2e2cd7e268"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T12:23:36.079Z"
+      },
+      "_id": {
+        "$oid": "677a79ca81a14f2e2cd7f9c4"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T12:29:01.541Z"
+      },
+      "_id": {
+        "$oid": "677a7b0f81a14f2e2cd7fb0a"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T12:34:19.470Z"
+      },
+      "_id": {
+        "$oid": "677a7c4d81a14f2e2cd7fc52"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T12:39:38.823Z"
+      },
+      "_id": {
+        "$oid": "677a7d8d81a14f2e2cd7fe79"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T12:45:26.579Z"
+      },
+      "_id": {
+        "$oid": "677a7ee881a14f2e2cd80825"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T12:51:01.389Z"
+      },
+      "_id": {
+        "$oid": "677a803781a14f2e2cd80c6c"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T12:58:00.488Z"
+      },
+      "_id": {
+        "$oid": "677a81da81a14f2e2cd81ce1"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T13:03:35.117Z"
+      },
+      "_id": {
+        "$oid": "677a832981a14f2e2cd81e26"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:06:27.552Z"
+      },
+      "_id": {
+        "$oid": "677a83d581a14f2e2cd8227d"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:09:36.238Z"
+      },
+      "_id": {
+        "$oid": "677a849281a14f2e2cd82a8a"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:11:47.606Z"
+      },
+      "_id": {
+        "$oid": "677a851581a14f2e2cd82dfd"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:14:01.714Z"
+      },
+      "_id": {
+        "$oid": "677a859c81a14f2e2cd82f4a"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:16:17.079Z"
+      },
+      "_id": {
+        "$oid": "677a862381a14f2e2cd839ff"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:18:25.692Z"
+      },
+      "_id": {
+        "$oid": "677a86a481a14f2e2cd83ce5"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:20:42.516Z"
+      },
+      "_id": {
+        "$oid": "677a872c81a14f2e2cd8409b"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:22:52.987Z"
+      },
+      "_id": {
+        "$oid": "677a87af81a14f2e2cd8451c"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:25:00.978Z"
+      },
+      "_id": {
+        "$oid": "677a882f81a14f2e2cd84b3f"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:27:07.845Z"
+      },
+      "_id": {
+        "$oid": "677a88ae81a14f2e2cd84c98"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:29:25.426Z"
+      },
+      "_id": {
+        "$oid": "677a893781a14f2e2cd84ec2"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:32:02.642Z"
+      },
+      "_id": {
+        "$oid": "677a89d481a14f2e2cd86087"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:34:15.002Z"
+      },
+      "_id": {
+        "$oid": "677a8a5981a14f2e2cd861e6"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:36:26.265Z"
+      },
+      "_id": {
+        "$oid": "677a8adc81a14f2e2cd864ec"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:38:37.813Z"
+      },
+      "_id": {
+        "$oid": "677a8b6081a14f2e2cd8664f"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:40:45.985Z"
+      },
+      "_id": {
+        "$oid": "677a8be081a14f2e2cd867b4"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:42:58.937Z"
+      },
+      "_id": {
+        "$oid": "677a8c6581a14f2e2cd8691b"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:45:10.083Z"
+      },
+      "_id": {
+        "$oid": "677a8ce881a14f2e2cd86c31"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:47:19.446Z"
+      },
+      "_id": {
+        "$oid": "677a8d6981a14f2e2cd86d9c"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:49:30.781Z"
+      },
+      "_id": {
+        "$oid": "677a8ded81a14f2e2cd86f09"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:51:58.936Z"
+      },
+      "_id": {
+        "$oid": "677a8e8181a14f2e2cd873db"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:54:10.161Z"
+      },
+      "_id": {
+        "$oid": "677a8f0481a14f2e2cd87cb2"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:56:20.707Z"
+      },
+      "_id": {
+        "$oid": "677a8f8681a14f2e2cd87e25"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T13:58:27.888Z"
+      },
+      "_id": {
+        "$oid": "677a900681a14f2e2cd88153"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T14:01:42.538Z"
+      },
+      "_id": {
+        "$oid": "677a90c881a14f2e2cd882ca"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T14:03:52.086Z"
+      },
+      "_id": {
+        "$oid": "677a914a81a14f2e2cd88443"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T14:06:09.352Z"
+      },
+      "_id": {
+        "$oid": "677a91d381a14f2e2cd89d95"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T14:08:20.846Z"
+      },
+      "_id": {
+        "$oid": "677a925681a14f2e2cd89f12"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T14:10:31.525Z"
+      },
+      "_id": {
+        "$oid": "677a92d981a14f2e2cd8a091"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T14:12:37.984Z"
+      },
+      "_id": {
+        "$oid": "677a935881a14f2e2cd8a212"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T14:15:12.190Z"
+      },
+      "_id": {
+        "$oid": "677a93f281a14f2e2cd8aaa5"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T14:19:24.306Z"
+      },
+      "_id": {
+        "$oid": "677a94ee81a14f2e2cd8afd6"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T14:19:46.830Z"
+      },
+      "_id": {
+        "$oid": "677a950481a14f2e2cd8b4f3"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T14:25:52.363Z"
+      },
+      "_id": {
+        "$oid": "677a967281a14f2e2cd8bdae"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T14:31:14.070Z"
+      },
+      "_id": {
+        "$oid": "677a97b481a14f2e2cd8bf3b"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T14:36:35.872Z"
+      },
+      "_id": {
+        "$oid": "677a98f581a14f2e2cd8c6d8"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T14:42:02.961Z"
+      },
+      "_id": {
+        "$oid": "677a9a3c81a14f2e2cd8c869"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T14:47:17.089Z"
+      },
+      "_id": {
+        "$oid": "677a9b7781a14f2e2cd8cdcb"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T14:53:20.278Z"
+      },
+      "_id": {
+        "$oid": "677a9ce281a14f2e2cd8d312"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T14:58:46.805Z"
+      },
+      "_id": {
+        "$oid": "677a9e2881a14f2e2cd8d4ab"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T15:03:57.727Z"
+      },
+      "_id": {
+        "$oid": "677a9f5f81a14f2e2cd8d646"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T15:09:28.541Z"
+      },
+      "_id": {
+        "$oid": "677aa0aa81a14f2e2cd8e1d7"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T15:15:13.414Z"
+      },
+      "_id": {
+        "$oid": "677aa20381a14f2e2cd8e376"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T15:20:56.998Z"
+      },
+      "_id": {
+        "$oid": "677aa35a81a14f2e2cd8f5ff"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T15:26:50.116Z"
+      },
+      "_id": {
+        "$oid": "677aa4bb81a14f2e2cd8fb6d"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T15:32:23.210Z"
+      },
+      "_id": {
+        "$oid": "677aa60981a14f2e2cd8fef8"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T15:38:00.850Z"
+      },
+      "_id": {
+        "$oid": "677aa75a81a14f2e2cd9046f"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T15:43:33.313Z"
+      },
+      "_id": {
+        "$oid": "677aa8a781a14f2e2cd90618"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T15:48:59.683Z"
+      },
+      "_id": {
+        "$oid": "677aa9ed81a14f2e2cd91487"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T15:54:25.973Z"
+      },
+      "_id": {
+        "$oid": "677aab3381a14f2e2cd91822"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T15:59:51.914Z"
+      },
+      "_id": {
+        "$oid": "677aac7981a14f2e2cd919d1"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T16:01:25.749Z"
+      },
+      "_id": {
+        "$oid": "677aacd781a14f2e2cd921f6"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T17:24:40.286Z"
+      },
+      "_id": {
+        "$oid": "677ac05981a14f2e2cd92e0e"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T17:29:46.141Z"
+      },
+      "_id": {
+        "$oid": "677ac18b81a14f2e2cd92fc3"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T17:34:52.121Z"
+      },
+      "_id": {
+        "$oid": "677ac2bd81a14f2e2cd9317a"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T17:39:57.841Z"
+      },
+      "_id": {
+        "$oid": "677ac3ef81a14f2e2cd93333"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T17:45:04.821Z"
+      },
+      "_id": {
+        "$oid": "677ac52281a14f2e2cd94212"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T17:47:30.218Z"
+      },
+      "_id": {
+        "$oid": "677ac5b381a14f2e2cd943cf"
+      }
+    },
+    {
+      "duration": 6,
+      "date": {
+        "$date": "2025-01-05T18:35:27.785Z"
+      },
+      "_id": {
+        "$oid": "677ad0f181a14f2e2cd99b94"
+      }
+    },
+    {
+      "duration": 5,
+      "date": {
+        "$date": "2025-01-05T18:40:18.694Z"
+      },
+      "_id": {
+        "$oid": "677ad21481a14f2e2cd9b141"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T18:42:50.809Z"
+      },
+      "_id": {
+        "$oid": "677ad2ac81a14f2e2cd9b610"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T18:43:53.536Z"
+      },
+      "_id": {
+        "$oid": "677ad2eb81a14f2e2cd9b7d5"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T18:45:02.510Z"
+      },
+      "_id": {
+        "$oid": "677ad33081a14f2e2cd9cae6"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T18:46:41.988Z"
+      },
+      "_id": {
+        "$oid": "677ad39381a14f2e2cd9d0c3"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T18:47:03.566Z"
+      },
+      "_id": {
+        "$oid": "677ad3a981a14f2e2cd9d8b2"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T18:48:11.727Z"
+      },
+      "_id": {
+        "$oid": "677ad3ed81a14f2e2cd9de9b"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T18:50:13.145Z"
+      },
+      "_id": {
+        "$oid": "677ad46681a14f2e2cd9e978"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T18:54:08.825Z"
+      },
+      "_id": {
+        "$oid": "677ad55281a14f2e2cd9f42d"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T18:55:30.423Z"
+      },
+      "_id": {
+        "$oid": "677ad5a381a14f2e2cd9f814"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T18:56:16.725Z"
+      },
+      "_id": {
+        "$oid": "677ad5d281a14f2e2cd9fbff"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T18:56:22.266Z"
+      },
+      "_id": {
+        "$oid": "677ad5d781a14f2e2cd9fdd6"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T18:57:48.083Z"
+      },
+      "_id": {
+        "$oid": "677ad62d81a14f2e2cda0e65"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T18:59:46.478Z"
+      },
+      "_id": {
+        "$oid": "677ad6a381a14f2e2cda3338"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:03:32.705Z"
+      },
+      "_id": {
+        "$oid": "677ad78681a14f2e2cda4489"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:05:37.828Z"
+      },
+      "_id": {
+        "$oid": "677ad80381a14f2e2cda499e"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:07:17.951Z"
+      },
+      "_id": {
+        "$oid": "677ad86781a14f2e2cda4fc3"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:10:28.454Z"
+      },
+      "_id": {
+        "$oid": "677ad92581a14f2e2cda5812"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T19:15:24.906Z"
+      },
+      "_id": {
+        "$oid": "677ada4e81a14f2e2cda6b28"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T19:15:27.005Z"
+      },
+      "_id": {
+        "$oid": "677ada5081a14f2e2cda6d0f"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:16:35.945Z"
+      },
+      "_id": {
+        "$oid": "677ada9581a14f2e2cda73e8"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:19:02.367Z"
+      },
+      "_id": {
+        "$oid": "677adb2781a14f2e2cda9abf"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:22:00.154Z"
+      },
+      "_id": {
+        "$oid": "677adbd981a14f2e2cdad9ae"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:23:37.923Z"
+      },
+      "_id": {
+        "$oid": "677adc3b81a14f2e2cdadffd"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:34:08.302Z"
+      },
+      "_id": {
+        "$oid": "677adeb181a14f2e2cdb2e0b"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:38:16.277Z"
+      },
+      "_id": {
+        "$oid": "677adfa981a14f2e2cdb5652"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:42:59.233Z"
+      },
+      "_id": {
+        "$oid": "677ae0c481a14f2e2cdb5847"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:44:21.279Z"
+      },
+      "_id": {
+        "$oid": "677ae11681a14f2e2cdb60a4"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:45:22.850Z"
+      },
+      "_id": {
+        "$oid": "677ae15481a14f2e2cdb629d"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:46:24.482Z"
+      },
+      "_id": {
+        "$oid": "677ae19181a14f2e2cdb6498"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:47:26.162Z"
+      },
+      "_id": {
+        "$oid": "677ae1cf81a14f2e2cdb6695"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T19:48:27.872Z"
+      },
+      "_id": {
+        "$oid": "677ae20d81a14f2e2cdb6894"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T19:48:48.158Z"
+      },
+      "_id": {
+        "$oid": "677ae22181a14f2e2cdb6a95"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T19:48:50.421Z"
+      },
+      "_id": {
+        "$oid": "677ae22381a14f2e2cdb6c98"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T19:48:52.081Z"
+      },
+      "_id": {
+        "$oid": "677ae22581a14f2e2cdb6e9d"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T19:48:53.174Z"
+      },
+      "_id": {
+        "$oid": "677ae22681a14f2e2cdb70a4"
+      }
+    },
+    {
+      "duration": 31,
+      "date": {
+        "$date": "2025-01-05T21:56:13.975Z"
+      },
+      "_id": {
+        "$oid": "677affff81a14f2e2cdc1915"
+      }
+    },
+    {
+      "duration": 31,
+      "date": {
+        "$date": "2025-01-05T22:27:02.167Z"
+      },
+      "_id": {
+        "$oid": "677b073781a14f2e2cdc42be"
+      }
+    },
+    {
+      "duration": 12,
+      "date": {
+        "$date": "2025-01-05T22:38:49.813Z"
+      },
+      "_id": {
+        "$oid": "677b09fa81a14f2e2cdc6a81"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T22:38:51.302Z"
+      },
+      "_id": {
+        "$oid": "677b09fc81a14f2e2cdc6c93"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T22:40:18.796Z"
+      },
+      "_id": {
+        "$oid": "677b0a5381a14f2e2cdc6ea7"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T22:45:25.995Z"
+      },
+      "_id": {
+        "$oid": "677b0b8781a14f2e2cdc7571"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T22:47:28.796Z"
+      },
+      "_id": {
+        "$oid": "677b0c0181a14f2e2cdc7789"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T22:49:50.434Z"
+      },
+      "_id": {
+        "$oid": "677b0c8f81a14f2e2cdc8e6d"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T22:51:54.335Z"
+      },
+      "_id": {
+        "$oid": "677b0d0b81a14f2e2cdca7c3"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T22:53:58.708Z"
+      },
+      "_id": {
+        "$oid": "677b0d8781a14f2e2cdcd879"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T22:56:01.786Z"
+      },
+      "_id": {
+        "$oid": "677b0e0281a14f2e2cdcda99"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T22:58:05.417Z"
+      },
+      "_id": {
+        "$oid": "677b0e7e81a14f2e2cdcdcbb"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:00:09.288Z"
+      },
+      "_id": {
+        "$oid": "677b0efa81a14f2e2cdcdedf"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:02:11.765Z"
+      },
+      "_id": {
+        "$oid": "677b0f7481a14f2e2cdce105"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:04:14.495Z"
+      },
+      "_id": {
+        "$oid": "677b0fef81a14f2e2cdce32d"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:06:18.032Z"
+      },
+      "_id": {
+        "$oid": "677b106b81a14f2e2cdce557"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:08:20.743Z"
+      },
+      "_id": {
+        "$oid": "677b10e581a14f2e2cdce783"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:10:23.377Z"
+      },
+      "_id": {
+        "$oid": "677b116081a14f2e2cdce9b1"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:12:38.437Z"
+      },
+      "_id": {
+        "$oid": "677b11e781a14f2e2cdcf0cc"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T23:12:54.608Z"
+      },
+      "_id": {
+        "$oid": "677b11f781a14f2e2cdcf2fe"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:14:57.246Z"
+      },
+      "_id": {
+        "$oid": "677b127281a14f2e2cdcf8e6"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:17:00.760Z"
+      },
+      "_id": {
+        "$oid": "677b12ed81a14f2e2cdcfb1c"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:19:05.093Z"
+      },
+      "_id": {
+        "$oid": "677b136a81a14f2e2cdd0566"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:21:07.939Z"
+      },
+      "_id": {
+        "$oid": "677b13e481a14f2e2cdd07a0"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:23:18.972Z"
+      },
+      "_id": {
+        "$oid": "677b146881a14f2e2cdd0edc"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:25:21.641Z"
+      },
+      "_id": {
+        "$oid": "677b14e281a14f2e2cdd111a"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:27:24.545Z"
+      },
+      "_id": {
+        "$oid": "677b155d81a14f2e2cdd135a"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:29:27.467Z"
+      },
+      "_id": {
+        "$oid": "677b15d881a14f2e2cdd159c"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:31:30.518Z"
+      },
+      "_id": {
+        "$oid": "677b165381a14f2e2cdd17e0"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-05T23:33:33.301Z"
+      },
+      "_id": {
+        "$oid": "677b16ce81a14f2e2cdd1a26"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T23:35:12.913Z"
+      },
+      "_id": {
+        "$oid": "677b173181a14f2e2cdd1c6e"
+      }
+    },
+    {
+      "duration": 18,
+      "date": {
+        "$date": "2025-01-06T22:12:09.716Z"
+      },
+      "_id": {
+        "$oid": "677c553881a14f2e2cddc7b6"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-07T18:17:59.145Z"
+      },
+      "_id": {
+        "$oid": "677d6fd681a14f2e2cdde954"
+      }
+    },
+    {
+      "duration": 15,
+      "date": {
+        "$date": "2025-01-07T18:33:23.852Z"
+      },
+      "_id": {
+        "$oid": "677d737381a14f2e2cddf059"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-07T18:33:26.315Z"
+      },
+      "_id": {
+        "$oid": "677d737581a14f2e2cddf2bd"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-07T19:06:33.568Z"
+      },
+      "_id": {
+        "$oid": "677d7b3881a14f2e2cde2869"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-07T19:32:00.658Z"
+      },
+      "_id": {
+        "$oid": "677d812f81a14f2e2cde7595"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-07T19:57:18.999Z"
+      },
+      "_id": {
+        "$oid": "677d871e81a14f2e2cde7fd6"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-07T20:22:44.758Z"
+      },
+      "_id": {
+        "$oid": "677d8d1381a14f2e2cdeb350"
+      }
+    },
+    {
+      "duration": 10,
+      "date": {
+        "$date": "2025-01-07T20:32:04.798Z"
+      },
+      "_id": {
+        "$oid": "677d8f4381a14f2e2cdeb5c2"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-07T21:40:38.259Z"
+      },
+      "_id": {
+        "$oid": "677d9f5581a14f2e2cdedcf0"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-07T22:06:25.843Z"
+      },
+      "_id": {
+        "$oid": "677da56081a14f2e2cdf0a52"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-07T22:34:20.752Z"
+      },
+      "_id": {
+        "$oid": "677dabeb81a14f2e2cdf0ccc"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-10T16:40:35.815Z"
+      },
+      "_id": {
+        "$oid": "67814d7fa950baf530ffc1db"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-10T17:05:58.606Z"
+      },
+      "_id": {
+        "$oid": "678153720b0f3a13b1462c67"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-10T17:07:29.063Z"
+      },
+      "_id": {
+        "$oid": "678153cc0b0f3a13b1464671"
+      }
+    },
+    {
+      "duration": 19,
+      "date": {
+        "$date": "2025-01-11T10:43:19.421Z"
+      },
+      "_id": {
+        "$oid": "67824b478309e2b3966579a0"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-11T10:43:24.452Z"
+      },
+      "_id": {
+        "$oid": "67824b4c8309e2b396657c26"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-11T11:08:45.055Z"
+      },
+      "_id": {
+        "$oid": "6782513c79e4a9c82a2b0336"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-11T11:12:18.910Z"
+      },
+      "_id": {
+        "$oid": "6782521279e4a9c82a2b0f06"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-11T13:20:49.682Z"
+      },
+      "_id": {
+        "$oid": "6782703179e4a9c82a2b6dc6"
+      }
+    },
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-11T13:51:22.650Z"
+      },
+      "_id": {
+        "$oid": "6782775a79e4a9c82a2bc4f8"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-11T15:38:15.455Z"
+      },
+      "_id": {
+        "$oid": "6782906679e4a9c82a2bf476"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-11T15:38:24.208Z"
+      },
+      "_id": {
+        "$oid": "6782906f79e4a9c82a2c0093"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-11T15:48:49.445Z"
+      },
+      "_id": {
+        "$oid": "678292e079e4a9c82a2c1064"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-11T16:21:43.402Z"
+      },
+      "_id": {
+        "$oid": "67829a9679e4a9c82a2c37d4"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-11T16:49:30.826Z"
+      },
+      "_id": {
+        "$oid": "6782a11a79e4a9c82a2cb655"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-11T17:15:36.816Z"
+      },
+      "_id": {
+        "$oid": "6782a73879e4a9c82a2cff35"
+      }
+    },
+    {
+      "duration": 20,
+      "date": {
+        "$date": "2025-01-11T17:35:23.169Z"
+      },
+      "_id": {
+        "$oid": "6782abda79e4a9c82a2d5066"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-11T18:33:11.824Z"
+      },
+      "_id": {
+        "$oid": "6782b96679e4a9c82a2e3408"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-11T18:35:14.511Z"
+      },
+      "_id": {
+        "$oid": "6782b9e179e4a9c82a2e36ab"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-11T18:37:18.481Z"
+      },
+      "_id": {
+        "$oid": "6782ba5d79e4a9c82a2e48e3"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-11T18:39:21.219Z"
+      },
+      "_id": {
+        "$oid": "6782bad879e4a9c82a2e5007"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-11T18:41:23.961Z"
+      },
+      "_id": {
+        "$oid": "6782bb5379e4a9c82a2e52b1"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-11T18:43:27.521Z"
+      },
+      "_id": {
+        "$oid": "6782bbce79e4a9c82a2e621c"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-11T18:45:30.846Z"
+      },
+      "_id": {
+        "$oid": "6782bc4979e4a9c82a2e7018"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-11T18:47:33.534Z"
+      },
+      "_id": {
+        "$oid": "6782bcc479e4a9c82a2e72c9"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-11T18:48:34.067Z"
+      },
+      "_id": {
+        "$oid": "6782bd0179e4a9c82a2e8aad"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:23:37.778Z"
+      },
+      "_id": {
+        "$oid": "6782c53879e4a9c82a2eae68"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-11T19:24:06.524Z"
+      },
+      "_id": {
+        "$oid": "6782c55579e4a9c82a2eb122"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-11T19:24:13.872Z"
+      },
+      "_id": {
+        "$oid": "6782c55c79e4a9c82a2eb3de"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-11T19:24:44.975Z"
+      },
+      "_id": {
+        "$oid": "6782c57b79e4a9c82a2eb69c"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:25:47.615Z"
+      },
+      "_id": {
+        "$oid": "6782c5ba79e4a9c82a2eb95c"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:26:49.439Z"
+      },
+      "_id": {
+        "$oid": "6782c5f879e4a9c82a2ebc1e"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:27:51.547Z"
+      },
+      "_id": {
+        "$oid": "6782c63679e4a9c82a2ebee2"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:28:53.373Z"
+      },
+      "_id": {
+        "$oid": "6782c67479e4a9c82a2ec1a8"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:29:55.563Z"
+      },
+      "_id": {
+        "$oid": "6782c6b279e4a9c82a2ec470"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:30:57.361Z"
+      },
+      "_id": {
+        "$oid": "6782c6f079e4a9c82a2ec73a"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:33:24.991Z"
+      },
+      "_id": {
+        "$oid": "6782c78379e4a9c82a2edcb6"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:34:26.833Z"
+      },
+      "_id": {
+        "$oid": "6782c7c179e4a9c82a2edf86"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:35:28.475Z"
+      },
+      "_id": {
+        "$oid": "6782c7ff79e4a9c82a2ee8a8"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:36:31.483Z"
+      },
+      "_id": {
+        "$oid": "6782c83e79e4a9c82a2ef5c4"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:37:33.572Z"
+      },
+      "_id": {
+        "$oid": "6782c87c79e4a9c82a2efa32"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:38:37.628Z"
+      },
+      "_id": {
+        "$oid": "6782c8bc79e4a9c82a2f068f"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:39:39.439Z"
+      },
+      "_id": {
+        "$oid": "6782c8fa79e4a9c82a2f0969"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:40:41.631Z"
+      },
+      "_id": {
+        "$oid": "6782c93879e4a9c82a2f16a5"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:41:43.614Z"
+      },
+      "_id": {
+        "$oid": "6782c97679e4a9c82a2f1983"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:42:46.542Z"
+      },
+      "_id": {
+        "$oid": "6782c9b579e4a9c82a2f286a"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:43:48.483Z"
+      },
+      "_id": {
+        "$oid": "6782c9f379e4a9c82a2f2b4c"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:44:52.007Z"
+      },
+      "_id": {
+        "$oid": "6782ca3379e4a9c82a2f6525"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:45:54.024Z"
+      },
+      "_id": {
+        "$oid": "6782ca7079e4a9c82a2f680f"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:46:56.618Z"
+      },
+      "_id": {
+        "$oid": "6782caaf79e4a9c82a2f6afe"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:47:58.719Z"
+      },
+      "_id": {
+        "$oid": "6782caed79e4a9c82a2f6f90"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:49:00.543Z"
+      },
+      "_id": {
+        "$oid": "6782cb2b79e4a9c82a2f8b1a"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:50:02.441Z"
+      },
+      "_id": {
+        "$oid": "6782cb6979e4a9c82a2f8e0c"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:51:04.641Z"
+      },
+      "_id": {
+        "$oid": "6782cba779e4a9c82a2f9100"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:52:06.379Z"
+      },
+      "_id": {
+        "$oid": "6782cbe579e4a9c82a2f93f6"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:53:08.147Z"
+      },
+      "_id": {
+        "$oid": "6782cc2379e4a9c82a2f96ee"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:54:09.994Z"
+      },
+      "_id": {
+        "$oid": "6782cc6079e4a9c82a2f99e8"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:55:11.842Z"
+      },
+      "_id": {
+        "$oid": "6782cc9e79e4a9c82a2f9ce4"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:56:13.717Z"
+      },
+      "_id": {
+        "$oid": "6782ccdc79e4a9c82a2faab4"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:57:15.641Z"
+      },
+      "_id": {
+        "$oid": "6782cd1a79e4a9c82a2fadb4"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:58:17.508Z"
+      },
+      "_id": {
+        "$oid": "6782cd5879e4a9c82a2fbb94"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T19:59:19.375Z"
+      },
+      "_id": {
+        "$oid": "6782cd9679e4a9c82a2fbe98"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:00:21.278Z"
+      },
+      "_id": {
+        "$oid": "6782cdd479e4a9c82a2fc19e"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:01:23.113Z"
+      },
+      "_id": {
+        "$oid": "6782ce1279e4a9c82a2fc658"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:02:25.097Z"
+      },
+      "_id": {
+        "$oid": "6782ce4f79e4a9c82a2fcb0e"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:03:26.984Z"
+      },
+      "_id": {
+        "$oid": "6782ce8d79e4a9c82a2fde44"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:04:28.891Z"
+      },
+      "_id": {
+        "$oid": "6782cecb79e4a9c82a2fe8ca"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:05:30.817Z"
+      },
+      "_id": {
+        "$oid": "6782cf0979e4a9c82a2febdc"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:06:32.665Z"
+      },
+      "_id": {
+        "$oid": "6782cf4779e4a9c82a2feef0"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:07:34.437Z"
+      },
+      "_id": {
+        "$oid": "6782cf8579e4a9c82a2ff206"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:08:36.284Z"
+      },
+      "_id": {
+        "$oid": "6782cfc379e4a9c82a2ff51e"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:09:39.669Z"
+      },
+      "_id": {
+        "$oid": "6782d00279e4a9c82a30035a"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:10:43.441Z"
+      },
+      "_id": {
+        "$oid": "6782d04279e4a9c82a3027ee"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:11:45.247Z"
+      },
+      "_id": {
+        "$oid": "6782d08079e4a9c82a302b0c"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:12:47.594Z"
+      },
+      "_id": {
+        "$oid": "6782d0be79e4a9c82a303960"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:13:49.412Z"
+      },
+      "_id": {
+        "$oid": "6782d0fc79e4a9c82a303c82"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:14:52.214Z"
+      },
+      "_id": {
+        "$oid": "6782d13b79e4a9c82a306166"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:15:54.057Z"
+      },
+      "_id": {
+        "$oid": "6782d17879e4a9c82a30648c"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:16:55.925Z"
+      },
+      "_id": {
+        "$oid": "6782d1b679e4a9c82a3067b4"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:17:58.273Z"
+      },
+      "_id": {
+        "$oid": "6782d1f579e4a9c82a306ade"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:19:00.221Z"
+      },
+      "_id": {
+        "$oid": "6782d23379e4a9c82a306e0a"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:20:02.080Z"
+      },
+      "_id": {
+        "$oid": "6782d27179e4a9c82a307138"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:21:04.252Z"
+      },
+      "_id": {
+        "$oid": "6782d2af79e4a9c82a307468"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:22:06.263Z"
+      },
+      "_id": {
+        "$oid": "6782d2ed79e4a9c82a30779a"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:23:08.178Z"
+      },
+      "_id": {
+        "$oid": "6782d32b79e4a9c82a307ace"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:24:11.555Z"
+      },
+      "_id": {
+        "$oid": "6782d36a79e4a9c82a30a066"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:25:13.505Z"
+      },
+      "_id": {
+        "$oid": "6782d3a879e4a9c82a30a39e"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:26:15.312Z"
+      },
+      "_id": {
+        "$oid": "6782d3e679e4a9c82a30a6d8"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:27:17.082Z"
+      },
+      "_id": {
+        "$oid": "6782d42379e4a9c82a30abe1"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:28:18.846Z"
+      },
+      "_id": {
+        "$oid": "6782d46179e4a9c82a30af20"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:29:20.594Z"
+      },
+      "_id": {
+        "$oid": "6782d49f79e4a9c82a30b261"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:30:22.530Z"
+      },
+      "_id": {
+        "$oid": "6782d4dd79e4a9c82a30b5a4"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:31:24.512Z"
+      },
+      "_id": {
+        "$oid": "6782d51b79e4a9c82a30b8e9"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:32:26.286Z"
+      },
+      "_id": {
+        "$oid": "6782d55979e4a9c82a30bc30"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:33:28.139Z"
+      },
+      "_id": {
+        "$oid": "6782d59679e4a9c82a30bf79"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:34:30.193Z"
+      },
+      "_id": {
+        "$oid": "6782d5d579e4a9c82a30c2c4"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:35:32.140Z"
+      },
+      "_id": {
+        "$oid": "6782d61279e4a9c82a30c611"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:36:34.000Z"
+      },
+      "_id": {
+        "$oid": "6782d65079e4a9c82a30c960"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:37:35.858Z"
+      },
+      "_id": {
+        "$oid": "6782d68e79e4a9c82a30ccb1"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:38:37.660Z"
+      },
+      "_id": {
+        "$oid": "6782d6cc79e4a9c82a30d004"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:39:39.465Z"
+      },
+      "_id": {
+        "$oid": "6782d70a79e4a9c82a30d359"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:40:41.360Z"
+      },
+      "_id": {
+        "$oid": "6782d74879e4a9c82a30d6b0"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:41:43.314Z"
+      },
+      "_id": {
+        "$oid": "6782d78679e4a9c82a30da09"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:42:45.121Z"
+      },
+      "_id": {
+        "$oid": "6782d7c379e4a9c82a30dd64"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:43:46.924Z"
+      },
+      "_id": {
+        "$oid": "6782d80179e4a9c82a30e0c1"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:44:49.174Z"
+      },
+      "_id": {
+        "$oid": "6782d83f79e4a9c82a30f014"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-11T20:45:51.047Z"
+      },
+      "_id": {
+        "$oid": "6782d87d79e4a9c82a30f375"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-11T20:46:07.614Z"
+      },
+      "_id": {
+        "$oid": "6782d88e79e4a9c82a30f6d8"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-11T22:15:27.364Z"
+      },
+      "_id": {
+        "$oid": "6782ed7e79e4a9c82a315031"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-11T22:40:54.355Z"
+      },
+      "_id": {
+        "$oid": "6782f37479e4a9c82a31d81c"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-11T23:06:18.081Z"
+      },
+      "_id": {
+        "$oid": "6782f96879e4a9c82a323df6"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-11T23:31:42.107Z"
+      },
+      "_id": {
+        "$oid": "6782ff5c79e4a9c82a32a221"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-11T23:57:08.304Z"
+      },
+      "_id": {
+        "$oid": "6783055279e4a9c82a32e408"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-12T00:22:50.595Z"
+      },
+      "_id": {
+        "$oid": "67830b5979e4a9c82a3352e4"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-12T00:48:15.226Z"
+      },
+      "_id": {
+        "$oid": "6783114d79e4a9c82a33d673"
+      }
+    },
+    {
+      "duration": 10,
+      "date": {
+        "$date": "2025-01-12T10:55:29.979Z"
+      },
+      "_id": {
+        "$oid": "67839fa579e4a9c82a341dc1"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-12T11:27:47.098Z"
+      },
+      "_id": {
+        "$oid": "6783a73679e4a9c82a34d17c"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-13T13:11:37.243Z"
+      },
+      "_id": {
+        "$oid": "67851109340f045d0ab9d56a"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-13T13:11:41.372Z"
+      },
+      "_id": {
+        "$oid": "6785110d340f045d0ab9d8fe"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-13T13:29:23.385Z"
+      },
+      "_id": {
+        "$oid": "67851533970814aaee0b2805"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-13T13:38:48.902Z"
+      },
+      "_id": {
+        "$oid": "67851768970814aaee0b4063"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-13T13:42:58.753Z"
+      },
+      "_id": {
+        "$oid": "67851862970814aaee0b4bf0"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-13T13:43:07.775Z"
+      },
+      "_id": {
+        "$oid": "6785186b970814aaee0b4f8c"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-13T14:49:01.379Z"
+      },
+      "_id": {
+        "$oid": "678527dd1d0402e2bff2a059"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-13T14:49:04.304Z"
+      },
+      "_id": {
+        "$oid": "678527e01d0402e2bff2a3fa"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-13T14:49:07.118Z"
+      },
+      "_id": {
+        "$oid": "678527e21d0402e2bff2a79d"
+      }
+    },
+    {
+      "duration": 10,
+      "date": {
+        "$date": "2025-01-13T15:53:09.802Z"
+      },
+      "_id": {
+        "$oid": "678536e51d0402e2bff38adb"
+      }
+    },
+    {
+      "duration": 10,
+      "date": {
+        "$date": "2025-01-13T16:03:46.831Z"
+      },
+      "_id": {
+        "$oid": "678539621d0402e2bff3f22c"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-13T16:04:33.198Z"
+      },
+      "_id": {
+        "$oid": "678539901d0402e2bff3f5d6"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-13T16:05:56.613Z"
+      },
+      "_id": {
+        "$oid": "678539e41d0402e2bff3f982"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-13T16:06:58.907Z"
+      },
+      "_id": {
+        "$oid": "67853a221d0402e2bff3fd30"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-13T16:07:02.041Z"
+      },
+      "_id": {
+        "$oid": "67853a251d0402e2bff400e0"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-13T16:07:09.767Z"
+      },
+      "_id": {
+        "$oid": "67853a2d1d0402e2bff40492"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-13T16:08:08.109Z"
+      },
+      "_id": {
+        "$oid": "67853a671d0402e2bff40846"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-13T16:08:12.952Z"
+      },
+      "_id": {
+        "$oid": "67853a6c1d0402e2bff41d4e"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-13T16:09:05.508Z"
+      },
+      "_id": {
+        "$oid": "67853aa11d0402e2bff43260"
+      }
+    },
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-13T16:34:53.651Z"
+      },
+      "_id": {
+        "$oid": "678540ad1d0402e2bff43e51"
+      }
+    },
+    {
+      "duration": 20,
+      "date": {
+        "$date": "2025-01-13T16:55:42.852Z"
+      },
+      "_id": {
+        "$oid": "6785458e1d0402e2bff4bece"
+      }
+    },
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-13T17:42:21.553Z"
+      },
+      "_id": {
+        "$oid": "6785507d1d0402e2bff4c64f"
+      }
+    },
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-13T18:12:14.140Z"
+      },
+      "_id": {
+        "$oid": "6785577d1d0402e2bff4fefb"
+      }
+    },
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-13T18:37:58.464Z"
+      },
+      "_id": {
+        "$oid": "67855d86702acc0de3651803"
+      }
+    },
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-13T19:05:52.206Z"
+      },
+      "_id": {
+        "$oid": "6785640f702acc0de3659ef2"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-13T19:06:11.768Z"
+      },
+      "_id": {
+        "$oid": "67856423702acc0de365a2ba"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-13T19:20:47.496Z"
+      },
+      "_id": {
+        "$oid": "6785678e702acc0de365cdf8"
+      }
+    },
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-13T20:09:22.482Z"
+      },
+      "_id": {
+        "$oid": "678572f1702acc0de366a25c"
+      }
+    },
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-13T20:35:03.272Z"
+      },
+      "_id": {
+        "$oid": "678578f6702acc0de366ae8e"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-13T20:36:42.751Z"
+      },
+      "_id": {
+        "$oid": "6785795a702acc0de366b479"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-13T20:50:06.428Z"
+      },
+      "_id": {
+        "$oid": "67857c7d702acc0de366c4e1"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-13T20:53:15.161Z"
+      },
+      "_id": {
+        "$oid": "67857d3a702acc0de366deb6"
+      }
+    },
+    {
+      "duration": 23,
+      "date": {
+        "$date": "2025-01-18T19:30:30.472Z"
+      },
+      "_id": {
+        "$oid": "678c01561a6c582f1c1dbdd7"
+      }
+    },
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-18T19:31:43.665Z"
+      },
+      "_id": {
+        "$oid": "678c019f1a6c582f1c1dd846"
+      }
+    }
+  ],
+  "__v": 460
+},
+{
+  "_id": {
+    "$oid": "6779a0b081a14f2e2cd6c92d"
+  },
+  "name": "23232",
+  "date": {
+    "$date": "2025-01-04T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-04T20:57:22.309Z"
+  },
+  "archived": "closed",
+  "categories": [],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-04T20:57:20.304Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6779e17c81a14f2e2cd7710c"
+  },
+  "name": "1236",
+  "date": {
+    "$date": "2025-01-05T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-05T01:33:52.720Z"
+  },
+  "archived": "closed",
+  "categories": [],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-05T01:33:48.941Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6779e5f381a14f2e2cd79839"
+  },
+  "name": "sdsd",
+  "date": {
+    "$date": "2025-01-05T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-05T01:52:57.966Z"
+  },
+  "archived": "closed",
+  "categories": [],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-05T01:52:51.981Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "677a6b0181a14f2e2cd7d2ba"
+  },
+  "name": "Déjeuner 🥐",
+  "date": {
+    "$date": "2025-01-05T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-05T12:44:37.517Z"
+  },
+  "archived": "closed",
+  "categories": [
+    ""
+  ],
+  "totalTime": 92,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-05T11:20:33.545Z"
+  },
+  "sessions": [
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T11:24:01.251Z"
+      },
+      "_id": {
+        "$oid": "677a6bd181a14f2e2cd7d377"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T11:27:05.008Z"
+      },
+      "_id": {
+        "$oid": "677a6c8881a14f2e2cd7d436"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T11:30:08.723Z"
+      },
+      "_id": {
+        "$oid": "677a6d4081a14f2e2cd7d4f7"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T11:33:12.432Z"
+      },
+      "_id": {
+        "$oid": "677a6df881a14f2e2cd7d5ba"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T11:36:16.118Z"
+      },
+      "_id": {
+        "$oid": "677a6eaf81a14f2e2cd7d67f"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T11:39:19.821Z"
+      },
+      "_id": {
+        "$oid": "677a6f6781a14f2e2cd7d746"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T11:42:23.507Z"
+      },
+      "_id": {
+        "$oid": "677a701f81a14f2e2cd7d80f"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T11:45:27.174Z"
+      },
+      "_id": {
+        "$oid": "677a70d681a14f2e2cd7d8da"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T11:48:30.845Z"
+      },
+      "_id": {
+        "$oid": "677a718e81a14f2e2cd7d9a7"
+      }
+    },
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-05T11:51:34.545Z"
+      },
+      "_id": {
+        "$oid": "677a724681a14f2e2cd7da76"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T11:53:00.637Z"
+      },
+      "_id": {
+        "$oid": "677a729c81a14f2e2cd7db47"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-05T12:15:10.094Z"
+      },
+      "_id": {
+        "$oid": "677a77d081a14f2e2cd7f165"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-05T12:16:20.958Z"
+      },
+      "_id": {
+        "$oid": "677a781781a14f2e2cd7f55c"
+      }
+    }
+  ],
+  "__v": 15
+},
+{
+  "_id": {
+    "$oid": "677a865b81a14f2e2cd83aca"
+  },
+  "name": "EEE",
+  "date": {
+    "$date": "2025-01-05T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-05T13:17:19.029Z"
+  },
+  "archived": "closed",
+  "categories": [],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-05T13:17:15.691Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "677a86ac81a14f2e2cd83db1"
+  },
+  "name": "dfdf",
+  "date": {
+    "$date": "2025-01-05T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-05T13:31:41.886Z"
+  },
+  "archived": "closed",
+  "categories": [],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-05T13:18:36.780Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "677a86af81a14f2e2cd83e7d"
+  },
+  "name": "323",
+  "date": {
+    "$date": "2025-01-05T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-05T13:18:42.485Z"
+  },
+  "archived": "closed",
+  "categories": [],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-05T13:18:39.472Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "677a87bf81a14f2e2cd845ea"
+  },
+  "name": "sdsd.",
+  "date": {
+    "$date": "2025-01-05T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-05T13:31:38.755Z"
+  },
+  "archived": "closed",
+  "categories": [],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-05T13:23:11.141Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "677a87d481a14f2e2cd849e8"
+  },
+  "name": "SD",
+  "date": {
+    "$date": "2025-01-05T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-05T13:28:38.795Z"
+  },
+  "archived": "closed",
+  "categories": [],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-05T13:23:32.134Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "677a8fd281a14f2e2cd87f02"
+  },
+  "name": "656",
+  "date": {
+    "$date": "2025-01-05T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-05T13:57:39.586Z"
+  },
+  "archived": "closed",
+  "categories": [],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-05T13:57:38.379Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "677c04f081a14f2e2cdd4bb2"
+  },
+  "name": "Rédaction rapports ",
+  "date": {
+    "$date": "2025-01-07T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-10T21:20:11.507Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Travail"
+  ],
+  "totalTime": 876,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "Rapport 1",
+      "priority": "low",
+      "archivedAt": {
+        "$date": "2025-01-10T19:30:13.379Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "677c4f9a81a14f2e2cdd9e45"
+      },
+      "addedAt": {
+        "$date": "2025-01-06T21:48:10.156Z"
+      }
+    },
+    {
+      "name": "Rapport 2",
+      "priority": "low",
+      "archivedAt": {
+        "$date": "2025-01-10T21:13:59.796Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "677c4fa381a14f2e2cdd9f9c"
+      },
+      "addedAt": {
+        "$date": "2025-01-06T21:48:19.422Z"
+      }
+    },
+    {
+      "name": "Préparation visite P.M",
+      "priority": "low",
+      "archivedAt": {
+        "$date": "2025-01-10T21:13:58.843Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "677c4faf81a14f2e2cdda0f4"
+      },
+      "addedAt": {
+        "$date": "2025-01-06T21:48:31.413Z"
+      }
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-06T16:29:36.013Z"
+  },
+  "sessions": [
+    {
+      "duration": 24,
+      "date": {
+        "$date": "2025-01-08T09:39:16.664Z"
+      },
+      "_id": {
+        "$oid": "677e47c481a14f2e2cdf73cc"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-08T10:04:36.354Z"
+      },
+      "_id": {
+        "$oid": "677e4db481a14f2e2cdf7538"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-08T10:35:07.187Z"
+      },
+      "_id": {
+        "$oid": "677e54db81a14f2e2cdf91b2"
+      }
+    },
+    {
+      "duration": 11,
+      "date": {
+        "$date": "2025-01-08T17:27:39.464Z"
+      },
+      "_id": {
+        "$oid": "677eb58b81a14f2e2cdf9d96"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-08T18:05:52.512Z"
+      },
+      "_id": {
+        "$oid": "677ebe8081a14f2e2cdfa729"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-08T18:31:13.584Z"
+      },
+      "_id": {
+        "$oid": "677ec47181a14f2e2cdfa89e"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-08T18:56:31.102Z"
+      },
+      "_id": {
+        "$oid": "677eca5f81a14f2e2cdfaa15"
+      }
+    },
+    {
+      "duration": 15,
+      "date": {
+        "$date": "2025-01-08T19:11:16.613Z"
+      },
+      "_id": {
+        "$oid": "677ecdd481a14f2e2cdfab8e"
+      }
+    },
+    {
+      "duration": 595,
+      "date": {
+        "$date": "2025-01-11T09:50:53.821Z"
+      },
+      "_id": {
+        "$oid": "67823efd8309e2b39664cc8b"
+      }
+    },
+    {
+      "duration": 101,
+      "date": {
+        "$date": "2025-01-11T11:31:05.011Z"
+      },
+      "_id": {
+        "$oid": "6782567979e4a9c82a2b1082"
+      }
+    }
+  ],
+  "__v": 12
+},
+{
+  "_id": {
+    "$oid": "677c056681a14f2e2cdd4e43"
+  },
+  "name": "Wi-Fi home",
+  "date": {
+    "$date": "2025-01-06T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T12:14:32.189Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Un jour"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "valider commande galaxus",
+      "priority": "low",
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "6784213b79e4a9c82a363f9f"
+      },
+      "addedAt": {
+        "$date": "2025-01-12T20:08:27.050Z"
+      }
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-06T16:31:34.954Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "677c0a1581a14f2e2cdd736e"
+  },
+  "name": "Système audio PC",
+  "date": {
+    "$date": "2025-01-06T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-13T12:14:30.749Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Achats"
+  ],
+  "totalTime": 64,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "Tester son PC Mike ",
+      "priority": "low",
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "6782bd4079e4a9c82a2e90c6"
+      },
+      "addedAt": {
+        "$date": "2025-01-11T18:49:36.667Z"
+      }
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-06T16:51:33.182Z"
+  },
+  "sessions": [
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-06T21:03:21.304Z"
+      },
+      "_id": {
+        "$oid": "677c451881a14f2e2cdd8798"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-06T21:30:24.594Z"
+      },
+      "_id": {
+        "$oid": "677c4b6f81a14f2e2cdd88ea"
+      }
+    },
+    {
+      "duration": 12,
+      "date": {
+        "$date": "2025-01-06T21:42:11.556Z"
+      },
+      "_id": {
+        "$oid": "677c4e3281a14f2e2cdd921b"
+      }
+    }
+  ],
+  "__v": 3
+},
+{
+  "_id": {
+    "$oid": "677cf7ad81a14f2e2cddc90d"
+  },
+  "name": "Appeler commune St Prex départ",
+  "date": {
+    "$date": "2025-01-15T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-18T14:20:32.626Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Maison 🏠"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "6565",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-11T18:29:45.380Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "6782b89979e4a9c82a2e2fec"
+      }
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-07T09:45:17.345Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "677d55da81a14f2e2cdddb9d"
+  },
+  "name": "Note de frais",
+  "date": {
+    "$date": "2025-01-07T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-07T18:32:04.865Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Travail"
+  ],
+  "totalTime": 25,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-07T16:27:06.978Z"
+  },
+  "sessions": [
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-07T16:51:49.453Z"
+      },
+      "_id": {
+        "$oid": "677d5ba581a14f2e2cddde4b"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "677d8b0a81a14f2e2cdea552"
+  },
+  "name": "t54er",
+  "date": {
+    "$date": "2025-01-07T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-07T20:14:04.710Z"
+  },
+  "archived": "closed",
+  "categories": [],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-07T20:14:02.031Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "677ff1e681a14f2e2cdfda81"
+  },
+  "name": "Enjoy Time post-work ",
+  "date": {
+    "$date": "2025-01-09T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-10T09:05:54.141Z"
+  },
+  "archived": "closed",
+  "categories": [],
+  "totalTime": 97,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-09T15:57:26.986Z"
+  },
+  "sessions": [
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-09T16:23:02.647Z"
+      },
+      "_id": {
+        "$oid": "677ff7e681a14f2e2cdfe1a6"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-09T16:48:28.832Z"
+      },
+      "_id": {
+        "$oid": "677ffddc81a14f2e2cdfe317"
+      }
+    },
+    {
+      "duration": 45,
+      "date": {
+        "$date": "2025-01-09T17:33:24.395Z"
+      },
+      "_id": {
+        "$oid": "6780086381a14f2e2cdfedc1"
+      }
+    }
+  ],
+  "__v": 3
+},
+{
+  "_id": {
+    "$oid": "6781a6078309e2b39664495b"
+  },
+  "name": "Apple Watch ?",
+  "date": {
+    "$date": "2025-02-01T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-13T12:14:28.418Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Autre 📝"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "65656",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-11T18:37:18.954Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-11T18:37:21.212Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "6782ba5e79e4a9c82a2e4a60"
+      }
+    },
+    {
+      "name": "Déterminer si achat nécessaire ? prix ? ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-11T18:49:17.456Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "6782bd2d79e4a9c82a2e8f40"
+      }
+    },
+    {
+      "name": "yxyx",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-12T11:22:51.013Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-12T11:22:57.161Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "6783a60b79e4a9c82a34cc04"
+      }
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-10T22:58:15.444Z"
+  },
+  "sessions": [],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "6782568279e4a9c82a2b3729"
+  },
+  "name": "Repassage ",
+  "date": {
+    "$date": "2025-01-11T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-11T17:40:20.403Z"
+  },
+  "archived": "closed",
+  "categories": [],
+  "totalTime": 81,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-11T11:31:14.936Z"
+  },
+  "sessions": [
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-11T11:56:25.765Z"
+      },
+      "_id": {
+        "$oid": "67825c6979e4a9c82a2b3899"
+      }
+    },
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-11T12:21:43.519Z"
+      },
+      "_id": {
+        "$oid": "6782625779e4a9c82a2b3a0b"
+      }
+    },
+    {
+      "duration": 27,
+      "date": {
+        "$date": "2025-01-11T12:48:21.678Z"
+      },
+      "_id": {
+        "$oid": "6782689579e4a9c82a2b3b7f"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-11T12:48:23.966Z"
+      },
+      "_id": {
+        "$oid": "6782689779e4a9c82a2b3cf5"
+      }
+    },
+    {
+      "duration": 1,
+      "date": {
+        "$date": "2025-01-11T13:53:48.316Z"
+      },
+      "_id": {
+        "$oid": "678277ec79e4a9c82a2bd963"
+      }
+    }
+  ],
+  "__v": 5
+},
+{
+  "_id": {
+    "$oid": "6782a8f779e4a9c82a2d1869"
+  },
+  "name": "sdsd",
+  "date": {
+    "$date": "2025-01-11T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-11T17:35:20.007Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-11T17:23:03.611Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6782c88c79e4a9c82a2efbcb"
+  },
+  "name": "testyxyx",
+  "date": {
+    "$date": "2025-01-11T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-11T20:01:07.869Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Divertissement"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "yxyx",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-11T19:44:20.428Z"
+      },
+      "archivedAt": {
+        "$date": "2025-01-11T19:44:27.833Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "6782ca1479e4a9c82a2f5ba3"
+      }
+    },
+    {
+      "name": "xyxy",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-11T19:44:31.960Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "6782ca1f79e4a9c82a2f5eec"
+      }
+    },
+    {
+      "name": "yxyxyx",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-11T19:44:37.201Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "6782ca2579e4a9c82a2f6091"
+      }
+    },
+    {
+      "name": "yxyxyx",
+      "priority": "low",
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "6782ca2879e4a9c82a2f6239"
+      },
+      "addedAt": {
+        "$date": "2025-01-11T19:44:40.494Z"
+      }
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-11T19:37:48.086Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6782e91879e4a9c82a3140c6"
+  },
+  "name": "SenT-bons",
+  "date": {
+    "$date": "2025-01-12T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-12T00:50:39.682Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Maison"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-11T21:56:40.232Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67830eda79e4a9c82a3387d6"
+  },
+  "name": "Finaliser commande Coop ",
+  "date": {
+    "$date": "2025-01-12T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-12T17:12:03.726Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Maison"
+  ],
+  "totalTime": 13,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "sens-bon ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-12T00:50:35.410Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "678311db79e4a9c82a33e3e5"
+      }
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-12T00:37:46.418Z"
+  },
+  "sessions": [
+    {
+      "duration": 13,
+      "date": {
+        "$date": "2025-01-12T17:11:58.654Z"
+      },
+      "_id": {
+        "$oid": "6783f7e179e4a9c82a361db3"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "6783aaef79e4a9c82a353a6f"
+  },
+  "name": "Démonstration Mike",
+  "date": {
+    "$date": "2025-01-12T00:00:00.000Z"
+  },
+  "priority": "high",
+  "archivedAt": {
+    "$date": "2025-01-12T13:37:08.617Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 3,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "Parler par exemple des sous tâches",
+      "priority": "low",
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "6783ab0179e4a9c82a353c60"
+      },
+      "addedAt": {
+        "$date": "2025-01-12T11:44:01.078Z"
+      }
+    },
+    {
+      "name": "tet",
+      "priority": "low",
+      "archivedAt": {
+        "$date": "2025-01-12T11:44:09.424Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "6783ab0579e4a9c82a353e55"
+      },
+      "addedAt": {
+        "$date": "2025-01-12T11:44:05.945Z"
+      }
+    },
+    {
+      "name": "test",
+      "priority": "low",
+      "archivedAt": {
+        "$date": "2025-01-12T11:44:16.452Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "6783ab0779e4a9c82a35404b"
+      },
+      "addedAt": {
+        "$date": "2025-01-12T11:44:07.027Z"
+      }
+    },
+    {
+      "name": "t",
+      "priority": "low",
+      "archivedAt": {
+        "$date": "2025-01-12T11:44:18.170Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "6783ab0779e4a9c82a354243"
+      },
+      "addedAt": {
+        "$date": "2025-01-12T11:44:07.592Z"
+      }
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-12T11:43:43.313Z"
+  },
+  "sessions": [
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-12T11:47:02.703Z"
+      },
+      "_id": {
+        "$oid": "6783abba79e4a9c82a35b42b"
+      }
+    }
+  ],
+  "__v": 4
+},
+{
+  "_id": {
+    "$oid": "6783af0579e4a9c82a35cb00"
+  },
+  "name": "Repassage",
+  "date": {
+    "$date": "2025-01-12T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-12T17:00:01.680Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "personnal"
+  ],
+  "totalTime": 52,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-12T12:01:09.112Z"
+  },
+  "sessions": [
+    {
+      "duration": 26,
+      "date": {
+        "$date": "2025-01-12T12:26:22.547Z"
+      },
+      "_id": {
+        "$oid": "6783b4ee79e4a9c82a35ccf9"
+      }
+    },
+    {
+      "duration": 2,
+      "date": {
+        "$date": "2025-01-12T12:27:59.751Z"
+      },
+      "_id": {
+        "$oid": "6783b54f79e4a9c82a35cef4"
+      }
+    },
+    {
+      "duration": 24,
+      "date": {
+        "$date": "2025-01-12T16:27:54.209Z"
+      },
+      "_id": {
+        "$oid": "6783ed8a79e4a9c82a360752"
+      }
+    }
+  ],
+  "__v": 3
+},
+{
+  "_id": {
+    "$oid": "6783b7ec79e4a9c82a35d0ee"
+  },
+  "name": "Plex",
+  "date": {
+    "$date": "2025-12-31T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": null,
+  "archived": "open",
+  "categories": [
+    "Maison 🏠"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "Prison Break",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:47:27.377Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850b5f79e4a9c82a36e764"
+      }
+    },
+    {
+      "name": "Mufassa",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:47:35.571Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850b6779e4a9c82a36e953"
+      }
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-12T12:39:08.225Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6783c55c79e4a9c82a35e76d"
+  },
+  "name": "Finaliser ouverture SoBa",
+  "date": {
+    "$date": "2025-01-12T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-18T14:20:25.020Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Maison 🏠"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-12T13:36:28.731Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6783c59579e4a9c82a35eb60"
+  },
+  "name": "Machine à laver finaliser achat ",
+  "date": {
+    "$date": "2025-01-12T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T12:14:06.974Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "personal"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-12T13:37:25.820Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6783c59d79e4a9c82a35ed55"
+  },
+  "name": "Filtres Check ",
+  "date": {
+    "$date": "2025-01-12T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-12T17:31:41.229Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "personal"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-12T13:37:33.584Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6783c99c79e4a9c82a35ef4a"
+  },
+  "name": "Coton tiges",
+  "date": {
+    "$date": "2025-01-12T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-12T16:59:55.594Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "personnal"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-12T13:54:36.893Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678452c679e4a9c82a368821"
+  },
+  "name": "Rapport 1 ",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-13T12:36:27.775Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Travail 💼"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-12T23:39:50.374Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678452ce79e4a9c82a368a14"
+  },
+  "name": "Rapport 2 ",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T12:36:26.777Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Travail 💼"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-12T23:39:58.250Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678452d779e4a9c82a368c07"
+  },
+  "name": "Appel Seeburn",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T12:36:26.096Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Travail 💼"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-12T23:40:07.972Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678452f779e4a9c82a3693d0"
+  },
+  "name": "Rapport 3 ",
+  "date": {
+    "$date": "2025-01-12T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T12:36:25.324Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Travail 💼"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-12T23:40:39.996Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6784531579e4a9c82a3695c3"
+  },
+  "name": "Switch Sport 30'",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": null,
+  "archived": "open",
+  "categories": [
+    "Santé - Fusion-Tool 🧬"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-12T23:41:09.011Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6784532e79e4a9c82a3699a8"
+  },
+  "name": "Health douche / rasage - 45' ",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T12:13:59.026Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Santé - Fusion-Tool 🧬"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-12T23:41:34.224Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67850aff79e4a9c82a36dfb5"
+  },
+  "name": "Anniversaires mise à jour ",
+  "date": {
+    "$date": "2025-01-19T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": null,
+  "archived": "open",
+  "categories": [
+    "Autre 📝"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T12:45:51.981Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67850b1a79e4a9c82a36e1a1"
+  },
+  "name": "Trier les scan's - mise à jour papiers ",
+  "date": {
+    "$date": "2025-01-17T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": null,
+  "archived": "open",
+  "categories": [
+    "Maison 🏠"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "Paiements Yohann ",
+      "priority": "low",
+      "archivedAt": {
+        "$date": "2025-01-18T14:19:51.789Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "678bb86ce1d43b41106e5a18"
+      },
+      "addedAt": {
+        "$date": "2025-01-18T14:19:24.351Z"
+      },
+      "sessions": []
+    },
+    {
+      "name": "Paiements Loïc ",
+      "priority": "low",
+      "archivedAt": {
+        "$date": "2025-01-18T14:19:58.020Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "678bb87ce1d43b41106e5c4e"
+      },
+      "addedAt": {
+        "$date": "2025-01-18T14:19:40.284Z"
+      },
+      "sessions": []
+    },
+    {
+      "name": "Scan fichiers Onedrive ",
+      "priority": "low",
+      "archivedAt": {
+        "$date": "2025-01-18T14:19:52.321Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "678bb885e1d43b41106e5e7b"
+      },
+      "addedAt": {
+        "$date": "2025-01-18T14:19:49.837Z"
+      },
+      "sessions": []
+    },
+    {
+      "name": "Trier scan Onedrive",
+      "priority": "low",
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "678bb898e1d43b41106e6734"
+      },
+      "addedAt": {
+        "$date": "2025-01-18T14:20:08.955Z"
+      },
+      "sessions": []
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-13T12:46:18.632Z"
+  },
+  "sessions": [
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-18T12:45:53.539Z"
+      },
+      "_id": {
+        "$oid": "678ba281e1d43b41106e3814"
+      }
+    },
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-18T13:12:42.780Z"
+      },
+      "_id": {
+        "$oid": "678ba8cae1d43b41106e46e3"
+      }
+    },
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-18T13:39:37.082Z"
+      },
+      "_id": {
+        "$oid": "678baf18e1d43b41106e4b26"
+      }
+    },
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-18T14:05:12.631Z"
+      },
+      "_id": {
+        "$oid": "678bb518e1d43b41106e4d4b"
+      }
+    },
+    {
+      "duration": 13,
+      "date": {
+        "$date": "2025-01-18T14:18:59.317Z"
+      },
+      "_id": {
+        "$oid": "678bb852e1d43b41106e57f5"
+      }
+    }
+  ],
+  "__v": 8
+},
+{
+  "_id": {
+    "$oid": "67850b3079e4a9c82a36e38d"
+  },
+  "name": "Lecture ",
+  "date": {
+    "$date": "2025-12-31T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": null,
+  "archived": "open",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "Briser les relations familiales ",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:49:29.051Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850bd979e4a9c82a36f887"
+      }
+    },
+    {
+      "name": "L'adversaire - Emmanuel Carrère",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:49:40.289Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850be479e4a9c82a36fa7e"
+      }
+    },
+    {
+      "name": "Tu n'es pas trop sensible - Ma Safe Place",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:49:46.207Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850bea79e4a9c82a36fc76"
+      }
+    },
+    {
+      "name": "Les 4 accords Toltèques",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:49:51.488Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850bef79e4a9c82a36fe70"
+      }
+    },
+    {
+      "name": "Ne montrez jamais ce livre à personne",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:49:55.957Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850bf379e4a9c82a37006c"
+      }
+    },
+    {
+      "name": "Passager noir",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:50:00.834Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850bf879e4a9c82a37026a"
+      }
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-13T12:46:40.425Z"
+  },
+  "sessions": [],
+  "__v": 5
+},
+{
+  "_id": {
+    "$oid": "67850b9779e4a9c82a36eec8"
+  },
+  "name": "Sauvegarde à mettre à jour ",
+  "date": {
+    "$date": "2025-01-19T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": null,
+  "archived": "open",
+  "categories": [
+    "Maison 🏠"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "Qbitorrent",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:48:30.684Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850b9e79e4a9c82a36f0b7"
+      }
+    },
+    {
+      "name": "VM's",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:48:37.444Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850ba579e4a9c82a36f2aa"
+      }
+    },
+    {
+      "name": "KeePass",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:48:49.885Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850bb179e4a9c82a36f49e"
+      }
+    },
+    {
+      "name": "/oneDrive -> Recovery",
+      "priority": "low",
+      "addedAt": {
+        "$date": "2025-01-13T12:49:06.523Z"
+      },
+      "archivedAt": null,
+      "archived": "open",
+      "sessions": [],
+      "_id": {
+        "$oid": "67850bc279e4a9c82a36f694"
+      }
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-13T12:48:23.896Z"
+  },
+  "sessions": [],
+  "__v": 3
+},
+{
+  "_id": {
+    "$oid": "67850df879e4a9c82a3723a0"
+  },
+  "name": "Mardi 14.01.2024 - présence bureau ",
+  "date": {
+    "$date": "2025-01-14T00:00:00.000Z"
+  },
+  "priority": "high",
+  "archivedAt": {
+    "$date": "2025-01-17T07:53:35.522Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Travail 💼"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "Rapport 1️⃣",
+      "priority": "low",
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "67858c2f702acc0de368acc1"
+      },
+      "addedAt": {
+        "$date": "2025-01-13T21:57:03.315Z"
+      },
+      "sessions": []
+    },
+    {
+      "name": "Rapport 2️⃣",
+      "priority": "low",
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "67858c42702acc0de368aee2"
+      },
+      "addedAt": {
+        "$date": "2025-01-13T21:57:22.454Z"
+      },
+      "sessions": []
+    },
+    {
+      "name": "Prises de contacts (4) + relance ",
+      "priority": "low",
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "67858c8b702acc0de368b104"
+      },
+      "addedAt": {
+        "$date": "2025-01-13T21:58:35.118Z"
+      },
+      "sessions": []
+    },
+    {
+      "name": "Préparer note rapport 3️⃣",
+      "priority": "low",
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "67858cd8702acc0de368b54f"
+      },
+      "addedAt": {
+        "$date": "2025-01-13T21:59:52.947Z"
+      },
+      "sessions": []
+    },
+    {
+      "name": "Préparer note rapport 4️⃣",
+      "priority": "low",
+      "archivedAt": null,
+      "archived": "open",
+      "_id": {
+        "$oid": "67858ce5702acc0de368b775"
+      },
+      "addedAt": {
+        "$date": "2025-01-13T22:00:05.507Z"
+      },
+      "sessions": []
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-13T12:58:32.295Z"
+  },
+  "sessions": [
+    {
+      "duration": 86,
+      "date": {
+        "$date": "2025-01-14T09:14:21.853Z"
+      },
+      "_id": {
+        "$oid": "67862aee702acc0de368e744"
+      }
+    },
+    {
+      "duration": 5,
+      "date": {
+        "$date": "2025-01-14T09:19:37.083Z"
+      },
+      "_id": {
+        "$oid": "67862c29702acc0de368f634"
+      }
+    },
+    {
+      "duration": 23,
+      "date": {
+        "$date": "2025-01-14T09:50:44.498Z"
+      },
+      "_id": {
+        "$oid": "67863375702acc0de369052c"
+      }
+    }
+  ],
+  "__v": 7
+},
+{
+  "_id": {
+    "$oid": "67852e681d0402e2bff32c3d"
+  },
+  "name": "Test version 1.2.9",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "high",
+  "archivedAt": {
+    "$date": "2025-01-13T15:40:15.044Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "TaskFlow ⛩️"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T15:16:56.522Z"
+  },
+  "sessions": [
+    {
+      "duration": 10,
+      "date": {
+        "$date": "2025-01-13T15:27:53.284Z"
+      },
+      "_id": {
+        "$oid": "678530f91d0402e2bff353ed"
+      }
+    },
+    {
+      "duration": 10,
+      "date": {
+        "$date": "2025-01-13T15:39:51.405Z"
+      },
+      "_id": {
+        "$oid": "678533c71d0402e2bff3852d"
+      }
+    }
+  ],
+  "__v": 2
+},
+{
+  "_id": {
+    "$oid": "678538e01d0402e2bff3e263"
+  },
+  "name": "test",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-13T19:44:53.363Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "personnal"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T16:01:36.448Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678538e51d0402e2bff3e469"
+  },
+  "name": "fdf",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T16:01:44.624Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T16:01:41.657Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678538fd1d0402e2bff3e874"
+  },
+  "name": "sdsd",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T16:02:16.495Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T16:02:05.846Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678539461d0402e2bff3ec7f"
+  },
+  "name": "sdsd",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T16:03:20.068Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T16:03:18.243Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67856477702acc0de365c815"
+  },
+  "name": "Douche",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-13T21:47:29.400Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T19:07:35.536Z"
+  },
+  "sessions": [
+    {
+      "duration": 8,
+      "date": {
+        "$date": "2025-01-13T19:16:10.084Z"
+      },
+      "_id": {
+        "$oid": "6785667a702acc0de365ca2d"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "678569e7702acc0de365dc9e"
+  },
+  "name": "tes",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-13T19:44:51.446Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "personnal"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T19:30:47.604Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678569eb702acc0de365deb7"
+  },
+  "name": "jj",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T19:31:16.173Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T19:30:51.855Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678569ef702acc0de365e0d0"
+  },
+  "name": "hh",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T19:31:14.738Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T19:30:55.511Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678569f9702acc0de365f49b"
+  },
+  "name": "df",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-13T19:44:49.828Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "personnal"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T19:31:05.721Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678569fb702acc0de365f6b4"
+  },
+  "name": "df",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T19:31:12.701Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T19:31:07.043Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67856a24702acc0de365ff15"
+  },
+  "name": "ffdf",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T19:33:17.995Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T19:31:48.621Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67856a25702acc0de366012e"
+  },
+  "name": "df",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T19:33:17.069Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T19:31:49.590Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67856a2b702acc0de36614f9"
+  },
+  "name": "dd",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-13T19:44:47.271Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "personnal"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T19:31:55.874Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67856a2d702acc0de3661712"
+  },
+  "name": "ff",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "low",
+  "archivedAt": {
+    "$date": "2025-01-13T19:33:16.334Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T19:31:57.508Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67856a6b702acc0de366192b"
+  },
+  "name": "ddd",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-13T19:33:15.450Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T19:32:59.363Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67856a71702acc0de3662cf6"
+  },
+  "name": "jj",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-13T19:33:14.287Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T19:33:05.731Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67856d5d702acc0de3666fc1"
+  },
+  "name": "Gg",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-13T19:45:36.579Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T19:45:33.894Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67857c99702acc0de366c6fd"
+  },
+  "name": "test",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-13T20:51:05.520Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T20:50:33.258Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67858dec702acc0de368c21a"
+  },
+  "name": "Utilisation de la plate-forme (New Horizon)",
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-16T22:51:28.985Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-13T22:04:28.659Z"
+  },
+  "sessions": [
+    {
+      "duration": 5,
+      "date": {
+        "$date": "2025-01-14T18:28:58.403Z"
+      },
+      "_id": {
+        "$oid": "6786ace9a226b4466659bd1c"
+      }
+    },
+    {
+      "duration": 5,
+      "date": {
+        "$date": "2025-01-14T18:35:29.431Z"
+      },
+      "_id": {
+        "$oid": "6786ae70a226b4466659bf44"
+      }
+    },
+    {
+      "duration": 5,
+      "date": {
+        "$date": "2025-01-14T18:41:34.131Z"
+      },
+      "_id": {
+        "$oid": "6786afdda226b4466659c16e"
+      }
+    },
+    {
+      "duration": 5,
+      "date": {
+        "$date": "2025-01-14T18:47:24.564Z"
+      },
+      "_id": {
+        "$oid": "6786b13ba226b4466659c39a"
+      }
+    },
+    {
+      "duration": 5,
+      "date": {
+        "$date": "2025-01-14T18:53:12.617Z"
+      },
+      "_id": {
+        "$oid": "6786b297a226b4466659c5c8"
+      }
+    },
+    {
+      "duration": 5,
+      "date": {
+        "$date": "2025-01-14T18:59:03.643Z"
+      },
+      "_id": {
+        "$oid": "6786b3f6a226b4466659c7f8"
+      }
+    },
+    {
+      "duration": 5,
+      "date": {
+        "$date": "2025-01-14T21:00:34.545Z"
+      },
+      "_id": {
+        "$oid": "6786d06f5c4bc526189a079b"
+      }
+    },
+    {
+      "duration": 5,
+      "date": {
+        "$date": "2025-01-14T21:06:10.864Z"
+      },
+      "_id": {
+        "$oid": "6786d1bf5c4bc526189a09cf"
+      }
+    },
+    {
+      "duration": 0,
+      "date": {
+        "$date": "2025-01-14T21:06:22.417Z"
+      },
+      "_id": {
+        "$oid": "6786d1cb5c4bc526189a0c05"
+      }
+    }
+  ],
+  "__v": 9
+},
+{
+  "_id": {
+    "$oid": "6786ab66a226b4466659b8d2"
+  },
+  "name": "Fusion-Tool (diverse tâches) ",
+  "date": {
+    "$date": "2025-01-19T00:00:00.000Z"
+  },
+  "priority": "high",
+  "archivedAt": {
+    "$date": "2025-01-14T18:22:49.004Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-14T18:22:30.131Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678a0c60e1d43b41106d84d5"
+  },
+  "name": "Mettre à jour heures XLS ",
+  "date": {
+    "$date": "2025-01-17T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-17T08:08:01.364Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Travail 💼"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-17T07:53:04.527Z"
+  },
+  "sessions": [
+    {
+      "duration": 5,
+      "date": {
+        "$date": "2025-01-17T07:58:49.717Z"
+      },
+      "_id": {
+        "$oid": "678a0db6e1d43b41106d8b46"
+      }
+    },
+    {
+      "duration": 3,
+      "date": {
+        "$date": "2025-01-17T08:02:52.715Z"
+      },
+      "_id": {
+        "$oid": "678a0ea9e1d43b41106d8d67"
+      }
+    }
+  ],
+  "__v": 2
+},
+{
+  "_id": {
+    "$oid": "678a0feae1d43b41106d91a6"
+  },
+  "name": "Rappel Emery pour prise RDV ",
+  "date": {
+    "$date": "2025-01-17T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-17T08:12:53.094Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Travail 💼"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-17T08:08:10.474Z"
+  },
+  "sessions": [
+    {
+      "duration": 4,
+      "date": {
+        "$date": "2025-01-17T08:12:49.195Z"
+      },
+      "_id": {
+        "$oid": "678a10fee1d43b41106da7e4"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "678a1109e1d43b41106dac21"
+  },
+  "name": "Luisier check ",
+  "date": {
+    "$date": "2025-01-17T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": {
+    "$date": "2025-01-17T17:03:20.381Z"
+  },
+  "archived": "closed",
+  "categories": [
+    "Travail 💼"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-17T08:12:57.995Z"
+  },
+  "sessions": [
+    {
+      "duration": 5,
+      "date": {
+        "$date": "2025-01-17T08:18:09.241Z"
+      },
+      "_id": {
+        "$oid": "678a123ee1d43b41106dae40"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "678baef6e1d43b41106e4903"
+  },
+  "name": "Ouverture compte bancaire Yohann SoBa",
+  "date": {
+    "$date": "2025-01-18T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "archivedAt": null,
+  "archived": "open",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [],
+  "addedAt": {
+    "$date": "2025-01-18T13:39:02.191Z"
+  },
+  "sessions": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678bb8f8e1d43b41106e6da7"
+  },
+  "name": "Tool-Fusion \"Janvier 25\" ",
+  "date": {
+    "$date": "2025-01-31T00:00:00.000Z"
+  },
+  "priority": "high",
+  "archivedAt": null,
+  "archived": "open",
+  "categories": [
+    "Personnel 🐈"
+  ],
+  "totalTime": 0,
+  "LastSessionTime": 0,
+  "subtasks": [
+    {
+      "name": "Mise à jour KeePass - password ",
+      "priority": "low",
+      "archivedAt": {
+        "$date": "2025-01-18T15:42:49.421Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "678bb913e1d43b41106e71f2"
+      },
+      "addedAt": {
+        "$date": "2025-01-18T14:22:11.310Z"
+      },
+      "sessions": []
+    },
+    {
+      "name": "Nettoyage et mise à jour VI-",
+      "priority": "low",
+      "archivedAt": {
+        "$date": "2025-01-18T15:42:51.076Z"
+      },
+      "archived": "closed",
+      "_id": {
+        "$oid": "678bcbefe1d43b41106ea656"
+      },
+      "addedAt": {
+        "$date": "2025-01-18T15:42:39.299Z"
+      },
+      "sessions": []
+    }
+  ],
+  "addedAt": {
+    "$date": "2025-01-18T14:21:44.248Z"
+  },
+  "sessions": [
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-18T15:01:15.723Z"
+      },
+      "_id": {
+        "$oid": "678bc23ce1d43b41106e86ff"
+      }
+    },
+    {
+      "duration": 25,
+      "date": {
+        "$date": "2025-01-18T15:26:43.467Z"
+      },
+      "_id": {
+        "$oid": "678bc834e1d43b41106e892a"
+      }
+    },
+    {
+      "duration": 8,
+      "date": {
+        "$date": "2025-01-18T16:03:31.128Z"
+      },
+      "_id": {
+        "$oid": "678bd0d3e1d43b41106eb965"
+      }
+    }
+  ],
+  "__v": 4
+}]

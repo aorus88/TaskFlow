@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./TaskForm.css"; // Centralisation des styles
+import FeedbackMessage from "./FeedbackMessage"; // Importer le composant FeedbackMessage
 
-const TaskForm = ({ onAddTask, taskCategories }) => {
+const TaskForm = ({ onAddTask, taskCategories, showFeedback }) => {
   const [formData, setFormData] = useState({
     name: "",
     date: new Date().toISOString().split("T")[0],
@@ -9,6 +10,8 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
     priority: "medium",
     categories: "Personnel 🐈", // Ajout de la catégorie par défaut
   });
+
+  const [errors, setErrors] = useState({});
 
   // Fonction pour gérer les changements dans le formulaire
   const handleChange = (key, value) => {
@@ -18,29 +21,45 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
     });
   };
 
-  // Gestion de l'ajout de tâche
-  const handleAddTask = () => {
+  // Validation des données du formulaire
+  const validateForm = () => {
+    const newErrors = {};
     if (!formData.name.trim()) {
-      alert("Le nom de la tâche est requis.");
+      newErrors.name = "Le nom de la tâche est requis.";
+    }
+    if (!formData.date) {
+      newErrors.date = "La date d'échéance est requise.";
+    }
+    if (!formData.time) {
+      newErrors.time = "L'heure d'échéance est requise.";
+    }
+    if (!formData.priority) {
+      newErrors.priority = "La priorité est requise.";
+    }
+    if (!formData.categories) {
+      newErrors.categories = "La catégorie est requise.";
+    }
+    return newErrors;
+  };
+
+  // Gestion de l'ajout de tâche
+  const handleAddTask = async () => {
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      showFeedback("Veuillez corriger les erreurs du formulaire.", "error");
       return;
     }
 
-    if (typeof onAddTask === "function") {
-      if (!formData.categories) {
-        alert("Veuillez sélectionner une catégorie.");
-        return;
-      }
-
-      onAddTask({
+    try {
+      await onAddTask({
         ...formData,
         id: Date.now(),
         subtasks: [], // Nouveau tableau par défaut
         timeSpent: 0, // Initialisation à 0
         status: "open", // Statut par défaut
         addedAt: new Date().toISOString(), // Date et heure d'ajout
-        categories: formData.categories, // Ajout de la catégorie
       });
-
       setFormData({
         name: "",
         date: new Date().toISOString().split("T")[0],
@@ -48,8 +67,10 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
         priority: "medium",
         categories: "Personnel 🐈", // Réinitialisation de la catégorie
       });
-    } else {
-      console.error("onAddTask n'est pas défini ou n'est pas une fonction valide.");
+      setErrors({});
+      showFeedback("Tâche ajoutée avec succès.", "success");
+    } catch (error) {
+      showFeedback("Erreur lors de l'ajout de la tâche.", "error");
     }
   };
 
@@ -71,6 +92,7 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
             value={formData.name}
             onChange={(e) => handleChange("name", e.target.value)}
           />
+          {errors.name && <span className="error-message">{errors.name}</span>}
         </label>
 
         <label>
@@ -80,6 +102,7 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
             value={formData.date}
             onChange={(e) => handleChange("date", e.target.value)}
           />
+          {errors.date && <span className="error-message">{errors.date}</span>}
         </label>
 
         <label>
@@ -89,6 +112,7 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
             value={formData.time}
             onChange={(e) => handleChange("time", e.target.value)}
           />
+          {errors.time && <span className="error-message">{errors.time}</span>}
         </label>
 
         <label>
@@ -101,6 +125,7 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
             <option value="medium">Moyenne</option>
             <option value="high">Élevée</option>
           </select>
+          {errors.priority && <span className="error-message">{errors.priority}</span>}
         </label>
 
         <label>
@@ -110,12 +135,13 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
             onChange={(e) => handleChange("categories", e.target.value)}
           >
             <option value="Personnel 🐈">Personnel 🐈</option>
-            {taskCategories.map((categories) => (
-              <option key={categories} value={categories}>
-                {categories}
+            {taskCategories.map((category) => (
+              <option key={category} value={category}>
+                {category}
               </option>
             ))}
           </select>
+          {errors.categories && <span className="error-message">{errors.categories}</span>}
         </label>
 
         <button type="button" onClick={handleAddTask}>
