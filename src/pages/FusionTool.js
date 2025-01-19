@@ -280,7 +280,7 @@ const FusionTool = ({ entries, onAddEntry, onDeleteEntry, showFeedback }) => {
         showFeedback={showFeedback}
       /> {/* Conserver minuterie pomodoro sur fusion-tool  */}
 
-      <h1>Fusion-Tool 🚬</h1>
+      <h1>Fusion-Tool ⛩️</h1>
       <form className="fusion-form">
         <label>
           Date :

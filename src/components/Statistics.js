@@ -113,11 +113,11 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
       );
       if (parentTask) {
         const subtask = parentTask.subtasks.find(st => st._id === id);
-        return subtask ? `📌 ${parentTask.name} > ${subtask.name}` : "Sous-tâche non trouvée";
+        return subtask ? `🆎 ${parentTask.name} > ${subtask.name}` : "Sous-tâche non trouvée";
       }
     } else {
       const task = tasks.find(t => t._id === id);
-      return task ? `⛩️ ${task.name}` : "Tâche non trouvée";
+      return task ? `🅰️ ${task.name}` : "Tâche non trouvée";
     }
     return "Tâche non trouvée";
   };
@@ -125,7 +125,7 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
   return (
     <div className="statistics-container">
       <div className="statistics-header">
-        <h2>📈 Statistiques  - ⛩️ TaskFlow 1.3.2 -  🕒 {formatClock(currentTime)}   
+        <h2>📈 Statistiques --- ⛩️ TaskFlow 1.3.3 💤 --- 🕒 {formatClock(currentTime)}   
        
         <div className="dark-mode-toggle">
           <h3>Mode sombre</h3>

@@ -281,7 +281,7 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
             className="dock-button"
             onClick={togglePosition}
           >
-            {isFloating ? '📌' : '🔓'}
+            {isFloating ? '🔓' : '📌'}
           </button>
           <button 
             className="minimize-button"

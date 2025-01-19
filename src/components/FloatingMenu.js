@@ -41,13 +41,13 @@ const FloatingMenu = () => {
 
             <li>
               <Link to="/fusion-tool" className="menu-link" onClick={handleLinkClick}>
-                🚬 Historique de consommation
+                ⛩️ Fusion-Tool
               </Link>
             </li>
 
             <li>
             <Link to="/VersionHistory" className="menu-link" onClick={handleLinkClick}>
-                🕒 Historique des versions
+                ⛳ In Progress
               </Link>
             </li>
 
