@@ -20,16 +20,28 @@ const TaskFilters_home = ({ filter = {}, setFilter = () => {}, taskCategories = 
   });
 
   // Gestionnaire de changement de catégorie
-  const handleCategoryChange = (category) => {
-    setSelectedCategories(prev => {
-      const newSelection = prev.includes(category) 
-        ? prev.filter(c => c !== category)
-        : [...prev, category];
-      
-      localStorage.setItem('selectedCategories', JSON.stringify(newSelection));
-      handleChange("categories", newSelection);
-      return newSelection;
-    });
+  const handleCategoryChange = (e) => {
+    const options = e.target.options;
+    const selected = [];
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) {
+        selected.push(options[i].value);
+      }
+    }
+
+    if (selected.includes("all")) {
+      setSelectedCategories(taskCategories);
+      localStorage.setItem('selectedCategories', JSON.stringify(taskCategories));
+      handleChange("categories", taskCategories);
+    } else if (selected.includes("none")) {
+      setSelectedCategories([]);
+      localStorage.setItem('selectedCategories', JSON.stringify([]));
+      handleChange("categories", []);
+    } else {
+      setSelectedCategories(selected);
+      localStorage.setItem('selectedCategories', JSON.stringify(selected));
+      handleChange("categories", selected);
+    }
   };
 
   // Gestion des changements de filtres avec sauvegarde
@@ -103,61 +115,41 @@ const TaskFilters_home = ({ filter = {}, setFilter = () => {}, taskCategories = 
           </label>
         </div>
 
-        {/* Filtre de recherche */}
-        <div className="filter-group">
-          <label>
-            Recherche :
-            <input
-              type="text"
-              value={filter.search || ""}
-              onChange={(e) => handleChange("search", e.target.value)}
-              placeholder="Rechercher une tâche..."
-            />
-          </label>
-        </div>
-
-        {/* Filtre de catégorie */}
-        <div className="filter-group">
-          <label>Catégories</label>
-          <div className="dropdown-checklist" ref={dropdownRef}>
-            <div 
-              className="dropdown-header"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              Sélectionner ({selectedCategories.length})
-              <span className={`arrow ${isOpen ? 'up' : 'down'}`}>▼</span>
-            </div>
-            {isOpen && (
-              <div className="dropdown-list">
-                <div className="special-options">
-                  <label className="checkbox-item special">
-                    <span onClick={() => handleSpecialCategoryChange('all')}>
-                      Toutes
-                    </span>
-                  </label>
-                  <label className="checkbox-item special">
-                    <span onClick={() => handleSpecialCategoryChange('none')}>
-                      Aucunes
-                    </span>
-                  </label>
-                </div>
-                <div className="separator"></div>
-                {taskCategories.map((category) => (
-                  <label key={category} className="checkbox-item">
-                    <input
-                      type="checkbox"
-                      checked={selectedCategories.includes(category)}
-                      onChange={() => handleCategoryChange(category)}
-                    />
-                    <span>{category}</span>
-                  </label>
-                ))}
-              </div>
-            )}
+           {/* Filtre de recherche */}
+          <div className="filter-group">
+            <label>
+              Recherche :
+              <input
+                type="text"
+                value={filter.search || ""}
+                onChange={(e) => handleChange("search", e.target.value)}
+                placeholder="Rechercher une tâche..."
+              />
+            </label>
           </div>
-        </div>
-      </div>
-  );
-};
+      {/* Filtre de catégorie */}
+      <div className="filter-group">
+        <label>
+          Catégories :
+          <select
+            multiple
+            value={selectedCategories}
+            onChange={handleCategoryChange}
+            className="dropdown-select"
+          >
+            <option value="all">Toutes</option>
+            <option value="none">Aucune</option>
+            {taskCategories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+      ))}
+    </select>
+  </label>
+</div>
+</div>
+          );
+        };
 
-export default TaskFilters_home;
+        export default TaskFilters_home;
+

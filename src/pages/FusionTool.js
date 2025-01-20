@@ -351,8 +351,7 @@ const FusionTool = ({ entries, onAddEntry, onDeleteEntry, showFeedback }) => {
           <StatCard label="Total sans fumée aujourd'hui" value={globalStats.nonConsumptionTodayEntries} emoji={`⛩️ ${getRewardEmoji(globalStats.nonConsumptionTodayEntries)}`} color="green" />
           </div>
           <div className="stats-chart-container">
-          <BarChartCard label="Consommations sur 10 jours" data={last10DaysStats} color="blue" />
-        </div>
+          <BarChartCard label="Consommations sur 10 jours" data={last10DaysStats} color="blue" className="double-width" />        </div>
       </div>
 
       <h2>Historique des Consommations</h2>

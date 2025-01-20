@@ -1,10 +1,13 @@
-// filepath: /src/components/TaskFilters_Sessions.js
 import React, { useEffect, useState } from "react";
 import "./TaskFilters_Sessions.css"; // Centralisation des styles dans un fichier commun
 
 const TaskFilters_Sessions = ({ filter = {}, setFilter = () => {}, tasks = [] }) => {
   const [categories, setCategories] = useState([]);
   const [taskIds, setTaskIds] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState(() => {
+    const saved = localStorage.getItem('selectedCategories');
+    return saved ? JSON.parse(saved) : [];
+  });
 
   useEffect(() => {
     // Extraire les catégories uniques des tâches
@@ -19,6 +22,32 @@ const TaskFilters_Sessions = ({ filter = {}, setFilter = () => {}, tasks = [] })
   // Gestion des changements de filtres
   const handleChange = (key, value) => {
     setFilter({ ...filter, [key]: value });
+    localStorage.setItem('taskFilters', JSON.stringify({ ...filter, [key]: value }));
+  };
+
+  // Gestionnaire de changement de catégorie
+  const handleCategoryChange = (e) => {
+    const options = e.target.options;
+    const selected = [];
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) {
+        selected.push(options[i].value);
+      }
+    }
+
+    if (selected.includes("all")) {
+      setSelectedCategories(categories);
+      localStorage.setItem('selectedCategories', JSON.stringify(categories));
+      handleChange("categories", categories);
+    } else if (selected.includes("none")) {
+      setSelectedCategories([]);
+      localStorage.setItem('selectedCategories', JSON.stringify([]));
+      handleChange("categories", []);
+    } else {
+      setSelectedCategories(selected);
+      localStorage.setItem('selectedCategories', JSON.stringify(selected));
+      handleChange("categories", selected);
+    }
   };
 
   return (
@@ -72,15 +101,18 @@ const TaskFilters_Sessions = ({ filter = {}, setFilter = () => {}, tasks = [] })
         {/* Filtre par catégorie */}
         <div className="filter-group">
           <label>
-            Catégorie :
+            Catégories :
             <select
-              value={filter.categories || ""}
-              onChange={(e) => handleChange("categories", e.target.value)}
+              multiple
+              value={selectedCategories}
+              onChange={handleCategoryChange}
+              className="dropdown-select"
             >
-              <option value="">Toutes</option>
-              {categories.map((categories) => (
-                <option key={categories} value={categories}>
-                  {categories}
+              <option value="all">Toutes</option>
+              <option value="none">Aucune</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
                 </option>
               ))}
             </select>

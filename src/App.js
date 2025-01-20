@@ -330,6 +330,7 @@ const App = () => {
                   handleDeleteTask={deleteTask}
                   onFetchArchivedTasks={() => fetchTasks(true)}
                   showFeedback={showFeedback}
+                  taskCategories={taskCategories} // Passer les catégories en prop
                 />
               }
             />
