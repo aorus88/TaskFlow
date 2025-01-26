@@ -80,23 +80,6 @@ const TaskFilters_Sessions = ({ filter = {}, setFilter = () => {}, tasks = [] })
           </label>
         </div>
 
-        {/* Filtre par tâche */}
-        <div className="filter-group">
-          <label>
-            Tâche :
-            <select
-              value={filter.taskId || ""}
-              onChange={(e) => handleChange("taskId", e.target.value)}
-            >
-              <option value="">Toutes</option>
-              {tasks.map((task) => (
-                <option key={task._id} value={task._id}>
-                  {task.name}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
 
         {/* Filtre par catégorie */}
         <div className="filter-group">

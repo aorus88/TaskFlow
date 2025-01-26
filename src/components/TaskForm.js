@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "./TaskForm.css"; // Centralisation des styles
-import FeedbackMessage from "./FeedbackMessage"; // Importer le composant FeedbackMessage
 
-const TaskForm = ({ onAddTask, taskCategories, showFeedback }) => {
+const TaskForm = ({ onAddTask, taskCategories }) => {
   const [formData, setFormData] = useState({
     name: "",
     date: new Date().toISOString().split("T")[0],
@@ -47,7 +46,6 @@ const TaskForm = ({ onAddTask, taskCategories, showFeedback }) => {
     const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      showFeedback("Veuillez corriger les erreurs du formulaire.", "error");
       return;
     }
 
@@ -68,9 +66,7 @@ const TaskForm = ({ onAddTask, taskCategories, showFeedback }) => {
         categories: "Personnel 🐈", // Réinitialisation de la catégorie
       });
       setErrors({});
-      showFeedback("Tâche ajoutée avec succès.", "success");
     } catch (error) {
-      showFeedback("Erreur lors de l'ajout de la tâche.", "error");
     }
   };
 

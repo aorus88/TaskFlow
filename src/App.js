@@ -11,7 +11,6 @@ import GlobalPomodoroTimer from "./components/GlobalPomodoroTimer";
 import "./index.css";
 import taskReducer from "./reducers/taskReducer";
 import { TimerProvider } from "./context/TimerContext";
-import FeedbackMessage from './components/FeedbackMessage'; // Importer le composant FeedbackMessage
 import { SelectedTaskProvider } from './context/SelectedTaskContext'; // Importer le contexte
 
 const initialState = {
@@ -61,12 +60,6 @@ const App = () => {
     "Autre 📝",
   ];
 
-  const showFeedback = (message, type) => {
-    setFeedback({ message, type });
-    setTimeout(() => {
-      setFeedback({ message: '', type: '' });
-    }, 3000); // Le message disparaîtra après 3 secondes
-  };
 
   const fetchTasks = useCallback(async (archived = false) => {
     try {
@@ -119,7 +112,7 @@ const App = () => {
       await fetchTasks();
     } catch (error) {
       console.error('Erreur :', error);
-      showFeedback('Erreur lors de la modification de la tâche.', 'error');
+    
     }
   };
 
@@ -134,7 +127,6 @@ const App = () => {
       await fetchTasks();
     } catch (error) {
       console.error('Erreur :', error);
-      showFeedback('Erreur lors de la suppression de la tâche.', 'error');
     }
   };
 
@@ -151,7 +143,6 @@ const App = () => {
       await fetchTasks();
     } catch (error) {
       console.error('Erreur :', error);
-      showFeedback('Erreur lors de l\'archivage de la tâche.', 'error');
     }
   };
 
@@ -203,7 +194,6 @@ const App = () => {
       await fetchTasks();
     } catch (error) {
       console.error('Erreur :', error);
-      showFeedback('Erreur lors de la suppression de la sous-tâche.', 'error');
     }
   };
 
@@ -287,7 +277,6 @@ const App = () => {
     <SelectedTaskProvider>
       <TimerProvider>
         <div className={`App ${isDarkMode ? 'dark' : ''}`}>
-          <FeedbackMessage message={feedback.message} type={feedback.type} />
           <FloatingMenu addTask={addTask} />
           <Routes>
             <Route
@@ -311,7 +300,6 @@ const App = () => {
                   isDarkMode={isDarkMode}
                   toggleDarkMode={toggleDarkMode}
                   taskCategories={taskCategories} // Passer les catégories en prop
-                  showFeedback={showFeedback} // Passer la fonction showFeedback en prop
                 />
               }
             />
@@ -327,9 +315,9 @@ const App = () => {
                       parentTaskId: task._id,
                     }))
                   )}
-                  handleDeleteTask={deleteTask}
+                  onDeleteTask={deleteTask}
+                  onDeleteSubtask={deleteSubtask}
                   onFetchArchivedTasks={() => fetchTasks(true)}
-                  showFeedback={showFeedback}
                   taskCategories={taskCategories} // Passer les catégories en prop
                 />
               }
@@ -341,7 +329,6 @@ const App = () => {
                   entries={state.consumptionEntries}
                   onAddEntry={addConsumptionEntry}
                   onDeleteEntry={deleteConsumptionEntry}
-                  showFeedback={showFeedback}
                 />
               }
             />
@@ -351,7 +338,6 @@ const App = () => {
                 <Sessions
                   tasks={state.tasks}
                   fetchTasks={fetchTasks}
-                  showFeedback={showFeedback}
                 />
               }
 
