@@ -1,3 +1,6 @@
+/* Sessions.css */
+
+/* Container global de la page Sessions */
 .sessions-page {
   margin: 20px;
   padding: 20px;
@@ -6,19 +9,29 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Header des sessions */
 .sessions-header {
   text-align: center;
   margin-bottom: 20px;
+  color:#2d2d2d;
 }
 
-.sessions-header h1 {
-  font-size: 2rem;
-  color: #333;
+body.dark .sessions-header {
+  color: #d4d4d4;
 }
 
+
+/* Liste des sessions */
 .sessions-list {
   list-style: none;
   padding: 0;
+  margin: 0;
+}
+
+.sessions-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
 .session-item {
@@ -42,6 +55,7 @@
   color: #666;
 }
 
+/* Bouton de suppression */
 .delete-button {
   background-color: #e51400;
   color: white;
@@ -50,13 +64,81 @@
   border-radius: 4px;
   cursor: pointer;
   margin-top: 10px;
+  transition: background-color 0.3s ease;
 }
 
 .delete-button:hover {
   background-color: #b31200;
 }
 
-/* Mode sombre VS Code */
+/* Personnalisation du calendrier react-big-calendar */
+.rbc-calendar {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 20px 0;
+  padding: 10px;
+}
+
+body.dark .rbc-calendar {
+  background-color: #1e1e1e;
+  border-color: #2d2d2d;
+  color: white
+}
+
+.rbc-events-container {
+  border-radius: 8px;
+  color: white;
+}
+
+.body.dark .rbc-events-container {
+  border-radius: 8px;
+  background-color: #d5909074;
+}
+
+.rbc-row {
+  color: white;
+}
+
+body.dark .rbc-row {
+  background-color: #d5909074;
+}
+
+.rbc-time-slot {
+  background-color: #f2bb4e1f;
+}
+
+body.dark .rbc-time-slot {
+  background-color: #d5909074;
+}
+
+.rbc-btn-group {
+  margin-bottom: 15px;
+  background-color: #6bb6e874;
+
+}
+
+/* Ajustements responsives */
+@media (max-width: 768px) {
+  .sessions-page {
+    margin: 10px;
+    padding: 10px;
+  }
+  .sessions-header h1 {
+    font-size: 1.8rem;
+  }
+  .session-item h3 {
+    font-size: 1.1rem;
+  }
+  .session-item p {
+    font-size: 0.95rem;
+  }
+}
+
+/* Mode sombre */
+
+
+
 body.dark .sessions-page {
   background-color: #1e1e1e;
   color: #d4d4d4;
@@ -66,6 +148,7 @@ body.dark .session-item {
   background-color: #252526;
   border-color: #2d2d2d;
 }
+
 
 body.dark .session-item h3,
 body.dark .session-item p {
@@ -80,12 +163,13 @@ body.dark .delete-button:hover {
   background-color: #b31200;
 }
 
-body.dark .legend li:nth-child(1) { background-color: #FFD700; } /* Travail 💼 */
-body.dark .legend li:nth-child(2) { background-color: #FFB6C1; } /* Personnel 🐈 */
-body.dark .legend li:nth-child(3) { background-color: #ADD8E6; } /* Santé - Fusion-Tool 🧬 */
-body.dark .legend li:nth-child(4) { background-color: #90EE90; } /* Finances 💵 */
-body.dark .legend li:nth-child(5) { background-color: #DDA0DD; } /* Jeux vidéos 🎮 */
-body.dark .legend li:nth-child(6) { background-color: #FFE4B5; } /* Maison 🏠 */
-body.dark .legend li:nth-child(7) { background-color: #FFB347; } /* Achats 🛒 */
-body.dark .legend li:nth-child(8) { background-color: #E0FFFF; } /* TaskFlow ⛩️ */
-body.dark .legend li:nth-child(9) { background-color: #D3D3D3; } /* Autre 📝 */
+/* Styles de légende pour le calendrier (si utilisés) */
+body.dark .legend li:nth-child(1) { background-color: #ffd90030; }
+body.dark .legend li:nth-child(2) { background-color: #ffb6c130; }
+body.dark .legend li:nth-child(3) { background-color: #add8e639; }
+body.dark .legend li:nth-child(4) { background-color: #90ee902c; }
+body.dark .legend li:nth-child(5) { background-color: #dda0dd39; }
+body.dark .legend li:nth-child(6) { background-color: #FFE4B5; }
+body.dark .legend li:nth-child(7) { background-color: #FFB347; }
+body.dark .legend li:nth-child(8) { background-color: rgba(15, 72, 72, 0.163); }
+body.dark .legend li:nth-child(9) { background-color: #D3D3D3; }

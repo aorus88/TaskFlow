@@ -231,12 +231,11 @@ const App = () => {
     }
   };
 
-  const deleteConsumptionEntry = async (entry) => {
+  // Modification de deleteConsumptionEntry pour utiliser l'identifiant dans l'URL
+  const deleteConsumptionEntry = async (id) => {
     try {
-      const response = await fetch(`http://192.168.50.241:4000/consumption-entries/`, {
+      const response = await fetch(`http://192.168.50.241:4000/consumption-entries/${id}`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(entry),
       });
       if (!response.ok) {
         throw new Error('Erreur lors de la suppression de l\'entrée de consommation.');
