@@ -23,31 +23,33 @@ const FloatingMenu = () => {
           <ul className="menu-list">
             <li>
               <Link to="/" className="menu-link" onClick={handleLinkClick}>
-                🏠 Accueil
-              </Link>
-            </li>
-
-            <li>
-              <Link to="/archives" className="menu-link" onClick={handleLinkClick}>
-                ✅ Tâches terminées
-              </Link>
-            </li>
-
-            <li>
-              <Link to="/sessions" className="menu-link" onClick={handleLinkClick}>
-                ⏱️ Sessions terminées
+                 TaskFlow 🏠/home.js
               </Link>
             </li>
 
             <li>
               <Link to="/fusion-tool" className="menu-link" onClick={handleLinkClick}>
-                ⛩️ Fusion-Tool
+                4:20 🍂/Fusion-Tool.js
+              </Link>
+            </li>
+
+        
+
+            <li>
+              <Link to="/sessions" className="menu-link" onClick={handleLinkClick}>
+                Suivi du temps⏱️/Sessions.js
+              </Link>
+            </li>
+
+            <li>
+              <Link to="/archives" className="menu-link" onClick={handleLinkClick}>
+                Historique 🔄️/Archives.js
               </Link>
             </li>
 
             <li>
             <Link to="/VersionHistory" className="menu-link" onClick={handleLinkClick}>
-                ⛳ In Progress
+                In Progress ⛳/VersionHistory.js
               </Link>
             </li>
 

@@ -222,7 +222,8 @@ const calculateSubtaskTime = (task, subtaskId) => {
                           checked={subtask.archived === "closed"}
                           onChange={() => handleToggleSubtaskStatus(task.id, subtask.id, subtask.archived === "open" ? "closed" : "open")}
                         />
-                        {subtask.name}
+                        
+                        {subtask.name} /{" "}
                         <span className="subtask-time">
                           {formatTime(calculateSubtaskTime(task, subtask._id))}
                         </span>

@@ -125,7 +125,7 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
   return (
     <div className="statistics-container">
       <div className="statistics-header">
-        <h2>📈 Statistiques --- ⛩️ TaskFlow 1.3.4 💤 --- 🕒 {formatClock(currentTime)}   
+        <h2>⛩️ TaskFlow 1.3.6 💤 -- 🕒 {formatClock(currentTime)}   
        
         <div className="dark-mode-toggle">
           <h3>Mode sombre</h3>

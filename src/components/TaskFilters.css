@@ -1,0 +1,168 @@
+.task-filters {
+  background-color: whitesmoke;
+  border: 1px solid whitesmoke;
+  border-radius: 12px;
+  margin-right: 20px;
+  margin-left: 40px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+body.dark .task-filters {
+  background-color: #1a202c;
+  border-color: #2d3748;
+  color: #e2e8f0;
+}
+
+.task-filters h3 {
+  font-size: 1rem;
+  color: #000000;
+  margin: 0px 0 20px 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid whitesmoke;
+}
+
+body.dark .task-filters h3 {
+  color: #e2e8f0;
+  border-bottom-color: #2d3748;
+}
+
+.filter-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  align-items: start;
+  margin-left: 20px;
+  margin-right: 8px;
+}
+
+body.dark .filter-container {
+  background-color: #1a202c;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+body.dark .filter-group {
+  background-color: #1a202c;
+}
+
+.filter-group label {
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+body.dark .filter-group label {
+  color: #e2e8f0;
+}
+
+.filter-group input,
+.filter-group select {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background-color: whitesmoke;
+  color: #2d3748;
+}
+
+body.dark .filter-group input,
+body.dark .filter-group select {
+  background-color: #2d3748;
+  border-color: #4a5568;
+  color: #e2e8f0;
+}
+
+.filter-group input:focus,
+.filter-group select:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+}
+
+body.dark .filter-group input:focus,
+body.dark .filter-group select:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.2);
+}
+
+.filter-group select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%232d3748' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 12px) center;
+  padding-right: 25px;
+}
+
+body.dark .filter-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23e2e8f0' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+}
+
+/* Styles pour les stat-card */
+.stat-card {
+  border: 2px solid;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.2));
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card-label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.stat-card-value {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Styles pour le mode sombre */
+body.dark .stat-card {
+  border-color: #718096;
+  background-color: #4a5568;
+  color: #f9f9f9;
+}
+
+body.dark .stat-card-label {
+  color: #cccccc;
+}
+
+body.dark .stat-card-value {
+  color: #ccaa00;
+}
+
+body.dark .stat-card::before {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3));
+}
+
+body.dark .stat-card:hover::before {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.4));
+}
+
+/* Assurer que les éléments cliquables ne sont pas affectés */
+.stat-card .dark-mode-button {
+  position: relative;
+  z-index: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: inherit;
+}
+
+.stat-card .dark-mode-button:hover {
+  color: #ffcc00;
+}

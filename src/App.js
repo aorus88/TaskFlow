@@ -319,6 +319,8 @@ const App = () => {
                   onDeleteSubtask={deleteSubtask}
                   onFetchArchivedTasks={() => fetchTasks(true)}
                   taskCategories={taskCategories} // Passer les catégories en prop
+                  isDarkMode={isDarkMode}
+                  toggleDarkMode={toggleDarkMode}
                 />
               }
             />
@@ -329,6 +331,8 @@ const App = () => {
                   entries={state.consumptionEntries}
                   onAddEntry={addConsumptionEntry}
                   onDeleteEntry={deleteConsumptionEntry}
+                  isDarkMode={isDarkMode}
+                  toggleDarkMode={toggleDarkMode}
                 />
               }
             />
@@ -338,6 +342,8 @@ const App = () => {
                 <Sessions
                   tasks={state.tasks}
                   fetchTasks={fetchTasks}
+                  isDarkMode={isDarkMode}
+                  toggleDarkMode={toggleDarkMode}
                 />
               }
 
@@ -346,6 +352,8 @@ const App = () => {
               path="/VersionHistory"
               element={
                 <VersionHistory
+                isDarkMode={isDarkMode}
+                toggleDarkMode={toggleDarkMode}
                 />} />
 
 

@@ -43,7 +43,7 @@ const taskCategories = [
   "Autre 📝",
 ];
 
-const Sessions = () => {
+const Sessions = ({ isDarkMode, toggleDarkMode }) => { 
   const [sessions, setSessions] = useState([]);
   const [tasks, setTasks] = useState([]); // Ajouter un état pour les tâches
   const [filter, setFilter] = useState({
@@ -52,6 +52,26 @@ const Sessions = () => {
     taskId: '',
     categories: '',
   });
+
+   // Ajout de l'état pour l'heure actuelle
+    const [currentTime, setCurrentTime] = useState(new Date());
+  
+    // Mise à jour de l'heure chaque seconde
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setCurrentTime(new Date());
+      }, 1000);
+      return () => clearInterval(interval);
+    }, []);
+    
+    // Fonction pour formater l'heure
+    const formatClock = (time) => {
+      return time.toLocaleTimeString('fr-FR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+    };
 
   useEffect(() => {
     const fetchTasksAndSessions = async () => {
@@ -121,39 +141,65 @@ const Sessions = () => {
 
     // Fonction pour obtenir la couleur de la session en fonction de la catégorie
     const getSessionStyle = (categories) => {
-      if (categories.includes("Travail 💼")) return { backgroundColor: 'rgba(255, 223, 186, 0.3)' }; // Beige clair transparent
-      if (categories.includes("Personnel 🐈")) return { backgroundColor: 'rgba(255, 192, 203, 0.3)', color: "#000000" }; // Rose clair transparent
-      if (categories.includes("NewHorizon ⛳")) return { backgroundColor: 'rgba(255, 255, 0, 0.3)' }; // Jaune clair transparent
-      if (categories.includes("Finances 💵")) return { backgroundColor: 'rgba(144, 238, 144, 0.3)' }; // Vert clair transparent
-      if (categories.includes("Jeux vidéos 🎮")) return { backgroundColor: 'rgba(221, 160, 221, 0.3)', color: "#000000" }; // Violet clair transparent
-      if (categories.includes("Maison 🏠")) return { backgroundColor: 'rgba(255, 228, 181, 0.3)', color: "#000000" }; // Beige transparent
-      if (categories.includes("Achats 🛒")) return { backgroundColor: 'rgba(255, 165, 0, 0.3)' }; // Orange clair transparent
-      if (categories.includes("TaskFlow ⛩️")) return { backgroundColor: 'rgba(72, 209, 204, 0.3)', color: '#000000' }; // Cyan clair transparent avec texte noir
-      if (categories.includes("Cuisine 🍳")) return { backgroundColor: 'rgba(255, 182, 193, 0.3)' }; // Rose clair transparent
-      if (categories.includes("Sport 🏋️")) return { backgroundColor: 'rgba(135, 206, 235, 0.3)' }; // Bleu ciel clair transparent
-      if (categories.includes("Santé 🏥")) return { backgroundColor: 'rgba(255, 160, 122, 0.3)' }; // Saumon clair transparent
-      if (categories.includes("Loisirs 🎨")) return { backgroundColor: 'rgba(255, 105, 180, 0.3)' }; // Rose vif clair transparent
-      if (categories.includes("Études 📚")) return { backgroundColor: 'rgba(173, 255, 47, 0.3)' }; // Vert clair transparent
-      if (categories.includes("Famille 👨‍👩‍👧‍👦")) return { backgroundColor: 'rgba(255, 228, 225, 0.3)' }; // Rose clair transparent
-      if (categories.includes("Amis 👫")) return { backgroundColor: 'rgba(255, 240, 245, 0.3)' }; // Rose clair transparent
-      if (categories.includes("Voyages 🌍")) return { backgroundColor: 'rgba(240, 255, 240, 0.3)' }; // Vert clair transparent
-      if (categories.includes("Bricolage 🛠️")) return { backgroundColor: 'rgba(245, 245, 220, 0.3)' }; // Beige clair transparent
-      if (categories.includes("Lego 🧱")) return { backgroundColor: 'rgba(255, 250, 205, 0.3)' }; // Jaune clair transparent
-      if (categories.includes("Jardinage 🌷")) return { backgroundColor: 'rgba(144, 238, 144, 0.3)' }; // Vert clair transparent
-      if (categories.includes("Meditation 🧘")) return { backgroundColor: 'rgba(224, 255, 255, 0.3)' }; // Cyan clair transparent
-      if (categories.includes("Musique 🎵")) return { backgroundColor: 'rgba(255, 228, 196, 0.3)' }; // Beige clair transparent
-      if (categories.includes("Podcast 🎙️")) return { backgroundColor: 'rgba(255, 218, 185, 0.3)' }; // Beige clair transparent
-      if (categories.includes("Lecture 📖")) return { backgroundColor: 'rgba(255, 239, 213, 0.3)' }; // Beige clair transparent
-      if (categories.includes("Film 🎬")) return { backgroundColor: 'rgba(255, 222, 173, 0.3)' }; // Beige clair transparent
-      if (categories.includes("Série 📺")) return { backgroundColor: 'rgba(255, 248, 220, 0.3)' }; // Beige clair transparent
-      if (categories.includes("YouTube 📹")) return { backgroundColor: 'rgba(255, 250, 240, 0.3)' }; // Beige clair transparent
-      if (categories.includes("Informatique 🖥️")) return { backgroundColor: 'rgba(245, 245, 245, 0.3)' }; // Gris clair transparent
-      if (categories.includes("Autre 📝")) return { backgroundColor: 'rgba(211, 211, 211, 0.3)' }; // Gris clair transparent
-      return { backgroundColor: '#FFFFFF' }; // Blanc
+      const styles = {
+        "Travail 💼": { backgroundColor: 'rgba(255, 223, 186, 0.8)', color: '#000000' },
+        "Personnel 🐈": { backgroundColor: 'rgba(255, 192, 203, 0.8)', color: '#000000' },
+        "NewHorizon ⛳": { backgroundColor: 'rgba(255, 255, 0, 0.8)', color: '#000000' },
+        "Finances 💵": { backgroundColor: 'rgba(144, 238, 144, 0.8)', color: '#000000' },
+        "Jeux vidéos 🎮": { backgroundColor: 'rgba(221, 160, 221, 0.8)', color: '#000000' },
+        "Maison 🏠": { backgroundColor: 'rgba(255, 228, 181, 0.8)', color: '#000000' },
+        "Achats 🛒": { backgroundColor: 'rgba(255, 165, 0, 0.8)', color: '#000000' },
+        "TaskFlow ⛩️": { backgroundColor: 'rgba(72, 209, 204, 0.8)', color: '#000000' },
+        "Cuisine 🍳": { backgroundColor: 'rgba(255, 182, 193, 0.8)', color: '#000000' },
+        "Sport 🏋️": { backgroundColor: 'rgba(135, 206, 235, 0.8)', color: '#000000' },
+        "Santé 🏥": { backgroundColor: 'rgba(255, 160, 122, 0.8)', color: '#000000' },
+        "Loisirs 🎨": { backgroundColor: 'rgba(255, 105, 180, 0.8)', color: '#000000' },
+        "Études 📚": { backgroundColor: 'rgba(173, 255, 47, 0.8)', color: '#000000' },
+        "Famille 👨‍👩‍👧‍👦": { backgroundColor: 'rgba(255, 228, 225, 0.8)', color: '#000000' },
+        "Amis 👫": { backgroundColor: 'rgba(255, 240, 245, 0.8)', color: '#000000' },
+        "Voyages 🌍": { backgroundColor: 'rgba(240, 255, 240, 0.8)', color: '#000000' },
+        "Bricolage 🛠️": { backgroundColor: 'rgba(245, 245, 220, 0.8)', color: '#000000' },
+        "Lego 🧱": { backgroundColor: 'rgba(255, 250, 205, 0.8)', color: '#000000' },
+        "Jardinage 🌷": { backgroundColor: 'rgba(144, 238, 144, 0.8)', color: '#000000' },
+        "Meditation 🧘": { backgroundColor: 'rgba(224, 255, 255, 0.8)', color: '#000000' },
+        "Musique 🎵": { backgroundColor: 'rgba(255, 228, 196, 0.8)', color: '#000000' },
+        "Podcast 🎙️": { backgroundColor: 'rgba(255, 218, 185, 0.8)', color: '#000000' },
+        "Lecture 📖": { backgroundColor: 'rgba(255, 239, 213, 0.8)', color: '#000000' },
+        "Film 🎬": { backgroundColor: 'rgba(255, 222, 173, 0.8)', color: '#000000' },
+        "Série 📺": { backgroundColor: 'rgba(255, 248, 220, 0.8)', color: '#000000' },
+        "YouTube 📹": { backgroundColor: 'rgba(255, 250, 240, 0.8)', color: '#000000' },
+        "Informatique 🖥️": { backgroundColor: 'rgba(245, 245, 245, 0.8)', color: '#000000' },
+        "Autre 📝": { backgroundColor: 'rgba(211, 211, 211, 0.8)', color: '#000000' },
+      };
+
+      for (const category of categories) {
+        if (styles[category]) {
+          return styles[category];
+        }
+      }
+
+      return { backgroundColor: '#FFFFFF', color: '#000000' };
     };
 
   return (
+    
     <div className="sessions-page">
+
+<div className="statistics-header">
+        <h2>⛩️ TaskFlow 1.3.6 💤 -- 🕒 {formatClock(currentTime)}   
+       
+        <div className="dark-mode-toggle">
+        <h3>Mode sombre</h3>
+          <button onClick={toggleDarkMode} className="dark-mode-button">
+            {isDarkMode ? "🌚" : "🌞"}
+          </button>
+          <div/>
+        
+        </div>    
+           </h2>
+      </div>
+
+
       <GlobalPomodoroTimer 
         tasks={tasks}
         selectedTaskId={filter.taskId}
@@ -161,6 +207,8 @@ const Sessions = () => {
 
        />
 
+
+      
 
 
            <div className="sessions-header">
