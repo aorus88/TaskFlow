@@ -208,7 +208,7 @@ const Archives = ({
 
       <div className="statistics-container">
       <div className="statistics-header">
-        <h2>⛩️ TaskFlow 1.3.6 ⛩️ _N_I_G_H_T_
+        <h2>⛩️ TaskFlow 1.3.7 ⛩️ _N_I_G_H_T_
         <button onClick={toggleDarkMode} className="dark-mode-button">
           {isDarkMode ? "🌚" : "🌞"}
         </button>_D_A_Y__

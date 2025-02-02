@@ -125,7 +125,7 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
   return (
     <div className="statistics-container">
       <div className="statistics-header">
-        <h2>⛩️ TaskFlow 1.3.6 ⛩️ _N_I_G_H_T_
+        <h2>⛩️ TaskFlow 1.3.7 ⛩️ _N_I_G_H_T_
         <button onClick={toggleDarkMode} className="dark-mode-button">
           {isDarkMode ? "🌚" : "🌞"}
         </button>_D_A_Y__
@@ -136,14 +136,14 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
         <div className="stat-card">
           <h3>Tâches Ouvertes</h3>
           <p>📋 {openTasks.length}</p>
-          <h3>Hautes / Moyennes (Ouvertes)</h3>
+          <h3>Tâches prioritaires</h3>
           <p>🔴🟠 {highMediumPriorityOpen.length}</p>
         </div>
 
         <div className="stat-card">
-          <h3>Sessions (Hier) </h3>
+          <h3>Durée (Hier) </h3>
           <p>⏱️ {formatTime(totalSessionTimeYesterday)}</p>
-          <h3>Sessions (Aujourd'hui)</h3>
+          <h3>Durée (Aujourd'hui)</h3>
           <p>⏱️ {formatTime(totalSessionTimeToday)}</p>
         </div>
 
