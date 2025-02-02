@@ -320,6 +320,7 @@ const App = () => {
                   taskCategories={taskCategories} // Passer les catégories en prop
                   isDarkMode={isDarkMode}
                   toggleDarkMode={toggleDarkMode}
+                  setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
                 />
               }
             />

@@ -47,6 +47,12 @@ const VersionHistory = ({ isDarkMode, toggleDarkMode }) => {
 
 
         {/* Ajoutez d'autres versions ici */}
+        <li>Version 1.3.7 - publication prévue le 02.02.2025 à 20h00
+          <ul> Update Fusion-Tool - stat-cards / suppression entrées   </ul>          
+          <ul> Update Suivi du temps - calendrier    </ul>
+
+        </li>
+        
         <li>Version 1.3.6 
           <ul> Intégration DarkMode + Horloge sur toutes les pages   </ul>          
           <ul> Améliorations de l'interface utilisateur   </ul>          

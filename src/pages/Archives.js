@@ -123,12 +123,12 @@ const Archives = ({
   // Contexte sélection de tâche
   const { selectedTaskId, setSelectedTaskId } = useContext(SelectedTaskContext);
 
-  // Rappel pour récupérer les tâches archivées
+  // Appeler onFetchArchivedTasks une seule fois lors du montage
   useEffect(() => {
     if (onFetchArchivedTasks) {
       onFetchArchivedTasks(true);
     }
-  }, [onFetchArchivedTasks]);
+  }, []);
 
   // Mise à jour des tâches locales lorsque archivedTasks change
   useEffect(() => {
@@ -204,22 +204,21 @@ const Archives = ({
 
   return (
     <DndProvider backend={HTML5Backend}>
-         <div className="Archives"></div>
-      
+      <div className="Archives"></div>
 
-        <div className="statistics-header">
-          <h2>
-            ⛩️ TaskFlow 1.3.6 💤 -- 🕒 {formatClock(currentTime)}
-            <div className="dark-mode-toggle">
-              <h3>Mode sombre</h3>
-              <button onClick={toggleDarkMode} className="dark-mode-button">
-                {isDarkMode ? "🌚" : "🌞"}
-              </button>
-              <div />
-            </div>
-          </h2>
+      <div className="statistics-header">
+        <h2>
+          ⛩️ TaskFlow 1.3.6 💤 -- 🕒 {formatClock(currentTime)}
+          <div className="dark-mode-toggle">
+            <h3>Mode sombre</h3>
+            <button onClick={toggleDarkMode} className="dark-mode-button">
+              {isDarkMode ? "🌚" : "🌞"}
+            </button>
+            <div />
+          </div>
+        </h2>
 
-  {/* Minuteur Global */}
+        {/* Minuteur Global */}
         <GlobalPomodoroTimer
           tasks={tasks}
           fetchTasks={onFetchArchivedTasks}
@@ -227,8 +226,6 @@ const Archives = ({
           selectedTaskId={selectedTaskId}
           showFeedback={showFeedback}
         />
-
-  
 
         {/* Filtres */}
         <TaskFilters_Sessions filter={filter} setFilter={setFilter} tasks={tasks} />
@@ -265,46 +262,10 @@ const Archives = ({
                 />
               ))
             ) : (
-              <div className="archived-ttasks-empty">
+              <div className="archived-tasks-empty">
                 Aucune tâche archivée.
               </div>
             )}
-          </div>
-
-          {/* Sous-tâches archivées dont la tâche parente est encore "open" */}
-          <div className="archived-subtasks-section">
-            <h2 className="archived-subtasks-title">
-              Sous-tâches Archivées (Tâches Parentes Ouvertes)
-            </h2>
-            <ul className="archived-subtasks-list">
-              {archivedSubtasksWithOpenParent.length > 0 ? (
-                archivedSubtasksWithOpenParent.map((subtask) => (
-                  <li key={subtask._id} className="archived-subtask-item">
-                    <div className="subtask-header">
-                      <strong>Sous-tâche :</strong> {subtask.name}
-                      <div className="subtask-details">
-                        <span className="subtask-parent-task">
-                          Tâche parente : {subtask.parentTaskName}
-                        </span>
-                        <span className="subtask-archived-date">
-                          Archivé le : {formatDate(subtask.archivedAt)}
-                        </span>
-                      </div>
-                      <button
-                        className="delete-button"
-                        onClick={() =>
-                          onDeleteSubtask(subtask.parentTaskId, subtask._id)
-                        }
-                      >
-                        Supprimer
-                      </button>
-                    </div>
-                  </li>
-                ))
-              ) : (
-                <p>Aucune sous-tâche archivée avec tâche parente ouverte.</p>
-              )}
-            </ul>
           </div>
         </div>
       </div>

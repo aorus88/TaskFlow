@@ -11,10 +11,11 @@ import {
   Tooltip,
   Legend,
 } from "chart.js"; // Importer les composants nécessaires de Chart.js
+import ChartDataLabels from "chartjs-plugin-datalabels"; // Importer le plugin pour afficher les valeurs sur le graphique
 import { SelectedTaskContext } from "../context/SelectedTaskContext"; // Importer le contexte
 
-// Enregistrer les composants nécessaires de Chart.js
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+// Enregistrer les composants nécessaires de Chart.js, y compris le plugin datalabels
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
 const StatCard = ({ label, value, emoji, color }) => {
   return (
@@ -35,7 +36,7 @@ const BarChartCard = ({ label, data, color }) => {
     labels: data.map((entry) => entry.date),
     datasets: [
       {
-        label: "Consommations",
+        label: "🍂",
         data: data.map((entry) => entry.count),
         backgroundColor: data.map((entry) => {
           if (entry.count < 3) {
@@ -67,12 +68,6 @@ const BarChartCard = ({ label, data, color }) => {
         position: "top",
         labels: { font: { size: 15 }, color: "#333" },
       },
-      title: {
-        display: true,
-        text: "Suivi des consommations sur 10 jours",
-        font: { size: 18 },
-        color: "#333",
-      },
       tooltip: {
         callbacks: {
           label: function (context) {
@@ -82,6 +77,13 @@ const BarChartCard = ({ label, data, color }) => {
             return label;
           },
         },
+      },
+      datalabels: {
+        display: true,
+        color: "#000",
+        anchor: "end",
+        align: "end",
+        formatter: (value) => value,
       },
     },
     scales: {
@@ -139,13 +141,13 @@ const FusionTool = ({
   // État pour l'heure actuelle
   const [currentTime, setCurrentTime] = useState(new Date());
 
-    // Un objet de filtre général
-    const [filter, setFilter] = useState({
-      date: "",        // pour filtrer par date (déjà présent)
-      taskId: "",      // possibilité de filtrer par tâche
-      categories: [],  // possibilité de filtrer par catégories
-      consumption: "", // possibilité de filtrer par consommation ("yes" ou "no")
-    });
+  // Un objet de filtre général
+  const [filter, setFilter] = useState({
+    date: "",
+    taskId: "",
+    categories: [],
+    consumption: "",
+  });
 
   // Mise à jour de l'heure chaque seconde
   useEffect(() => {
@@ -203,10 +205,21 @@ const FusionTool = ({
       déprimé: "Déprimé 😵",
       détendu: "Détendu 😌",
       nerveux: "Nerveux 😵‍💫",
-      apathique: "Apathique 😵",
-      indécis: "Indécis 🧐",
+      frustré: "Frustré 😤",
+      déterminé: "Déterminé 💪",
+      motivé: "Motivé 🚀",
+      concentré: "Concentré 🧐",
+      confiant: "Confiant 😎",
+      déçu: "Déçu 😞",
+      dégoûté: "Dégoûté 🤢",
+      honteux: "Honteux 😳",
+      triste: "Triste 😢",
+      démotivé: "Démotivé 😔",
+      fiévreux: "Fiévreux 🤒",
+      malade: "Malade 🤕",
+      indécis: "Indécis 🤔",
+      indiférent: "Indiférent 😐",
     };
-    const moodWithEmoji = moodOptions[formData.mood] || formData.mood;
     onAddEntry({
       ...formData,
       id: Date.now(),
@@ -231,22 +244,35 @@ const FusionTool = ({
 
   // Calcul de diverses statistiques
   const totalEntries = entries.length;
-  const todayEntries = entries.filter((entry) => entry.date.split("T")[0] === today).length;
-  const yesterdayEntries = entries.filter((entry) => entry.date.split("T")[0] === yesterday).length;
-  const dayBeforeYesterdayEntries = entries.filter((entry) => entry.date.split("T")[0] === dayBeforeYesterday).length;
-  const sevenDaysAgoEntries = entries.filter((entry) => entry.date.split("T")[0] === sevenDaysAgo).length;
-  const nonConsumptionEntries = entries.filter((entry) => entry.consumption === "no").length;
+  const todayEntries = entries.filter(
+    (entry) => entry.date.split("T")[0] === today && entry.consumption === "yes"
+  ).length;
+  const yesterdayEntries = entries.filter(
+    (entry) => entry.date.split("T")[0] === yesterday && entry.consumption === "yes"
+  ).length;
+  const dayBeforeYesterdayEntries = entries.filter(
+    (entry) => entry.date.split("T")[0] === dayBeforeYesterday && entry.consumption === "yes"
+  ).length;
+  const sevenDaysAgoEntries = entries.filter(
+    (entry) => entry.date.split("T")[0] === sevenDaysAgo && entry.consumption === "yes"
+  ).length;
+  const nonConsumptionEntries = entries.filter(
+    (entry) => entry.consumption === "no"
+  ).length;
   const nonConsumptionTodayEntries = entries.filter(
     (entry) => entry.date.split("T")[0] === today && entry.consumption === "no"
   ).length;
-  const thisMonthEntries = entries.filter((entry) => entry.date.split("T")[0] >= startOfMonth).length;
+  const thisMonthEntries = entries.filter(
+    (entry) => entry.date.split("T")[0] >= startOfMonth && entry.consumption === "yes"
+  ).length;
   const lastMonthEntries = entries.filter(
     (entry) =>
       entry.date.split("T")[0] >= startOfLastMonth &&
-      entry.date.split("T")[0] <= endOfLastMonth
+      entry.date.split("T")[0] <= endOfLastMonth &&
+      entry.consumption === "yes"
   ).length;
 
-  // Calcul de la dernière entrée avec consumption "yes"
+  // Calcul de la dernière entrée avec consommation "yes"
   const lastYesEntry = entries
     .filter((entry) => entry.consumption === "yes")
     .reduce((latest, entry) => {
@@ -261,7 +287,7 @@ const FusionTool = ({
     timeSinceLastYesEntry = { hours, minutes };
   }
 
-  // Calcul de la dernière entrée avec consumption "no"
+  // Calcul de la dernière entrée avec consommation "no"
   const lastNoEntry = entries
     .filter((entry) => entry.consumption === "no")
     .reduce((latest, entry) => {
@@ -301,44 +327,35 @@ const FusionTool = ({
 
   const getEmojiAndColor = (count) => {
     if (count <= 3) {
-      return { emoji: "🟢 Continue comme ça 😉" };
+      return { emoji: "🟢 Bravo ! 😉", };
     } else if (count > 3 && count <= 6) {
-      return { emoji: "🟠 On se calme 😑" };
+      return { emoji: "🟠 Peut faire mieux 😑", };
     } else {
-      return { emoji: "🔴 Aïe aïe... 😓😭" };
+      return { emoji: "🔴 Aïe aïe... 😓😭", };
     }
   };
 
   const todayStats = getEmojiAndColor(globalStats.todayEntries);
   const yesterdayStats = getEmojiAndColor(globalStats.yesterdayEntries);
   const dayBeforeYesterdayStats = getEmojiAndColor(globalStats.dayBeforeYesterdayEntries);
-  const sevenDaysAgoStats = getEmojiAndColor(globalStats.sevenDaysAgoEntries);
 
-  const getLast10DaysStats = () => {
-    const last10Days = [];
-    for (let i = 9; i >= 0; i--) {
+  const getLast15DaysStats = () => {
+    const last15Days = [];
+    for (let i = 14; i >= 0; i--) {
       const date = new Date(new Date().setDate(new Date().getDate() - i))
         .toISOString()
         .split("T")[0];
-      const count = entries.filter((entry) => entry.date.split("T")[0] === date).length;
-      last10Days.push({ date, count });
+      // Compter uniquement les entrées dont la date correspond et la consommation est "yes"
+      const count = entries.filter(
+        (entry) =>
+          entry.date.split("T")[0] === date && entry.consumption === "yes"
+      ).length;
+      last15Days.push({ date, count });
     }
-    return last10Days;
+    return last15Days;
   };
 
-  const last10DaysStats = getLast10DaysStats();
-
-  const getRewardEmoji = (count) => {
-    if (count > 10) {
-      return "🏆 Objectif rempli !";
-    } else if (count > 5) {
-      return "🎉 Étape supérieure !";
-    } else if (count > 2) {
-      return "👏 Bien joué !";
-    } else {
-      return "";
-    }
-  };
+  const last15DaysStats = getLast15DaysStats();
 
   const fetchTasks = async () => {
     try {
@@ -368,8 +385,20 @@ const FusionTool = ({
       déprimé: "Déprimé 😵",
       détendu: "Détendu 😌",
       nerveux: "Nerveux 😵‍💫",
-      apathique: "Apathique 😵",
-      indécis: "Indécis 🧐",
+      frustré: "Frustré 😤",
+      déterminé: "Déterminé 💪",
+      motivé: "Motivé 🚀",
+      concentré: "Concentré 🧐",
+      confiant: "Confiant 😎",
+      déçu: "Déçu 😞",
+      dégoûté: "Dégoûté 🤢",
+      honteux: "Honteux 😳",
+      triste: "Triste 😢",
+      démotivé: "Démotivé 😔",
+      fiévreux: "Fiévreux 🤒",
+      malade: "Malade 🤕",
+      indécis: "Indécis 🤔",
+      indiférent: "Indiférent 😐",
     };
     return moodMap[mood] || mood;
   };
@@ -399,7 +428,6 @@ const FusionTool = ({
         setSelectedTaskId={setSelectedTaskId}
         selectedTaskId={selectedTaskId}
       />
-      {/* Conserver minuterie pomodoro sur fusion-tool */}
 
       <h1>Fusion-Tool ⛩️</h1>
       <form className="fusion-form">
@@ -439,8 +467,20 @@ const FusionTool = ({
             <option value="déprimé">Déprimé 😵</option>
             <option value="détendu">Détendu 😌</option>
             <option value="nerveux">Nerveux 😵‍💫</option>
-            <option value="apathique">Apathique 😵</option>
-            <option value="Indécis">Indécis 🧐</option>
+            <option value="frustré">Frustré 😤</option>
+            <option value="déterminé">Déterminé 💪</option>
+            <option value="motivé">Motivé 🚀</option>
+            <option value="concentré">Concentré 🧐</option>
+            <option value="confiant">Confiant 😎</option>
+            <option value="déçu">Déçu 😞</option>
+            <option value="dégoûté">Dégoûté 🤢</option>
+            <option value="honteux">Honteux 😳</option>
+            <option value="triste">Triste 😢</option>
+            <option value="démotivé">Démotivé 😔</option>
+            <option value="fiévreux">Fiévreux 🤒</option>
+            <option value="malade">Malade 🤕</option>
+            <option value="indécis">Indécis 🤔</option>
+            <option value= "indiférent">Indiférent 😐</option>
           </select>
         </label>
         <label>
@@ -458,61 +498,68 @@ const FusionTool = ({
         </button>
       </form>
 
-      {/* Nouvelle section stats globales */}
+      {/* Statistiques globales  */}
       <div className="stats-global">
         <h3>Statistiques Globales</h3>
         <div className="stats-container">
-          <StatCard label="Total ce mois-ci" value={globalStats.thisMonthEntries} emoji="📊" />
-          <StatCard label="Total le mois dernier" value={globalStats.lastMonthEntries} emoji="📊" />
           <StatCard
-            label="Total aujourd'hui"
-            value={globalStats.todayEntries}
-            emoji={todayStats.emoji}
-            color={todayStats.color}
-          />
-          <StatCard
-            label="Total hier"
+            label="Hier"
             value={globalStats.yesterdayEntries}
             emoji={yesterdayStats.emoji}
             color={yesterdayStats.color}
           />
           <StatCard
-            label="Total avant-hier"
+            label="Avant-hier"
             value={globalStats.dayBeforeYesterdayEntries}
             emoji={dayBeforeYesterdayStats.emoji}
             color={dayBeforeYesterdayStats.color}
           />
+          {/* Durée depuis la dernière entrée avec consommation "yes" */}
           <StatCard
-            label="Total il y a 7 jours"
-            value={globalStats.sevenDaysAgoEntries}
-            emoji={sevenDaysAgoStats.emoji}
-            color={sevenDaysAgoStats.color}
-          />
-          {/* Nouvelle stat card : durée depuis la dernière entrée avec consommation "yes" */}
-          <StatCard
-            label="Temps depuis la dernière entrée (consommation oui)"
+            label="Dernière entrée 🍂"
             value={
               timeSinceLastYesEntry !== null
                 ? `${timeSinceLastYesEntry.hours}h ${timeSinceLastYesEntry.minutes}m`
                 : "N/A"
             }
-            emoji="⏳🍂"
+            emoji="⏳"
           />
-          {/* Nouvelle stat card : durée depuis la dernière entrée avec consommation "no" */}
+          {/* Durée depuis la dernière entrée avec consommation "no" */}
           <StatCard
-            label="Temps depuis la dernière entrée (sans consommation)"
+            label="Dernière victoire 💯"
             value={
               timeSinceLastNoEntry !== null
                 ? `${timeSinceLastNoEntry.hours}h ${timeSinceLastNoEntry.minutes}m`
                 : "N/A"
             }
-            emoji="⏳💯"
+            emoji="⏳"
+          />
+          <StatCard 
+            label="Ce mois-ci" 
+            value={globalStats.thisMonthEntries} 
+            emoji="📊"
+          />
+          <StatCard 
+            label="Le mois dernier" 
+            value={globalStats.lastMonthEntries} 
+            emoji="📊" 
+          />
+          <StatCard
+            label="Les 7 derniers jours"
+            value={entries.filter(
+              (entry) => new Date(entry.date) >= new Date(sevenDaysAgo) && entry.consumption === "yes"
+            ).length}
+            emoji="📅"
+          />
+          <StatCard
+            label="Aujourd'hui"
+            value={globalStats.todayEntries}
+            emoji={todayStats.emoji}
+            color={todayStats.color}
           />
         </div>
         <div className="stats-chart-container">
-          <BarChartCard label="Consommations sur 10 jours" 
-          data={last10DaysStats} 
-          className="double-width" />
+          <BarChartCard label="15 derniers jours 🗓️" data={last15DaysStats} className="double-width" />
         </div>
       </div>
 
@@ -542,7 +589,9 @@ const FusionTool = ({
               <td>{getMoodWithEmoji(entry.mood)}</td>
               <td>{entry.consumption === "yes" ? "Oui" : "Non"}</td>
               <td>
-                <button onClick={() => handleDeleteEntry(entry._id || entry.id)}>Supprimer</button>
+                <button onClick={() => handleDeleteEntry(entry._id || entry.id)}>
+                  Supprimer
+                </button>
               </td>
             </tr>
           ))}

@@ -12,36 +12,6 @@ import 'moment/locale/fr'; // Importer la locale française pour moment
 
 const localizer = momentLocalizer(moment);
 
-const taskCategories = [
-  "Travail 💼",
-  "Personnel 🐈",
-  "NewHorizon ⛳",
-  "Finances 💵",
-  "Jeux vidéos 🎮",
-  "Maison 🏠",
-  "Achats 🛒",
-  "TaskFlow ⛩️",
-  "Cuisine 🍳",
-  "Sport 🏋️",
-  "Santé 🏥",
-  "Loisirs 🎨",
-  "Études 📚",
-  "Famille 👨‍👩‍👧‍👦",
-  "Amis 👫",
-  "Voyages 🌍",
-  "Bricolage 🛠️",
-  "Lego 🧱",
-  "Jardinage 🌷",
-  "Meditation 🧘",
-  "Musique 🎵",
-  "Podcast 🎙️",
-  "Lecture 📖",
-  "Film 🎬",
-  "Série 📺",
-  "YouTube 📹",
-  "Informatique 🖥️",
-  "Autre 📝",
-];
 
 const Sessions = ({ isDarkMode, toggleDarkMode }) => { 
   const [sessions, setSessions] = useState([]);
@@ -212,7 +182,7 @@ const Sessions = ({ isDarkMode, toggleDarkMode }) => {
 
 
            <div className="sessions-header">
-       <h1> ⏱️ Sessions terminées</h1>
+       <h1> ⏱️ Suivi du temps</h1>
            </div>
            
            
@@ -224,14 +194,22 @@ const Sessions = ({ isDarkMode, toggleDarkMode }) => {
        events={sessions}
        startAccessor="start"
        endAccessor="end"
-       titleAccessor={(session) => session.categories.join(', ')}
-       style={{ height: 500, 
+       titleAccessor={(session) => {
+         const taskName = session.subTaskName ? session.subTaskName : session.taskName;
+         return `${taskName} - ${session.categories.join(', ')} - ${session.duration} minutes`;
+       }}
+       style={{ 
+        height: 700, 
          width: '100%', 
          margin: '20px 0', 
          padding: '0 20px', 
-         border: '1px solid #ccc', 
-         borderRadius: '5px', 
-         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}  
+          overflow: 'auto',
+
+
+
+}}  
+
+
        defaultView='day'
        scrollToTime={new Date()}
        messages={{
@@ -247,7 +225,7 @@ const Sessions = ({ isDarkMode, toggleDarkMode }) => {
          style: getSessionStyle(event.categories),
        })}
        step={15} // Adjust the step to 15 minutes to reduce overlapping
-       timeslots={1} // Number of timeslots per hour
+       timeslots={2} // Number of timeslots per hour
            />
 
 

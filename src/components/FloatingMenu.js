@@ -19,42 +19,59 @@ const FloatingMenu = () => {
 
       {isOpen && (
         <>
-          <h2 className="menu-title">TaskFlow 🛖 </h2>
+
+          {/* Titre menu flottant */}
+          <h2 className="menu-title"> <p> </p> </h2>
+
+
           <ul className="menu-list">
             <li>
               <Link to="/" className="menu-link" onClick={handleLinkClick}>
-                 TaskFlow 🏠/home.js
+              🏠 TaskFlow 🏠 <p></p>
+              home.js
+                 
               </Link>
             </li>
 
             <li>
               <Link to="/fusion-tool" className="menu-link" onClick={handleLinkClick}>
-                4:20 🍂/Fusion-Tool.js
+              🍂 4:20 🍂<p></p>
+              Fusion-Tool.js
               </Link>
             </li>
 
-        
-
             <li>
               <Link to="/sessions" className="menu-link" onClick={handleLinkClick}>
-                Suivi du temps⏱️/Sessions.js
+              ⏱️ Suivi du temps⏱️ <p></p>
+              Sessions.js
+              </Link>
+            </li>
+     
+
+            <li>
+            <Link to="/VersionHistory" className="menu-link" onClick={handleLinkClick}>
+                ///// ⛳
+                <p></p>VersionHistory.js
               </Link>
             </li>
 
             <li>
               <Link to="/archives" className="menu-link" onClick={handleLinkClick}>
-                Historique 🔄️/Archives.js
+                ///// 🔄️
+                <p></p>/Archives.js
               </Link>
             </li>
 
             <li>
-            <Link to="/VersionHistory" className="menu-link" onClick={handleLinkClick}>
-                In Progress ⛳/VersionHistory.js
+              <Link to="/settings" className="menu-link" onClick={handleLinkClick}>
+                ///// ⚙️ (in progress)
+                <p></p>Settings.js
               </Link>
             </li>
 
+          
 
-        
+   
 
           </ul>
         </>
