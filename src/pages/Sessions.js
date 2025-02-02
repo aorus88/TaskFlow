@@ -52,8 +52,8 @@ const Sessions = ({ isDarkMode, toggleDarkMode }) => {
           const openTasks = data.filter(task => task.archived === 'open');
           setTasks(openTasks); // Mettre à jour l'état des tâches
           const allSessions = openTasks.flatMap(task => task.sessions.map(session => {
-            const start = new Date(session.date);
-            const end = new Date(new Date(session.date).getTime() + session.duration * 60000); // Calculer l'heure de fin
+            const end = new Date(session.date);
+            const start = new Date(new Date(session.date).getTime() - session.duration * 60000); // Calculer l'heure de début
             return {
               ...session,
               taskId: task._id, // Ajouter l'ID de la tâche à la session
