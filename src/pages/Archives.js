@@ -206,26 +206,16 @@ const Archives = ({
     <DndProvider backend={HTML5Backend}>
       <div className="Archives"></div>
 
+      <div className="statistics-container">
       <div className="statistics-header">
-        <h2>
-          ⛩️ TaskFlow 1.3.6 💤 -- 🕒 {formatClock(currentTime)}
-          <div className="dark-mode-toggle">
-            <h3>Mode sombre</h3>
-            <button onClick={toggleDarkMode} className="dark-mode-button">
-              {isDarkMode ? "🌚" : "🌞"}
-            </button>
-            <div />
-          </div>
-        </h2>
+        <h2>⛩️ TaskFlow 1.3.6 ⛩️ _N_I_G_H_T_
+        <button onClick={toggleDarkMode} className="dark-mode-button">
+          {isDarkMode ? "🌚" : "🌞"}
+        </button>_D_A_Y__
+        🕒 {formatClock(currentTime)} 🕒</h2>
+      </div>
 
-        {/* Minuteur Global */}
-        <GlobalPomodoroTimer
-          tasks={tasks}
-          fetchTasks={onFetchArchivedTasks}
-          setSelectedTaskId={setSelectedTaskId}
-          selectedTaskId={selectedTaskId}
-          showFeedback={showFeedback}
-        />
+     
 
         {/* Filtres */}
         <TaskFilters_Sessions filter={filter} setFilter={setFilter} tasks={tasks} />
@@ -267,6 +257,11 @@ const Archives = ({
               </div>
             )}
           </div>
+
+   {/* Minuteur Global sans affichage mais continue de tourner */}
+   <GlobalPomodoroTimer
+   />
+
         </div>
       </div>
     </DndProvider>

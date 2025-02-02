@@ -153,26 +153,22 @@ const Sessions = ({ isDarkMode, toggleDarkMode }) => {
 
   return (
     
-    <div className="sessions-page">
 
-<div className="statistics-header">
-        <h2>⛩️ TaskFlow 1.3.6 💤 -- 🕒 {formatClock(currentTime)}   
-       
-        <div className="dark-mode-toggle">
-        <h3>Mode sombre</h3>
-          <button onClick={toggleDarkMode} className="dark-mode-button">
-            {isDarkMode ? "🌚" : "🌞"}
-          </button>
-          <div/>
-        
-        </div>    
-           </h2>
+
+<div className="statistics-container">
+      <div className="statistics-header">
+        <h2>⛩️ TaskFlow 1.3.6 ⛩️ _N_I_G_H_T_
+        <button onClick={toggleDarkMode} className="dark-mode-button">
+          {isDarkMode ? "🌚" : "🌞"}
+        </button>_D_A_Y__
+        🕒 {formatClock(currentTime)} 🕒</h2>
       </div>
 
 
       <GlobalPomodoroTimer 
         tasks={tasks}
         selectedTaskId={filter.taskId}
+        selectedsubTaskId={filter.subTaskId}
       /* Conserver minuterie pomodoro sur fusion-tool  */
 
        />

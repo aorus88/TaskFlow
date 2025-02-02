@@ -27,29 +27,28 @@ const VersionHistory = ({ isDarkMode, toggleDarkMode }) => {
     <div className="version-history">
 
 
+<div className="statistics-container">
       <div className="statistics-header">
-        <h2>
-          ⛩️ TaskFlow 1.3.6 💤 -- 🕒 {formatClock(currentTime)}
-          <div className="dark-mode-toggle">
-            <h3>Mode sombre</h3>
-            <button onClick={toggleDarkMode} className="dark-mode-button">
-              {isDarkMode ? "🌚" : "🌞"}
-            </button>
-            <div />
-          </div>
-        </h2>
+        <h2>⛩️ TaskFlow 1.3.6 ⛩️ _N_I_G_H_T_
+        <button onClick={toggleDarkMode} className="dark-mode-button">
+          {isDarkMode ? "🌚" : "🌞"}
+        </button>_D_A_Y__
+        🕒 {formatClock(currentTime)} 🕒</h2>
       </div>
 
 
-      <h1>Historique des Versions - TaskFlow</h1>
+      <h1>Historique Versions - TaskFlow 📈📊</h1>
       <p>Bienvenue sur la page de l'historique des versions. Ici, vous trouverez des informations sur les différentes versions de l'application.</p>
       <ul>
 
 
         {/* Ajoutez d'autres versions ici */}
         <li>Version 1.3.7 - publication prévue le 02.02.2025 à 20h00
-          <ul> Update Fusion-Tool - stat-cards / suppression entrées   </ul>          
+          <ul> Update Fusion-Tool - stat-cards   </ul>          
           <ul> Update Suivi du temps - calendrier    </ul>
+          <ul> Update Sessions-js - suppression entrées    </ul>
+          <ul> Mise à jour du menu flottant    </ul>
+          <ul>Suppression du pomodoro (graphique) sur archive.js</ul>
 
         </li>
         
@@ -65,6 +64,7 @@ const VersionHistory = ({ isDarkMode, toggleDarkMode }) => {
 
         {/* Ajoutez d'autres versions ici */}
       </ul>
+    </div>
     </div>
   );
 };

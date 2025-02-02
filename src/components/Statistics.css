@@ -134,11 +134,11 @@ body.dark .stat-card:hover {
 }
 
 body.dark .stat-card h3 {
-  color: #ffffff;
+  color: #76ec6b;
 }
 
 body.dark .stat-card p {
-  color: #ffffffe3;
+  color: #ccaa00;
 }
 
 body.dark .timer-display {

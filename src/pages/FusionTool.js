@@ -409,17 +409,14 @@ const FusionTool = ({
 
   return (
     <div className="fusion-tool">
-      <div className="statistics-header">
-        <h2>
-          ⛩️ TaskFlow 1.3.6 💤 -- 🕒 {formatClock(currentTime)}
-          <div className="dark-mode-toggle">
-            <h3>Mode sombre</h3>
-            <button onClick={toggleDarkMode} className="dark-mode-button">
-              {isDarkMode ? "🌚" : "🌞"}
-            </button>
-            <div />
-          </div>
-        </h2>
+      <div className="statistics-container">
+        <div className="statistics-header">
+        <h2>⛩️ TaskFlow 1.3.6 ⛩️ _N_I_G_H_T_
+        <button onClick={toggleDarkMode} className="dark-mode-button">
+          {isDarkMode ? "🌚" : "🌞"}
+        </button>_D_A_Y__
+        🕒 {formatClock(currentTime)} 🕒</h2>
+      </div>
       </div>
 
       <GlobalPomodoroTimer
@@ -480,7 +477,7 @@ const FusionTool = ({
             <option value="fiévreux">Fiévreux 🤒</option>
             <option value="malade">Malade 🤕</option>
             <option value="indécis">Indécis 🤔</option>
-            <option value= "indiférent">Indiférent 😐</option>
+            <option value="indiférent">Indiférent 😐</option>
           </select>
         </label>
         <label>
@@ -499,9 +496,9 @@ const FusionTool = ({
       </form>
 
       {/* Statistiques globales  */}
-      <div className="stats-global">
+      <div className="stats-global-FusionTool">
         <h3>Statistiques Globales</h3>
-        <div className="stats-container">
+        <div className="stats-container-FusionTool">
           <StatCard
             label="Hier"
             value={globalStats.yesterdayEntries}

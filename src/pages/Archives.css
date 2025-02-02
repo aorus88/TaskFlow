@@ -40,7 +40,7 @@
 
 .archived-tasks-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
@@ -51,6 +51,12 @@
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dark .archived-task-item,
+.dark .archived-subtask-item {
+  background: #333;
+  color: #fff;
 }
 
 .archived-task-item .task-header,
