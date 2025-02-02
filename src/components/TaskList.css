@@ -1,11 +1,9 @@
 /* Container principal de la liste */
 .task-list-container {
   background-color: whitesmoke;
-  border: 1px solid #c3bbbb;
   border-radius: 8px;
   padding: 16px;
   margin: 16px 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
 

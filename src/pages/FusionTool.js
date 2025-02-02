@@ -139,6 +139,14 @@ const FusionTool = ({
   // État pour l'heure actuelle
   const [currentTime, setCurrentTime] = useState(new Date());
 
+    // Un objet de filtre général
+    const [filter, setFilter] = useState({
+      date: "",        // pour filtrer par date (déjà présent)
+      taskId: "",      // possibilité de filtrer par tâche
+      categories: [],  // possibilité de filtrer par catégories
+      consumption: "", // possibilité de filtrer par consommation ("yes" ou "no")
+    });
+
   // Mise à jour de l'heure chaque seconde
   useEffect(() => {
     const timer = setInterval(() => {
