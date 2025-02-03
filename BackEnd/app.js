@@ -67,16 +67,32 @@ const ConsumptionEntry = mongoose.model('ConsumptionEntry', consumptionEntrySche
 // 5) Routes de l'API
 // a) Récupérer toutes les tâches avec filtres
 app.get('/tasks', async (req, res) => {
-    const { archived } = req.query;
-    const filter = archived === 'true' ? { archived: 'closed' } : { archived: 'open' };
-    try {
-      const tasks = await Task.find(filter);
-      console.log("Backend - Tâches récupérées :", tasks); // Ajoutez ce log
-      res.json(tasks);
-    } catch (err) {
-      res.status(500).json({ error: 'Erreur lors de la récupération des tâches.' });
-    }
-  });
+  const { archived } = req.query;
+  // Si vous recevez un paramètre archived, vous pouvez filtrer,
+  // sinon, renvoyez toutes les tâches.
+  let filter = {};
+  if (archived === 'true') {
+    filter = { archived: 'closed' };
+  } else if (archived === 'false') {
+    filter = { archived: 'open' };
+  }
+
+  try {
+    // Utiliser .lean() pour avoir des objets JS simples
+    const tasks = await Task.find(filter).lean();
+    // Ajoutez un champ "status" égal à la valeur du champ "archived"
+    const tasksWithStatus = tasks.map(task => ({
+      ...task,
+      status: task.archived // Ici, status sera "open" ou "closed"
+    }));
+    console.log("Backend - Tâches récupérées avec status :", tasksWithStatus);
+    res.json(tasksWithStatus);
+  } catch (err) {
+    res.status(500).json({ error: 'Erreur lors de la récupération des tâches.' });
+  }
+});
+
+
 
 // routes pour ajouter des tâches à TaskFlow
 
@@ -324,6 +340,26 @@ app.delete('/consumption-entries/:id', async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: 'Erreur lors de la suppression de l\'entrée.' });
     }
+});
+
+
+// Endpoint pour renvoyer toutes les tâches avec leur champ "status" (fonction pour afficher toutes les sessions dans session.js + caldendrier)
+app.get('/all-tasks', async (req, res) => {
+  try {
+    // Récupérer toutes les tâches sans filtre
+    const tasks = await Task.find({}).lean();
+    // Transformer chaque tâche en ajoutant le champ "status"
+    // Ici, le champ "archived" contient déjà "open" ou "closed" selon votre schéma
+    const tasksWithStatus = tasks.map(task => ({
+      ...task,
+      status: task.archived // status sera "open" ou "closed"
+    }));
+    console.log("Backend - Toutes les tâches récupérées avec status :", tasksWithStatus);
+    res.json(tasksWithStatus);
+  } catch (err) {
+    console.error("Erreur lors de la récupération de toutes les tâches :", err);
+    res.status(500).json({ error: "Erreur lors de la récupération des tâches." });
+  }
 });
 
 

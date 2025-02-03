@@ -43,39 +43,48 @@ const Sessions = ({ isDarkMode, toggleDarkMode }) => {
       });
     };
 
-  useEffect(() => {
-    const fetchTasksAndSessions = async () => {
-      try {
-        const response = await fetch('http://192.168.50.241:4000/tasks?archived=false');
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          const openTasks = data.filter(task => task.archived === 'open');
-          setTasks(openTasks); // Mettre à jour l'état des tâches
-          const allSessions = openTasks.flatMap(task => task.sessions.map(session => {
-            const end = new Date(session.date);
-            const start = new Date(new Date(session.date).getTime() - session.duration * 60000); // Calculer l'heure de début
-            return {
-              ...session,
-              taskId: task._id, // Ajouter l'ID de la tâche à la session
-              taskName: task.name,
-              totalTime: task.totalTime,
-              categories: task.categories,
-              start: isNaN(start) ? null : start,
-              end: isNaN(end) ? null : end,
-            };
-          }));
-          console.log("Sessions formatées :", allSessions); // Log pour vérifier les données des sessions
-          setSessions(allSessions);
-        } else {
-          console.error('Les données reçues ne sont pas un tableau:', data);
+    useEffect(() => {
+      const fetchTasksAndSessions = async () => {
+        try {
+          // Pour récupérer toutes les tâches, n'incluez pas le paramètre archived
+          const response = await fetch('http://192.168.50.241:4000/all-tasks');
+          const data = await response.json();
+          if (Array.isArray(data)) {
+            // Si vous souhaitez conserver uniquement les tâches qui ont des sessions, vous pouvez filtrer :
+            const allTasks = data.filter(task =>
+              Array.isArray(task.sessions) && task.sessions.length > 0
+            );
+            setTasks(allTasks); // Mettre à jour l'état des tâches
+    
+            // Transformer les sessions
+            const allSessions = allTasks.flatMap(task =>
+              task.sessions.map(session => {
+                const end = new Date(session.date);
+                const start = new Date(new Date(session.date).getTime() - session.duration * 60000);
+                return {
+                  ...session,
+                  taskId: task._id,
+                  taskName: task.name,
+                  totalTime: task.totalTime,
+                  categories: task.categories,
+                  start: isNaN(start) ? null : start,
+                  end: isNaN(end) ? null : end,
+                };
+              })
+            );
+            console.log("Sessions formatées :", allSessions);
+            setSessions(allSessions);
+          } else {
+            console.error('Les données reçues ne sont pas un tableau:', data);
+          }
+        } catch (error) {
+          console.error('Erreur lors de la récupération des tâches et sessions:', error);
         }
-      } catch (error) {
-        console.error('Erreur lors de la récupération des tâches et sessions:', error);
-      }
-    };
-
-    fetchTasksAndSessions();
-  }, []);
+      };
+    
+      fetchTasksAndSessions();
+    }, []);
+    
 
   // Fonction pour supprimer une session
   const handleDeleteSession = async (taskId, sessionId) => {
