@@ -38,7 +38,8 @@ const BarChartCard = ({ label, data, color }) => {
       {
         label: "🍂",
         data: data.map((entry) => entry.count),
-        backgroundColor: data.map((entry) => {
+        backgroundColor: 
+        data.map((entry) => {
           if (entry.count < 3) {
             return "rgba(0, 255, 0, 0.2)"; // Vert pour < 3
           } else if (entry.count >= 3 && entry.count <= 6) {
@@ -58,7 +59,16 @@ const BarChartCard = ({ label, data, color }) => {
         }),
         borderWidth: 1,
       },
+
+      {
+        label: "🔋",
+        data: data.map((entry) => entry.noCount),
+        backgroundColor: "rgba(0, 255, 0, 0.2)", // Vert
+        borderColor: "rgba(0, 255, 0, 1)", // Vert
+        borderWidth: 1, 
+      },
     ],
+
   };
 
   const options = {
@@ -350,7 +360,12 @@ const FusionTool = ({
         (entry) =>
           entry.date.split("T")[0] === date && entry.consumption === "yes"
       ).length;
-      last15Days.push({ date, count });
+      // compter uniquement les entrées dont la date correspond et la consommation est "no"
+      const noCount = entries.filter(
+        (entry) =>
+          entry.date.split("T")[0] === date && entry.consumption === "no"
+      ).length;
+      last15Days.push({ date, count, noCount });
     }
     return last15Days;
   };
