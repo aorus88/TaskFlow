@@ -105,6 +105,7 @@ const Home = ({
 
       
       <section className="stats-pomodoro-section">
+     
         <Statistics 
           tasks={tasks} 
           isDarkMode={isDarkMode}

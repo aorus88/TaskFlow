@@ -36,14 +36,17 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
 
-  // Définition des tâches filtrées
+  
+
+  // Statistiques tâches ouvertes
   const openTasks = tasks.filter((task) => 
-    task.status !== "closed" && !task.archivedAt
+    task.archived !== "closed" && !task.archivedAt
   );
 
+  // Statistiques tâches prioritaires
   const highMediumPriorityOpen = tasks.filter((task) => 
     (task.priority === "high" || task.priority === "medium") 
-    && task.status !== "closed" 
+    && task.archived !== "closed" 
     && !task.archivedAt
   );
 
@@ -54,14 +57,14 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
     console.log("Tâches créées:", tasks.filter(task => task.addedAt));
   }, [tasks]);
 
-  // Sessions du jour
+  // Sessions du jour (TOUTES les tâches)
   const sessionsToday = tasks.flatMap((task) => task.sessions || [])
     .filter((session) => {
       const sessionDate = new Date(session.date);
       return sessionDate >= today && sessionDate < new Date(today.getTime() + 86400000);
     });
 
-  // Sessions d'hier
+  // Sessions d'hier (TOUTES les tâches)
   const sessionsYesterday = tasks.flatMap((task) => task.sessions || [])
     .filter((session) => {
       const sessionDate = new Date(session.date);

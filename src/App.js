@@ -7,7 +7,6 @@ import VersionHistory from "./pages/VersionHistory";
 import "./timer.css";
 import Sessions from "./pages/Sessions";
 import FloatingMenu from "./components/FloatingMenu";
-import GlobalPomodoroTimer from "./components/GlobalPomodoroTimer";
 import "./index.css";
 import taskReducer from "./reducers/taskReducer";
 import { TimerProvider } from "./context/TimerContext";
@@ -21,14 +20,16 @@ const initialState = {
 
 const App = () => {
   const [state, dispatch] = useReducer(taskReducer, initialState);
-  const [feedback, setFeedback] = useState({ message: '', type: '' });
+  const [] = useState({ message: '', type: '' });
   const [filter, setFilter] = useState({
     priority: "",
     date: "",
     status: "",
     sortOrder: "newest",
   });
+
   const [isDarkMode, setIsDarkMode] = useState(false);
+  
   const taskCategories = [
     "Travail 💼",
     "Personnel 🐈",
@@ -61,9 +62,9 @@ const App = () => {
   ];
 
 
-  const fetchTasks = useCallback(async (archived = false) => {
+  const fetchTasks = useCallback(async () => {
     try {
-      const response = await fetch(`http://192.168.50.241:4000/tasks?archived=${archived}`);
+      const response = await fetch(`http://192.168.50.241:4000/tasks`); // Récupérer toutes les tâches
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
       }
@@ -77,10 +78,9 @@ const App = () => {
       console.error("Erreur lors du chargement des tâches :", error);
     }
   }, []);
-
+  
   useEffect(() => {
     fetchTasks();
-    fetchTasks(true); // Fetch archived tasks as well
   }, [fetchTasks]);
 
   const addTask = async (task) => {

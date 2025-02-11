@@ -273,8 +273,8 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
   return (
     <div className={`pomodoro-timer ${!isPreview ? (isFloating ? 'floating' : 'docked') : ''} ${isMinimized ? 'minimized' : ''}`}>
       <div className="timer-header">
-        <h1>{formatTime(timeLeft)} ⏱️</h1>
-        <h1>{tasks.find(task => task._id === selectedTaskId.split('-')[1])?.name || 'Aucune tâche sélectionnée'}</h1>
+        <h1 className="time-left">{formatTime(timeLeft)} ⏱️</h1>
+        <h1 className="task-name">{tasks.find(task => task._id === selectedTaskId.split('-')[1])?.name || 'Aucune tâche sélectionnée'}</h1>
         <h3></h3>
         <div className="timer-controls">
           <button 
@@ -356,9 +356,6 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
           </button>
         </div>
 
-        <div className="session-info">
-          <p>Sessions complétées : {sessionCount}</p>
-        </div>
       </div>
     </div>
   );

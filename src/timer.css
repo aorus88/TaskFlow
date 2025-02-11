@@ -10,12 +10,7 @@
     color: #4caf50;
   }
   
-  .timer-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-  }
+
   
   .progress-circle {
     width: 150px;
@@ -27,13 +22,7 @@
     background: conic-gradient(#4caf50 0%, #ddd 0%);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   }
-  
-  .timer-display {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-  }
-  
+    
   .task-selector,
   .duration-input {
     margin: 10px;
