@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState, useRef, useCallback } from "react";
 import { TimerContext } from "../context/TimerContext";
+import TaskForm from "./TaskForm"; // Importez TaskForm
 import "./GlobalPomodoroTimer.css";
-
 
 // Sons de notification
 const NOTIFICATION_SOUNDS = {
@@ -21,7 +21,7 @@ const playSound = (soundType) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
+const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddTask, taskCategories = [] }) => {
   const {
     timeLeft,
     setTimeLeft,
@@ -49,6 +49,9 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
     const saved = localStorage.getItem('pomodoroPosition');
     return saved ? JSON.parse(saved) : true;
   });
+
+  // Nouvel état pour la modale
+  const [isTaskFormModalOpen, setIsTaskFormModalOpen] = useState(false);
 
   // Mettre à jour le gestionnaire pour sauvegarder l'état
   const handleMinimize = () => {
@@ -261,6 +264,28 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
     return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
+  const getTaskNameWithIcon = (selectedTaskId, tasks) => {
+    if (!selectedTaskId || !tasks?.length) {
+      return "Aucune tâche sélectionnée";
+    }
+
+    const [type, id] = selectedTaskId.split('-');
+
+    if (type === 'subtask') {
+      const parentTask = tasks.find(task =>
+        task.subtasks?.some(subtask => subtask._id === id)
+      );
+      if (parentTask) {
+        const subtask = parentTask.subtasks.find(st => st._id === id);
+        return subtask ? `🆎 ${parentTask.name} > ${subtask.name}` : "Sous-tâche non trouvée";
+      }
+    } else {
+      const task = tasks.find(t => t._id === id);
+      return task ? `🅰️ ${task.name}` : "Tâche non trouvée";
+    }
+    return "Tâche non trouvée";
+  };
+
   if (!tasks?.length) {
     return <div>Aucune tâche disponible</div>;
   }
@@ -272,11 +297,11 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
 
   return (
     <div className={`pomodoro-timer ${!isPreview ? (isFloating ? 'floating' : 'docked') : ''} ${isMinimized ? 'minimized' : ''}`}>
-      <div className="timer-header">
-        <h1 className="time-left">{formatTime(timeLeft)} ⏱️</h1>
-        <h1 className="task-name">{tasks.find(task => task._id === selectedTaskId.split('-')[1])?.name || 'Aucune tâche sélectionnée'}</h1>
+      <div className="pomodoro-timer__header">
+        <h1 className="pomodoro-timer__title">{formatTime(timeLeft)} ⏱️</h1>
+        <h1 className="pomodoro-timer__title">{getTaskNameWithIcon(selectedTaskId, tasks)}</h1>
         <h3></h3>
-        <div className="timer-controls">
+        <div className="pomodoro-timer__controls">
           <button 
             className="dock-button"
             onClick={togglePosition}
@@ -289,21 +314,25 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
           >
             {isMinimized ? '🔼' : '🔽'}
           </button>
+          {/* Nouveau bouton pour ouvrir la modale */}
+          <button className="pomodoro-button-add" onClick={() => setIsTaskFormModalOpen(true)}>➕ Ajouter Tâche</button>
         </div>
       </div>
 
-      <div className={`timer-content ${isMinimized ? 'hidden' : ''}`}>
-        <div className="timer-container">
-          <div className="progress-bar-container">
-            {Array.from({ length: segments }).map((_, index) => (
-              <div
-                key={index}
-                className={`progress-bar-segment ${index < activeSegments ? "active" : "inactive"}`}
-                style={{ width: `${segmentProgress}%` }}
-              />
-            ))}
-          </div>
-          <span className="timer-display">{formatTime(timeLeft)}</span>
+      {/* Barre de progression visible même en mode minimisé */}
+      <div className="pomodoro-timer__progress-bar minimized-progress-bar">
+        {Array.from({ length: segments }).map((_, index) => (
+          <div
+            key={index}
+            className={`progress-bar-segment ${index < activeSegments ? "active" : "inactive"}`}
+            style={{ width: `${segmentProgress}%` }}
+          />
+        ))}
+      </div>
+
+      <div className={`pomodoro-timer__content ${isMinimized ? 'hidden' : ''}`}>
+        <div className="pomodoro-timer__container">
+          <span className="pomodoro-timer__display">{formatTime(timeLeft)}</span>
         </div>
 
         <select
@@ -312,10 +341,10 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
             setSelectedTaskId(e.target.value);
             localStorage.setItem('lastSelectedTaskId', e.target.value);
           }}
-          className="task-selector"
+          className="pomodoro-timer__selector"
         >
           <option value="" disabled>Sélectionnez une tâche</option>
-          {tasks.map((task) => (
+          {tasks.slice().reverse().map((task) => (
             <React.Fragment key={task._id}>
               <option value={`task-${task._id}`}>
                 {task.name}
@@ -338,10 +367,10 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
           onChange={(e) => handleDurationChange(e.target.value)}
           min="1"
           placeholder="Durée (min)"
-          className="duration-input"
+          className="pomodoro-timer__input"
         />
 
-        <div className="timer-buttons">
+        <div className="pomodoro-timer__buttons">
           <button onClick={startTimer} className="start-button" disabled={!selectedTaskId || isRunning}>
             Démarrer ⏱️
           </button>
@@ -357,6 +386,23 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks }) => {
         </div>
 
       </div>
+
+      {/* Modale pour TaskForm */}
+      {isTaskFormModalOpen && (
+    <div className="modal-overlay">
+    <div className="modal-content">
+      <button onClick={() => setIsTaskFormModalOpen(false)}>❌</button>
+      <TaskForm
+        onAddTask={async (task) => {
+          await onAddTask(task); // Appelle la fonction onAddTask passée en prop
+          setIsTaskFormModalOpen(false);
+          if (fetchTasks) await fetchTasks();
+        }}
+        taskCategories={taskCategories}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

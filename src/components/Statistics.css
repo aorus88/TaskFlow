@@ -21,15 +21,34 @@
 .statistics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 18px;
-  font-size: 0.95rem;
+  gap: 12px;
 }
 
-.stat-card {
+.stat-card-tasks {
   background-color: rgba(226, 231, 244, 0.893);
   border-color: black;
   border-radius: 8px;
-  padding: 12px;
+  padding: 10px;
+  text-align: center;
+  transition: all 0.3s ease;
+  color: #110909;
+}
+
+.stat-card-duration {
+  background-color: rgba(226, 231, 244, 0.893);
+  border-color: black;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  transition: all 0.3s ease;
+  color: #110909;
+}
+
+.stat-card-top5 {
+  background-color: rgba(226, 231, 244, 0.893);
+  border-color: black;
+  border-radius: 8px;
+  padding: 10px;
   text-align: center;
   transition: all 0.3s ease;
   color: #110909;

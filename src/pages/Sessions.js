@@ -1,21 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import TaskFilters_Sessions from '../components/TaskFilters_Sessions'; // Importer le nouveau composant TaskFilters_Sessions
+import TaskFilters_Sessions from '../components/TaskFilters_Sessions';
 import './Sessions.css';
-import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer"; // Importer le composant GlobalPomodoroTimer
+import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer";
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
-import 'moment/locale/fr'; // Importer la locale française pour moment
-
+import 'moment/locale/fr';
 
 const localizer = momentLocalizer(moment);
 
+// Déplacer fetchTasksAndSessions en dehors du composant - actualisation calendrier après ajout session 
+const fetchTasksAndSessions = async (setTasks, setSessions) => {
+  try {
+    const response = await fetch('http://192.168.50.241:4000/all-tasks');
+    const data = await response.json();
+    if (Array.isArray(data)) {
+      const allTasks = data.filter(task =>
+        Array.isArray(task.sessions) && task.sessions.length > 0
+      );
+      setTasks(allTasks);
 
-const Sessions = ({ isDarkMode, toggleDarkMode }) => { 
+      const allSessions = allTasks.flatMap(task =>
+        task.sessions.map(session => {
+          const end = new Date(session.date);
+          const start = new Date(new Date(session.date).getTime() - session.duration * 60000);
+          return {
+            ...session,
+            taskId: task._id,
+            taskName: task.name,
+            totalTime: task.totalTime,
+            categories: task.categories,
+            start: isNaN(start) ? null : start,
+            end: isNaN(end) ? null : end,
+          };
+        })
+      );
+      console.log("Sessions formatées :", allSessions);
+      setSessions(allSessions);
+    } else {
+      console.error('Les données reçues ne sont pas un tableau:', data);
+    }
+  } catch (error) {
+    console.error('Erreur lors de la récupération des tâches et sessions:', error);
+  }
+};
+
+const Sessions = ({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) => {
   const [sessions, setSessions] = useState([]);
-  const [tasks, setTasks] = useState([]); // Ajouter un état pour les tâches
+  const [tasks, setTasks] = useState([]);
+  const [currentTime, setCurrentTime] = useState(new Date());
   const [filter, setFilter] = useState({
     date: '',
     sortOrder: 'newest',
@@ -23,70 +58,33 @@ const Sessions = ({ isDarkMode, toggleDarkMode }) => {
     categories: '',
   });
 
-   // Ajout de l'état pour l'heure actuelle
-    const [currentTime, setCurrentTime] = useState(new Date());
-  
-    // Mise à jour de l'heure chaque seconde
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setCurrentTime(new Date());
-      }, 1000);
-      return () => clearInterval(interval);
-    }, []);
-    
-    // Fonction pour formater l'heure
-    const formatClock = (time) => {
-      return time.toLocaleTimeString('fr-FR', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      });
-    };
+  // Utiliser useCallback pour mémoriser la fonction
+  const fetchTasksAndSessionsCallback = useCallback(() => {
+    fetchTasksAndSessions(setTasks, setSessions);
+  }, []);
 
-    useEffect(() => {
-      const fetchTasksAndSessions = async () => {
-        try {
-          // Pour récupérer toutes les tâches, n'incluez pas le paramètre archived
-          const response = await fetch('http://192.168.50.241:4000/all-tasks');
-          const data = await response.json();
-          if (Array.isArray(data)) {
-            // Si vous souhaitez conserver uniquement les tâches qui ont des sessions, vous pouvez filtrer :
-            const allTasks = data.filter(task =>
-              Array.isArray(task.sessions) && task.sessions.length > 0
-            );
-            setTasks(allTasks); // Mettre à jour l'état des tâches
-    
-            // Transformer les sessions
-            const allSessions = allTasks.flatMap(task =>
-              task.sessions.map(session => {
-                const end = new Date(session.date);
-                const start = new Date(new Date(session.date).getTime() - session.duration * 60000);
-                return {
-                  ...session,
-                  taskId: task._id,
-                  taskName: task.name,
-                  totalTime: task.totalTime,
-                  categories: task.categories,
-                  start: isNaN(start) ? null : start,
-                  end: isNaN(end) ? null : end,
-                };
-              })
-            );
-            console.log("Sessions formatées :", allSessions);
-            setSessions(allSessions);
-          } else {
-            console.error('Les données reçues ne sont pas un tableau:', data);
-          }
-        } catch (error) {
-          console.error('Erreur lors de la récupération des tâches et sessions:', error);
-        }
-      };
-    
-      fetchTasksAndSessions();
-    }, []);
-    
+  // Mettre à jour l'heure
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
-  // Fonction pour supprimer une session
+  // Charger les données initiales
+  useEffect(() => {
+    fetchTasksAndSessionsCallback();
+  }, [fetchTasksAndSessionsCallback]);
+
+  const formatClock = (time) => {
+    return time.toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  };
+
+  // Reste du code existant...
   const handleDeleteSession = async (taskId, sessionId) => {
     if (!window.confirm('Êtes-vous sûr de vouloir supprimer cette session ?')) {
       return;
@@ -103,142 +101,129 @@ const Sessions = ({ isDarkMode, toggleDarkMode }) => {
         throw new Error('Erreur lors de la suppression de la session');
       }
 
-      // Mettre à jour l'état local après la suppression
       setSessions(sessions.filter(session => session._id !== sessionId));
+      // Recharger les données après la suppression
+      fetchTasksAndSessionsCallback();
     } catch (error) {
       console.error('Erreur:', error);
       alert('Erreur lors de la suppression de la session');
     }
   };
 
-  // Fonction pour trier les sessions
+  // Garder le reste du code identique...
   const sortedSessions = sessions.sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
     return filter.sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
   });
 
-    // Fonction pour obtenir la couleur de la session en fonction de la catégorie
-    const getSessionStyle = (categories) => {
-      const styles = {
-        "Travail 💼": { backgroundColor: 'rgba(255, 223, 186, 0.8)', color: '#000000' },
-        "Personnel 🐈": { backgroundColor: 'rgba(255, 192, 203, 0.8)', color: '#000000' },
-        "NewHorizon ⛳": { backgroundColor: 'rgba(255, 255, 0, 0.8)', color: '#000000' },
-        "Finances 💵": { backgroundColor: 'rgba(144, 238, 144, 0.8)', color: '#000000' },
-        "Jeux vidéos 🎮": { backgroundColor: 'rgba(221, 160, 221, 0.8)', color: '#000000' },
-        "Maison 🏠": { backgroundColor: 'rgba(255, 228, 181, 0.8)', color: '#000000' },
-        "Achats 🛒": { backgroundColor: 'rgba(255, 165, 0, 0.8)', color: '#000000' },
-        "TaskFlow ⛩️": { backgroundColor: 'rgba(72, 209, 204, 0.8)', color: '#000000' },
-        "Cuisine 🍳": { backgroundColor: 'rgba(255, 182, 193, 0.8)', color: '#000000' },
-        "Sport 🏋️": { backgroundColor: 'rgba(135, 206, 235, 0.8)', color: '#000000' },
-        "Santé 🏥": { backgroundColor: 'rgba(255, 160, 122, 0.8)', color: '#000000' },
-        "Loisirs 🎨": { backgroundColor: 'rgba(255, 105, 180, 0.8)', color: '#000000' },
-        "Études 📚": { backgroundColor: 'rgba(173, 255, 47, 0.8)', color: '#000000' },
-        "Famille 👨‍👩‍👧‍👦": { backgroundColor: 'rgba(255, 228, 225, 0.8)', color: '#000000' },
-        "Amis 👫": { backgroundColor: 'rgba(255, 240, 245, 0.8)', color: '#000000' },
-        "Voyages 🌍": { backgroundColor: 'rgba(240, 255, 240, 0.8)', color: '#000000' },
-        "Bricolage 🛠️": { backgroundColor: 'rgba(245, 245, 220, 0.8)', color: '#000000' },
-        "Lego 🧱": { backgroundColor: 'rgba(255, 250, 205, 0.8)', color: '#000000' },
-        "Jardinage 🌷": { backgroundColor: 'rgba(144, 238, 144, 0.8)', color: '#000000' },
-        "Meditation 🧘": { backgroundColor: 'rgba(224, 255, 255, 0.8)', color: '#000000' },
-        "Musique 🎵": { backgroundColor: 'rgba(255, 228, 196, 0.8)', color: '#000000' },
-        "Podcast 🎙️": { backgroundColor: 'rgba(255, 218, 185, 0.8)', color: '#000000' },
-        "Lecture 📖": { backgroundColor: 'rgba(255, 239, 213, 0.8)', color: '#000000' },
-        "Film 🎬": { backgroundColor: 'rgba(255, 222, 173, 0.8)', color: '#000000' },
-        "Série 📺": { backgroundColor: 'rgba(255, 248, 220, 0.8)', color: '#000000' },
-        "YouTube 📹": { backgroundColor: 'rgba(255, 250, 240, 0.8)', color: '#000000' },
-        "Informatique 🖥️": { backgroundColor: 'rgba(245, 245, 245, 0.8)', color: '#000000' },
-        "Autre 📝": { backgroundColor: 'rgba(211, 211, 211, 0.8)', color: '#000000' },
-      };
-
-      for (const category of categories) {
-        if (styles[category]) {
-          return styles[category];
-        }
-      }
-
-      return { backgroundColor: '#FFFFFF', color: '#000000' };
+  const getSessionStyle = (categories) => {
+    const styles = {
+      "Travail 💼": { backgroundColor: 'rgba(255, 223, 186, 0.8)', color: '#000000' },
+      "Personnel 🐈": { backgroundColor: 'rgba(255, 192, 203, 0.8)', color: '#000000' },
+      "NewHorizon ⛳": { backgroundColor: 'rgba(255, 255, 0, 0.8)', color: '#000000' },
+      "Finances 💵": { backgroundColor: 'rgba(144, 238, 144, 0.8)', color: '#000000' },
+      "Jeux vidéos 🎮": { backgroundColor: 'rgba(221, 160, 221, 0.8)', color: '#000000' },
+      "Maison 🏠": { backgroundColor: 'rgba(255, 228, 181, 0.8)', color: '#000000' },
+      "Achats 🛒": { backgroundColor: 'rgba(255, 165, 0, 0.8)', color: '#000000' },
+      "TaskFlow ⛩️": { backgroundColor: 'rgba(72, 209, 204, 0.8)', color: '#000000' },
+      "Cuisine 🍳": { backgroundColor: 'rgba(255, 182, 193, 0.8)', color: '#000000' },
+      "Sport 🏋️": { backgroundColor: 'rgba(135, 206, 235, 0.8)', color: '#000000' },
+      "Santé 🏥": { backgroundColor: 'rgba(255, 160, 122, 0.8)', color: '#000000' },
+      "Loisirs 🎨": { backgroundColor: 'rgba(255, 105, 180, 0.8)', color: '#000000' },
+      "Études 📚": { backgroundColor: 'rgba(173, 255, 47, 0.8)', color: '#000000' },
+      "Famille 👨‍👩‍👧‍👦": { backgroundColor: 'rgba(255, 228, 225, 0.8)', color: '#000000' },
+      "Amis 👫": { backgroundColor: 'rgba(255, 240, 245, 0.8)', color: '#000000' },
+      "Voyages 🌍": { backgroundColor: 'rgba(240, 255, 240, 0.8)', color: '#000000' },
+      "Bricolage 🛠️": { backgroundColor: 'rgba(245, 245, 220, 0.8)', color: '#000000' },
+      "Lego 🧱": { backgroundColor: 'rgba(255, 250, 205, 0.8)', color: '#000000' },
+      "Jardinage 🌷": { backgroundColor: 'rgba(144, 238, 144, 0.8)', color: '#000000' },
+      "Meditation 🧘": { backgroundColor: 'rgba(224, 255, 255, 0.8)', color: '#000000' },
+      "Musique 🎵": { backgroundColor: 'rgba(255, 228, 196, 0.8)', color: '#000000' },
+      "Podcast 🎙️": { backgroundColor: 'rgba(255, 218, 185, 0.8)', color: '#000000' },
+      "Lecture 📖": { backgroundColor: 'rgba(255, 239, 213, 0.8)', color: '#000000' },
+      "Film 🎬": { backgroundColor: 'rgba(255, 222, 173, 0.8)', color: '#000000' },
+      "Série 📺": { backgroundColor: 'rgba(255, 248, 220, 0.8)', color: '#000000' },
+      "YouTube 📹": { backgroundColor: 'rgba(255, 250, 240, 0.8)', color: '#000000' },
+      "Informatique 🖥️": { backgroundColor: 'rgba(245, 245, 245, 0.8)', color: '#000000' },
+      "Autre 📝": { backgroundColor: 'rgba(211, 211, 211, 0.8)', color: '#000000' },
     };
 
+    for (const category of categories) {
+      if (styles[category]) {
+        return styles[category];
+      }
+    }
+
+    return { backgroundColor: '#FFFFFF', color: '#000000' };
+  };
+
   return (
-    
-
-
-<div className="statistics-container">
+    <div className="statistics-container">
       <div className="statistics-header">
-        <h2>⛩️ TaskFlow 1.3.7 ⛩️ _N_I_G_H_T_
-        <button onClick={toggleDarkMode} className="dark-mode-button">
-          {isDarkMode ? "🌚" : "🌞"}
-        </button>_D_A_Y__
-        🕒 {formatClock(currentTime)} 🕒</h2>
+        <h3>⛩️ TaskFlow 1.3.9 ⛩️ ➖
+          <button onClick={toggleDarkMode} className="dark-mode-button">
+            {isDarkMode ? "🌚" : "🌞"}
+          </button>_D_A_Y__
+          🕒 {formatClock(currentTime)} 🕒
+        </h3>
       </div>
 
-
       <GlobalPomodoroTimer 
-        tasks={tasks}
+        tasks={tasks.filter(task => task.status === 'open')}
         selectedTaskId={filter.taskId}
         selectedsubTaskId={filter.subTaskId}
-      /* Conserver minuterie pomodoro sur fusion-tool  */
+        fetchTasks={fetchTasksAndSessionsCallback} // Passer la fonction callback
+        onAddTask={onAddTask} // ajout de tâche via pomodoro timer
+        taskCategories={taskCategories} // ajout de tâche via pomodoro timer
+      />
 
-       />
+      <div className="sessions-header">
+        <h1> ⏱️ Suivi du temps</h1>
+      </div>
 
-
-      
-
-
-           <div className="sessions-header">
-       <h1> ⏱️ Suivi du temps</h1>
-           </div>
-           
-           
-           
-           
-           
-           <Calendar
-       localizer={localizer}
-       events={sessions}
-       startAccessor="start"
-       endAccessor="end"
-       titleAccessor={(session) => {
-         const taskName = session.subTaskName ? session.subTaskName : session.taskName;
-         return `${taskName} - ${session.categories.join(', ')} - ${session.duration} minutes`;
-       }}
-       style={{ 
-        height: 700, 
-         width: '100%', 
-         margin: '20px 0', 
-         padding: '0 20px', 
+      <Calendar
+        localizer={localizer}
+        events={sessions}
+        startAccessor="start"
+        endAccessor="end"
+        titleAccessor={(session) => {
+          const taskName = session.subTaskName ? session.subTaskName : session.taskName;
+          return `${taskName} - ${session.categories.join(', ')} - ${session.duration} minutes`;
+        }}
+        style={{ 
+          height: 600, 
+          width: '100%', 
+          margin: '10px 0', 
+          padding: '0 20px', 
           overflow: 'auto',
 
 
+        }}  
+        defaultView='day'
+        scrollToTime={new Date()}
+        messages={{
+          next: "Suivant",
+          previous: "Précédent",
+          today: "Aujourd'hui",
+          month: "Mois",
+          week: "Semaine",
+          day: "Jour",
+          agenda: "Agenda",
+        }}
+        eventPropGetter={(event) => ({
+          style: getSessionStyle(event.categories),
+        })}
+        step={30} // Adjust the step to 15 minutes to reduce overlapping
+        timeslots={2} // Number of timeslots per hour
 
-}}  
+      />
 
-
-       defaultView='day'
-       scrollToTime={new Date()}
-       messages={{
-         next: "Suivant",
-         previous: "Précédent",
-         today: "Aujourd'hui",
-         month: "Mois",
-         week: "Semaine",
-         day: "Jour",
-         agenda: "Agenda",
-       }}
-       eventPropGetter={(event) => ({
-         style: getSessionStyle(event.categories),
-       })}
-       step={15} // Adjust the step to 15 minutes to reduce overlapping
-       timeslots={2} // Number of timeslots per hour
-           />
-
-
-          <TaskFilters_Sessions 
-          filter={filter} 
-          setFilter={setFilter} 
-          tasks={tasks} /> {/* Passer les tâches */}
-
+      <TaskFilters_Sessions 
+        filter={filter} 
+        setFilter={setFilter} 
+        tasks={tasks} 
+      />
 
       <ul className="sessions-list">
         {sortedSessions.length > 0 ? (

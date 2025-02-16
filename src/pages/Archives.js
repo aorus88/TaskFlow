@@ -1,14 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useDrag, useDrop, DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer";
 import { SelectedTaskContext } from "../context/SelectedTaskContext";
 import TaskFilters_Sessions from "../components/TaskFilters_Sessions";
 import "./Archives.css";
-
-const ItemType = {
-  TASK: "task",
-};
 
 // Fonction de formatage de date (peut rester en dehors du composant)
 const formatDate = (date) => {
@@ -23,25 +17,9 @@ const formatDate = (date) => {
   }).format(parsedDate);
 };
 
-const Task = ({ task, index, moveTask, onDeleteTask, onDeleteSubtask }) => {
-  // DRAG & DROP
-  const [, ref] = useDrag({
-    type: ItemType.TASK,
-    item: { index },
-  });
-
-  const [, drop] = useDrop({
-    accept: ItemType.TASK,
-    hover: (draggedItem) => {
-      if (draggedItem.index !== index) {
-        moveTask(draggedItem.index, index);
-        draggedItem.index = index;
-      }
-    },
-  });
-
+const Task = ({ task, index, onDeleteTask, onDeleteSubtask, onOpenTask }) => {
   return (
-    <div ref={(node) => ref(drop(node))} className="archived-task-item">
+    <div className="archived-task-item">
       <div className="task-header">
         <strong>Statut :</strong>{" "}
         {task.archived === "closed" ? "🔴 Closed" : "🟢 Open"}
@@ -59,6 +37,10 @@ const Task = ({ task, index, moveTask, onDeleteTask, onDeleteSubtask }) => {
         {/* Bouton de suppression de la tâche */}
         <button className="delete-button" onClick={() => onDeleteTask(task._id)}>
           Supprimer
+        </button>
+        {/* Bouton pour rouvrir la tâche */}
+        <button className="open-button" onClick={() => onOpenTask(task._id)}>
+          Rouvrir
         </button>
       </div>
 
@@ -113,6 +95,7 @@ const Archives = ({
   showFeedback,
   isDarkMode,
   toggleDarkMode,
+  onUpdateTask, // Nouvelle prop pour mettre à jour la tâche
 }) => {
   // États locaux
   const [sortOrder, setSortOrder] = useState("desc");
@@ -160,14 +143,6 @@ const Archives = ({
     archivedSubtasksWithOpenParent
   );
 
-  // Gestion du drag & drop
-  const moveTask = (fromIndex, toIndex) => {
-    const updatedTasks = [...tasks];
-    const [movedTask] = updatedTasks.splice(fromIndex, 1);
-    updatedTasks.splice(toIndex, 0, movedTask);
-    setTasks(updatedTasks);
-  };
-
   // Tri des tâches par date d'archivage
   const sortedTasks = [...tasks].sort((a, b) => {
     const dateA = new Date(a.archivedAt);
@@ -202,20 +177,35 @@ const Archives = ({
     return true;
   });
 
+  // Fonction pour rouvrir une tâche
+  const onOpenTask = async (taskId) => {
+    try {
+      // Appeler la fonction pour mettre à jour la tâche dans la base de données
+      await onUpdateTask(taskId, { archived: "open", archivedAt: null });
+
+      // Mettre à jour l'état local
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task._id === taskId ? { ...task, archived: "open", archivedAt: null } : task
+        )
+      );
+    } catch (error) {
+      console.error("Erreur lors de la réouverture de la tâche :", error);
+    }
+  };
+
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="Archives"></div>
-
+    <div className="Archives">
       <div className="statistics-container">
-      <div className="statistics-header">
-        <h2>⛩️ TaskFlow 1.3.7 ⛩️ _N_I_G_H_T_
-        <button onClick={toggleDarkMode} className="dark-mode-button">
-          {isDarkMode ? "🌚" : "🌞"}
-        </button>_D_A_Y__
-        🕒 {formatClock(currentTime)} 🕒</h2>
-      </div>
-
-     
+        <div className="statistics-header">
+          <h3>
+          ⛩️ TaskFlow 1.3.9 ⛩️ ➖
+            <button onClick={toggleDarkMode} className="dark-mode-button">
+              {isDarkMode ? "🌚" : "🌞"}
+            </button>
+            _D_A_Y__ 🕒 {formatClock(currentTime)} 🕒
+          </h3>
+        </div>
 
         {/* Filtres */}
         <TaskFilters_Sessions filter={filter} setFilter={setFilter} tasks={tasks} />
@@ -246,25 +236,25 @@ const Archives = ({
                   key={task._id}
                   index={index}
                   task={task}
-                  moveTask={moveTask}
                   onDeleteTask={onDeleteTask}
                   onDeleteSubtask={onDeleteSubtask}
+                  onOpenTask={onOpenTask} // Passer la fonction onOpenTask
                 />
               ))
             ) : (
-              <div className="archived-tasks-empty">
-                Aucune tâche archivée.
-              </div>
+              <div className="archived-tasks-empty">Aucune tâche archivée.</div>
             )}
           </div>
 
-   {/* Minuteur Global sans affichage mais continue de tourner */}
-   <GlobalPomodoroTimer
-   />
+          {/* Minuteur Global sans affichage mais continue de tourner */}
+          <GlobalPomodoroTimer
+            tasks={tasks.filter(task => task.status === 'open')}
 
+            
+                       />
         </div>
       </div>
-    </DndProvider>
+    </div>
   );
 };
 

@@ -29,11 +29,11 @@ const VersionHistory = ({ isDarkMode, toggleDarkMode }) => {
 
 <div className="statistics-container">
       <div className="statistics-header">
-        <h2>⛩️ TaskFlow 1.3.7 ⛩️ _N_I_G_H_T_
+      <h3>⛩️ TaskFlow 1.3.9 ⛩️ ➖
         <button onClick={toggleDarkMode} className="dark-mode-button">
           {isDarkMode ? "🌚" : "🌞"}
         </button>_D_A_Y__
-        🕒 {formatClock(currentTime)} 🕒</h2>
+        🕒 {formatClock(currentTime)} 🕒</h3>
       </div>
 
 

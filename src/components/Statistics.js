@@ -50,6 +50,16 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
     && !task.archivedAt
   );
 
+  // Statistiques des tâches liquidées (closed)
+  const closedTasksToday = tasks.filter(task => {
+    if (task.archived === "closed" && task.archivedAt) {
+      const archivedDate = new Date(task.archivedAt);
+      return archivedDate.toDateString() === today.toDateString();
+    }
+    return false;
+  });
+
+
   // Debug logs
   useEffect(() => {
     console.log("Date actuelle:", today);
@@ -125,40 +135,96 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
     return "Tâche non trouvée";
   };
 
+  // Fonction pour déterminer l'emoji de récompense en fonction du pourcentage de progression
+  const getRewardEmoji = (closedTasksToday) => {
+    if (closedTasksToday >= 5) return "🏆🏆🏆"; // Trophée pour 100% ou plus
+    if (closedTasksToday >= 4) return "🏆"; // Trophée pour 100% ou plus
+    if (closedTasksToday >= 3) return "🎉"; // Confettis pour 75% ou plus
+    if (closedTasksToday >= 2) return "👍"; // Pouce en l'air pour 50% ou plus
+    if (closedTasksToday >= 1) return "🙂"; // Visage souriant pour 25% ou plus
+    return "💪"; // Muscle pour moins de 1
+  };
+
+  const calculateCategoryDurations = (tasks) => {
+    const categoryDurations = {};
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+    tasks.forEach((task) => {
+      if (task.categories && task.sessions) {
+        const category = task.categories;
+        const recentSessions = task.sessions.filter((session) => new Date(session.date) >= sevenDaysAgo);
+        const totalDuration = recentSessions.reduce((sum, session) => sum + session.duration, 0);
+
+        if (categoryDurations[category]) {
+          categoryDurations[category] += totalDuration;
+        } else {
+          categoryDurations[category] = totalDuration;
+        }
+      }
+    });
+
+    return categoryDurations;
+  };
+
+  const sortCategoriesByDuration = (categoryDurations) => {
+    const sortedCategories = Object.entries(categoryDurations).sort(([, durationA], [, durationB]) => durationB - durationA);
+    return sortedCategories;
+  };
+
+  const getTop5Categories = (sortedCategories) => {
+    return sortedCategories.slice(0, 5);
+  };
+
+  const formatDurationInHours = (duration) => {
+    const hours = (duration / 60).toFixed(2);
+    return `${hours}h`;
+  };
+
+  const categoryDurations = calculateCategoryDurations(tasks);
+  const sortedCategories = sortCategoriesByDuration(categoryDurations);
+  const top5Categories = getTop5Categories(sortedCategories);
+
   return (
     <div className="statistics-container">
       <div className="statistics-header">
-        <h2>⛩️ TaskFlow 1.3.7 ⛩️ _N_I_G_H_T_
+        <h3>⛩️ TaskFlow 1.3.9 ⛩️ ➖
         <button onClick={toggleDarkMode} className="dark-mode-button">
           {isDarkMode ? "🌚" : "🌞"}
-        </button>_D_A_Y__
-        🕒 {formatClock(currentTime)} 🕒</h2>
+        </button>➖
+        🕒 {formatClock(currentTime)} 🕒</h3>
       </div>
 
       <div className="statistics-grid">
-        <div className="stat-card">
-          <h3>Tâches Ouvertes</h3>
+        <div className="stat-card-tasks">
+          <h4>Tâches Ouvertes</h4>
           <p>📋 {openTasks.length}</p>
-          <h3>Tâches prioritaires</h3>
+          <h4>Tâches prioritaires</h4>
           <p>🔴🟠 {highMediumPriorityOpen.length}</p>
+           <h4>Tâches liquidées (Aujourd'hui)</h4>
+          <p>✅ {closedTasksToday.length}</p>
         </div>
 
-        <div className="stat-card">
-          <h3>Durée (Hier) </h3>
+        <div className="stat-card-duration">
+          <h4>Durée (Hier) </h4>
           <p>⏱️ {formatTime(totalSessionTimeYesterday)}</p>
-          <h3>Durée (Aujourd'hui)</h3>
+          <h4>Durée (Aujourd'hui)</h4>
           <p>⏱️ {formatTime(totalSessionTimeToday)}</p>
+  
+          <div className="spacer">
+            </div> 
+  
+          <h4>Level</h4>
+          <p className="reward-emoji">{getRewardEmoji(closedTasksToday.length)}</p>
         </div>
 
-        <div className="stat-card">
-          <h3>⌛</h3>
-          <div className="progress-bar-container">
-            <div className="progress-bar" style={{ width: `${validProgress}%` }}></div>
-          </div>
-          <p>{validProgress.toFixed(2)}%</p>
-          <p className="selected-task-name">{getSelectedTaskName()}</p>
-          <h3>⌛</h3>
-          <p className="timer-display">{formatTimeWithSeconds(timeLeft)}</p>
+        <div className="stat-card-top5">
+          <h4>Top 5 (7 derniers jours)</h4>
+          {top5Categories.map(([category, duration]) => (
+            <p key={category}>
+              {category} : {formatDurationInHours(duration)}
+            </p>
+          ))}
         </div>
 
         <div className="stat-card-weather">

@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
-import TaskForm from "../components/TaskForm";
 import TaskFilters from "../components/TaskFilters_home";
 import TaskList from "../components/TaskList";
 import EditTaskModal from "../components/EditTaskModal";
-import WeatherWidget from "../components/WeatherWidget";
-import Clock from "../components/Clock";
 import Statistics from "../components/Statistics";
 import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer";
 import "./Home.css";
@@ -114,21 +111,19 @@ const Home = ({
           showFeedback={showFeedback}
         />
         <GlobalPomodoroTimer
-          tasks={tasks}
+          tasks={tasks.filter(task => task.status === 'open')}
           updateTaskTime={updateTaskTime}
           fetchTasks={fetchTasks}
           setSelectedTaskId={setSelectedTaskId}
           showFeedback={showFeedback}
+          onAddTask={onAddTask}
+          taskCategories={taskCategories}
         />
       </section>
 
       <section className="tasks-section">
 
-        <TaskForm 
-        onAddTask={handleAddTask} 
-        taskCategories={taskCategories} 
-        showFeedback={showFeedback}
-        />
+
 
 <TaskFilters 
         filter={filter} 

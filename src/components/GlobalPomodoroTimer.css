@@ -1,214 +1,259 @@
 /* Styles de base du timer */
 .pomodoro-timer {
   width: 100%;
-  max-width: 350px;
+  max-width: 900px;
   max-height: 450px;
   background-color: #ffffff;
   border-radius: 12px;
-  padding: 20px;
+  padding: 14px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
   transition: all 0.3s ease;
+}
+
+/* Style spécifique pour le timer flottant (hors page Home) */
+.pomodoro-timer.floating {
+  position: fixed;
+  background-color: rgb(192, 242, 171);
+  bottom: 100px;
+  right: 5px;
+  width: 450px;
+  z-index: 1000;
+  transform: translateY(0);
+  zoom: 0.8;
+}
+
+/* État minimisé pour le timer flottant */
+.pomodoro-timer.floating.minimized {
+  transform: translateY(calc(100% - 40px));
+}
+
+/* En-tête du timer */
+.pomodoro-timer__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.pomodoro-timer__title {
+  font-size: 1rem;
+  margin: 0;
+  color: #2d3748;
+}
+
+/* Bouton de minimisation */
+.minimize-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: #666;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.minimize-button:hover {
+  background-color: #f0f0f0;
+}
+
+/* Contenu du timer */
+.pomodoro-timer__content {
+  opacity: 1;
+  transition: opacity 0.3s ease, max-height 0.3s ease;
+  max-height: 500px;
+  overflow: hidden;
+}
+
+.pomodoro-timer__content.hidden {
+  opacity: 0;
+  max-height: 0;
+}
+
+/* Container du timer */
+.timer-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* Barre de progression */
+.pomodoro-timer__progress-bar {
+  display: flex;
+  margin: 15px 0;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 8px;
+}
+
+.progress-bar-segment {
+  height: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.progress-bar-segment.active {
+  background-color: #4CAF50;
+}
+
+.progress-bar-segment.inactive {
+  background-color: #e0e0e0;
+}
+
+/* Barre de progression visible même en mode minimisé */
+.minimized-progress-bar {
+  display: flex;
+  margin: 5px 0;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 12px;
+  max-width: 85%;
+  margin: 0 auto;
 
 }
-  
-  /* Style spécifique pour le timer flottant (hors page Home) */
-  .pomodoro-timer.floating {
-    position: fixed;
-    bottom: 115px;
-    right: 20px;
-    width: 250px;
-    z-index: 1000;
-    transform: translateY(0);
-    zoom: 0.8;
-  }
-  
-  /* État minimisé pour le timer flottant */
-  .pomodoro-timer.floating.minimized {
-    transform: translateY(calc(100% - 40px));
-  }
-  
-  /* En-tête du timer */
-  .timer-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-  }
-  
-  
-  .timer-header h1 {
-    font-size: 0.9rem;
-    margin: 0;
-    color: #2d3748;
-  }
-  
-  /* Bouton de minimisation */
-  .minimize-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.1em;
-    color: #666;
-    padding: 5px;
-    border-radius: 50%;
-    transition: background-color 0.2s;
-  }
-  
-  .minimize-button:hover {
-    background-color: #f0f0f0;
-  }
-  
-  /* Contenu du timer */
-  .timer-content {
-    opacity: 1;
-    transition: opacity 0.3s ease, max-height 0.3s ease;
-    max-height: 500px;
-    overflow: hidden;
-  }
-  
-  .timer-content.hidden {
-    opacity: 0;
-    max-height: 0;
-  }
-  
-  /* Container du timer */
-  .timer-container {
-    text-align: center;
-    margin: 20px 0;
-  }
-  
-  /* Barre de progression */
-  .progress-bar-container {
-    display: flex;
-    margin: 15px 0;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    overflow: hidden;
-    height: 8px;
-  }
-  
-  .progress-bar-segment {
-    height: 100%;
-    transition: background-color 0.3s ease;
-  }
-  
-  .progress-bar-segment.active {
-    background-color: #4CAF50;
-  }
-  
-  .progress-bar-segment.inactive {
-    background-color: #e0e0e0;
-  }
-  
-  /* Affichage du temps */
-  .timer-display {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #4768a0;
-    margin: 20px 0;
-    display: block;
-  }
-  
-  /* Sélecteur de tâches et input de durée */
-  .task-selector,
-  .duration-input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 1rem;
-  }
-  
-  /* Boutons */
-  .timer-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-    flex-wrap: wrap;
-  }
-  
-  .timer-buttons button {
-    flex: 1;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-  }
-  
-  .timer-buttons button:active {
-    transform: scale(0.98);
-  }
-  
-  .start-button {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  .pause-button {
-    background-color: #FFA000;
-    color: white;
-  }
-  
-  .stop-button {
-    background-color: #f44336;
-    color: white;
-  }
-  
-  .reset-button {
-    background-color: #9E9E9E;
-    color: white;
-  }
-  
-  .timer-buttons button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-    opacity: 0.7;
-  }
-  
-  /* Information sur les sessions */
-  .session-info {
-    text-align: center;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
-  }
-  
-  /* Mode sombre */
-  body.dark .pomodoro-timer {
-    background-color: #1e1e1e;
-    color: #d4d4d4;
+
+.minimized-progress-bar .progress-bar-segment {
+  height: 100%;
+  transition: background-color 0.3s ease;
 }
-  
-body.dark .timer-header {
+
+.minimized-progress-bar .progress-bar-segment.active {
+  background-color: #4CAF50;
+}
+
+.minimized-progress-bar .progress-bar-segment.inactive {
+  background-color: #e0e0e0;
+}
+
+/* Affichage du temps */
+.pomodoro-timer__display {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #4768a0;
+  margin: 2px 0;
+  display: block;
+  text-align: center;
+}
+
+/* Sélecteur de tâches et input de durée */
+.pomodoro-timer__selector {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.pomodoro-timer__input {
+  width: 20%;
+  padding: 10px;
+
+  border: 1px solid #dddddd;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* Boutons */
+.pomodoro-timer__buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.pomodoro-timer__buttons button {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.pomodoro-timer__buttons button:active {
+  transform: scale(0.98);
+}
+
+.start-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.pause-button {
+  background-color: #FFA000;
+  color: white;
+}
+
+.stop-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.reset-button {
+  background-color: #9E9E9E;
+  color: white;
+}
+
+.pomodoro-timer__buttons button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+
+.pomodoro-button-add {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+
+}
+
+/* Information sur les sessions */
+.session-info {
+  text-align: center;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+/* Mode sombre */
+body.dark .pomodoro-timer {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+}
+
+body.dark .pomodoro-timer__header {
   border-bottom-color: #2d2d2d;
 }
-  
-body.dark .timer-header h1 {
+
+body.dark .pomodoro-timer__title {
   color: #cccccc;
 }
-  
+
 body.dark .minimize-button {
   color: #cccccc;
 }
-  
+
 body.dark .minimize-button:hover {
   background-color: #2d2d2d;
 }
-  
-body.dark .timer-display {
+
+body.dark .pomodoro-timer__display {
   color: #cccccc;
 }
-  
-body.dark .progress-bar-container {
+
+body.dark .pomodoro-timer__progress-bar {
   background-color: #2d2d2d;
 }
-  
+
 body.dark .progress-bar-segment.active {
   background-color: #388a34;
 }
@@ -216,14 +261,14 @@ body.dark .progress-bar-segment.active {
 body.dark .progress-bar-segment.inactive {
   background-color: #252526;
 }
-  
-body.dark .task-selector,
-body.dark .duration-input {
-    background-color: #252526;
-    border-color: #2d2d2d;
-    color: #d4d4d4;
+
+body.dark .pomodoro-timer__selector,
+body.dark .pomodoro-timer__input {
+  background-color: #252526;
+  border-color: #2d2d2d;
+  color: #d4d4d4;
 }
-  
+
 body.dark .session-info {
   border-top-color: #2d2d2d;
 }
@@ -244,7 +289,6 @@ body.dark .stop-button {
 body.dark .reset-button {
   background-color: #2d2d2d;
 }
-
 
 .pomodoro-timer.docked {
   position: hide;
@@ -271,4 +315,9 @@ body.dark .reset-button {
 
 .dock-button:hover {
   background-color: #f0f0f0;
+}
+
+/* Supprime les styles en double */
+.timer-header {
+  display: none;
 }

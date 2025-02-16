@@ -321,6 +321,7 @@ const App = () => {
                   isDarkMode={isDarkMode}
                   toggleDarkMode={toggleDarkMode}
                   setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
+                  onUpdateTask={updateTask} // Passer la fonction updateTask // modifier la propriété de la tâche "archived" + suppression de archivedAt
                 />
               }
             />
@@ -333,6 +334,8 @@ const App = () => {
                   onDeleteEntry={deleteConsumptionEntry}
                   isDarkMode={isDarkMode}
                   toggleDarkMode={toggleDarkMode}
+                  onAddTask={addTask} // ajout de tâche via pomodoro timer
+                  taskCategories={taskCategories} // ajout de tâche via pomodoro timer
                 />
               }
             />
@@ -344,6 +347,8 @@ const App = () => {
                   fetchTasks={fetchTasks}
                   isDarkMode={isDarkMode}
                   toggleDarkMode={toggleDarkMode}
+                  onAddTask={addTask} // ajout de tâche via pomodoro timer
+                  taskCategories={taskCategories} // ajout de tâche via pomodoro timer
                 />
               }
 

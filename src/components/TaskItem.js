@@ -13,11 +13,21 @@ const TaskItem = ({
   isArchived,
   taskCategories,
 }) => {
+
+  // Fonction pour calculer la progression
+  const calculateProgress = () => {
+    const totalSubtasks = task.subtasks.length;
+    const completedSubtasks = task.subtasks.filter((subtask) => subtask.archived === "closed").length;
+    return totalSubtasks > 0 ? (completedSubtasks / totalSubtasks) * 100 : 0;
+  };
+
   const [newSubtaskText, setNewSubtaskText] = useState("");
   const [expanded, setExpanded] = useState(false); // Initialiser expanded à false
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [hiddenSubtasks, setHiddenSubtasks] = useState([]);
+  const [progress, setProgress] = useState(calculateProgress()); // Ajoute un état pour la progression
+  const [isCompleted, setIsCompleted] = useState(false); // Ajoute un état pour indiquer si la tâche est terminée
 
   // Sons de notification
 const NOTIFICATION_SOUNDS = {
@@ -97,12 +107,6 @@ const playSound = (soundType) => {
     return `${day}.${month}.${year}`;
   };
 
-  const calculateProgress = () => {
-    const totalSubtasks = task.subtasks.length;
-    const completedSubtasks = task.subtasks.filter((subtask) => subtask.archived === "closed").length;
-    return totalSubtasks > 0 ? (completedSubtasks / totalSubtasks) * 100 : 0;
-  };
-
   const formatTime = (minutes) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
@@ -125,7 +129,7 @@ const playSound = (soundType) => {
           localStorage.setItem(`hiddenSubtasks-${taskId}`, JSON.stringify(updatedHiddenSubtasks));
           return updatedHiddenSubtasks;
         });
-      }, 5000); // Masquer la sous-tâche après 5 secondes
+      }, 10000); // Masquer la sous-tâche après 10 secondes (10000 ms)
     }
   };
 
@@ -158,7 +162,15 @@ const calculateSubtaskTime = (task, subtaskId) => {
   return subtaskSessions.reduce((acc, session) => acc + session.duration, 0);
 };
 
-
+const handleArchiveTask = () => {
+  onArchiveTask(task.id);
+  playSound('sessionComplete'); // Ajouter le son ici
+  setProgress(100); // Remplir la barre de progression
+  setIsCompleted(true); // Indiquer que la tâche est terminée
+  setTimeout(() => {
+    onArchiveTask(task.id);
+  }, 10000); // Délai de 10 secondes (2000 ms) avant d'archiver définitivement
+};
 
   return (
     <li className="task-item">
@@ -169,10 +181,7 @@ const calculateSubtaskTime = (task, subtaskId) => {
             <button className="edit-button" onClick={() => openEditModal(task)}>
               Éditer
             </button>
-            <button className="complete-button" onClick={() => { 
-              onArchiveTask(task.id);
-              playSound('sessionComplete'); // Ajouter le son ici
-            }}>
+            <button className="complete-button" onClick={handleArchiveTask}>
               Terminé
             </button>
             <button className="delete-button" onClick={() => onDeleteTask(task.id, isArchived)}>
@@ -199,10 +208,10 @@ const calculateSubtaskTime = (task, subtaskId) => {
         <div className="progress-bar-taskitem">
           <div
             className="progress-bar-taskitem-fill"
-            style={{ width: `${calculateProgress()}%` }}
+            style={{ width: `${progress}%` }}
           ></div>
         </div>
-        <p>Progression : {Math.round(calculateProgress())}%</p>
+        <p>Progression : {Math.round(progress)}%</p>
 
         
         {task.subtasks.length > 0 && (

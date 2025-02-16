@@ -13,6 +13,7 @@ import {
 } from "chart.js"; // Importer les composants nécessaires de Chart.js
 import ChartDataLabels from "chartjs-plugin-datalabels"; // Importer le plugin pour afficher les valeurs sur le graphique
 import { SelectedTaskContext } from "../context/SelectedTaskContext"; // Importer le contexte
+import TaskForm from "../components/TaskForm"; // Importer le composant TaskForm
 
 // Enregistrer les composants nécessaires de Chart.js, y compris le plugin datalabels
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
@@ -129,9 +130,12 @@ const FusionTool = ({
   onDeleteEntry,
   isDarkMode,
   toggleDarkMode,
+  onAddTask,
+  taskCategories,
 }) => {
   // Gestion des tâches et du contexte
   const [tasks, setTasks] = useState([]);
+  const [isTaskFormModalOpen, setIsTaskFormModalOpen] = useState(false);
   const { selectedTaskId, setSelectedTaskId } = useContext(SelectedTaskContext);
 
   // État du formulaire
@@ -426,19 +430,21 @@ const FusionTool = ({
     <div className="fusion-tool">
       <div className="statistics-container">
         <div className="statistics-header">
-        <h2>⛩️ TaskFlow 1.3.7 ⛩️ _N_I_G_H_T_
+        <h3>⛩️ TaskFlow 1.3.9 ⛩️ ➖
         <button onClick={toggleDarkMode} className="dark-mode-button">
           {isDarkMode ? "🌚" : "🌞"}
         </button>_D_A_Y__
-        🕒 {formatClock(currentTime)} 🕒</h2>
+        🕒 {formatClock(currentTime)} 🕒</h3>
       </div>
       </div>
 
       <GlobalPomodoroTimer
-        tasks={tasks}
+        tasks={tasks.filter(task => task.status === 'open')}
         fetchTasks={fetchTasks}
         setSelectedTaskId={setSelectedTaskId}
         selectedTaskId={selectedTaskId}
+        onAddTask={onAddTask}
+        taskCategories={taskCategories}
       />
 
       <h1>Fusion-Tool ⛩️</h1>

@@ -4,7 +4,7 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    line-height: 1.6;
+    line-height: 1.5;
   }
   
   /* Gestion du mode sombre */
@@ -20,11 +20,6 @@ body {
     list-style-type: none;
   }
   
-  /* Classes personnalisées globales */
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-  }
   
   /* organiser menu flottant */
   .app-container {
