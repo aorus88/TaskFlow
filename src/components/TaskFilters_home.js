@@ -72,7 +72,10 @@ const TaskFilters_home = ({ filter = {}, setFilter = () => {}, taskCategories = 
   };
 
   return (
-      <div className="filter-container">
+    <div className="filter-container">
+      {/* Stat Card pour les filtres de priorité et de date */}
+      <div className="stat-card-filter1">
+        <h3>Filtres de Tâches</h3>
         {/* Filtre de priorité */}
         <div className="filter-group">
           <label>
@@ -100,7 +103,11 @@ const TaskFilters_home = ({ filter = {}, setFilter = () => {}, taskCategories = 
             />
           </label>
         </div>
+      </div>
 
+      {/* Stat Card pour les filtres de chronologie et de recherche */}
+      <div className="stat-card-filter2">
+        <h3>Filtres de Recherche</h3>
         {/* Filtre du plus récent ou plus ancien (ordre) */}
         <div className="filter-group">
           <label>
@@ -115,41 +122,45 @@ const TaskFilters_home = ({ filter = {}, setFilter = () => {}, taskCategories = 
           </label>
         </div>
 
-           {/* Filtre de recherche */}
-          <div className="filter-group">
-            <label>
-              Recherche :
-              <input
-                type="text"
-                value={filter.search || ""}
-                onChange={(e) => handleChange("search", e.target.value)}
-                placeholder="Rechercher une tâche..."
-              />
-            </label>
-          </div>
-      {/* Filtre de catégorie */}
-      <div className="filter-group">
-        <label>
-          Catégories :
-          <select
-            multiple
-            value={selectedCategories}
-            onChange={handleCategoryChange}
-            className="dropdown-select"
-          >
-            <option value="all">Toutes</option>
-            <option value="none">Aucune</option>
-            {taskCategories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-      ))}
-    </select>
-  </label>
-</div>
-</div>
-          );
-        };
+        {/* Filtre de recherche */}
+        <div className="filter-group">
+          <label>
+            Recherche :
+            <input
+              type="text"
+              value={filter.search || ""}
+              onChange={(e) => handleChange("search", e.target.value)}
+              placeholder="Rechercher une tâche..."
+            />
+          </label>
+        </div>
+      </div>
 
-        export default TaskFilters_home;
+      {/* Stat Card pour les filtres de catégorie */}
+      <div className="stat-card-filter3">
+        <h3>Filtres de Catégories</h3>
+        <div className="filter-group">
+          <label>
+            Catégories :
+            <select
+              multiple
+              value={selectedCategories}
+              onChange={handleCategoryChange}
+              className="dropdown-select"
+            >
+              <option value="all">Toutes</option>
+              <option value="none">Aucune</option>
+              {taskCategories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+  );
+};
 
+export default TaskFilters_home;

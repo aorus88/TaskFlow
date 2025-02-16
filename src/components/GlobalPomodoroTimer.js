@@ -306,14 +306,31 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
             className="dock-button"
             onClick={togglePosition}
           >
-            {isFloating ? '🔓' : '📌'}
+            {isFloating ? '🔒' : '🔓'}
           </button>
           <button 
             className="minimize-button"
             onClick={() => setIsMinimized(!isMinimized)}
           >
-            {isMinimized ? '🔼' : '🔽'}
+            {isMinimized ? '⤴️' : '⤵️'}
           </button>
+          {/* Emojis conditionnels */}
+          {isMinimized && (
+            <>
+              <button className="emoji-button" onClick={startTimer} disabled={!selectedTaskId || isRunning}>
+                ▶️
+              </button>
+              <button className="emoji-button" onClick={pauseResumeTimer} disabled={!isRunning}>
+                {isPaused ? "⏯️" : "⏸️"}
+              </button>
+              <button className="emoji-button" onClick={completeAndAssignTime} disabled={!selectedTaskId}>
+                ✅
+              </button>
+              <button className="emoji-button" onClick={resetTimer}>
+                ❌
+              </button>
+            </>
+          )}
           {/* Nouveau bouton pour ouvrir la modale */}
           <button className="pomodoro-button-add" onClick={() => setIsTaskFormModalOpen(true)}>➕ Ajouter Tâche</button>
         </div>

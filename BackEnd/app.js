@@ -221,29 +221,42 @@ app.delete('/tasks/:taskId/subtasks/:subtaskId', async (req, res) => {
 
 // 2a) 
 // Ajouter une session de temps à une tâche
-app.post('/tasks/:id/sessions', async (req, res) => {
+  app.post('/tasks/:taskId/sessions', async (req, res) => {
+  const taskId = req.params.taskId;
+  const session = req.body; // Exemple : { duration: 3, date: new Date(), subtaskId: '67b1c55f643bae2573ebe7b4' }
+  
   try {
-    const { type, targetId } = req.body;
-    const session = {
-      duration: req.body.duration,
-      date: req.body.date,
-      type: type,
-      targetId: targetId
-    };
-
-    const task = await Task.findById(type === 'task' ? targetId : req.params.id);
+    const task = await Task.findById(taskId);
     if (!task) {
-      return res.status(404).json({ message: "Tâche non trouvée" });
+      return res.status(404).send({ error: 'Task not found' });
     }
-
-    task.sessions.push(session);
+    
+    if (session.subtaskId) {
+      // Recherche de la sous-tâche par son _id dans le tableau task.subtasks
+      const subtask = task.subtasks.id(session.subtaskId);
+      if (!subtask) {
+        return res.status(404).send({ error: 'Subtask not found' });
+      }
+      // Ajout de la session dans la sous-tâche
+      subtask.sessions.push({
+        duration: session.duration,
+        date: session.date || new Date()
+      });
+    } else {
+      // Ajout de la session dans la tâche principale si aucune sous-tâche n'est spécifiée
+      task.sessions.push({
+        duration: session.duration,
+        date: session.date || new Date()
+      });
+    }
+    
     await task.save();
-
-    res.status(200).json(task);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.send(task);
+  } catch (e) {
+    res.status(400).send(e);
   }
 });
+
 
 //  2b)
 //  Route pour récupérer les sessions d'une tâche spécifique

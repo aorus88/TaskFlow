@@ -127,3 +127,38 @@ body.dark .task-form button:active {
     padding: 10px;
   }
 }
+
+/* Styles spécifiques pour les appareils mobiles */
+@media screen and (max-width: 600px) {
+  .task-form {
+    padding: 12px; /* Réduire le padding */
+    margin-bottom: 16px; /* Réduire la marge inférieure */
+  }
+
+  .form-group {
+    margin-bottom: 12px; /* Réduire la marge inférieure */
+  }
+
+  .form-group label {
+    font-size: 0.8rem; /* Réduire la taille de la police */
+    margin-bottom: 4px; /* Réduire la marge inférieure */
+  }
+
+  .task-form input,
+  .task-form select {
+    padding: 6px; /* Réduire le padding */
+    font-size: 0.9rem; /* Réduire la taille de la police */
+  }
+
+  .task-form button {
+    padding: 8px 16px; /* Réduire le padding */
+    font-size: 0.9rem; /* Réduire la taille de la police */
+  }
+
+  /* Ajustements spécifiques pour iOS */
+  @supports (-webkit-touch-callout: none) {
+    .task-form button {
+      -webkit-appearance: none; /* Supprimer le style natif des boutons iOS */
+    }
+  }
+}

@@ -1,9 +1,9 @@
 .fusion-tool {
-  margin: 10px auto;
   padding: 10px auto;
-  border: 15px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+  border-left: 12px solid #ffffff00;
+  border-right: 12px solid #ffffff00;
 }
 
 .fusion-form {

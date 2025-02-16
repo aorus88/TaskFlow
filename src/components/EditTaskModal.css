@@ -112,3 +112,43 @@ body.modal-open .modal-overlay,
 body.modal-open .modal-content {
   pointer-events: auto; /* Réactive les interactions pour l'overlay et la modale */
 }
+
+
+/* Styles spécifiques pour les appareils mobiles */
+@media screen and (max-width: 600px) {
+  .modal-content {
+    width: 90%; /* Utiliser 90% de la largeur de l'écran */
+    max-width: 400px; /* Limiter la largeur maximale */
+    padding: 16px; /* Réduire le padding */
+  }
+
+  .modal-form label {
+    margin-bottom: 8px; /* Réduire la marge inférieure */
+    font-size: 0.9rem; /* Réduire la taille de la police */
+  }
+
+  .modal-form input,
+  .modal-form select {
+    padding: 6px; /* Réduire le padding */
+    font-size: 0.9rem; /* Réduire la taille de la police */
+  }
+
+  .modal-buttons {
+    margin-top: 16px; /* Réduire la marge supérieure */
+    flex-direction: column; /* Empiler les boutons */
+    align-items: stretch; /* Étirer les boutons sur toute la largeur */
+    gap: 8px; /* Réduire l'espacement entre les boutons */
+  }
+
+  .modal-buttons button {
+    padding: 10px 12px; /* Augmenter le padding pour le toucher */
+    font-size: 0.9rem; /* Réduire la taille de la police */
+  }
+
+  /* Ajustements spécifiques pour iOS */
+  @supports (-webkit-touch-callout: none) {
+    .modal-buttons button {
+      -webkit-appearance: none; /* Supprimer le style natif des boutons iOS */
+    }
+  }
+}

@@ -1,31 +1,48 @@
 /* Styles de base du timer */
 .pomodoro-timer {
-  width: 100%;
   max-width: 900px;
   max-height: 450px;
   background-color: #ffffff;
-  border-radius: 12px;
+  border-radius: 40px;
   padding: 14px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
+  margin-left: 12px auto;
   transition: all 0.3s ease;
+  border-left: 25px solid whitesmoke;
+  border-right: 20px solid whitesmoke;
+  border-top: 20px solid whitesmoke;
+  border-bottom: 20px solid whitesmoke;
+}
+
+/* Style spécifique pour le timer docké */
+.pomodoro-timer.docked {
+  position: hide;
+  bottom: 0;
+  border-left: 25px solid whitesmoke;
+  border-right: 20px solid whitesmoke;
+  border-top: 20px solid whitesmoke;
+  border-bottom: 20px solid whitesmoke;
+  transform: none;
 }
 
 /* Style spécifique pour le timer flottant (hors page Home) */
 .pomodoro-timer.floating {
   position: fixed;
-  background-color: rgb(192, 242, 171);
+  background-color: rgb(190, 196, 196);
   bottom: 100px;
   right: 5px;
-  width: 450px;
+  width: 350px;
   z-index: 1000;
   transform: translateY(0);
-  zoom: 0.8;
+  zoom: 0.75;
+  border-left: 25px solid rgb(190, 196, 196);
+  border-right: 20px solid rgb(190, 196, 196);
+  border-top: 20px solid rgb(190, 196, 196);
+  border-bottom: 20px solid rgb(190, 196, 196);
 }
 
 /* État minimisé pour le timer flottant */
 .pomodoro-timer.floating.minimized {
-  transform: translateY(calc(100% - 40px));
+  transform: translateY(calc(100% - 100px));
 }
 
 /* En-tête du timer */
@@ -226,8 +243,12 @@
 
 /* Mode sombre */
 body.dark .pomodoro-timer {
-  background-color: #1e1e1e;
+  background-color: #535252;
   color: #d4d4d4;
+  border-left: 25px solid #535252;
+  border-right: 20px solid #535252;
+  border-top: 20px solid #535252;
+  border-bottom: 20px solid #535252;
 }
 
 body.dark .pomodoro-timer__header {
@@ -290,12 +311,7 @@ body.dark .reset-button {
   background-color: #2d2d2d;
 }
 
-.pomodoro-timer.docked {
-  position: hide;
-  bottom: 0;
-  right: 20px;
-  transform: none;
-}
+
 
 .timer-controls {
   display: flex;
@@ -320,4 +336,27 @@ body.dark .reset-button {
 /* Supprime les styles en double */
 .timer-header {
   display: none;
+}
+
+.emoji-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: #666;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.emoji-button:hover {
+  background-color: #f0f0f0;
+}
+
+body.dark .emoji-button {
+  color: #cccccc;
+}
+
+body.dark .emoji-button:hover {
+  background-color: #2d2d2d;
 }

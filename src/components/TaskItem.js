@@ -50,20 +50,20 @@ const playSound = (soundType) => {
 
     // Fonction pour calculer les jours restants
     const calculateDaysRemaining = () => {
-      if (!task.date) return null;
-      
+      if (!task.date) return { text: "Pas de date", className: "no-date" };
+    
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const dueDate = new Date(task.date);
       dueDate.setHours(0, 0, 0, 0);
-      
+    
       const diffTime = dueDate - today;
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      
-      if (diffDays < 0) return "En retard";
-      if (diffDays === 0) return "Aujourd'hui";
-      if (diffDays === 1) return "Demain";
-      return `${diffDays} jours restants`;
+    
+      if (diffDays < 0) return { text: "En retard", className: "overdue" };
+      if (diffDays === 0) return { text: "Aujourd'hui", className: "today" };
+      if (diffDays === 1) return { text: "Demain", className: "tomorrow" };
+      return { text: `${diffDays} jours restants`, className: "remaining" };
     };
 
   const openEditModal = (task) => {
@@ -156,10 +156,10 @@ const calculateTotalTime = (task) => {
 
 // 2. Ajout d'une fonction pour calculer le temps par sous-tâche
 const calculateSubtaskTime = (task, subtaskId) => {
-  const subtaskSessions = task.sessions.filter(s => 
+  const subtaskSessions = task.sessions.filter(s =>
     s.type === 'subtask' && s.targetId === subtaskId
   );
-  return subtaskSessions.reduce((acc, session) => acc + session.duration, 0);
+  return subtaskSessions.reduce((acc, session) => acc + (session.duration || 0), 0);
 };
 
 const handleArchiveTask = () => {
@@ -189,7 +189,14 @@ const handleArchiveTask = () => {
             </button>
           </div>
         </div>
-        Échéance : {calculateDaysRemaining() || "Pas de date"}
+        <div className="task-content"></div>
+        Échéance : {
+          (() => {
+            const daysRemaining = calculateDaysRemaining();
+            return <span className={daysRemaining.className}>{daysRemaining.text}</span>;
+          })()
+        }
+        
         <p>
           <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
         </p>

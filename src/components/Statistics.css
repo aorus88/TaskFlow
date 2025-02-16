@@ -138,6 +138,10 @@ body.dark .statistics-container {
   border-color: #000000;
 }
 
+body.dark .statistics-header {
+  color: #cccccc;
+}
+
 body.dark .statistics-header h2 {
   color: #cccccc;
 }
