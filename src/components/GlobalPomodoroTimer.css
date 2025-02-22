@@ -1,9 +1,9 @@
 /* Styles de base du timer */
 .pomodoro-timer {
-  max-width: 900px;
-  max-height: 450px;
+  max-width: auto;
+  max-height: 550px;
   background-color: #ffffff;
-  border-radius: 40px;
+  border-radius: 20px;
   padding: 14px;
   margin-left: 12px auto;
   transition: all 0.3s ease;
@@ -22,27 +22,32 @@
   border-top: 20px solid whitesmoke;
   border-bottom: 20px solid whitesmoke;
   transform: none;
+  margin: auto;
+  zoom: 0.95;
+  
 }
 
 /* Style spécifique pour le timer flottant (hors page Home) */
 .pomodoro-timer.floating {
   position: fixed;
-  background-color: rgb(190, 196, 196);
-  bottom: 100px;
+  background-color: whitesmoke;
+  bottom: 200px;
   right: 5px;
-  width: 350px;
+  width: 450px;
   z-index: 1000;
   transform: translateY(0);
   zoom: 0.75;
-  border-left: 25px solid rgb(190, 196, 196);
-  border-right: 20px solid rgb(190, 196, 196);
-  border-top: 20px solid rgb(190, 196, 196);
-  border-bottom: 20px solid rgb(190, 196, 196);
+  border-left: 25px solid #e0e0e0;
+  border-right: 20px solid #e0e0e0;
+  border-top: 20px solid #e0e0e0;
+  border-bottom: 20px solid #e0e0e0;
+  
 }
 
 /* État minimisé pour le timer flottant */
 .pomodoro-timer.floating.minimized {
   transform: translateY(calc(100% - 100px));
+  
 }
 
 /* En-tête du timer */
@@ -55,10 +60,27 @@
   border-bottom: 1px solid #eee;
 }
 
-.pomodoro-timer__title {
-  font-size: 1rem;
+.pomodoro-timer-header-taskname {
+  font-size: 1.2rem;
+  font-weight: bold;
   margin: 0;
   color: #2d3748;
+  text-align: center;
+  background-color: rgba(226, 231, 244, 0.893);
+  padding: 5px;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+
+.pomodoro-timer-header-timer {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #4768a0;
+  margin: 2px 0;
+  margin-right: 12px;
+  display: block;
+  text-align: center;
+  
 }
 
 /* Bouton de minimisation */
@@ -66,11 +88,12 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.1em;
+  font-size: 1.4em;
   color: #666;
-  padding: 5px;
-  border-radius: 50%;
+  padding-right: 25px;
+  border-radius: 20%;
   transition: background-color 0.2s;
+  border-color: #252526;
 }
 
 .minimize-button:hover {
@@ -322,10 +345,10 @@ body.dark .reset-button {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   color: #666;
-  padding: 5px;
-  border-radius: 50%;
+  padding-left: 10px;
+  border-radius: 20%;
   transition: background-color 0.2s;
 }
 
@@ -341,13 +364,17 @@ body.dark .reset-button {
 .emoji-button {
   background: none;
   border: none;
+
+  margin: 2px;
   cursor: pointer;
-  font-size: 1.1em;
-  color: #666;
+  font-size: 1.5em;
+
   padding: 5px;
-  border-radius: 50%;
-  transition: background-color 0.2s;
+  border-radius: 20%;
+  transition: background-color 0.2s, border-color 0.2s;
 }
+
+
 
 .emoji-button:hover {
   background-color: #f0f0f0;

@@ -160,23 +160,9 @@ const Sessions = ({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) => 
 
   return (
     <div className="statistics-container">
-      <div className="statistics-header">
-        <h3>⛩️ TaskFlow 1.3.9 ⛩️ ➖
-          <button onClick={toggleDarkMode} className="dark-mode-button">
-            {isDarkMode ? "🌚" : "🌞"}
-          </button>_D_A_Y__
-          🕒 {formatClock(currentTime)} 🕒
-        </h3>
-      </div>
+ 
 
-      <GlobalPomodoroTimer 
-        tasks={tasks.filter(task => task.status === 'open')}
-        selectedTaskId={filter.taskId}
-        selectedsubTaskId={filter.subTaskId}
-        fetchTasks={fetchTasksAndSessionsCallback} // Passer la fonction callback
-        onAddTask={onAddTask} // ajout de tâche via pomodoro timer
-        taskCategories={taskCategories} // ajout de tâche via pomodoro timer
-      />
+    
 
       <div className="sessions-header">
         <h1> ⏱️ Suivi du temps</h1>

@@ -100,9 +100,7 @@ const Home = ({
   return (
     <div className="home-container">
 
-      
-      <section className="stats-pomodoro-section">
-     
+
         <Statistics 
           tasks={tasks} 
           isDarkMode={isDarkMode}
@@ -110,16 +108,8 @@ const Home = ({
           setSelectedTaskId={setSelectedTaskId}
           showFeedback={showFeedback}
         />
-        <GlobalPomodoroTimer
-          tasks={tasks.filter(task => task.status === 'open')}
-          updateTaskTime={updateTaskTime}
-          fetchTasks={fetchTasks}
-          setSelectedTaskId={setSelectedTaskId}
-          showFeedback={showFeedback}
-          onAddTask={onAddTask}
-          taskCategories={taskCategories}
-        />
-      </section>
+
+
 
       <section className="tasks-section">
 
@@ -148,6 +138,7 @@ const Home = ({
           onToggleSubtaskStatus={onToggleSubtaskStatus}
           onUpdateTask={onSaveTask} 
           showFeedback={showFeedback}
+          
         />
       </section>
 

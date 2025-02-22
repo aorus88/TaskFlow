@@ -428,24 +428,11 @@ const FusionTool = ({
 
   return (
     <div className="fusion-tool">
-      <div className="statistics-container">
-        <div className="statistics-header">
-        <h3>⛩️ TaskFlow 1.3.9 ⛩️ ➖
-        <button onClick={toggleDarkMode} className="dark-mode-button">
-          {isDarkMode ? "🌚" : "🌞"}
-        </button>_D_A_Y__
-        🕒 {formatClock(currentTime)} 🕒</h3>
-      </div>
-      </div>
+   
 
-      <GlobalPomodoroTimer
-        tasks={tasks.filter(task => task.status === 'open')}
-        fetchTasks={fetchTasks}
-        setSelectedTaskId={setSelectedTaskId}
-        selectedTaskId={selectedTaskId}
-        onAddTask={onAddTask}
-        taskCategories={taskCategories}
-      />
+
+
+
 
       <h1>Fusion-Tool ⛩️</h1>
       <form className="fusion-form">

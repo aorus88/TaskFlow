@@ -1,0 +1,59 @@
+.additional-menu {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #6e6c68;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: max-height 0.3s ease;
+  }
+  
+  .additional-menu.closed .menu-items {
+    display: none;
+  }
+  
+  .menu-toggle {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .menu-items {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #6e6c68;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    z-index: 1000;
+    transition: max-height 0.3s ease;
+    padding: 10px 45px;
+    gap: 45px;  /* espace augmenté à 20px */
+  }
+  
+  .menu-link {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+  }
+
+.menu-button {
+  position: absolute;
+  left: 20px;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  background: none; /* retire le fond */
+  border: none;     /* retire la bordure */
+  font-size: 2rem;  /* agrandit l'emoji */
+
+
+}

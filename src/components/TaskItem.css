@@ -12,6 +12,23 @@
   zoom: 0.9;
 }
 
+/* Styles pour le mode compact */
+.task-item.compact-view {
+  padding: 8px;
+  margin-bottom: 5px;
+  border-left: none;
+  box-shadow: none;
+}
+
+.task-item.compact-view .task-name {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+.task-item.compact-view .task-buttons {
+  display: none; /* Masquer les boutons en mode compact */
+}
+
 .overdue {
   color: rgba(232, 25, 25, 0.832);
   font-weight: bold;
@@ -61,7 +78,7 @@ body.dark .task-content {
 
 /* Style pour le nom de la tâche */
 .task-name {
-  font-size: 1.3em;
+  font-size: 1.1rem;
   font-weight: bold;
   color: #333;
   margin-bottom: 8px;
@@ -99,6 +116,7 @@ body.dark .delete-button {
 .task-item p {
   margin: 2px 0;
   color: #050404c7;
+  font-size: 0.8rem;
 }
 
 /* Mode sombre -  Style pour priorité, catégories, temps total , dernière session */
@@ -212,6 +230,8 @@ body.dark .task-item p {
   transform: translateY(-50%);
 }
 
+
+
 /* Media queries pour les appareils mobiles */
 @media screen and (max-width: 768px) {
   .task-item {
@@ -255,4 +275,9 @@ body.dark .task-item p {
   .task-item {
     padding-right: 16px;
   }
+}
+
+/* filepath: /a:/src/components/TaskList.css */
+.task-list.compact-view {
+  grid-template-columns: 1fr; /* Une seule colonne en mode compact */
 }

@@ -19,6 +19,7 @@ const TaskList = ({
 }) => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isCompactView, setIsCompactView] = useState(false); // Ajout d'un état pour le mode d'affichage
 
   // Fonction pour filtrer les tâches en fonction des filtres
   const filteredTasks = tasks.filter((task) => {
@@ -35,15 +36,15 @@ const TaskList = ({
       return task.name.toLowerCase().includes(filter.search.toLowerCase());
     }
 
-      // Ajout du filtre des catégories
-      if (filter.categories && filter.categories.length > 0) {
-        return filter.categories.some(category => 
-          task.categories.includes(category)
-        );
-      }
-    
-      return true;
-    });
+    // Ajout du filtre des catégories
+    if (filter.categories && filter.categories.length > 0) {
+      return filter.categories.some(category =>
+        task.categories.includes(category)
+      );
+    }
+
+    return true;
+  });
 
   // Fonction pour trier les tâches par date d'ajout
   const sortedTasks = filteredTasks.sort((a, b) => {
@@ -76,9 +77,17 @@ const TaskList = ({
     handleCloseModal();
   };
 
+  // Fonction pour basculer entre les modes d'affichage
+  const toggleViewMode = () => {
+    setIsCompactView(!isCompactView);
+  };
+
   return (
     <div className="task-list-container">
-      <ul className="task-list">
+      <button onClick={toggleViewMode}>
+        {isCompactView ? "Affichage normal" : "Affichage compact"}
+      </button>
+      <ul className={`task-list ${isCompactView ? "compact-view" : ""}`}>
         {sortedTasks.map((task) => (
           <TaskItem
             key={task.id}
@@ -94,6 +103,7 @@ const TaskList = ({
             onUpdateTask={onSaveTask}
             onUpdateTaskTime={onUpdateTaskTime} // Passage de la prop
             isArchived={isArchived}
+            isCompactView={isCompactView} // Passage du mode d'affichage en tant que prop
           />
         ))}
       </ul>

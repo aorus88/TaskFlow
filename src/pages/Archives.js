@@ -197,16 +197,7 @@ const Archives = ({
   return (
     <div className="Archives">
       <div className="statistics-container">
-        <div className="statistics-header">
-          <h3>
-          ⛩️ TaskFlow 1.3.9 ⛩️ ➖
-            <button onClick={toggleDarkMode} className="dark-mode-button">
-              {isDarkMode ? "🌚" : "🌞"}
-            </button>
-            _D_A_Y__ 🕒 {formatClock(currentTime)} 🕒
-          </h3>
-        </div>
-
+      
         {/* Filtres */}
         <TaskFilters_Sessions filter={filter} setFilter={setFilter} tasks={tasks} />
 
@@ -245,13 +236,6 @@ const Archives = ({
               <div className="archived-tasks-empty">Aucune tâche archivée.</div>
             )}
           </div>
-
-          {/* Minuteur Global sans affichage mais continue de tourner */}
-          <GlobalPomodoroTimer
-            tasks={tasks.filter(task => task.status === 'open')}
-
-            
-                       />
         </div>
       </div>
     </div>

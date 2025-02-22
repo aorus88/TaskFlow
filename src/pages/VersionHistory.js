@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./VersionHistory.css"; // Créez ce fichier pour les styles spécifiques à cette page
+import AdditionalMenu from "../components/AdditionalMenu";
 
 const VersionHistory = ({ isDarkMode, toggleDarkMode }) => { 
 
@@ -28,16 +29,9 @@ const VersionHistory = ({ isDarkMode, toggleDarkMode }) => {
 
 
 <div className="statistics-container">
-      <div className="statistics-header">
-      <h3>⛩️ TaskFlow 1.3.9 ⛩️ ➖
-        <button onClick={toggleDarkMode} className="dark-mode-button">
-          {isDarkMode ? "🌚" : "🌞"}
-        </button>_D_A_Y__
-        🕒 {formatClock(currentTime)} 🕒</h3>
-      </div>
+ 
 
-
-      <h1>Historique Versions - TaskFlow 📈📊</h1>
+      <h1>Historique Versions </h1>
       <p>Bienvenue sur la page de l'historique des versions. Ici, vous trouverez des informations sur les différentes versions de l'application.</p>
       <ul>
 

@@ -298,21 +298,21 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
   return (
     <div className={`pomodoro-timer ${!isPreview ? (isFloating ? 'floating' : 'docked') : ''} ${isMinimized ? 'minimized' : ''}`}>
       <div className="pomodoro-timer__header">
-        <h1 className="pomodoro-timer__title">{formatTime(timeLeft)} ⏱️</h1>
-        <h1 className="pomodoro-timer__title">{getTaskNameWithIcon(selectedTaskId, tasks)}</h1>
+        <h1 className="pomodoro-timer-header-timer">{formatTime(timeLeft)} ⏱️</h1>
+        <h1 className="pomodoro-timer-header-taskname">{getTaskNameWithIcon(selectedTaskId, tasks)}</h1>
         <h3></h3>
         <div className="pomodoro-timer__controls">
           <button 
             className="dock-button"
             onClick={togglePosition}
           >
-            {isFloating ? '🔒' : '🔓'}
+            {isFloating ? '📌' : '📌'}
           </button>
           <button 
             className="minimize-button"
             onClick={() => setIsMinimized(!isMinimized)}
           >
-            {isMinimized ? '⤴️' : '⤵️'}
+            {isMinimized ? '➕' : '➖'}
           </button>
           {/* Emojis conditionnels */}
           {isMinimized && (
@@ -327,7 +327,7 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
                 ✅
               </button>
               <button className="emoji-button" onClick={resetTimer}>
-                ❌
+                ⛔
               </button>
             </>
           )}

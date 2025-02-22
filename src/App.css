@@ -1,0 +1,25 @@
+.main-title {
+  font-size: 2em;
+  color: #000;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.dark-mode-button {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: inherit;
+}
+
+.app-title {
+  color: #000;
+  margin-bottom: 2px;
+  font-weight: bold;
+  text-align: center;
+}

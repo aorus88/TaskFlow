@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./TaskItem.css";
 import EditTaskModal from "./EditTaskModal"; // Import de la modale
+import TaskDetailsModal from "./TaskDetailsModal"; // Import de la nouvelle modale
 
 const TaskItem = ({
   task,
@@ -12,6 +13,7 @@ const TaskItem = ({
   onToggleSubtaskStatus,
   isArchived,
   taskCategories,
+  isCompactView, // Ajout de la prop pour le mode d'affichage
 }) => {
 
   // Fonction pour calculer la progression
@@ -28,6 +30,7 @@ const TaskItem = ({
   const [hiddenSubtasks, setHiddenSubtasks] = useState([]);
   const [progress, setProgress] = useState(calculateProgress()); // Ajoute un état pour la progression
   const [isCompleted, setIsCompleted] = useState(false); // Ajoute un état pour indiquer si la tâche est terminée
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
   // Sons de notification
 const NOTIFICATION_SOUNDS = {
@@ -74,6 +77,14 @@ const playSound = (soundType) => {
   const closeEditModal = () => {
     setSelectedTask(null);
     setIsModalOpen(false);
+  };
+
+  const openDetailsModal = () => {
+    setIsDetailsModalOpen(true);
+  };
+
+  const closeDetailsModal = () => {
+    setIsDetailsModalOpen(false);
   };
 
   const handleAddSubtask = () => {
@@ -173,7 +184,7 @@ const handleArchiveTask = () => {
 };
 
   return (
-    <li className="task-item">
+    <li className={`task-item ${isCompactView ? "compact-view" : ""}`}>
       <div className="task-content">
         <div className="task-item-header">
           <strong className="task-name">{task.name}</strong>
@@ -187,81 +198,88 @@ const handleArchiveTask = () => {
             <button className="delete-button" onClick={() => onDeleteTask(task.id, isArchived)}>
               Supprimer
             </button>
+            <button className="details-button" onClick={openDetailsModal}>
+              Détails
+            </button>
           </div>
         </div>
-        <div className="task-content"></div>
-        Échéance : {
-          (() => {
-            const daysRemaining = calculateDaysRemaining();
-            return <span className={daysRemaining.className}>{daysRemaining.text}</span>;
-          })()
-        }
-        
-        <p>
-          <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
-        </p>
-        {task.categories && task.categories.length > 0 && (
-          <p>
-            <strong>Catégories :</strong> {task.categories.join(", ")}
-          </p>
-        )}
-        <p>
-          <strong>Temps total :</strong> {formatTime(calculateTotalTime(task))}
-        </p>
-        <p>
-          <strong>Dernière session :</strong> {formatTime(lastSessionDuration)}
-        </p>
+        {!isCompactView && (
+          <>
+            <div className="task-content"></div>
+            Échéance : {
+              (() => {
+                const daysRemaining = calculateDaysRemaining();
+                return <span className={daysRemaining.className}>{daysRemaining.text}</span>;
+              })()
+            }
 
-        <div className="progress-bar-taskitem">
-          <div
-            className="progress-bar-taskitem-fill"
-            style={{ width: `${progress}%` }}
-          ></div>
-        </div>
-        <p>Progression : {Math.round(progress)}%</p>
+            <p>
+              <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
+            </p>
+            {task.categories && task.categories.length > 0 && (
+              <p>
+                <strong>Catégories :</strong> {task.categories.join(", ")}
+              </p>
+            )}
+            <p>
+              <strong>Temps total :</strong> {formatTime(calculateTotalTime(task))}
+            </p>
+            <p>
+              <strong>Dernière session :</strong> {formatTime(lastSessionDuration)}
+            </p>
 
-        
-        {task.subtasks.length > 0 && (
-          <div className="subtasks-section">
-            <button onClick={() => setExpanded(!expanded)}>
-              {expanded ? "Masquer les sous-tâches" : "Voir les sous-tâches"}
-            </button>
-            {expanded && (
-              <div className="subtask-list">
-                {task.subtasks
-                  .filter((subtask) => subtask.archived === "open")
-                  .map((subtask) => (
-                    !hiddenSubtasks.includes(subtask.id) && (
-                      <div key={subtask.id} className="subtask-item">
-                        <input
-                          type="checkbox"
-                          checked={subtask.archived === "closed"}
-                          onChange={() => handleToggleSubtaskStatus(task.id, subtask.id, subtask.archived === "open" ? "closed" : "open")}
-                        />
-                        
-                        {subtask.name} /{" "}
-                        <span className="subtask-time">
-                          {formatTime(calculateSubtaskTime(task, subtask._id))}
-                        </span>
-                        <button className="edit-icon" onClick={() => openEditModal(subtask)}>
-                          ✏️
-                        </button>
-                        <button className="delete-icon" onClick={() => handleDeleteSubtask(task.id, subtask.id)}>
-                         ❌
-                        </button>
-                      </div>
-                    )
-                  ))}
-                <input
-                  type="text"
-                  value={newSubtaskText}
-                  onChange={(e) => setNewSubtaskText(e.target.value)}
-                  onKeyDown={handleKeyPress}
-                  placeholder="Nouvelle sous-tâche..."
-                />
+            <div className="progress-bar-taskitem">
+              <div
+                className="progress-bar-taskitem-fill"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+            <p>Progression : {Math.round(progress)}%</p>
+
+
+            {task.subtasks.length > 0 && (
+              <div className="subtasks-section">
+                <button onClick={() => setExpanded(!expanded)}>
+                  {expanded ? "Masquer les sous-tâches" : "Voir les sous-tâches"}
+                </button>
+                {expanded && (
+                  <div className="subtask-list">
+                    {task.subtasks
+                      .filter((subtask) => subtask.archived === "open")
+                      .map((subtask) => (
+                        !hiddenSubtasks.includes(subtask.id) && (
+                          <div key={subtask.id} className="subtask-item">
+                            <input
+                              type="checkbox"
+                              checked={subtask.archived === "closed"}
+                              onChange={() => handleToggleSubtaskStatus(task.id, subtask.id, subtask.archived === "open" ? "closed" : "open")}
+                            />
+
+                            {subtask.name} /{" "}
+                            <span className="subtask-time">
+                              {formatTime(calculateSubtaskTime(task, subtask._id))}
+                            </span>
+                            <button className="edit-icon" onClick={() => openEditModal(subtask)}>
+                              ✏️
+                            </button>
+                            <button className="delete-icon" onClick={() => handleDeleteSubtask(task.id, subtask.id)}>
+                             ❌
+                            </button>
+                          </div>
+                        )
+                      ))}
+                    <input
+                      type="text"
+                      value={newSubtaskText}
+                      onChange={(e) => setNewSubtaskText(e.target.value)}
+                      onKeyDown={handleKeyPress}
+                      placeholder="Nouvelle sous-tâche..."
+                    />
+                  </div>
+                )}
               </div>
             )}
-          </div>
+          </>
         )}
       {isModalOpen && (
         <EditTaskModal
@@ -275,6 +293,12 @@ const handleArchiveTask = () => {
             }}
           />
         )}
+      {isDetailsModalOpen && (
+        <TaskDetailsModal
+          task={task}
+          onClose={closeDetailsModal}
+        />
+      )}
       </div>
     </li>
   );

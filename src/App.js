@@ -6,11 +6,13 @@ import FusionTool from "./pages/FusionTool";
 import VersionHistory from "./pages/VersionHistory";
 import "./timer.css";
 import Sessions from "./pages/Sessions";
-import FloatingMenu from "./components/FloatingMenu";
 import "./index.css";
 import taskReducer from "./reducers/taskReducer";
 import { TimerProvider } from "./context/TimerContext";
 import { SelectedTaskProvider } from './context/SelectedTaskContext'; // Importer le contexte
+import AdditionalMenu from "./components/AdditionalMenu";
+import "./App.css";
+import GlobalPomodoroTimer from "./components/GlobalPomodoroTimer";
 
 const initialState = {
   tasks: [],
@@ -27,6 +29,25 @@ const App = () => {
     status: "",
     sortOrder: "newest",
   });
+
+    // Fonction pour formater l'heure
+    const formatClock = (time) => {
+      return time.toLocaleTimeString('fr-FR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+    };
+
+      // Ajout de l'état pour l'heure actuelle
+      const [currentTime, setCurrentTime] = useState(new Date());
+
+      useEffect(() => {
+        const timer = setInterval(() => {
+          setCurrentTime(new Date());
+        }, 1000);
+        return () => clearInterval(timer);
+      }, []);
 
   const [isDarkMode, setIsDarkMode] = useState(false);
   
@@ -276,7 +297,35 @@ const App = () => {
     <SelectedTaskProvider>
       <TimerProvider>
         <div className={`App ${isDarkMode ? 'dark' : ''}`}>
-          <FloatingMenu addTask={addTask} />
+          <div className="app-title">
+            
+            <h3>
+            <AdditionalMenu />
+              TaskFlow 📬 1.4.0 
+            
+                 <button onClick={toggleDarkMode} className="dark-mode-button">
+                {isDarkMode ? "🌚" : "🌞"}
+              </button>
+         
+            </h3>
+          </div>
+
+          <section className="stats-pomodoro-section">
+            <GlobalPomodoroTimer
+              tasks={state.tasks.filter(task => task.status === 'open')}
+              updateTaskTime={updateTaskTime}
+              fetchTasks={fetchTasks}
+              setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
+              onAddTask={addTask}
+              taskCategories={taskCategories}
+            />
+          </section>
+          
+
+    
+      
+
+
           <Routes>
             <Route
               path="/"
@@ -298,7 +347,7 @@ const App = () => {
                   setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
                   isDarkMode={isDarkMode}
                   toggleDarkMode={toggleDarkMode}
-                  taskCategories={taskCategories} // Passer les catégories en prop
+                  taskCategories={taskCategories}
                 />
               }
             />
@@ -317,11 +366,11 @@ const App = () => {
                   onDeleteTask={deleteTask}
                   onDeleteSubtask={deleteSubtask}
                   onFetchArchivedTasks={() => fetchTasks(true)}
-                  taskCategories={taskCategories} // Passer les catégories en prop
+                  taskCategories={taskCategories}
                   isDarkMode={isDarkMode}
                   toggleDarkMode={toggleDarkMode}
                   setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
-                  onUpdateTask={updateTask} // Passer la fonction updateTask // modifier la propriété de la tâche "archived" + suppression de archivedAt
+                  onUpdateTask={updateTask}
                 />
               }
             />
@@ -334,8 +383,8 @@ const App = () => {
                   onDeleteEntry={deleteConsumptionEntry}
                   isDarkMode={isDarkMode}
                   toggleDarkMode={toggleDarkMode}
-                  onAddTask={addTask} // ajout de tâche via pomodoro timer
-                  taskCategories={taskCategories} // ajout de tâche via pomodoro timer
+                  onAddTask={addTask}
+                  taskCategories={taskCategories}
                 />
               }
             />
@@ -347,21 +396,20 @@ const App = () => {
                   fetchTasks={fetchTasks}
                   isDarkMode={isDarkMode}
                   toggleDarkMode={toggleDarkMode}
-                  onAddTask={addTask} // ajout de tâche via pomodoro timer
-                  taskCategories={taskCategories} // ajout de tâche via pomodoro timer
+                  onAddTask={addTask}
+                  taskCategories={taskCategories}
                 />
               }
-
             />
-              <Route
+            <Route
               path="/VersionHistory"
               element={
                 <VersionHistory
-                isDarkMode={isDarkMode}
-                toggleDarkMode={toggleDarkMode}
-                />} />
-
-
+                  isDarkMode={isDarkMode}
+                  toggleDarkMode={toggleDarkMode}
+                />
+              }
+            />
           </Routes>
         </div>
       </TimerProvider>

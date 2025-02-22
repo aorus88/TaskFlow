@@ -188,11 +188,6 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
   return (
     <div className="statistics-container">
       <div className="statistics-header">
-        <h3>⛩️ TaskFlow 1.3.9 ⛩️ ➖
-        <button onClick={toggleDarkMode} className="dark-mode-button">
-          {isDarkMode ? "🌚" : "🌞"}
-        </button>➖
-        🕒 {formatClock(currentTime)} 🕒</h3>
       </div>
 
       <div className="statistics-grid">
