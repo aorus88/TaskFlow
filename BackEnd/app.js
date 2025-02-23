@@ -22,8 +22,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/taskflowDB')
 const sessionSchema = new mongoose.Schema({
     duration: Number,
     date: Date,
-    taskName: String,
-  });
+    type: { type: String, enum: ['task', 'subtask'] },
+    targetId: String // ID de la tâche ou sous-tâche
+});
 
 const Session = mongoose.model('Session', sessionSchema);
 
@@ -221,9 +222,9 @@ app.delete('/tasks/:taskId/subtasks/:subtaskId', async (req, res) => {
 
 // 2a) 
 // Ajouter une session de temps à une tâche
-  app.post('/tasks/:taskId/sessions', async (req, res) => {
+app.post('/tasks/:taskId/sessions', async (req, res) => {
   const taskId = req.params.taskId;
-  const session = req.body; // Exemple : { duration: 3, date: new Date(), subtaskId: '67b1c55f643bae2573ebe7b4' }
+  const session = req.body; // { duration, date, type, targetId }
   
   try {
     const task = await Task.findById(taskId);
@@ -231,29 +232,34 @@ app.delete('/tasks/:taskId/subtasks/:subtaskId', async (req, res) => {
       return res.status(404).send({ error: 'Task not found' });
     }
     
-    if (session.subtaskId) {
-      // Recherche de la sous-tâche par son _id dans le tableau task.subtasks
-      const subtask = task.subtasks.id(session.subtaskId);
+    // Création de la nouvelle session avec type et targetId
+    const newSession = {
+      duration: session.duration,
+      date: session.date || new Date(),
+      type: session.type, // 'task' ou 'subtask'
+      targetId: session.targetId // ID de la tâche ou sous-tâche
+    };
+    
+    // Ajouter la session au tableau de sessions
+    task.sessions.push(newSession);
+    
+    // Si c'est une sous-tâche, trouver et mettre à jour la sous-tâche correspondante
+    if (session.type === 'subtask') {
+      const subtask = task.subtasks.id(session.targetId);
       if (!subtask) {
         return res.status(404).send({ error: 'Subtask not found' });
       }
-      // Ajout de la session dans la sous-tâche
-      subtask.sessions.push({
-        duration: session.duration,
-        date: session.date || new Date()
-      });
-    } else {
-      // Ajout de la session dans la tâche principale si aucune sous-tâche n'est spécifiée
-      task.sessions.push({
-        duration: session.duration,
-        date: session.date || new Date()
-      });
+      if (!subtask.sessions) {
+        subtask.sessions = [];
+      }
+      subtask.sessions.push(newSession);
     }
     
     await task.save();
-    res.send(task);
-  } catch (e) {
-    res.status(400).send(e);
+    res.json(task);
+  } catch (err) {
+    console.error('Erreur lors de l\'ajout de la session:', err);
+    res.status(400).send(err);
   }
 });
 

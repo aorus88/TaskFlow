@@ -23,3 +23,7 @@
   font-weight: bold;
   text-align: center;
 }
+
+body.dark .app-title {
+  color: #fff;
+}

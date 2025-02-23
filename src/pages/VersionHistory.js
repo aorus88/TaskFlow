@@ -37,6 +37,15 @@ const VersionHistory = ({ isDarkMode, toggleDarkMode }) => {
 
 
         {/* Ajoutez d'autres versions ici */}
+      <li>Version 1.4.0 
+          <ul> Mise à jour général source-code     </ul>
+          <ul> Préparation à la 1ère prise en main 24 février 2025   </ul>
+
+
+
+      </li>
+
+
         <li>Version 1.3.7 - publication prévue le 02.02.2025 à 20h00
           <ul> Update Fusion-Tool - stat-cards   </ul>          
           <ul> Update Suivi du temps - calendrier    </ul>

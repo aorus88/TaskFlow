@@ -12,6 +12,7 @@ import 'moment/locale/fr';
 const localizer = momentLocalizer(moment);
 
 // Déplacer fetchTasksAndSessions en dehors du composant - actualisation calendrier après ajout session 
+// Modifier la fonction fetchTasksAndSessions pour inclure les informations de sous-tâches
 const fetchTasksAndSessions = async (setTasks, setSessions) => {
   try {
     const response = await fetch('http://192.168.50.241:4000/all-tasks');
@@ -26,10 +27,19 @@ const fetchTasksAndSessions = async (setTasks, setSessions) => {
         task.sessions.map(session => {
           const end = new Date(session.date);
           const start = new Date(new Date(session.date).getTime() - session.duration * 60000);
+
+          // Chercher la sous-tâche si type === 'subtask'
+          let subtaskName = null;
+          if (session.type === 'subtask' && session.targetId) {
+            const subtask = task.subtasks?.find(st => st._id === session.targetId);
+            subtaskName = subtask?.name;
+          }
+
           return {
             ...session,
             taskId: task._id,
             taskName: task.name,
+            subtaskName, // Ajouter le nom de la sous-tâche
             totalTime: task.totalTime,
             categories: task.categories,
             start: isNaN(start) ? null : start,
@@ -37,13 +47,10 @@ const fetchTasksAndSessions = async (setTasks, setSessions) => {
           };
         })
       );
-      console.log("Sessions formatées :", allSessions);
       setSessions(allSessions);
-    } else {
-      console.error('Les données reçues ne sont pas un tableau:', data);
     }
   } catch (error) {
-    console.error('Erreur lors de la récupération des tâches et sessions:', error);
+    console.error('Erreur:', error);
   }
 };
 
@@ -300,8 +307,21 @@ function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
             const endDate = new Date(session.end);
             return (
               <li key={session._id} className="session-item">
-                <h3>{session.taskName}</h3>
+                <h3>
+                  {session.type === 'subtask' ? (
+                    <>
+                      <span className="task-type">🆎</span> {session.subtaskName}
+                      <br />
+                      <span className="parent-task">🅰️{session.taskName}</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="task-type">🅰️</span> {session.taskName}
+                    </>
+                  )}
+                </h3>
                 <p>Catégories : {session.categories.join(', ')}</p>
+                <p>Type : {session.type === 'subtask' ? 'Sous-tâche' : 'Tâche principale'}</p>
                 <p>Durée : {session.duration} minutes</p>
                 <p>Date de session : {isNaN(startDate) ? "Date invalide" : format(startDate, "d MMMM yyyy", { locale: fr })}</p>
                 <p>Heure de fin : {isNaN(endDate) ? "Heure invalide" : format(endDate, "HH:mm:ss", { locale: fr })}</p>

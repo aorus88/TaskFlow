@@ -1,92 +1,82 @@
 const TaskReady = [
+
   {
-    name: "Démarrage de la journée 🌞",
+    name: "🌞 - Démarrage de la journée ",
     date: new Date().toISOString().split("T")[0],
     time: "07:30",
     priority: "high",
-    categories: "Santé 🏥",
+    categories: "Hygiène 🚿",
     subtasks: [  // Ajout des sous-tâches
       {
         id: 1,
-        name: "Exercices respiration 🫁",
+        name: "Douche 🚿",
         archived: "open"
       },
       {
         id: 2,
-        name: "Verre d'eau 💧",
+        name: "Se brosser les dents 🦷",
         archived: "open"
       },
       {
         id: 3,
-        name: "Méditation 5min 🧘",
+        name: "Fil dentaire 🧵",
         archived: "open"
       }
     ]
   },
+
+  {
+    name: "🌙 - Se préparer pour dormir ",
+    date: new Date().toISOString().split("T")[0],
+    time: "22:30",
+    priority: "high",
+    categories: "Hygiène 🚿",
+    subtasks: [  // Ajout des sous-tâches
+      {
+        id: 1,
+        name: "Se brosser les dents 🦷",
+        archived: "open"
+      },
+      {
+        id: 2,
+        name: "Fil dentaire 🧵",
+        archived: "open"
+      },
+      {
+        id: 3,
+        name: "Prendre les médicaments 💊",
+        archived: "open"
+      },
+      {
+        id: 4,
+        name: "Préparer les vêtements du lendemain 👕",
+        archived: "open"
+      }
+    ]
+  },
+
+  {
+    name: "💊 - Préparer le pilulier",
+    date: new Date().toISOString().split("T")[0],
+    time: "22:00",
+    priority: "medium",
+    categories: "Autre 📝",
+    subtasks: [  // Ajout des sous-tâches   ]
+  ]
+},
+
+  {
+    name: "✍️ - Rédaction de rapports",
+    date: new Date().toISOString().split("T")[0],
+    time: "18:00",
+    priority: "medium",
+    categories: "Travail 💼",
+    subtasks: [  // Ajout des sous-tâches
+
+    ]
+  },
+
   
-  {
-    name: "Entrainement 🛤️ ",
-    date: new Date().toISOString().split("T")[0],
-    time: "08:00",
-    priority: "high",
-    categories: "Sport 🏋️",
-  },
-  {
-    name: "Manger équilibré 🥗",
-    date: new Date().toISOString().split("T")[0],
-    time: "11:30",
-    priority: "medium",
-    categories: "Cuisine 🍳",
-  },
-  {
-    name: "Relaxation 🧘",
-    date: new Date().toISOString().split("T")[0],
-    time: "13:00",
-    priority: "medium",
-    categories: "Podcast 🎙️",
-  },
-  {
-    name: "Marche en plein air",
-    date: new Date().toISOString().split("T")[0],
-    time: "16:00",
-    priority: "medium",
-    categories: "Sport 🏋️",
-  },
-  {
-    name: "Journal de progression",
-    date: new Date().toISOString().split("T")[0],
-    time: "19:00",
-    priority: "high",
-    categories: "Personnel 🐈",
-  },
-  {
-    name: "Session respiration",
-    date: new Date().toISOString().split("T")[0],
-    time: "20:00",
-    priority: "high",
-    categories: "Meditation 🧘",
-  },
-  {
-    name: "Documentation app",
-    date: new Date().toISOString().split("T")[0],
-    time: "14:00",
-    priority: "medium",
-    categories: "TaskFlow ⛩️",
-  },
-  {
-    name: "Administratif 🗃️",
-    date: new Date().toISOString().split("T")[0],
-    time: "21:00",
-    priority: "medium", 
-    categories: "Finances 💵",
-  },
-  {
-    name: "Lecture développement personnel",
-    date: new Date().toISOString().split("T")[0],
-    time: "21:30",
-    priority: "low",
-    categories: "Lecture 📖",
-  }
 ];
 
 export default TaskReady;

@@ -149,56 +149,45 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
   }, [isRunning, isPaused, customDuration, sessionEnded, sessionTime, setSessionTime]);
 
   const handleSessionEnd = async (totalSeconds = 0) => {
-    if (!selectedTaskId || isSubmitting.current) {
-      return;
-    }
+    if (!selectedTaskId || isSubmitting.current) return;
 
     try {
       isSubmitting.current = true;
       setIsRunning(false);
-      playSound('sessionComplete'); // Ajouter le son
-
+      
       const [type, id] = selectedTaskId.split('-');
-     // Arrondir au nombre de minutes sans ajouter de minute supplémentaire
-     const sessionTimeInMinutes = Math.floor(totalSeconds / 60);
+      const sessionTimeInMinutes = Math.floor(totalSeconds / 60);
 
-      const parentTaskId = type === 'subtask' 
-        ? tasks.find(task => task.subtasks?.some(st => st._id === id))?._id
-        : id;
+      // Trouver la tâche parente
+      const parentTask = type === 'subtask' 
+        ? tasks.find(task => task.subtasks?.some(st => st._id === id))
+        : tasks.find(task => task._id === id);
 
-      if (!parentTaskId) {
-        throw new Error("Tâche parente non trouvée");
-      }
+      if (!parentTask) throw new Error("Tâche parente non trouvée");
 
       const session = {
         duration: sessionTimeInMinutes,
         date: new Date(),
-        type: type,
-        targetId: id
+        type: type, // 'task' ou 'subtask'
+        targetId: id // ID de la tâche ou sous-tâche
       };
 
       const response = await fetch(
-        `http://192.168.50.241:4000/tasks/${parentTaskId}/sessions`,
+        `http://192.168.50.241:4000/tasks/${parentTask._id}/sessions`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(session),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(session)
         }
       );
 
-      if (!response.ok) {
-        throw new Error("Erreur lors de l'ajout de la session");
-      }
+      if (!response.ok) throw new Error("Erreur lors de l'ajout de la session");
 
       setTimeLeft(customDuration * 60);
       setSessionTime(0);
       setSessionEnded(false);
 
-      if (fetchTasks) {
-        await fetchTasks();
-      }
+      if (fetchTasks) await fetchTasks();
     } catch (error) {
       console.error("Erreur:", error);
     } finally {
@@ -302,7 +291,41 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
     <div className={`pomodoro-timer ${!isPreview ? (isFloating ? 'floating' : 'docked') : ''} ${isMinimized ? 'minimized' : ''}`}>
       <div className="pomodoro-timer__header">
         <h1 className="pomodoro-timer-header-timer">{formatTime(timeLeft)} ⏱️</h1>
-        <h1 className="pomodoro-timer-header-taskname">{getTaskNameWithIcon(selectedTaskId, tasks)}</h1>
+
+
+
+
+        
+        <h1 className="pomodoro-timer-header-taskname">{getTaskNameWithIcon(selectedTaskId, tasks)}
+
+        <select
+          value={selectedTaskId || ""}
+          onChange={(e) => {
+            setSelectedTaskId(e.target.value);
+            localStorage.setItem('lastSelectedTaskId', e.target.value);
+          }}
+          className="pomodoro-timer__selector"
+        >
+          <option value="" disabled>Sélectionnez une tâche</option>
+          {tasks.slice().reverse().map((task) => (
+            <React.Fragment key={task._id}>
+              <option value={`task-${task._id}`}>
+                {task.name}
+              </option>
+              {/* Filtrer les sous-tâches non archivées */}
+              {task.subtasks
+            ?.filter(subtask => subtask.archived !== "closed")
+            .map((subtask) => (
+              <option key={subtask._id} value={`subtask-${subtask._id}`}>
+                ├─ {subtask.name}
+              </option>
+            ))}
+        </React.Fragment>
+          ))}
+        </select>
+
+
+        </h1>
         <h3></h3>
         <div className="pomodoro-timer__controls">
           <button 
@@ -350,36 +373,19 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
         ))}
       </div>
 
+      
+
       <div className={`pomodoro-timer__content ${isMinimized ? 'hidden' : ''}`}>
+
+
+
+
+        
         <div className="pomodoro-timer__container">
           <span className="pomodoro-timer__display">{formatTime(timeLeft)}</span>
         </div>
 
-        <select
-          value={selectedTaskId || ""}
-          onChange={(e) => {
-            setSelectedTaskId(e.target.value);
-            localStorage.setItem('lastSelectedTaskId', e.target.value);
-          }}
-          className="pomodoro-timer__selector"
-        >
-          <option value="" disabled>Sélectionnez une tâche</option>
-          {tasks.slice().reverse().map((task) => (
-            <React.Fragment key={task._id}>
-              <option value={`task-${task._id}`}>
-                {task.name}
-              </option>
-              {/* Filtrer les sous-tâches non archivées */}
-              {task.subtasks
-            ?.filter(subtask => subtask.archived !== "closed")
-            .map((subtask) => (
-              <option key={subtask._id} value={`subtask-${subtask._id}`}>
-                ├─ {subtask.name}
-              </option>
-            ))}
-        </React.Fragment>
-          ))}
-        </select>
+
 
         <input
           type="number"
