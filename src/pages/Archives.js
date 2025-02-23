@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer";
 import { SelectedTaskContext } from "../context/SelectedTaskContext";
-import TaskFilters_Sessions from "../components/TaskFilters_Sessions";
 import "./Archives.css";
 
 // Fonction de formatage de date (peut rester en dehors du composant)
@@ -92,7 +91,6 @@ const Archives = ({
   onDeleteTask,
   onDeleteSubtask,
   onFetchArchivedTasks,
-  showFeedback,
   isDarkMode,
   toggleDarkMode,
   onUpdateTask, // Nouvelle prop pour mettre à jour la tâche
@@ -198,8 +196,7 @@ const Archives = ({
     <div className="Archives">
       <div className="statistics-container">
       
-        {/* Filtres */}
-        <TaskFilters_Sessions filter={filter} setFilter={setFilter} tasks={tasks} />
+      
 
         <div className="archives-page">
           <h1>✅ Tâches terminées</h1>

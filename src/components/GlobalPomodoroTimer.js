@@ -76,19 +76,22 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
 
   // Restaurer la dernière tâche ou sous-tâche sélectionnée
   useEffect(() => {
-    const lastSelectedTaskId = localStorage.getItem('lastSelectedTaskId');
-    if (lastSelectedTaskId) {
-      const [type, id] = lastSelectedTaskId.split('-');
-      const taskExists = type === 'task' 
-        ? tasks.some(task => task._id === id)
-        : tasks.some(task => task.subtasks?.some(subtask => subtask._id === id));
-      
-      if (taskExists) {
-        setSelectedTaskId(lastSelectedTaskId);
-        console.log("Dernière tâche/sous-tâche restaurée:", lastSelectedTaskId);
+    // Ne restaurer que si aucune tâche n'est encore sélectionnée
+    if (!selectedTaskId) {
+      const lastSelectedTaskId = localStorage.getItem('lastSelectedTaskId');
+      if (lastSelectedTaskId) {
+        const [type, id] = lastSelectedTaskId.split('-');
+        const taskExists = type === 'task' 
+          ? tasks.some(task => task._id === id)
+          : tasks.some(task => task.subtasks?.some(subtask => subtask._id === id));
+        
+        if (taskExists) {
+          setSelectedTaskId(lastSelectedTaskId);
+          console.log("Dernière tâche/sous-tâche restaurée:", lastSelectedTaskId);
+        }
       }
     }
-  }, [tasks]);
+  }, [tasks, selectedTaskId]);
 
   // Mettre à jour le compte des sessions
   useEffect(() => {

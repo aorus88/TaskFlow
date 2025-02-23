@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./TaskFilters_Sessions.css"; // Centralisation des styles dans un fichier commun
+
 
 const TaskFilters_Sessions = ({ filter = {}, setFilter = () => {}, tasks = [] }) => {
   const [categories, setCategories] = useState([]);

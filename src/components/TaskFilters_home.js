@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, } from "react";
 import "./TaskFilters_home.css";
 
 const TaskFilters_home = ({ filter = {}, setFilter = () => {}, taskCategories = [] }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
 
   // Charger les filtres sauvegardés au démarrage
   useEffect(() => {
@@ -51,17 +50,6 @@ const TaskFilters_home = ({ filter = {}, setFilter = () => {}, taskCategories = 
     localStorage.setItem('taskFilters', JSON.stringify(newFilters));
   };
 
-  // Gestionnaire de clic extérieur
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   // Ajout de la fonction pour les options spéciales
   const handleSpecialCategoryChange = (type) => {

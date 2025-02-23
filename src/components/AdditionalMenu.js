@@ -18,11 +18,11 @@ const AdditionalMenu = () => {
                 <span role="img" aria-label="Home">🏠</span></Link>
 
           <Link to="/fusion-tool" className="menu-link" onClick={toggleMenu}>
-            <span role="img" aria-label="Fusion Tool">🍂</span>
+            <span role="img" aria-label="Fusion Tool">⛩️</span>
           </Link>
 
           <Link to="/sessions" className="menu-link" onClick={toggleMenu}>
-            <span role="img" aria-label="Sessions">⏱️</span>
+            <span role="img" aria-label="Sessions">📆</span>
           </Link>
 
           <Link to="/archives" className="menu-link" onClick={toggleMenu}>
@@ -30,7 +30,7 @@ const AdditionalMenu = () => {
           </Link>
 
           <Link to="/versionHistory" className="menu-link" onClick={toggleMenu}>
-            <span role="img" aria-label="Version History">🚧</span>
+            <span role="img" aria-label="Version History">🛤️</span>
           </Link>
 
           <Link to="/settings" className="menu-link" onClick={toggleMenu}>

@@ -25,24 +25,20 @@ const Home = ({
   isDarkMode,
   toggleDarkMode,
   taskCategories,
-  showFeedback,
 }) => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [showFilters, setShowFilters] = useState(false); // État pour la modale
 
   const fetchTasksCallback = useCallback(() => {
     fetchTasks();
   }, [fetchTasks]);
-
+  
   useEffect(() => {
+    // Appel unique lors du montage ou quand fetchTasks change
     fetchTasksCallback();
   }, [fetchTasksCallback]);
-
-  useEffect(() => {
-    console.log("Home.js - Tâches reçues :", tasks);
-    console.log("Home.js - Tâches archivées reçues :", archivedTasks);
-  }, [tasks, archivedTasks]);
-
+  
   const handleEditTask = async (taskId, updatedFields) => {
     try {
       await onEditTask(taskId, updatedFields);
@@ -106,20 +102,28 @@ const Home = ({
           isDarkMode={isDarkMode}
           toggleDarkMode={toggleDarkMode}
           setSelectedTaskId={setSelectedTaskId}
-          showFeedback={showFeedback}
         />
 
 
 
       <section className="tasks-section">
 
+        {/* Bouton pour ouvrir la modale des filtres */}
+        <button onClick={() => setShowFilters(true)}>Afficher les filtres</button>
 
-
-<TaskFilters 
-        filter={filter} 
-        setFilter={setFilter} 
-        taskCategories={taskCategories} />
-
+        {/* Modale des filtres */}
+        {showFilters && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <button onClick={() => setShowFilters(false)}>Fermer</button>
+              <TaskFilters
+                filter={filter}
+                setFilter={setFilter}
+                taskCategories={taskCategories}
+              />
+            </div>
+          </div>
+        )}
 
         <TaskList
           tasks={tasks.filter((task) => task.archived === 'open')}
@@ -137,7 +141,6 @@ const Home = ({
           onDeleteSubtask={onDeleteSubtask}
           onToggleSubtaskStatus={onToggleSubtaskStatus}
           onUpdateTask={onSaveTask} 
-          showFeedback={showFeedback}
           
         />
       </section>
@@ -148,7 +151,6 @@ const Home = ({
           onClose={() => setIsEditing(false)}
           onSave={handleSaveTask}
           taskCategories={taskCategories}
-          showFeedback={showFeedback}
         />
       )}
     </div>

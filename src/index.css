@@ -61,20 +61,6 @@ body {
     background-color: #45a045;
   }
   
-  /*message d'info enregistrement - v.1.1.5*/
-  .feedback-message {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #4caf50; /* Couleur verte pour le succès */
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    font-size: 16px;
-    animation: fade-in-out 3s forwards;
-  }
   
   @keyframes fade-in-out {
     0% {

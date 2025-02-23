@@ -137,12 +137,12 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
 
   // Fonction pour déterminer l'emoji de récompense en fonction du pourcentage de progression
   const getRewardEmoji = (closedTasksToday) => {
-    if (closedTasksToday >= 5) return "🏆🏆🏆"; // Trophée pour 100% ou plus
-    if (closedTasksToday >= 4) return "🏆"; // Trophée pour 100% ou plus
-    if (closedTasksToday >= 3) return "🎉"; // Confettis pour 75% ou plus
-    if (closedTasksToday >= 2) return "👍"; // Pouce en l'air pour 50% ou plus
-    if (closedTasksToday >= 1) return "🙂"; // Visage souriant pour 25% ou plus
-    return "💪"; // Muscle pour moins de 1
+    if (closedTasksToday >= 5) return "5️⃣🏆🏆🏆"; // Trophée pour 100% ou plus
+    if (closedTasksToday >= 4) return "4️⃣🏆"; // Trophée pour 100% ou plus
+    if (closedTasksToday >= 3) return "3️⃣🎉"; // Confettis pour 75% ou plus
+    if (closedTasksToday >= 2) return "2️⃣👍"; // Pouce en l'air pour 50% ou plus
+    if (closedTasksToday >= 1) return "1️⃣🙂"; // Visage souriant pour 25% ou plus
+    return "0️⃣💪"; // Muscle pour moins de 1
   };
 
   const calculateCategoryDurations = (tasks) => {

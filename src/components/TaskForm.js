@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./TaskForm.css"; // Centralisation des styles
+import TaskReady from "./TaskReady"; // Import de taskTemplates
 
 const TaskForm = ({ onAddTask, taskCategories }) => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
     time: "23:59",
     priority: "medium",
     categories: "Personnel 🐈", // Ajout de la catégorie par défaut
+    subtasks: [] // Ajout du tableau de sous-tâches
   });
 
   const [errors, setErrors] = useState({});
@@ -53,20 +55,22 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
       await onAddTask({
         ...formData,
         id: Date.now(),
-        subtasks: [], // Nouveau tableau par défaut
-        timeSpent: 0, // Initialisation à 0
-        status: "open", // Statut par défaut
-        addedAt: new Date().toISOString(), // Date et heure d'ajout
+        subtasks: formData.subtasks, // Utiliser les sous-tâches existantes au lieu d'un tableau vide
+        timeSpent: 0,
+        status: "open",
+        addedAt: new Date().toISOString(),
       });
       setFormData({
         name: "",
         date: new Date().toISOString().split("T")[0],
         time: "23:59",
         priority: "medium",
-        categories: "Personnel 🐈", // Réinitialisation de la catégorie
+        categories: "Personnel 🐈",
+        subtasks: [] // Réinitialiser les sous-tâches
       });
       setErrors({});
     } catch (error) {
+      console.error("Erreur lors de l'ajout de la tâche:", error);
     }
   };
 
@@ -78,10 +82,42 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
     }
   };
 
+    // Gestion du changement de modèle
+    const handleTemplateChange = (e) => {
+      const templateIndex = e.target.value;
+      if (templateIndex !== "") {
+        const selectedTemplate = TaskReady[templateIndex];
+        setFormData({
+          ...formData,
+          name: selectedTemplate.name || "",
+          date: selectedTemplate.date || new Date().toISOString().split("T")[0],
+          time: selectedTemplate.time || "23:59",
+          priority: selectedTemplate.priority || "medium",
+          categories: selectedTemplate.categories || "Personnel 🐈",
+          subtasks: selectedTemplate.subtasks || [] // Ajout des sous-tâches du modèle
+        });
+      }
+    };
+
   return (
     <div className="task-form">
       <form onKeyDown={handleKeyDown} className="task-form">
         <div className="form-group-task">
+
+        <div className="form-model">
+      <label>
+        Modèle de tâche :
+        <select onChange={handleTemplateChange}>
+          <option value="">Sélectionner un modèle</option>
+          {TaskReady.map((template, index) => (
+            <option key={index} value={index}>
+              {template.name}
+            </option>
+          ))}
+        </select>
+      </label>
+    </div>
+
           <label>
             Tâche :
             <input

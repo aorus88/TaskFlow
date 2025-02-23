@@ -301,6 +301,21 @@ const FusionTool = ({
     timeSinceLastYesEntry = { hours, minutes };
   }
 
+  // Calcul en secondes depuis la dernière entrée "yes" (si existante)
+  const timeSinceLastYesSec = lastYesEntry ? Math.floor((new Date() - lastYesEntry) / 1000) : 0;
+  // Seuil de 4 heures (en secondes)
+  const thresholdSec = 4 * 3600;
+  // Pourcentage de remplissage : maximum 100%
+  const glassProgress = Math.min((timeSinceLastYesSec / thresholdSec) * 100, 100);
+
+  // Fonction pour formater le temps en h, m, s
+  const formatTimeDiff = (secs) => {
+    const h = Math.floor(secs / 3600);
+    const m = Math.floor((secs % 3600) / 60);
+    const s = secs % 60;
+    return `${h}h ${m}m ${s}s`;
+  };
+
   // Calcul de la dernière entrée avec consommation "no"
   const lastNoEntry = entries
     .filter((entry) => entry.consumption === "no")
@@ -428,12 +443,6 @@ const FusionTool = ({
 
   return (
     <div className="fusion-tool">
-   
-
-
-
-
-
       <h1>Fusion-Tool ⛩️</h1>
       <form className="fusion-form">
         <label>
@@ -503,33 +512,42 @@ const FusionTool = ({
         </button>
       </form>
 
-      {/* Statistiques globales  */}
       <div className="stats-global-FusionTool">
-        <h3>Statistiques Globales</h3>
+        <h3>Real-Time 📈</h3>
+
+        <div className="stats-overview">
+          <ul>
+            <li>Total des entrées : {globalStats.totalEntries}</li>
+            <li>Entrées aujourd'hui : {globalStats.todayEntries} {todayStats.emoji}</li>
+            <li>Entrées hier : {globalStats.yesterdayEntries} {yesterdayStats.emoji}</li>
+            <li>Entrées avant-hier : {globalStats.dayBeforeYesterdayEntries} {dayBeforeYesterdayStats.emoji}</li>
+            <li>Entrées des 7 derniers jours : {globalStats.sevenDaysAgoEntries}</li>
+            <li>Entrées sans consommation : {globalStats.nonConsumptionEntries}</li>
+            <li>Entrées sans consommation aujourd'hui : {globalStats.nonConsumptionTodayEntries}</li>
+            <li>Entrées ce mois-ci : {globalStats.thisMonthEntries}</li>
+            <li>Entrées le mois dernier : {globalStats.lastMonthEntries}</li>
+          </ul>
+        </div>
+
         <div className="stats-container-FusionTool">
-          <StatCard
-            label="Hier"
-            value={globalStats.yesterdayEntries}
-            emoji={yesterdayStats.emoji}
-            color={yesterdayStats.color}
-          />
-          <StatCard
-            label="Avant-hier"
-            value={globalStats.dayBeforeYesterdayEntries}
-            emoji={dayBeforeYesterdayStats.emoji}
-            color={dayBeforeYesterdayStats.color}
-          />
-          {/* Durée depuis la dernière entrée avec consommation "yes" */}
-          <StatCard
-            label="Dernière entrée 🍂"
-            value={
-              timeSinceLastYesEntry !== null
-                ? `${timeSinceLastYesEntry.hours}h ${timeSinceLastYesEntry.minutes}m`
-                : "N/A"
-            }
-            emoji="⏳"
-          />
-          {/* Durée depuis la dernière entrée avec consommation "no" */}
+          
+          <div className="stat-card glass-card">
+            <h3 className="stat-card-label">Pas de consommation depuis</h3>
+            {lastYesEntry ? (
+              <>
+                <p>{formatTimeDiff(timeSinceLastYesSec)}</p>
+                <div className="progress-bar-container">
+                  <div
+                    className="progress-bar"
+                    style={{ width: glassProgress + "%" }}
+                  ></div>
+                </div>
+                <p>{glassProgress.toFixed(0)}%</p>
+              </>
+            ) : (
+              <p>Pas de données</p>
+            )}
+          </div>
           <StatCard
             label="Dernière victoire 💯"
             value={
@@ -539,29 +557,7 @@ const FusionTool = ({
             }
             emoji="⏳"
           />
-          <StatCard 
-            label="Ce mois-ci" 
-            value={globalStats.thisMonthEntries} 
-            emoji="📊"
-          />
-          <StatCard 
-            label="Le mois dernier" 
-            value={globalStats.lastMonthEntries} 
-            emoji="📊" 
-          />
-          <StatCard
-            label="Les 7 derniers jours"
-            value={entries.filter(
-              (entry) => new Date(entry.date) >= new Date(sevenDaysAgo) && entry.consumption === "yes"
-            ).length}
-            emoji="📅"
-          />
-          <StatCard
-            label="Aujourd'hui"
-            value={globalStats.todayEntries}
-            emoji={todayStats.emoji}
-            color={todayStats.color}
-          />
+         
         </div>
         <div className="stats-chart-container">
           <BarChartCard label="15 derniers jours 🗓️" data={last15DaysStats} className="double-width" />

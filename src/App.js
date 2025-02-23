@@ -4,8 +4,8 @@ import Home from "./pages/Home";
 import Archives from "./pages/Archives";
 import FusionTool from "./pages/FusionTool";
 import VersionHistory from "./pages/VersionHistory";
-import "./timer.css";
 import Sessions from "./pages/Sessions";
+import Settings from "./pages/Settings";
 import "./index.css";
 import taskReducer from "./reducers/taskReducer";
 import { TimerProvider } from "./context/TimerContext";
@@ -13,6 +13,7 @@ import { SelectedTaskProvider } from './context/SelectedTaskContext'; // Importe
 import AdditionalMenu from "./components/AdditionalMenu";
 import "./App.css";
 import GlobalPomodoroTimer from "./components/GlobalPomodoroTimer";
+
 
 const initialState = {
   tasks: [],
@@ -410,6 +411,7 @@ const App = () => {
                 />
               }
             />
+            <Route path="/settings" element={<Settings />} /> {/* Add the new route */}
           </Routes>
         </div>
       </TimerProvider>

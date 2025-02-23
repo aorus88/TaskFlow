@@ -47,7 +47,14 @@ const fetchTasksAndSessions = async (setTasks, setSessions) => {
   }
 };
 
-const Sessions = ({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) => {
+function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
+  const [showSessionForm, setShowSessionForm] = useState(false);
+  const [newSession, setNewSession] = useState({
+    taskId: "",
+    duration: 30, // valeur par défaut
+    date: new Date(),
+    categories: []
+  });
   const [sessions, setSessions] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -110,6 +117,31 @@ const Sessions = ({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) => 
     }
   };
 
+  const handleAddSession = async () => {
+    try {
+      // appel à un endpoint /tasks/:id/sessions ou similaire
+      const response = await fetch(
+        `http://192.168.50.241:4000/tasks/${newSession.taskId}/sessions`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            duration: newSession.duration,
+            date: newSession.date,
+            categories: newSession.categories
+          })
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Erreur lors de l'ajout de la session");
+      }
+      setShowSessionForm(false);
+      fetchTasksAndSessionsCallback(); // pour recharger la liste
+    } catch (error) {
+      console.error("Erreur lors de l'ajout de session:", error);
+    }
+  };
+
   // Garder le reste du code identique...
   const sortedSessions = sessions.sort((a, b) => {
     const dateA = new Date(a.date);
@@ -168,6 +200,8 @@ const Sessions = ({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) => 
         <h1> ⏱️ Suivi du temps</h1>
       </div>
 
+      
+
       <Calendar
         localizer={localizer}
         events={sessions}
@@ -211,6 +245,54 @@ const Sessions = ({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) => 
         tasks={tasks} 
       />
 
+            {/* Bouton pour afficher le formulaire */}
+            <button onClick={() => setShowSessionForm(true)}>
+        Ajouter une session
+      </button>
+
+      {showSessionForm && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Nouvelle session</h2>
+            <label>
+              Tâche cible:
+              <select
+                value={newSession.taskId}
+                onChange={(e) => setNewSession({...newSession, taskId: e.target.value})}
+              >
+                <option value="">Sélectionnez une tâche</option>
+                {tasks.map((task) => (
+                  <option key={task._id} value={task._id}>
+                    {task.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label>
+              Durée (minutes):
+              <input
+                type="number"
+                value={newSession.duration}
+                onChange={(e) => setNewSession({...newSession, duration: e.target.value})}
+              />
+            </label>
+
+            <label>
+              Date:
+              <input
+                type="datetime-local"
+                onChange={(e) => setNewSession({...newSession, date: new Date(e.target.value)})}
+              />
+            </label>
+
+            <button onClick={handleAddSession}>Enregistrer</button>
+            <button onClick={() => setShowSessionForm(false)}>Annuler</button>
+          </div>
+        </div>
+      )}
+
+
       <ul className="sessions-list">
         {sortedSessions.length > 0 ? (
           sortedSessions.map((session) => {
@@ -236,8 +318,11 @@ const Sessions = ({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) => 
           <p>Aucune session trouvée.</p>
         )}
       </ul>
+
+
+
     </div>
   );
-};
+}
 
 export default Sessions;

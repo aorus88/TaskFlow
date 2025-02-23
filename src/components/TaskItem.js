@@ -131,18 +131,26 @@ const playSound = (soundType) => {
     ? task.sessions[task.sessions.length - 1].duration
     : 0;
 
-  const handleToggleSubtaskStatus = (taskId, subtaskId, status) => {
-    onToggleSubtaskStatus(taskId, subtaskId, status);
-    if (status === "closed") {
-      setTimeout(() => {
-        setHiddenSubtasks((prev) => {
-          const updatedHiddenSubtasks = [...prev, subtaskId];
-          localStorage.setItem(`hiddenSubtasks-${taskId}`, JSON.stringify(updatedHiddenSubtasks));
-          return updatedHiddenSubtasks;
-        });
-      }, 10000); // Masquer la sous-tâche après 10 secondes (10000 ms)
-    }
-  };
+    const handleToggleSubtaskStatus = (taskId, subtaskId, status) => {
+      onToggleSubtaskStatus(taskId, subtaskId, status);
+      // Mise à jour immédiate de la progression
+      setProgress(calculateProgress());
+      
+      if (status === "closed") {
+        setTimeout(() => {
+          setHiddenSubtasks((prev) => {
+            const updatedHiddenSubtasks = [...prev, subtaskId];
+            localStorage.setItem(`hiddenSubtasks-${taskId}`, JSON.stringify(updatedHiddenSubtasks));
+            return updatedHiddenSubtasks;
+          });
+        }, 10000); // Délai de 10 secondes (10000 ms) avant de masquer la sous-tâche
+      }
+    };
+
+    // 2. Ajoutez un useEffect pour surveiller les changements dans les sous-tâches
+useEffect(() => {
+  setProgress(calculateProgress());
+}, [task.subtasks]); // Se déclenche quand les sous-tâches changent
 
   const handleDeleteSubtask = (taskId, subtaskId) => {
     onDeleteSubtask(taskId, subtaskId);

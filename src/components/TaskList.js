@@ -77,16 +77,10 @@ const TaskList = ({
     handleCloseModal();
   };
 
-  // Fonction pour basculer entre les modes d'affichage
-  const toggleViewMode = () => {
-    setIsCompactView(!isCompactView);
-  };
+
 
   return (
     <div className="task-list-container">
-      <button onClick={toggleViewMode}>
-        {isCompactView ? "Affichage normal" : "Affichage compact"}
-      </button>
       <ul className={`task-list ${isCompactView ? "compact-view" : ""}`}>
         {sortedTasks.map((task) => (
           <TaskItem
