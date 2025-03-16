@@ -338,7 +338,7 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
             className="minimize-button"
             onClick={() => setIsMinimized(!isMinimized)}
           >
-            {isMinimized ? '➕' : '➖'}
+            {isMinimized ? '📂' : '📁'}
           </button>
           {/* Emojis conditionnels */}
           {isMinimized && (

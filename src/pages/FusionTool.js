@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import "./FusionTool.css"; // Importer les styles spécifiques
-import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer"; // Importer le composant GlobalPomodoroTimer
 import { Bar } from "react-chartjs-2"; // Importer le composant Bar de react-chartjs-2
 import {
   Chart as ChartJS,
@@ -14,6 +13,8 @@ import {
 import ChartDataLabels from "chartjs-plugin-datalabels"; // Importer le plugin pour afficher les valeurs sur le graphique
 import { SelectedTaskContext } from "../context/SelectedTaskContext"; // Importer le contexte
 import TaskForm from "../components/TaskForm"; // Importer le composant TaskForm
+import ConsumptionFilters from "../components/ConsumptionFilters"; // Importer le composant ConsumptionFilters
+import { format } from "date-fns";
 
 // Enregistrer les composants nécessaires de Chart.js, y compris le plugin datalabels
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
@@ -32,52 +33,48 @@ const StatCard = ({ label, value, emoji, color }) => {
   );
 };
 
-const BarChartCard = ({ label, data, color }) => {
+const BarChartCard = ({ label, data, color = "#4285f4" }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const chartRef = useRef(null);
+  
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  // Préparation des données pour le graphique
   const chartData = {
     labels: data.map((entry) => entry.date),
     datasets: [
       {
-        label: "🍂",
+        label: "Conso par jour",
         data: data.map((entry) => entry.count),
-        backgroundColor: 
-        data.map((entry) => {
-          if (entry.count < 3) {
-            return "rgba(0, 255, 0, 0.2)"; // Vert pour < 3
-          } else if (entry.count >= 3 && entry.count <= 6) {
-            return "rgba(255, 165, 0, 0.2)"; // Orange pour 3 à 6
-          } else {
-            return "rgba(255, 0, 0, 0.2)"; // Rouge pour > 6
-          }
-        }),
-        borderColor: data.map((entry) => {
-          if (entry.count < 3) {
-            return "rgba(0, 255, 0, 1)";
-          } else if (entry.count >= 3 && entry.count <= 6) {
-            return "rgba(255, 165, 0, 1)";
-          } else {
-            return "rgba(255, 0, 0, 1)";
-          }
-        }),
+        backgroundColor: data.map((entry) => 
+          entry.count < 3 
+            ? "rgba(0, 255, 0, 0.5)" 
+            : entry.count <= 6 
+              ? "rgba(255, 165, 0, 0.5)" 
+              : "rgba(255, 0, 0, 0.5)"
+        ),
+        borderColor: data.map((entry) => 
+          entry.count < 3 
+            ? "rgba(0, 200, 0, 1)" 
+            : entry.count <= 6 
+              ? "rgba(255, 140, 0, 1)" 
+              : "rgba(200, 0, 0, 1)"
+        ),
         borderWidth: 1,
       },
-
-      {
-        label: "🔋",
-        data: data.map((entry) => entry.noCount),
-        backgroundColor: "rgba(0, 255, 0, 0.2)", // Vert
-        borderColor: "rgba(0, 255, 0, 1)", // Vert
-        borderWidth: 1, 
-      },
     ],
-
   };
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "top",
-        labels: { font: { size: 15 }, color: "#333" },
+        align: "center",
+        labels: { font: { size: 14 }, color: "#333" },
       },
       tooltip: {
         callbacks: {
@@ -89,28 +86,38 @@ const BarChartCard = ({ label, data, color }) => {
           },
         },
       },
-      datalabels: {
-        display: true,
-        color: "#000",
-        anchor: "end",
-        align: "end",
-        formatter: (value) => value,
-      },
     },
     scales: {
       y: {
         beginAtZero: true,
-        title: { display: true, text: "X par jour", color: "#333", font: { size: 14 } },
+        title: { display: true, text: "Consommations", color: "#333", font: { size: 14 } },
         ticks: { color: "#333", font: { size: 12 } },
-        grid: { color: "rgba(0, 0, 0, 0.1)" },
       },
       x: {
         title: { display: true, text: "Date", color: "#333", font: { size: 14 } },
-        ticks: { color: "#333", font: { size: 12 } },
-        grid: { color: "rgba(0, 0, 0, 0.1)" },
+        ticks: {
+          color: "#333",
+          font: { size: 10 },
+          callback: function (value, index) {
+            // Vérifier que value est une chaîne avant d'appeler split
+            if (typeof value !== 'string') {
+              return value;
+            }
+            
+            const dateParts = value.split('-');
+            if (dateParts.length === 3) {
+              const date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+              return date.toLocaleDateString("fr-FR", {
+                day: "numeric",
+                month: "short",
+              });
+            }
+            return value;
+          },
+        },
       },
     },
-    animation: { duration: 1000, easing: "easeInOutBounce" },
+    animation: { duration: 600, easing: "easeOutQuart" },
   };
 
   return (
@@ -118,8 +125,46 @@ const BarChartCard = ({ label, data, color }) => {
       className="stat-card"
       style={{ borderColor: color, backgroundColor: `${color}33` }}
     >
-      <h3 className="stat-card-label">{label}</h3>
-      <Bar data={chartData} options={options} />
+      <div className="chart-header">
+        <h3 className="stat-card-label">{label}</h3>
+        <button 
+          onClick={toggleExpand} 
+          className="toggle-chart-btn"
+        >
+          {isExpanded ? 'Réduire ↑' : 'Développer ↓'}
+        </button>
+      </div>
+      
+      {isExpanded ? (
+        <div style={{ height: "300px", width: "100%" }}>
+          <Bar 
+            data={chartData} 
+            options={options} 
+            ref={chartRef}
+          />
+        </div>
+      ) : (
+        <div className="chart-preview">
+          <p>Cliquez sur "Développer" pour voir le graphique</p>
+          <div className="mini-chart">
+            {data.slice(-7).map((entry, index) => (
+              <div 
+                key={index} 
+                className="mini-bar" 
+                style={{
+                  height: `${Math.min(entry.count * 5, 30)}px`,
+                  backgroundColor: entry.count < 3 
+                    ? "rgba(0, 255, 0, 0.5)" 
+                    : entry.count <= 6 
+                      ? "rgba(255, 165, 0, 0.5)" 
+                      : "rgba(255, 0, 0, 0.5)"
+                }}
+                title={`${entry.date}: ${entry.count}`}
+              ></div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -149,18 +194,24 @@ const FusionTool = ({
     consumption: "yes",
   });
 
-  // État pour le tri des entrées
+  // État pour le tri des entrées - Mettre à jour pour utiliser la valeur du filtre
   const [sortOrder, setSortOrder] = useState("desc");
 
   // État pour l'heure actuelle
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  // Un objet de filtre général
-  const [filter, setFilter] = useState({
-    date: "",
-    taskId: "",
-    categories: [],
-    consumption: "",
+  // Ajouter cet état pour contrôler l'affichage de la modale
+  const [showFilters, setShowFilters] = useState(false);
+  
+  // Mettre à jour l'état du filtre pour inclure tous les champs nécessaires
+  const [filter, setFilter] = useState(() => {
+    const savedFilters = localStorage.getItem('consumptionFilters');
+    return savedFilters ? JSON.parse(savedFilters) : {
+      date: "",
+      sortOrder: "desc",
+      mood: "",
+      consumption: "",
+    };
   });
 
   // Mise à jour de l'heure chaque seconde
@@ -306,7 +357,10 @@ const FusionTool = ({
   // Seuil de 4 heures (en secondes)
   const thresholdSec = 4 * 3600;
   // Pourcentage de remplissage : maximum 100%
-  const glassProgress = Math.min((timeSinceLastYesSec / thresholdSec) * 100, 100);
+  const endOfDay = new Date();
+  endOfDay.setHours(23, 59, 59, 999);
+  const timeUntilEndOfDaySec = Math.floor((endOfDay - new Date()) / 1000);
+  const glassProgress = Math.min((timeSinceLastYesSec / timeUntilEndOfDaySec) * 100, 100);
 
   // Fonction pour formater le temps en h, m, s
   const formatTimeDiff = (secs) => {
@@ -346,27 +400,29 @@ const FusionTool = ({
     };
   };
 
+  // Mettre à jour pour utiliser la valeur du filtre pour le tri
   const sortedEntries = [...entries].sort((a, b) => {
     const dateA = new Date(a.createdAt);
     const dateB = new Date(b.createdAt);
-    return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
+    return filter.sortOrder === "asc" ? dateA - dateB : dateB - dateA;
   });
 
   const globalStats = getGlobalStats();
 
   const getEmojiAndColor = (count) => {
     if (count <= 3) {
-      return { emoji: "🟢 Bravo ! 😉", };
+      return { emoji: "🟢", };
     } else if (count > 3 && count <= 6) {
-      return { emoji: "🟠 Peut faire mieux 😑", };
+      return { emoji: "🟠", };
     } else {
-      return { emoji: "🔴 Aïe aïe... 😓😭", };
+      return { emoji: "🔴", };
     }
   };
 
   const todayStats = getEmojiAndColor(globalStats.todayEntries);
   const yesterdayStats = getEmojiAndColor(globalStats.yesterdayEntries);
   const dayBeforeYesterdayStats = getEmojiAndColor(globalStats.dayBeforeYesterdayEntries);
+  const sevenDaysAgoStats = getEmojiAndColor(globalStats.sevenDaysAgoEntries);
 
   const getLast15DaysStats = () => {
     const last15Days = [];
@@ -441,9 +497,113 @@ const FusionTool = ({
     fetchTasks();
   }, []);
 
+  const [editEntryModal, setEditEntryModal] = useState(false);
+  const [currentEntry, setCurrentEntry] = useState(null);
+
+  // Fonction pour ouvrir la modale d'édition pour une entrée donnée
+  const openEditEntryModal = (entry) => {
+    setCurrentEntry({ ...entry });
+    setEditEntryModal(true);
+  };
+
+  // Fonction pour fermer la modale d'édition
+  const closeEditEntryModal = () => {
+    setEditEntryModal(false);
+    setCurrentEntry(null);
+  };
+
+  // Fonction pour mettre à jour un champ de l'entrée en cours d'édition
+  const handleEditEntryChange = (field, value) => {
+    setCurrentEntry({ ...currentEntry, [field]: value });
+  };
+
+  // Fonction pour sauvegarder l'édition (ici via une requête PUT)
+  const handleSaveEntryEdit = async () => {
+    try {
+      const response = await fetch(
+        `http://192.168.50.241:4000/consumption-entries/${currentEntry._id || currentEntry.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(currentEntry),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Erreur lors de la mise à jour de l'entrée.");
+      }
+      // Vous pouvez actualiser la liste des entrées ici, par exemple en rappelant une fonction de récupération,
+      // ou en mettant à jour localement l'état.
+      closeEditEntryModal();
+    } catch (error) {
+      console.error("Erreur :", error);
+    }
+  };
+
+  // Fonction pour supprimer l'entrée depuis la modale
+  const handleDeleteEntryFromModal = async () => {
+    try {
+      const response = await fetch(
+        `http://192.168.50.241:4000/consumption-entries/${currentEntry._id || currentEntry.id}`,
+        { method: "DELETE" }
+      );
+      if (!response.ok) {
+        throw new Error("Erreur lors de la suppression de l'entrée.");
+      }
+      if (typeof onDeleteEntry === "function") {
+        onDeleteEntry(currentEntry._id || currentEntry.id);
+      }
+      closeEditEntryModal();
+    } catch (error) {
+      console.error("Erreur :", error);
+    }
+  };
+
+  // Mettre à jour la logique de tri et de filtrage des entrées
+  const filteredEntries = sortedEntries.filter(entry => {
+    // Filtre par date
+    if (filter.date && entry.date.split("T")[0] !== filter.date) {
+      return false;
+    }
+    
+    // Filtre par humeur
+    if (filter.mood && entry.mood !== filter.mood) {
+      return false;
+    }
+    
+    // Filtre par consommation (yes/no)
+    if (filter.consumption && entry.consumption !== filter.consumption) {
+      return false;
+    }
+    
+    return true;
+  });
+
+  // Définir les options d'humeur pour le filtre
+  const moodOptions = {
+    heureux: "Heureux 😀",
+    triste: "Triste 😭",
+    stressé: "Stressé 😣",
+    calme: "Calme 😌",
+    fatigué: "Fatigué 😴",
+    énergique: "Énergique 😜",
+    anxieux: "Anxieux 😖",
+    colère: "Colère 😡",
+    ennuyé: "Ennuyé 😩",
+    excité: "Excité 🥳",
+  };
+
+  // Ajouter cette fonction pour synchroniser le sortOrder avec le filtre
+  useEffect(() => {
+    setSortOrder(filter.sortOrder || "desc");
+  }, [filter.sortOrder]);
+
   return (
+
+    
+    
     <div className="fusion-tool">
       <h1>Fusion-Tool ⛩️</h1>
+
       <form className="fusion-form">
         <label>
           Date :
@@ -512,65 +672,90 @@ const FusionTool = ({
         </button>
       </form>
 
+
       <div className="stats-global-FusionTool">
-        <h3>Real-Time 📈</h3>
 
-        <div className="stats-overview">
-          <ul>
-            <li>Total des entrées : {globalStats.totalEntries}</li>
-            <li>Entrées aujourd'hui : {globalStats.todayEntries} {todayStats.emoji}</li>
-            <li>Entrées hier : {globalStats.yesterdayEntries} {yesterdayStats.emoji}</li>
-            <li>Entrées avant-hier : {globalStats.dayBeforeYesterdayEntries} {dayBeforeYesterdayStats.emoji}</li>
-            <li>Entrées des 7 derniers jours : {globalStats.sevenDaysAgoEntries}</li>
-            <li>Entrées sans consommation : {globalStats.nonConsumptionEntries}</li>
-            <li>Entrées sans consommation aujourd'hui : {globalStats.nonConsumptionTodayEntries}</li>
-            <li>Entrées ce mois-ci : {globalStats.thisMonthEntries}</li>
-            <li>Entrées le mois dernier : {globalStats.lastMonthEntries}</li>
-          </ul>
-        </div>
 
-        <div className="stats-container-FusionTool">
-          
-          <div className="stat-card glass-card">
-            <h3 className="stat-card-label">Pas de consommation depuis</h3>
-            {lastYesEntry ? (
-              <>
-                <p>{formatTimeDiff(timeSinceLastYesSec)}</p>
-                <div className="progress-bar-container">
-                  <div
-                    className="progress-bar"
-                    style={{ width: glassProgress + "%" }}
-                  ></div>
-                </div>
-                <p>{glassProgress.toFixed(0)}%</p>
-              </>
-            ) : (
-              <p>Pas de données</p>
-            )}
-          </div>
-          <StatCard
-            label="Dernière victoire 💯"
-            value={
-              timeSinceLastNoEntry !== null
-                ? `${timeSinceLastNoEntry.hours}h ${timeSinceLastNoEntry.minutes}m`
-                : "N/A"
-            }
-            emoji="⏳"
+        <StatCard
+          label="📥Last "
+          value={lastYesEntry ? `${formatClock(lastYesEntry)}` : "N/A"}
+        />
+
+        <StatCard
+          label="⏳Last "
+          value={timeSinceLastYesEntry ? formatTimeDiff(timeSinceLastYesSec) : "N/A"}
           />
-         
-        </div>
+
+<StatCard
+          label="Progress "
+          value={`${glassProgress.toFixed(2)}%`}
+        />
+
+        <StatCard
+          label="⛩️ 0 J "
+          value={`${globalStats.todayEntries} ${todayStats.emoji}`}
+        />
+
+        <StatCard
+          label="⛩️ -1 J "
+          value={`${globalStats.yesterdayEntries} ${yesterdayStats.emoji}`}
+        />
+
+        <StatCard
+          label="⛩️ -2 J "
+          value={`${globalStats.dayBeforeYesterdayEntries} ${dayBeforeYesterdayStats.emoji}`}
+        />
+
+        <StatCard
+          label="⛩️ -7 J "
+          value={`${globalStats.sevenDaysAgoEntries} ${sevenDaysAgoStats.emoji}`}
+        />
+
+      
+        
+
+
+     
+
+     
+     
+
+
+
         <div className="stats-chart-container">
-          <BarChartCard label="15 derniers jours 🗓️" data={last15DaysStats} className="double-width" />
+          <BarChartCard
+            label="15 derniers jours 🗓️"
+            data={last15DaysStats}
+          />
+          
         </div>
+
+
       </div>
 
-      <h2>Historique des Consommations</h2>
-      <button
-        className="sort-button"
-        onClick={() => setSortOrder((prevOrder) => (prevOrder === "desc" ? "asc" : "desc"))}
-      >
-        Trier : {sortOrder === "desc" ? "Du plus récent" : "Du plus ancien"}
+      {/* Ajouter le bouton pour ouvrir la modale des filtres */}
+      <button className="show-filters-btn" onClick={() => setShowFilters(true)}>
+        Afficher les filtres
       </button>
+
+      {/* Modale des filtres */}
+      {showFilters && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button className="close-btn" onClick={() => setShowFilters(false)}>
+              Fermer
+            </button>
+            <ConsumptionFilters
+              filter={filter}
+              setFilter={setFilter}
+              moodOptions={moodOptions}
+            />
+          </div>
+        </div>
+      )}
+
+      <h2>Historique des Consommations</h2>
+      {/* Supprimer le bouton de tri ici */}
 
       <table className="fusion-table">
         <thead>
@@ -583,21 +768,106 @@ const FusionTool = ({
           </tr>
         </thead>
         <tbody>
-          {sortedEntries.map((entry) => (
+          {filteredEntries.map((entry) => (
             <tr key={entry._id || entry.id}>
-              <td>{new Date(entry.date).toLocaleDateString("fr-FR")}</td>
+              <td>
+                {new Date(entry.date).toLocaleDateString("fr-FR", {
+                  weekday: "long", // jour de la semaine en lettres
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric"
+                })}
+              </td>
               <td>{entry.time}</td>
               <td>{getMoodWithEmoji(entry.mood)}</td>
               <td>{entry.consumption === "yes" ? "Oui" : "Non"}</td>
               <td>
-                <button onClick={() => handleDeleteEntry(entry._id || entry.id)}>
-                  Supprimer
+                <button onClick={() => openEditEntryModal(entry)}>
+                  Éditer
                 </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {/* Modale d'édition d'entrée */}
+      {editEntryModal && currentEntry && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Modifier l'entrée</h3>
+            <label>
+              Date :
+              <input
+                type="date"
+                value={new Date(currentEntry.date).toISOString().split("T")[0]}
+                onChange={(e) => handleEditEntryChange("date", e.target.value)}
+              />
+            </label>
+            <label>
+              Heure :
+              <input
+                type="time"
+                value={currentEntry.time}
+                onChange={(e) => handleEditEntryChange("time", e.target.value)}
+              />
+            </label>
+            <label>
+              Humeur :
+              <select
+                value={currentEntry.mood}
+                onChange={(e) => handleEditEntryChange("mood", e.target.value)}
+              >
+                <option value="">Sélectionnez</option>
+                <option value="heureux">Heureux 😀</option>
+                <option value="triste">Triste 😭</option>
+                <option value="stressé">Stressé 😣</option>
+                <option value="calme">Calme 😌</option>
+                <option value="fatigué">Fatigué 😴</option>
+                <option value="énergique">Énergique 😜</option>
+                <option value="anxieux">Anxieux 😖</option>
+                <option value="colère">Colère 😡</option>
+                <option value="ennuyé">Ennuyé 😩</option>
+                <option value="excité">Excité 🥳</option>
+                <option value="déprimé">Déprimé 😵</option>
+                <option value="détendu">Détendu 😌</option>
+                <option value="nerveux">Nerveux 😵‍💫</option>
+                <option value="frustré">Frustré 😤</option>
+                <option value="déterminé">Déterminé 💪</option>
+                <option value="motivé">Motivé 🚀</option>
+                <option value="concentré">Concentré 🧐</option>
+                <option value="confiant">Confiant 😎</option>
+                <option value="déçu">Déçu 😞</option>
+                <option value="dégoûté">Dégoûté 🤢</option>
+                <option value="honteux">Honteux 😳</option>
+                <option value="triste">Triste 😢</option>
+                <option value="démotivé">Démotivé 😔</option>
+                <option value="fiévreux">Fiévreux 🤒</option>
+                <option value="malade">Malade 🤕</option>
+                <option value="indécis">Indécis 🤔</option>
+                <option value="indiférent">Indiférent 😐</option>
+              </select>
+            </label>
+            <label>
+              Consommation :
+              <select
+                value={currentEntry.consumption}
+                onChange={(e) =>
+                  handleEditEntryChange("consumption", e.target.value)
+                }
+              >
+                <option value="yes">Oui</option>
+                <option value="no">Non</option>
+              </select>
+            </label>
+            <div className="modal-buttons">
+              <button onClick={handleSaveEntryEdit}>Enregistrer</button>
+              <button onClick={closeEditEntryModal}>Annuler</button>
+              <button onClick={handleDeleteEntryFromModal}>Supprimer</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

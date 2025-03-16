@@ -36,6 +36,11 @@ const AdditionalMenu = () => {
           <Link to="/settings" className="menu-link" onClick={toggleMenu}>
             <span role="img" aria-label="Settings">⚙️</span>
           </Link>
+
+          <Link to="/notes" className="menu-link" onClick={toggleMenu}>
+            <span role="img" aria-label="Notes">📝</span>
+            </Link>
+
         
         </div>
       )}

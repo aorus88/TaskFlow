@@ -65,6 +65,15 @@ const consumptionEntrySchema = new mongoose.Schema({
 
 const ConsumptionEntry = mongoose.model('ConsumptionEntry', consumptionEntrySchema);
 
+const noteSchema = new mongoose.Schema({
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    date: { type: Date, required: true },
+    createdAt: { type: Date, default: Date.now }
+});
+
+const Note = mongoose.model('Note', noteSchema);
+
 // 5) Routes de l'API
 // a) Récupérer toutes les tâches avec filtres
 app.get('/tasks', async (req, res) => {
@@ -381,10 +390,54 @@ app.get('/all-tasks', async (req, res) => {
   }
 });
 
+// a) Récupérer toutes les notes
+app.get('/notes', async (req, res) => {
+    try {
+        const notes = await Note.find();
+        res.json(notes);
+    } catch (err) {
+        res.status(500).json({ error: 'Erreur lors de la récupération des notes.' });
+    }
+});
 
+// b) Ajouter une nouvelle note
+app.post('/notes', async (req, res) => {
+    const { title, content, date } = req.body;
+    try {
+        const newNote = new Note({
+            title,
+            content,
+            date
+        });
+        await newNote.save();
+        res.status(201).json(newNote);
+    } catch (err) {
+        res.status(400).json({ error: 'Erreur lors de l\'ajout de la note.' });
+    }
+});
 
+// c) Mettre à jour une note
+app.put('/notes/:id', async (req, res) => {
+    const { id } = req.params;
+    const updates = req.body;
+    try {
+        const updatedNote = await Note.findByIdAndUpdate(id, updates, { new: true });
+        res.json(updatedNote);
+    } catch (err) {
+        res.status(400).json({ error: 'Erreur lors de la mise à jour de la note.' });
+    }
+});
 
-
+// d) Supprimer une note
+app.delete('/notes/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        await Note.findByIdAndDelete(id);
+        res.json({ message: 'Note supprimée avec succès.' });
+    } catch (err) {
+        res.status(500).json({ error: 'Erreur lors de la suppression de la note.' });
+    }
+});
 
 // 6) Exportation de l'application
 module.exports = app;

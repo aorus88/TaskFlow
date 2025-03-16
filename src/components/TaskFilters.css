@@ -102,56 +102,6 @@ body.dark .filter-group select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23e2e8f0' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
 }
 
-/* Styles pour les stat-card */
-.stat-card {
-  border: 2px solid;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 10px;
-  text-align: center;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.2));
-  position: relative;
-  overflow: hidden;
-}
-
-.stat-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.stat-card-label {
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.stat-card-value {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-/* Styles pour le mode sombre */
-body.dark .stat-card {
-  border-color: #718096;
-  background-color: #4a5568;
-  color: #f9f9f9;
-}
-
-body.dark .stat-card-label {
-  color: #cccccc;
-}
-
-body.dark .stat-card-value {
-  color: #ccaa00;
-}
-
-body.dark .stat-card::before {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3));
-}
-
-body.dark .stat-card:hover::before {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.4));
-}
-
 /* Assurer que les éléments cliquables ne sont pas affectés */
 .stat-card .dark-mode-button {
   position: relative;

@@ -1,0 +1,31 @@
+.notes-container {
+  padding: 20px 0;
+}
+
+.note-form {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.note-card {
+  height: 100%;
+  transition: all 0.3s ease;
+  border-left: 4px solid #007bff;
+}
+
+.note-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.note-card .card-title {
+  font-weight: 600;
+}
+
+.note-card .card-text {
+  white-space: pre-wrap;
+  max-height: 120px;
+  overflow: auto;
+}

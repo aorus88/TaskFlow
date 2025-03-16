@@ -218,80 +218,90 @@ const handleArchiveTask = () => {
               (() => {
                 const daysRemaining = calculateDaysRemaining();
                 return <span className={daysRemaining.className}>{daysRemaining.text}</span>;
-              })()
-            }
+                })()
+                }
 
-            <p>
-              <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
-            </p>
-            {task.categories && task.categories.length > 0 && (
-              <p>
+                <p>
+                <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
+                </p>
+                {task.categories && task.categories.length > 0 && (
+                <p>
                 <strong>Catégories :</strong> {task.categories.join(", ")}
-              </p>
-            )}
-            <p>
-              <strong>Temps total :</strong> {formatTime(calculateTotalTime(task))}
-            </p>
-            <p>
-              <strong>Dernière session :</strong> {formatTime(lastSessionDuration)}
-            </p>
+                </p>
+                )}
+                <p>
+                <strong>Temps total :</strong> {formatTime(calculateTotalTime(task))}
+                </p>
+                <p>
+                <strong>Dernière session :</strong> {formatTime(lastSessionDuration)}
+                </p>
+                <p>
+                <strong>Nombre total de session :</strong> {task.sessions ? task.sessions.length : 0}
+                </p>
+                <p>
+                <strong>Jours depuis création :</strong> {Math.floor((new Date() - new Date(task.addedAt)) / (1000 * 60 * 60 * 24))} jours
+                </p>
 
-            <div className="progress-bar-taskitem">
-              <div
+                <p>
+                <strong>Date de création :</strong> {formatDate(task.addedAt)}
+                </p>
+            
+              <div className="progress-bar-taskitem">
+                <div
                 className="progress-bar-taskitem-fill"
                 style={{ width: `${progress}%` }}
-              ></div>
-            </div>
-            <p>Progression : {Math.round(progress)}%</p>
+                ></div>
+              </div>
+              <p>Progression : {Math.round(progress)}%</p>
 
 
-            {task.subtasks.length > 0 && (
-              <div className="subtasks-section">
+              {task.subtasks.length > 0 && (
+                <div className="subtasks-section">
                 <button onClick={() => setExpanded(!expanded)}>
                   {expanded ? "Masquer les sous-tâches" : "Voir les sous-tâches"}
                 </button>
                 {expanded && (
                   <div className="subtask-list">
-                    {task.subtasks
-                      .filter((subtask) => subtask.archived === "open")
-                      .map((subtask) => (
-                        !hiddenSubtasks.includes(subtask.id) && (
-                          <div key={subtask.id} className="subtask-item">
-                            <input
-                              type="checkbox"
-                              checked={subtask.archived === "closed"}
-                              onChange={() => handleToggleSubtaskStatus(task.id, subtask.id, subtask.archived === "open" ? "closed" : "open")}
-                            />
+                  {task.subtasks
+                    .filter((subtask) => subtask.archived === "open")
+                    .map((subtask) => (
+                    !hiddenSubtasks.includes(subtask.id) && (
+                      <div key={subtask.id} className="subtask-item">
+                      <input
+                        type="checkbox"
+                        checked={subtask.archived === "closed"}
+                        onChange={() => handleToggleSubtaskStatus(task.id, subtask.id, subtask.archived === "open" ? "closed" : "open")}
+                      />
 
-                            {subtask.name} /{" "}
-                            <span className="subtask-time">
-                              {formatTime(calculateSubtaskTime(task, subtask._id))}
-                            </span>
-                            <button className="edit-icon" onClick={() => openEditModal(subtask)}>
-                              ✏️
-                            </button>
-                            <button className="delete-icon" onClick={() => handleDeleteSubtask(task.id, subtask.id)}>
-                             ❌
-                            </button>
-                          </div>
-                        )
-                      ))}
-                    <input
-                      type="text"
-                      value={newSubtaskText}
-                      onChange={(e) => setNewSubtaskText(e.target.value)}
-                      onKeyDown={handleKeyPress}
-                      placeholder="Nouvelle sous-tâche..."
-                    />
+                      {subtask.name} /{" "}
+                      <span className="subtask-time">
+                        {formatTime(calculateSubtaskTime(task, subtask._id))}
+                      </span>
+                      <button className="edit-icon" onClick={() => openEditModal(subtask)}>
+                        ✏️
+                      </button>
+                      <button className="delete-icon" onClick={() => handleDeleteSubtask(task.id, subtask.id)}>
+                       ❌
+                      </button>
+                      </div>
+                    )
+                    ))}
+                  <input
+                    type="text"
+                    value={newSubtaskText}
+                    onChange={(e) => setNewSubtaskText(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                    placeholder="Nouvelle sous-tâche..."
+                  />
                   </div>
                 )}
-              </div>
+                </div>
+              )}
+              </>
             )}
-          </>
-        )}
-      {isModalOpen && (
-        <EditTaskModal
-          task={selectedTask} // Tâche actuelle
+            {isModalOpen && (
+            <EditTaskModal
+              task={selectedTask} // Tâche actuelle
           taskCategories={taskCategories} // Catégories de tâches
           onClose={closeEditModal} // Fonction pour fermer la modale
           onSave={(updatedTask) => {

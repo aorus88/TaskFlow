@@ -55,6 +55,21 @@ body.dark .sessions-header {
   color: #666;
 }
 
+
+.set-current-time-btn {
+  margin-left: 10px;
+  padding: 4px 8px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.set-current-time-btn:hover {
+  background-color: #5a6268;
+}
+
 /* Bouton de suppression */
 .delete-button {
   background-color: #e51400;

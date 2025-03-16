@@ -1,69 +1,29 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import TaskFilters_Sessions from '../components/TaskFilters_Sessions';
 import './Sessions.css';
-import GlobalPomodoroTimer from "../components/GlobalPomodoroTimer";
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 import 'moment/locale/fr';
+import { SelectedTaskContext } from '../context/SelectedTaskContext';
+import { TasksContext } from '../context/TasksContext';
 
 const localizer = momentLocalizer(moment);
 
-// Déplacer fetchTasksAndSessions en dehors du composant - actualisation calendrier après ajout session 
-// Modifier la fonction fetchTasksAndSessions pour inclure les informations de sous-tâches
-const fetchTasksAndSessions = async (setTasks, setSessions) => {
-  try {
-    const response = await fetch('http://192.168.50.241:4000/all-tasks');
-    const data = await response.json();
-    if (Array.isArray(data)) {
-      const allTasks = data.filter(task =>
-        Array.isArray(task.sessions) && task.sessions.length > 0
-      );
-      setTasks(allTasks);
-
-      const allSessions = allTasks.flatMap(task =>
-        task.sessions.map(session => {
-          const end = new Date(session.date);
-          const start = new Date(new Date(session.date).getTime() - session.duration * 60000);
-
-          // Chercher la sous-tâche si type === 'subtask'
-          let subtaskName = null;
-          if (session.type === 'subtask' && session.targetId) {
-            const subtask = task.subtasks?.find(st => st._id === session.targetId);
-            subtaskName = subtask?.name;
-          }
-
-          return {
-            ...session,
-            taskId: task._id,
-            taskName: task.name,
-            subtaskName, // Ajouter le nom de la sous-tâche
-            totalTime: task.totalTime,
-            categories: task.categories,
-            start: isNaN(start) ? null : start,
-            end: isNaN(end) ? null : end,
-          };
-        })
-      );
-      setSessions(allSessions);
-    }
-  } catch (error) {
-    console.error('Erreur:', error);
-  }
-};
-
 function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
+  const { tasks, sessions, loading, fetchTasks } = useContext(TasksContext);
+  const { selectedTaskId, setSelectedTaskId } = useContext(SelectedTaskContext);
+  
   const [showSessionForm, setShowSessionForm] = useState(false);
   const [newSession, setNewSession] = useState({
     taskId: "",
     duration: 30, // valeur par défaut
     date: new Date(),
-    categories: []
+    // Utiliser une méthode qui préserve le fuseau horaire local
+    formattedDateTime: new Date().toISOString().slice(0, 16)
   });
-  const [sessions, setSessions] = useState([]);
-  const [tasks, setTasks] = useState([]);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [filter, setFilter] = useState({
     date: '',
@@ -72,10 +32,26 @@ function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
     categories: '',
   });
 
-  // Utiliser useCallback pour mémoriser la fonction
-  const fetchTasksAndSessionsCallback = useCallback(() => {
-    fetchTasksAndSessions(setTasks, setSessions);
-  }, []);
+  // Ajouter cette fonction pour obtenir la date et heure locale au format ISO
+  const getLocalISOString = (date) => {
+    const pad = (num) => String(num).padStart(2, '0');
+    
+    return date.getFullYear() + '-' +
+      pad(date.getMonth() + 1) + '-' +
+      pad(date.getDate()) + 'T' +
+      pad(date.getHours()) + ':' +
+      pad(date.getMinutes());
+  };
+
+  // Fonction pour mettre à jour avec l'heure actuelle
+  const setCurrentDateTime = () => {
+    const now = new Date();
+    setNewSession({
+      ...newSession,
+      date: now,
+      formattedDateTime: getLocalISOString(now)
+    });
+  };
 
   // Mettre à jour l'heure
   useEffect(() => {
@@ -87,8 +63,8 @@ function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
 
   // Charger les données initiales
   useEffect(() => {
-    fetchTasksAndSessionsCallback();
-  }, [fetchTasksAndSessionsCallback]);
+    fetchTasks();
+  }, [fetchTasks]);
 
   const formatClock = (time) => {
     return time.toLocaleTimeString('fr-FR', {
@@ -98,7 +74,7 @@ function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
     });
   };
 
-  // Reste du code existant...
+  // Gestion de la suppression de session
   const handleDeleteSession = async (taskId, sessionId) => {
     if (!window.confirm('Êtes-vous sûr de vouloir supprimer cette session ?')) {
       return;
@@ -115,9 +91,8 @@ function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
         throw new Error('Erreur lors de la suppression de la session');
       }
 
-      setSessions(sessions.filter(session => session._id !== sessionId));
-      // Recharger les données après la suppression
-      fetchTasksAndSessionsCallback();
+      // Au lieu de modifier l'état local, on rafraîchit les données via le contexte
+      fetchTasks();
     } catch (error) {
       console.error('Erreur:', error);
       alert('Erreur lors de la suppression de la session');
@@ -126,24 +101,43 @@ function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
 
   const handleAddSession = async () => {
     try {
-      // appel à un endpoint /tasks/:id/sessions ou similaire
+      // Extraire le type et l'ID du format "task-id" ou "subtask-id"
+      const [type, id] = newSession.taskId.split('-');
+      
+      // Trouver la tâche parente
+      const parentTask = type === 'subtask'
+        ? tasks.find(task => task.subtasks?.some(st => st._id === id))
+        : tasks.find(task => task._id === id);
+      
+      if (!parentTask) {
+        throw new Error("Tâche parente non trouvée");
+      }
+      
+      // Création de l'objet session avec les informations correctes
+      const sessionData = {
+        duration: parseInt(newSession.duration, 10),
+        date: newSession.date, // Cette date contient bien l'heure choisie
+        categories: parentTask.categories || [],
+        type: type, // 'task' ou 'subtask'
+        targetId: id // l'id de la tâche ou sous-tâche cible
+      };
+      
       const response = await fetch(
-        `http://192.168.50.241:4000/tasks/${newSession.taskId}/sessions`,
+        `http://192.168.50.241:4000/tasks/${parentTask._id}/sessions`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            duration: newSession.duration,
-            date: newSession.date,
-            categories: newSession.categories
-          })
+          body: JSON.stringify(sessionData)
         }
       );
+      
       if (!response.ok) {
         throw new Error("Erreur lors de l'ajout de la session");
       }
+      
       setShowSessionForm(false);
-      fetchTasksAndSessionsCallback(); // pour recharger la liste
+      // Rafraîchir les données via le contexte partagé
+      fetchTasks();
     } catch (error) {
       console.error("Erreur lors de l'ajout de session:", error);
     }
@@ -266,31 +260,59 @@ function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
               <select
                 value={newSession.taskId}
                 onChange={(e) => setNewSession({...newSession, taskId: e.target.value})}
+                className="session-task-selector"
               >
                 <option value="">Sélectionnez une tâche</option>
-                {tasks.map((task) => (
-                  <option key={task._id} value={task._id}>
-                    {task.name}
-                  </option>
+                {tasks
+                  .filter(task => task.status === "open") // Filtrer uniquement les tâches ouvertes
+                  .slice().reverse().map((task) => (
+                  <React.Fragment key={task._id}>
+                    <option value={`task-${task._id}`}>
+                      {task.name}
+                    </option>
+                    {task.subtasks
+                      ?.filter(subtask => subtask.archived !== "closed")
+                      .map((subtask) => (
+                        <option key={subtask._id} value={`subtask-${subtask._id}`}>
+                          ├─ {subtask.name}
+                        </option>
+                      ))
+                    }
+                  </React.Fragment>
                 ))}
               </select>
             </label>
-
+            
             <label>
               Durée (minutes):
               <input
                 type="number"
                 value={newSession.duration}
-                onChange={(e) => setNewSession({...newSession, duration: e.target.value})}
+                onChange={(e) => setNewSession({...newSession, duration: parseInt(e.target.value, 10)})}
               />
             </label>
 
             <label>
-              Date:
+              Heure de fin :
               <input
                 type="datetime-local"
-                onChange={(e) => setNewSession({...newSession, date: new Date(e.target.value)})}
+                value={newSession.formattedDateTime}
+                onChange={(e) => {
+                  const selectedDateTime = new Date(e.target.value);
+                  setNewSession({
+                    ...newSession, 
+                    date: selectedDateTime,
+                    formattedDateTime: e.target.value
+                  });
+                }}
               />
+              <button 
+                type="button"
+                onClick={setCurrentDateTime}
+                className="set-current-time-btn"
+              >
+                Maintenant
+              </button>
             </label>
 
             <button onClick={handleAddSession}>Enregistrer</button>
