@@ -86,7 +86,7 @@ body.dark .task-content {
 
 /* Mode sombre - nom de la tâche */
 body.dark .task-name {
-  color: #babaa8;
+  color: #f5f5c5;
 }
 
 
@@ -121,7 +121,7 @@ body.dark .delete-button {
 
 /* Mode sombre -  Style pour priorité, catégories, temps total , dernière session */
 body.dark .task-item p {
-  color: #ccaa00;
+  color: #99a9cc;
 }
 
 

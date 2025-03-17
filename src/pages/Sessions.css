@@ -141,8 +141,8 @@ body.dark .add-session-btn:hover {
 }
 
 body.dark .rbc-calendar {
-  background-color: #1e1e1e;
-  border-color: #2d2d2d;
+  background-color: #2d3748;
+  border-color: #2d3748;
   color: white
 }
 
@@ -153,7 +153,7 @@ body.dark .rbc-calendar {
 
 .body.dark .rbc-events-container {
   border-radius: 8px;
-  background-color: #d5909074;
+  background-color: #2d3748;
 }
 
 .rbc-row {
@@ -161,20 +161,23 @@ body.dark .rbc-calendar {
 }
 
 body.dark .rbc-row {
-  background-color: #d5909074;
+  background-color: #2d3748;
 }
 
 .rbc-time-slot {
-  background-color: #f2bb4e1f;
+  background-color: #2d3748;
 }
 
 body.dark .rbc-time-slot {
-  background-color: #d5909074;
+  background-color: #d5909048;
 }
 
 .rbc-btn-group {
   margin-bottom: 15px;
-  background-color: #6bb6e874;
+  background-color: #cabe1353;
+  border-radius: 8px;
+  padding: 10px;
+  color:wheat;
 
 }
 

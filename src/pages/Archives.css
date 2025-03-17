@@ -1,15 +1,14 @@
 .archives-page {
-  margin-left: 10%; /* Décale tout vers la droite */
-  padding: 20px; /* Ajoute de l'espace à l'intérieur */
-  box-sizing: border-box; /* Assure que les marges sont bien calculées */
-  margin-right: 10%; /* Décale tout vers la droite */
+  margin-left: 5%; /* Réduit les marges pour plus d'espace */
+  padding: 20px;
+  box-sizing: border-box;
+  margin-right: 5%;
 }
 
 .archives-page h1 {
   text-align: center;
   margin-bottom: 20px;
 }
-
 
 .archived-tasks-header {
   display: flex;
@@ -40,8 +39,8 @@
 
 .archived-tasks-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Disposition responsive */
+  gap: 10px; /* Espacement réduit entre les éléments */
 }
 
 .archived-task-item,
@@ -49,14 +48,23 @@
   background: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 20px;
+  padding: 12px; /* Padding réduit pour plus de compacité */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease; /* Animation de transition */
+  position: relative; /* Pour positionner les boutons */
+}
+
+.archived-task-item:hover,
+.archived-subtask-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .dark .archived-task-item,
 .dark .archived-subtask-item {
-  background: #333;
-  color: #fff;
+  background: #2d3748;
+  border-color: #4a5568;
+  color: #e2e8f0;
 }
 
 .archived-task-item .task-header,
@@ -64,45 +72,54 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap; /* Permet aux éléments de passer à la ligne sur les petits écrans */
 }
 
-.archived-task-item .task-header .task-name,
-.archived-subtask-item .subtask-header .subtask-name {
+.task-name {
+  font-size: 1.1rem;
   font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+  flex: 1;
+}
+
+.dark .task-name {
+  color: #f5f5c5;
 }
 
 .archived-task-item .task-details,
 .archived-subtask-item .subtask-details {
-  font-size: 0.9em;
+  font-size: 0.85em;
   color: #666;
 }
 
 .archived-task-item .task-priority,
 .archived-task-item .task-time-spent,
 .archived-subtask-item .subtask-archived-date {
-  margin-top: 10px;
+  margin-top: 6px;
+  font-size: 0.9rem;
 }
 
 .archived-task-item .task-separator {
   border: none;
   border-top: 1px solid #ddd;
-  margin: 10px 0;
+  margin: 8px 0;
 }
 
 .archived-subtask-item {
   background: #e9e9e9;
   border-left: 4px solid #007bff;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .archived-subtasks-section {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .archived-subtasks-title {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .archived-subtasks-list {
@@ -122,4 +139,104 @@
 
 .delete-button:hover {
   background-color: #c53030;
+}
+
+/* Styles des boutons */
+.task-buttons {
+  display: flex;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.delete-button, .open-button {
+  padding: 6px 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.delete-button {
+  background-color: #e53e3e;
+}
+
+.open-button {
+  background-color: #48bb78;
+}
+
+.dark .delete-button {
+  background-color: #c53030;
+}
+
+.dark .open-button {
+  background-color: #2f855a;
+}
+
+/* Badge de statut */
+.task-status {
+  display: inline-block;
+  padding: 3px 6px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.status-closed {
+  background-color: #fed7d7;
+  color: #e53e3e;
+}
+
+.status-open {
+  background-color: #c6f6d5;
+  color: #38a169;
+}
+
+/* Mode compact pour petits écrans */
+@media screen and (max-width: 768px) {
+  .archives-page {
+    margin-left: 2%;
+    margin-right: 2%;
+    padding: 10px;
+  }
+
+  .archived-tasks-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .archived-task-item,
+  .archived-subtask-item {
+    padding: 10px;
+  }
+  
+  .task-buttons {
+    position: static;
+    margin-top: 8px;
+  }
+}
+
+/* Vue compacte */
+.compact-view .archived-task-item {
+  padding: 8px;
+  margin-bottom: 5px;
+}
+
+.compact-view .task-name {
+  font-size: 0.9rem;
+}
+
+.toggle-view-button {
+  margin-bottom: 15px;
+  padding: 8px 12px;
+  background-color: #4299e1;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.toggle-view-button:hover {
+  background-color: #3182ce;
 }

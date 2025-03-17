@@ -6,9 +6,6 @@
     color: #333;
   }
 
-  .dark .version-history {
-    color: #bc9e0c;
-  }
   
   .version-history h1 {
     font-size: 2rem;
@@ -40,6 +37,21 @@
 
   .dark .version-history ul li {
     background: #333;
-    border-left: 5px solid #bc9e0c;
+    border-left: 5px solid #ffffffc4;
   }
+
+  .dark .version-history h1 {
+    color: #ffffffc4;
+  }
+  
+  .dark .version-history p {
+    color: #f5f5c5;
+  }
+
+  .dark .version-history ul li  {
+    border-left: 15px solid #5e75da;
+    background-color: #77839a;
+    color:#eeeeea;
+  }
+
 

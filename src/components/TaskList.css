@@ -9,7 +9,7 @@
 
 /* Mode sombre - container principal */
 body.dark .task-list-container {
-  background-color: #1a202c;
+  background-color: #2d3748;
   border-color: #2d3748;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
@@ -44,9 +44,13 @@ body.dark .task-list {
 
 /* Mode sombre - tâches individuelles */
 body.dark .task-item {
-  background-color: #1a202c;
+  background-color: #2d3748;
   border-color: #2d3748;
   color: #e2e8f0;
+  border-left: 2px solid #3182ce;
+  border-right: 2px solid #3182ce;
+  border-top: 2px solid #3182ce;
+  border-bottom: 2px solid #3182ce;
 }
 
 /* Conteneur des boutons d'action */

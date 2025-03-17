@@ -34,6 +34,7 @@
   color: #110909;
 }
 
+
 .stat-card-duration {
   background-color: rgba(226, 231, 244, 0.893);
   border-color: black;
@@ -129,8 +130,8 @@
 
 /* Mode sombre inspiré de VS Code */
 body.dark .statistics-container {
-  background-color: #1a202c;
-  border-color: #000000;
+  background-color: #2d3748;
+  border-color: #2d3748;
 }
 
 body.dark .statistics-header {
@@ -146,17 +147,36 @@ body.dark .stat-card {
   border: 3px solid #4d9ae785;
 }
 
+body.dark .stat-card-tasks {
+  background-color: #3f4d66;
+  border-color: #2d3748;
+  color: #cccccc;
+}
+
+body.dark .stat-card-duration {
+  background-color: #3f4d66;
+  border-color: #2d3748;
+  color: #cccccc;
+}
+body.dark .stat-card-top5 {
+  background-color: #3f4d66;
+  border-color: #2d3748;
+  color: #cccccc;
+}
+
 body.dark .stat-card:hover {
-  background-color: #eae2e289;
+  background-color: #eae2e221;
   border-color: #252526;
 }
 
 body.dark .stat-card h3 {
   color: #76ec6b;
+  background-color: #2d3748;
 }
 
 body.dark .stat-card p {
   color: #ccaa00;
+  background-color: #2d3748;
 }
 
 body.dark .timer-display {

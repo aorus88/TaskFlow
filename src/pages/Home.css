@@ -13,12 +13,12 @@
 
 /* Styles pour le mode sombre */
 body.dark .home-page {
-  background-color: #1a202c;
+  background-color: #2d3748;
   color: #c3bbbb;
 }
 
 body.dark .header {
-  background-color: #1a202c;
+  background-color: #2d3748;
 }
 
 body.dark .widget-container,
@@ -26,12 +26,12 @@ body.dark .task-form,
 body.dark .task-filters,
 body.dark .global-pomodoro-timer,
 body.dark .task-list {
-  background-color: #1a202c;
+  background-color: #2d3748;
   color: #f9f9f9;
 }
 
 body.dark .header-section {
-  background-color: #1a202c;
-  border-color: #1a202c;
+  background-color: #2d3748;
+  border-color: #2d3748;
   color: #cccccc;
 }

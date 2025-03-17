@@ -79,9 +79,9 @@
   margin: 2px 0;
   margin-right: 12px;
   display: block;
-  text-align: center;
-  
+  text-align: center; 
 }
+
 
 /* Bouton de minimisation */
 .minimize-button {
@@ -267,13 +267,25 @@
 
 /* Mode sombre */
 body.dark .pomodoro-timer {
-  background-color: #535252;
-  color: #d4d4d4;
-  border-left: 25px solid #535252;
-  border-right: 20px solid #535252;
-  border-top: 20px solid #535252;
-  border-bottom: 20px solid #535252;
+  background-color: #2d3748;
+  color: #2d3748;
+  border-left: 25px solid #2d3748;
+  border-right: 20px solid #2d3748;
+  border-top: 20px solid #2d3748;
+  border-bottom: 20px solid #2d3748;
 }
+
+body.dark .pomodoro-timer-header-taskname {
+  background-color: #2d3748;
+  color: #cccccc;
+}
+
+/* Couleur du timer en mode sombre */
+body.dark .pomodoro-timer-header-timer {
+  color: #a07947;
+
+}
+
 
 body.dark .pomodoro-timer__header {
   border-bottom-color: #2d2d2d;

@@ -44,7 +44,7 @@ const AdditionalMenu = () => {
           </Link>
 
           <Link to="/versionHistory" className="menu-link" onClick={toggleMenu}>
-            <span role="img" aria-label="Version History">🛤️</span>
+            <span role="img" aria-label="Version History">📜</span>
           </Link>
 
         

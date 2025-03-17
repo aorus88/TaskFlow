@@ -9,7 +9,7 @@ body {
 
 /* Gestion du mode sombre */
 body.dark {
-  background-color: #1a202c; /* Fond sombre */
+  background-color: #2d3748; /* Fond sombre */
 }
 
 /* Supprimer les marges des ul/ol globalement */

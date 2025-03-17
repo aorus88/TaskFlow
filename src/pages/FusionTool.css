@@ -99,7 +99,7 @@
 /* ----- Cartes de statistiques ----- */
 .stat-card {
   text-align: center;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
   align-items: center;
   width: 95%;
   height: 95%;
@@ -167,8 +167,8 @@ body.dark .sort-button:hover {
 }
 
 body.dark .stat-card {
-  background-color: #1e1e1e;
-  border-color: #333;
+  background-color: #2d3748;
+  border-color: #2d3748;
   color: #cccccc;
 }
 
