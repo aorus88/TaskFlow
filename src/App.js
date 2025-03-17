@@ -6,15 +6,17 @@ import FusionTool from "./pages/FusionTool";
 import VersionHistory from "./pages/VersionHistory";
 import Sessions from "./pages/Sessions";
 import Settings from "./pages/Settings";
-import Notes from "./pages/Notes";
+import NotesEditor from "./pages/NotesEditor"; // Importer le nouvel éditeur de notes
 import "./index.css";
 import taskReducer from "./reducers/taskReducer";
 import { TimerProvider } from "./context/TimerContext";
-import { SelectedTaskProvider } from './context/SelectedTaskContext'; // Importer le contexte
+import { SelectedTaskProvider } from './context/SelectedTaskContext';
+import { NotesProvider } from './context/NotesContext'; // Importer le provider de notes
 import AdditionalMenu from "./components/AdditionalMenu";
 import "./App.css";
 import GlobalPomodoroTimer from "./components/GlobalPomodoroTimer";
 import { TasksProvider } from './context/TasksContext';
+import { setupHabitRegenerationCheck, regenerateHabits } from './utils/cronJobs';
 
 const initialState = {
   tasks: [],
@@ -24,7 +26,6 @@ const initialState = {
 
 const App = () => {
   const [state, dispatch] = useReducer(taskReducer, initialState);
-  const [] = useState({ message: '', type: '' });
   const [filter, setFilter] = useState({
     priority: "",
     date: "",
@@ -32,24 +33,24 @@ const App = () => {
     sortOrder: "newest",
   });
 
-    // Fonction pour formater l'heure
-    const formatClock = (time) => {
-      return time.toLocaleTimeString('fr-FR', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      });
-    };
+  // Fonction pour formater l'heure
+  const formatClock = (time) => {
+    return time.toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  };
 
-      // Ajout de l'état pour l'heure actuelle
-      const [currentTime, setCurrentTime] = useState(new Date());
+  // Ajout de l'état pour l'heure actuelle
+  const [currentTime, setCurrentTime] = useState(new Date());
 
-      useEffect(() => {
-        const timer = setInterval(() => {
-          setCurrentTime(new Date());
-        }, 1000);
-        return () => clearInterval(timer);
-      }, []);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const [isDarkMode, setIsDarkMode] = useState(false);
   
@@ -85,10 +86,9 @@ const App = () => {
     "Autre 📝",
   ];
 
-
   const fetchTasks = useCallback(async () => {
     try {
-      const response = await fetch(`http://192.168.50.241:4000/tasks`); // Récupérer toutes les tâches
+      const response = await fetch(`http://192.168.50.241:4000/tasks`);
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
       }
@@ -103,9 +103,36 @@ const App = () => {
     }
   }, []);
   
+  const fetchConsumptionEntries = useCallback(async () => {
+    try {
+      const response = await fetch('http://192.168.50.241:4000/consumption-entries');
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      const data = await response.json();
+      if (!Array.isArray(data)) {
+        console.error("Les données reçues ne sont pas un tableau :", data);
+        return;
+      }
+      dispatch({ type: "SET_CONSUMPTION_ENTRIES", payload: data });
+    } catch (error) {
+      console.error("Erreur lors du chargement des entrées de consommation :", error);
+      dispatch({ type: "SET_CONSUMPTION_ENTRIES", payload: [] });
+    }
+  }, []);
+  
   useEffect(() => {
     fetchTasks();
-  }, [fetchTasks]);
+    fetchConsumptionEntries();
+    
+    // Configurer la vérification automatique pour la régénération des habitudes
+    setupHabitRegenerationCheck();
+    
+    // Régénérer les habitudes au démarrage de l'application
+    regenerateHabits()
+      .then(() => console.log('Vérification des habitudes au démarrage terminée'))
+      .catch(err => console.error('Erreur lors de la vérification des habitudes:', err));
+  }, [fetchTasks, fetchConsumptionEntries]);
 
   const addTask = async (task) => {
     try {
@@ -136,7 +163,6 @@ const App = () => {
       await fetchTasks();
     } catch (error) {
       console.error('Erreur :', error);
-    
     }
   };
 
@@ -221,24 +247,6 @@ const App = () => {
     }
   };
 
-  const fetchConsumptionEntries = useCallback(async () => {
-    try {
-      const response = await fetch('http://192.168.50.241:4000/consumption-entries');
-      if (!response.ok) {
-        throw new Error(`HTTP error: ${response.status}`);
-      }
-      const data = await response.json();
-      if (!Array.isArray(data)) {
-        console.error("Les données reçues ne sont pas un tableau :", data);
-        return;
-      }
-      dispatch({ type: "SET_CONSUMPTION_ENTRIES", payload: data });
-    } catch (error) {
-      console.error("Erreur lors du chargement des entrées de consommation :", error);
-      dispatch({ type: "SET_CONSUMPTION_ENTRIES", payload: [] });
-    }
-  }, []);
-
   const addConsumptionEntry = async (entry) => {
     try {
       const response = await fetch('http://192.168.50.241:4000/consumption-entries', {
@@ -255,7 +263,6 @@ const App = () => {
     }
   };
 
-  // Modification de deleteConsumptionEntry pour utiliser l'identifiant dans l'URL
   const deleteConsumptionEntry = async (id) => {
     try {
       const response = await fetch(`http://192.168.50.241:4000/consumption-entries/${id}`, {
@@ -269,11 +276,6 @@ const App = () => {
       console.error('Erreur :', error);
     }
   };
-
-  useEffect(() => {
-    fetchTasks();
-    fetchConsumptionEntries();
-  }, [fetchTasks, fetchConsumptionEntries]);
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -300,126 +302,134 @@ const App = () => {
     <TasksProvider>
       <TimerProvider>
         <SelectedTaskProvider>
-          <div className={`App ${isDarkMode ? 'dark' : ''}`}>
-            <div className="app-title">
-              
-              <h3>
-              <AdditionalMenu />
-                TaskFlow 📬 1.4.0 
-              
+          <NotesProvider>
+            <div className={`App ${isDarkMode ? 'dark' : ''}`}>
+              <div className="app-title">
+                <h3>
+                  <AdditionalMenu />
+                  TaskFlow 📬 1.4.1 
                   <button onClick={toggleDarkMode} className="dark-mode-button">
-                  {isDarkMode ? "🌚" : "🌞"}
-                </button>
-          
-              </h3>
+                    {isDarkMode ? "🌚" : "🌞"}
+                  </button>
+                </h3>
+              </div>
+
+              <section className="stats-pomodoro-section">
+                <GlobalPomodoroTimer
+                  tasks={state.tasks.filter(task => task.status === 'open')}
+                  updateTaskTime={updateTaskTime}
+                  fetchTasks={fetchTasks}
+                  setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
+                  onAddTask={addTask}
+                  taskCategories={taskCategories}
+                />
+              </section>
+
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <Home
+                      tasks={state.tasks}
+                      onAddTask={addTask}
+                      onEditTask={updateTask}
+                      onDeleteTask={deleteTask}
+                      onArchiveTask={archiveTask}
+                      onAddSubtask={addSubtask}
+                      onDeleteSubtask={deleteSubtask}
+                      onToggleSubtaskStatus={toggleSubtaskStatus}
+                      onSaveTask={updateTask}
+                      filter={filter}
+                      setFilter={setFilter}
+                      fetchTasks={fetchTasks}
+                      updateTaskTime={updateTaskTime}
+                      setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
+                      isDarkMode={isDarkMode}
+                      toggleDarkMode={toggleDarkMode}
+                      taskCategories={taskCategories}
+                    />
+                  }
+                />
+                <Route
+                  path="/archives"
+                  element={
+                    <Archives
+                      archivedTasks={state.tasks.filter((task) => task.archived?.trim() === "closed")}
+                      archivedSubtasksWithOpenParent={state.tasks.flatMap(task =>
+                        task.subtasks.filter(subtask => subtask.archived === "closed" && task.archived !== "closed").map(subtask => ({
+                          ...subtask,
+                          parentTaskName: task.name,
+                          parentTaskId: task._id,
+                        }))
+                      )}
+                      onDeleteTask={deleteTask}
+                      onDeleteSubtask={deleteSubtask}
+                      onFetchArchivedTasks={() => fetchTasks(true)}
+                      taskCategories={taskCategories}
+                      isDarkMode={isDarkMode}
+                      toggleDarkMode={toggleDarkMode}
+                      setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
+                      onUpdateTask={updateTask}
+                    />
+                  }
+                />
+                <Route
+                  path="/fusion-tool"
+                  element={
+                    <FusionTool
+                      entries={state.consumptionEntries}
+                      onAddEntry={addConsumptionEntry}
+                      onDeleteEntry={deleteConsumptionEntry}
+                      isDarkMode={isDarkMode}
+                      toggleDarkMode={toggleDarkMode}
+                      onAddTask={addTask}
+                      taskCategories={taskCategories}
+                    />
+                  }
+                />
+                <Route
+                  path="/sessions"
+                  element={
+                    <Sessions
+                      tasks={state.tasks}
+                      fetchTasks={fetchTasks}
+                      isDarkMode={isDarkMode}
+                      toggleDarkMode={toggleDarkMode}
+                      onAddTask={addTask}
+                      taskCategories={taskCategories}
+                    />
+                  }
+                />
+                <Route
+                  path="/VersionHistory"
+                  element={
+                    <VersionHistory
+                      isDarkMode={isDarkMode}
+                      toggleDarkMode={toggleDarkMode}
+                    />
+                  }
+                />
+                <Route
+                  path="/settings"
+                  element={
+                    <Settings
+                      taskCategories={taskCategories}
+                      isDarkMode={isDarkMode}
+                      toggleDarkMode={toggleDarkMode}
+                    />
+                  }
+                />
+                <Route
+                  path="/notes"
+                  element={
+                    <NotesEditor
+                      taskCategories={taskCategories}
+                    />
+                  }
+                />
+              </Routes>
             </div>
-
-            <section className="stats-pomodoro-section">
-              <GlobalPomodoroTimer
-                tasks={state.tasks.filter(task => task.status === 'open')}
-                updateTaskTime={updateTaskTime}
-                fetchTasks={fetchTasks}
-                setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
-                onAddTask={addTask}
-                taskCategories={taskCategories}
-              />
-            </section>
-            
-
-      
-        
-
-
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <Home
-                    tasks={state.tasks}
-                    onAddTask={addTask}
-                    onEditTask={updateTask}
-                    onDeleteTask={deleteTask}
-                    onArchiveTask={archiveTask}
-                    onAddSubtask={addSubtask}
-                    onDeleteSubtask={deleteSubtask}
-                    onToggleSubtaskStatus={toggleSubtaskStatus}
-                    onSaveTask={updateTask}
-                    filter={filter}
-                    setFilter={setFilter}
-                    fetchTasks={fetchTasks}
-                    updateTaskTime={updateTaskTime}
-                    setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                    taskCategories={taskCategories}
-                  />
-                }
-              />
-              <Route
-                path="/archives"
-                element={
-                  <Archives
-                    archivedTasks={state.tasks.filter((task) => task.archived?.trim() === "closed")}
-                    archivedSubtasksWithOpenParent={state.tasks.flatMap(task =>
-                      task.subtasks.filter(subtask => subtask.archived === "closed" && task.archived !== "closed").map(subtask => ({
-                        ...subtask,
-                        parentTaskName: task.name,
-                        parentTaskId: task._id,
-                      }))
-                    )}
-                    onDeleteTask={deleteTask}
-                    onDeleteSubtask={deleteSubtask}
-                    onFetchArchivedTasks={() => fetchTasks(true)}
-                    taskCategories={taskCategories}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                    setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
-                    onUpdateTask={updateTask}
-                  />
-                }
-              />
-              <Route
-                path="/fusion-tool"
-                element={
-                  <FusionTool
-                    entries={state.consumptionEntries}
-                    onAddEntry={addConsumptionEntry}
-                    onDeleteEntry={deleteConsumptionEntry}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                    onAddTask={addTask}
-                    taskCategories={taskCategories}
-                  />
-                }
-              />
-              <Route
-                path="/sessions"
-                element={
-                  <Sessions
-                    tasks={state.tasks}
-                    fetchTasks={fetchTasks}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                    onAddTask={addTask}
-                    taskCategories={taskCategories}
-                  />
-                }
-              />
-              <Route
-                path="/VersionHistory"
-                element={
-                  <VersionHistory
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                  />
-                }
-              />
-              <Route path="/settings" element={<Settings />} /> {/* Add the new route */}
-              
-              <Route path="/notes" element={<Notes />} /> {/* Add the new route */}
-
-            </Routes>
-          </div>
+          </NotesProvider>
         </SelectedTaskProvider>
       </TimerProvider>
     </TasksProvider>

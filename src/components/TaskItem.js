@@ -53,7 +53,12 @@ const playSound = (soundType) => {
 
     // Fonction pour calculer les jours restants
     const calculateDaysRemaining = () => {
-      if (!task.date) return { text: "Pas de date", className: "no-date" };
+      if (!task.date) return { 
+        text: "Pas de date", 
+        className: "no-date",
+        icon: "❓",
+        badgeClass: "badge-no-date" 
+      };
     
       const today = new Date();
       today.setHours(0, 0, 0, 0);
@@ -63,10 +68,36 @@ const playSound = (soundType) => {
       const diffTime = dueDate - today;
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
-      if (diffDays < 0) return { text: "En retard", className: "overdue" };
-      if (diffDays === 0) return { text: "Aujourd'hui", className: "today" };
-      if (diffDays === 1) return { text: "Demain", className: "tomorrow" };
-      return { text: `${diffDays} jours restants`, className: "remaining" };
+      if (diffDays < 0) return { 
+        text: "En retard", 
+        className: "overdue",
+        icon: "⚠️",
+        badgeClass: "badge-overdue" 
+      };
+      if (diffDays === 0) return { 
+        text: "Aujourd'hui", 
+        className: "today",
+        icon: "🔴",
+        badgeClass: "badge-today" 
+      };
+      if (diffDays === 1) return { 
+        text: "Demain", 
+        className: "tomorrow",
+        icon: "🟠",
+        badgeClass: "badge-tomorrow" 
+      };
+      if (diffDays <= 7) return { 
+        text: "Cette semaine", 
+        className: "this-week",
+        icon: "🟡",
+        badgeClass: "badge-this-week" 
+      };
+      return { 
+        text: "Plus tard", 
+        className: "remaining",
+        icon: "🟢", 
+        badgeClass: "badge-later" 
+      };
     };
 
   const openEditModal = (task) => {
@@ -181,6 +212,12 @@ const calculateSubtaskTime = (task, subtaskId) => {
   return subtaskSessions.reduce((acc, session) => acc + (session.duration || 0), 0);
 };
 
+// Afficher un indicateur différent pour les habitudes
+const getTaskTypeIcon = (taskType) => {
+  if (taskType === 'habit') return '🔄';
+  return '';
+};
+
 const handleArchiveTask = () => {
   onArchiveTask(task.id);
   playSound('sessionComplete'); // Ajouter le son ici
@@ -192,10 +229,18 @@ const handleArchiveTask = () => {
 };
 
   return (
-    <li className={`task-item ${isCompactView ? "compact-view" : ""}`}>
+    <li className={`task-item ${isCompactView ? "compact-view" : ""} ${task.taskType === "habit" ? "habit-task" : ""}`}>
       <div className="task-content">
         <div className="task-item-header">
-          <strong className="task-name">{task.name}</strong>
+          <strong className="task-name">
+            {getTaskTypeIcon(task.taskType)} {task.name}
+            {task.taskType === 'habit' && <span className="habit-label">Habitude</span>}
+            {/* Ajout du badge d'échéance à côté du nom */}
+            {(() => {
+              const dueInfo = calculateDaysRemaining();
+              return <span className={`due-date-badge ${dueInfo.badgeClass}`}>{dueInfo.icon} {dueInfo.text}</span>;
+            })()}
+          </strong>
           <div className="task-buttons">
             <button className="edit-button" onClick={() => openEditModal(task)}>
               Éditer
@@ -214,112 +259,110 @@ const handleArchiveTask = () => {
         {!isCompactView && (
           <>
             <div className="task-content"></div>
-            Échéance : {
-              (() => {
-                const daysRemaining = calculateDaysRemaining();
-                return <span className={daysRemaining.className}>{daysRemaining.text}</span>;
-                })()
-                }
-
-                <p>
-                <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
-                </p>
-                {task.categories && task.categories.length > 0 && (
-                <p>
-                <strong>Catégories :</strong> {task.categories.join(", ")}
-                </p>
-                )}
-                <p>
-                <strong>Temps total :</strong> {formatTime(calculateTotalTime(task))}
-                </p>
-                <p>
-                <strong>Dernière session :</strong> {formatTime(lastSessionDuration)}
-                </p>
-                <p>
-                <strong>Nombre total de session :</strong> {task.sessions ? task.sessions.length : 0}
-                </p>
-                <p>
-                <strong>Jours depuis création :</strong> {Math.floor((new Date() - new Date(task.addedAt)) / (1000 * 60 * 60 * 24))} jours
-                </p>
-
-                <p>
-                <strong>Date de création :</strong> {formatDate(task.addedAt)}
-                </p>
             
-              <div className="progress-bar-taskitem">
-                <div
-                className="progress-bar-taskitem-fill"
-                style={{ width: `${progress}%` }}
-                ></div>
-              </div>
-              <p>Progression : {Math.round(progress)}%</p>
-
-
-              {task.subtasks.length > 0 && (
-                <div className="subtasks-section">
-                <button onClick={() => setExpanded(!expanded)}>
-                  {expanded ? "Masquer les sous-tâches" : "Voir les sous-tâches"}
-                </button>
-                {expanded && (
-                  <div className="subtask-list">
-                  {task.subtasks
-                    .filter((subtask) => subtask.archived === "open")
-                    .map((subtask) => (
-                    !hiddenSubtasks.includes(subtask.id) && (
-                      <div key={subtask.id} className="subtask-item">
-                      <input
-                        type="checkbox"
-                        checked={subtask.archived === "closed"}
-                        onChange={() => handleToggleSubtaskStatus(task.id, subtask.id, subtask.archived === "open" ? "closed" : "open")}
-                      />
-
-                      {subtask.name} /{" "}
-                      <span className="subtask-time">
-                        {formatTime(calculateSubtaskTime(task, subtask._id))}
-                      </span>
-                      <button className="edit-icon" onClick={() => openEditModal(subtask)}>
-                        ✏️
-                      </button>
-                      <button className="delete-icon" onClick={() => handleDeleteSubtask(task.id, subtask.id)}>
-                       ❌
-                      </button>
-                      </div>
-                    )
-                    ))}
-                  <input
-                    type="text"
-                    value={newSubtaskText}
-                    onChange={(e) => setNewSubtaskText(e.target.value)}
-                    onKeyDown={handleKeyPress}
-                    placeholder="Nouvelle sous-tâche..."
-                  />
-                  </div>
-                )}
-                </div>
-              )}
-              </>
+            <p>
+                <strong>Priorité :</strong> {task.priority === "low" ? "🟢 Faible" : task.priority === "medium" ? "🟠 Moyenne" : "🔴 Haute"}
+            </p>
+            {task.categories && task.categories.length > 0 && (
+            <p>
+            <strong>Catégories :</strong> {task.categories.join(", ")}
+            </p>
             )}
-            {isModalOpen && (
-            <EditTaskModal
-              task={selectedTask} // Tâche actuelle
-          taskCategories={taskCategories} // Catégories de tâches
-          onClose={closeEditModal} // Fonction pour fermer la modale
-          onSave={(updatedTask) => {
-            onUpdateTask(updatedTask.id, updatedTask); // Appelle la fonction de mise à jour avec l'ID et les champs mis à jour
-            closeEditModal(); // Ferme la modale après la sauvegarde
+            <p>
+            <strong>Temps total :</strong> {formatTime(calculateTotalTime(task))}
+            </p>
+            <p>
+            <strong>Dernière session :</strong> {formatTime(lastSessionDuration)}
+            </p>
+            <p>
+            <strong>Nombre total de session :</strong> {task.sessions ? task.sessions.length : 0}
+            </p>
+            <p>
+            <strong>Jours depuis création :</strong> {Math.floor((new Date() - new Date(task.addedAt)) / (1000 * 60 * 60 * 24))} jours
+            </p>
+
+            <p>
+            <strong>Date de création :</strong> {formatDate(task.addedAt)}
+            </p>
+
+            <p>
+            <strong>Type de tâche : </strong> {task.taskType === "habit" ? "🔄 Habitude" : "📝 Tâche"}
+           </p>
           
-            }}
-          />
-        )}
-      {isDetailsModalOpen && (
-        <TaskDetailsModal
-          task={task}
-          onClose={closeDetailsModal}
-        />
-      )}
-      </div>
-    </li>
-  );
+            <div className="progress-bar-taskitem">
+            <div
+            className="progress-bar-taskitem-fill"
+            style={{ width: `${progress}%` }}
+            ></div>
+            </div>
+            <p>Progression : {Math.round(progress)}%</p>
+
+
+            {task.subtasks.length > 0 && (
+            <div className="subtasks-section">
+            <button onClick={() => setExpanded(!expanded)}>
+              {expanded ? "Masquer les sous-tâches" : "Voir les sous-tâches"}
+            </button>
+            {expanded && (
+              <div className="subtask-list">
+              {task.subtasks
+              .filter((subtask) => subtask.archived === "open")
+              .map((subtask) => (
+              !hiddenSubtasks.includes(subtask.id) && (
+                <div key={subtask.id} className="subtask-item">
+                <input
+                type="checkbox"
+                checked={subtask.archived === "closed"}
+                onChange={() => handleToggleSubtaskStatus(task.id, subtask.id, subtask.archived === "open" ? "closed" : "open")}
+                />
+
+                {subtask.name} /{" "}
+                <span className="subtask-time">
+                {formatTime(calculateSubtaskTime(task, subtask._id))}
+                </span>
+                <button className="edit-icon" onClick={() => openEditModal(subtask)}>
+                ✏️
+                </button>
+                <button className="delete-icon" onClick={() => handleDeleteSubtask(task.id, subtask.id)}>
+                 ❌
+                </button>
+                </div>
+              )
+              ))}
+              <input
+              type="text"
+              value={newSubtaskText}
+              onChange={(e) => setNewSubtaskText(e.target.value)}
+              onKeyDown={handleKeyPress}
+              placeholder="Nouvelle sous-tâche..."
+              />
+              </div>
+            )}
+            </div>
+            )}
+            </>
+          )}
+          {isModalOpen && (
+          <EditTaskModal
+            task={selectedTask} // Tâche actuelle
+      taskCategories={taskCategories} // Catégories de tâches
+      onClose={closeEditModal} // Fonction pour fermer la modale
+      onSave={(updatedTask) => {
+        onUpdateTask(updatedTask.id, updatedTask); // Appelle la fonction de mise à jour avec l'ID et les champs mis à jour
+        closeEditModal(); // Ferme la modale après la sauvegarde
+      
+        }}
+      />
+    )}
+  {isDetailsModalOpen && (
+    <TaskDetailsModal
+      task={task}
+      onClose={closeDetailsModal}
+    />
+  )}
+  </div>
+</li>
+);
 };
 
 export default TaskItem;

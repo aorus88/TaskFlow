@@ -1,0 +1,523 @@
+/* Conteneur principal pour les paramètres */
+.settings-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Onglets de navigation */
+.settings-tabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  color: #666;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab-button.active {
+  color: #2196F3;
+  border-bottom-color: #2196F3;
+}
+
+.tab-button:hover:not(.active) {
+  color: #333;
+  background-color: #f5f5f5;
+}
+
+/* Mode sombre pour les onglets */
+body.dark .settings-tabs {
+  border-bottom-color: #4a5568;
+}
+
+body.dark .tab-button {
+  color: #a0aec0;
+}
+
+body.dark .tab-button.active {
+  color: #4299e1;
+  border-bottom-color: #4299e1;
+}
+
+body.dark .tab-button:hover:not(.active) {
+  background-color: #2d3748;
+  color: #e2e8f0;
+}
+
+/* Sections de paramètres généraux */
+.general-settings {
+  animation: fadeIn 0.3s ease;
+}
+
+.settings-section {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.settings-option {
+  margin-bottom: 15px;
+}
+
+.settings-option label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.settings-option span {
+  margin-right: 10px;
+}
+
+.settings-option select,
+.settings-option input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 200px;
+}
+
+/* Mode sombre pour les sections de paramètres généraux */
+body.dark .settings-section {
+  background-color: #1a202c;
+  color: #e2e8f0;
+}
+
+body.dark .settings-option select,
+body.dark .settings-option input[type="text"] {
+  background-color: #2d3748;
+  color: #e2e8f0;
+  border-color: #4a5568;
+}
+
+/* Mise en page pour les habitudes */
+.settings-layout {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.habits-list, .habit-form {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Mode sombre */
+body.dark .habits-list, 
+body.dark .habit-form {
+  background-color: #1a202c;
+  color: #e2e8f0;
+}
+
+.habits-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.new-habit-btn, .regenerate-btn, .show-habits-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.new-habit-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.show-habits-btn {
+  background-color: #FF9800;
+  color: white;
+}
+
+.regenerate-btn {
+  background-color: #2196F3;
+  color: white;
+}
+
+.new-habit-btn:hover {
+  background-color: #45a049;
+}
+
+.show-habits-btn:hover {
+  background-color: #F57C00;
+}
+
+.regenerate-btn:hover {
+  background-color: #0b7dda;
+}
+
+.habits-list-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.habit-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Mode sombre */
+body.dark .habit-item {
+  background-color: #2d3748;
+}
+
+.habit-item:hover {
+  background-color: #e9e9e9;
+}
+
+/* Mode sombre */
+body.dark .habit-item:hover {
+  background-color: #3a4458;
+}
+
+.habit-item.disabled {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.habit-item-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.toggle-status, .delete-habit {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.activate {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.deactivate {
+  background-color: #f44336;
+  color: white;
+}
+
+.delete-habit {
+  background-color: #607d8b;
+  color: white;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Mode sombre */
+body.dark .form-group input,
+body.dark .form-group select {
+  background-color: #2d3748;
+  color: #e2e8f0;
+  border-color: #4a5568;
+}
+
+.subtasks-input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.subtasks-input-group input {
+  flex: 1;
+}
+
+.subtasks-input-group button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0 15px;
+}
+
+.subtasks-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+}
+
+.subtask-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  margin-bottom: 5px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+/* Mode sombre */
+body.dark .subtask-item {
+  background-color: #2d3748;
+}
+
+.remove-subtask {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.save-habit, .cancel-edit {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.save-habit {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.cancel-edit {
+  background-color: #f44336;
+  color: white;
+}
+
+.save-habit:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Styles pour la modale d'habitudes actives */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 80%;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+.habits-modal {
+  width: 90%;
+  max-width: 900px;
+}
+
+.active-habits-list {
+  list-style: none;
+  padding: 0;
+}
+
+.active-habit-item {
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  border-left: 4px solid #2196F3;
+}
+
+.habit-details h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.habit-details p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.no-habits-message {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+/* Mode sombre pour la modale */
+body.dark .modal-content {
+  background-color: #1a202c;
+  color: #e2e8f0;
+}
+
+body.dark .modal-header {
+  border-bottom-color: #2d3748;
+}
+
+body.dark .close-button {
+  color: #a0aec0;
+}
+
+body.dark .close-button:hover {
+  color: #e2e8f0;
+}
+
+body.dark .active-habit-item {
+  background-color: #2d3748;
+  border-left-color: #4299e1;
+}
+
+body.dark .habit-details h3 {
+  color: #e2e8f0;
+}
+
+body.dark .habit-details p {
+  color: #a0aec0;
+}
+
+body.dark .no-habits-message {
+  color: #a0aec0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    transform: translateY(30px);
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0);
+    opacity: 1; 
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .settings-layout {
+    flex-direction: column;
+  }
+  
+  .modal-content {
+    width: 95%;
+    max-height: 90vh;
+    padding: 15px;
+  }
+  
+  .habits-actions {
+    gap: 5px;
+  }
+  
+  .habit-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .habit-item-controls {
+    margin-top: 10px;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .settings-tabs {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .tab-button {
+    border-bottom: none;
+    border-left: 3px solid transparent;
+    text-align: left;
+  }
+  
+  .tab-button.active {
+    border-bottom: none;
+    border-left-color: #2196F3;
+    background-color: #f5f5f5;
+  }
+  
+  body.dark .tab-button.active {
+    border-left-color: #4299e1;
+    background-color: #2d3748;
+  }
+}

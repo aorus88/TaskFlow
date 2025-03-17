@@ -1,0 +1,163 @@
+/* Styles pour le ruban Office */
+.office-ribbon {
+  display: flex;
+  flex-direction: column;
+  background-color: #f3f3f3;
+  border-bottom: 1px solid #d9d9d9;
+  user-select: none;
+}
+
+/* Onglets du ruban */
+.ribbon-tabs {
+  display: flex;
+  background-color: #217346; /* Couleur verte comme dans MS Office */
+}
+
+.ribbon-tab {
+  padding: 8px 16px;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  position: relative;
+  transition: background-color 0.2s;
+}
+
+.ribbon-tab:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.ribbon-tab.active {
+  background-color: #f3f3f3;
+  color: #217346;
+  font-weight: 600;
+}
+
+.ribbon-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #f3f3f3;
+}
+
+/* Contenu du ruban */
+.ribbon-content {
+  padding: 5px;
+}
+
+.ribbon-tab-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+/* Groupes du ruban */
+.ribbon-group {
+  padding: 2px 10px;
+  margin: 2px;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+}
+
+.ribbon-group-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.ribbon-group-title {
+  font-size: 11px;
+  color: #666;
+  text-align: center;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+/* Boutons du ruban */
+.ribbon-button {
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  margin: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: 60px;
+}
+
+.ribbon-button:hover {
+  background-color: #e6e6e6;
+}
+
+.ribbon-button.primary {
+  background-color: #217346;
+  color: white;
+}
+
+.ribbon-button.primary:hover {
+  background-color: #185a35;
+}
+
+.ribbon-button i {
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+
+.ribbon-button-label {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* Éléments spécifiques */
+.search-box {
+  min-width: 180px;
+}
+
+.category-filter {
+  min-width: 180px;
+}
+
+/* Boutons d'affichage */
+.view-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.view-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 12px;
+}
+
+.view-button i {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+/* Réactivité */
+@media (max-width: 768px) {
+  .ribbon-group {
+    padding: 2px 5px;
+    min-width: auto;
+  }
+
+  .ribbon-button {
+    min-width: 50px;
+  }
+
+  .search-box,
+  .category-filter {
+    min-width: 120px;
+  }
+}

@@ -1,5 +1,6 @@
 .notes-container {
   padding: 20px 0;
+  margin-bottom: 40px;
 }
 
 .note-form {
@@ -9,10 +10,29 @@
   margin-bottom: 30px;
 }
 
+.note-form-card {
+  background-color: #f8f9fa;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.rich-text-editor {
+  min-height: 200px;
+  margin-bottom: 15px;
+}
+
 .note-card {
   height: 100%;
   transition: all 0.3s ease;
+  border: none;
   border-left: 4px solid #007bff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  min-height: 180px; /* Hauteur minimale pour une apparence cohérente */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
 }
 
 .note-card:hover {
@@ -28,4 +48,700 @@
   white-space: pre-wrap;
   max-height: 120px;
   overflow: auto;
+}
+
+.note-card .card-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.note-card .note-actions {
+  margin-top: auto;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.note-status-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px 10px;
+  border-radius: 0 0 0 8px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  left: 0;
+  text-align: center;
+  font-size: 0.8em;
+  text-transform: capitalize;
+}
+
+.note-content-preview {
+  max-height: 120px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.note-content-preview::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(transparent, white);
+}
+
+.category-badge {
+  font-size: 0.8em;
+  padding: 5px 10px;
+}
+
+.tag-badge {
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.tag-badge:hover {
+  background-color: #dc3545 !important;
+}
+
+.note-actions {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.notes-filter-section {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.status-select {
+  border: 1px solid #ced4da;
+  width: 100%;
+}
+
+/* Styles pour les cartes selon les catégories */
+.note-card.category-travail { border-left-color: #0d6efd; }
+.note-card.category-personnel { border-left-color: #198754; }
+.note-card.category-idées { border-left-color: #ffc107; }
+.note-card.category-important { border-left-color: #dc3545; }
+.note-card.category-projet { border-left-color: #6610f2; }
+.note-card.category-santé { border-left-color: #20c997; }
+.note-card.category-réunion { border-left-color: #fd7e14; }
+.note-card.category-formation { border-left-color: #0dcaf0; }
+.note-card.category-autre { border-left-color: #6c757d; }
+
+/* Styles pour le tableau Kanban */
+.kanban-board {
+  display: flex;
+  gap: 20px;
+  min-height: 500px;
+  overflow-x: auto;
+  padding-bottom: 20px;
+}
+
+.kanban-column {
+  flex: 1;
+  min-width: 300px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  max-height: 800px;
+}
+
+.kanban-column-title {
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  font-weight: 600;
+  color: #333;
+}
+
+.kanban-column-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  min-height: 200px;
+}
+
+.kanban-note {
+  margin-bottom: 15px;
+  transition: transform 0.2s ease;
+  margin-bottom: 10px;
+}
+
+.kanban-empty {
+  padding: 20px;
+  text-align: center;
+  color: #999;
+}
+
+/* Styles pour le drag-and-drop */
+.kanban-note.is-dragging {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* View mode toggle buttons */
+.view-mode-toggle {
+  display: flex;
+  justify-content: center;
+}
+
+/* Mode sombre - compatibilité avec votre app */
+body.dark .note-form-card,
+body.dark .notes-filter-section {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+
+body.dark .note-card {
+  background-color: #333333;
+  color: #e0e0e0;
+}
+
+body.dark .kanban-column {
+  background-color: #252525;
+}
+
+body.dark .kanban-column-title {
+  color: #fff;
+}
+
+body.dark .note-content-preview::after {
+  background: linear-gradient(transparent, #333333);
+}
+
+body.dark .text-muted {
+  color: #aaaaaa !important;
+}
+
+body.dark .form-control,
+body.dark .form-select {
+  background-color: #444;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+body.dark .note-actions {
+  border-top-color: #444;
+}
+
+/* Styles pour l'éditeur en mode sombre */
+body.dark .ql-snow {
+  border-color: #555;
+}
+
+body.dark .ql-toolbar.ql-snow {
+  background-color: #444;
+}
+
+body.dark .ql-editor {
+  background-color: #333333;
+  color: #e0e0e0;
+}
+
+body.dark .ql-snow .ql-stroke {
+  stroke: #e0e0e0;
+}
+
+body.dark .ql-snow .ql-fill {
+  fill: #e0e0e0;
+}
+
+/* Styles uniformisés pour les boutons */
+.notes-container button.btn {
+  padding: 6px 12px;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Boutons primaires */
+.notes-container .btn-primary {
+  background-color: #007acc;
+  border-color: #007acc;
+  color: white;
+}
+
+.notes-container .btn-primary:hover {
+  background-color: #0062a3;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Boutons secondaires */
+.notes-container .btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.notes-container .btn-secondary:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Boutons outline */
+.notes-container .btn-outline-primary {
+  color: #007acc;
+  border-color: #007acc;
+}
+
+.notes-container .btn-outline-primary:hover {
+  background-color: #007acc;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.notes-container .btn-outline-danger {
+  color: #e51400;
+  border-color: #e51400;
+}
+
+.notes-container .btn-outline-danger:hover {
+  background-color: #e51400;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Boutons bascule de vue */
+.view-mode-toggle .btn {
+  min-width: 80px;
+}
+
+/* Boutons à l'intérieur des notes */
+.note-actions .btn {
+  margin-right: 6px;
+  margin-bottom: 6px;
+}
+
+/* Select du statut dans les notes */
+.status-select {
+  margin-top: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+  color: #333;
+}
+
+/* Mode sombre pour les boutons */
+body.dark .notes-container .btn-primary {
+  background-color: #388a34;
+  border-color: #388a34;
+}
+
+body.dark .notes-container .btn-primary:hover {
+  background-color: #2d6f2a;
+}
+
+body.dark .notes-container .btn-outline-primary {
+  color: #4299e1;
+  border-color: #4299e1;
+}
+
+body.dark .notes-container .btn-outline-primary:hover {
+  background-color: #2b6cb0;
+  color: white;
+}
+
+body.dark .notes-container .btn-outline-danger {
+  color: #c53030;
+  border-color: #c53030;
+}
+
+body.dark .notes-container .btn-outline-danger:hover {
+  background-color: #c53030;
+}
+
+body.dark .notes-container .btn-secondary {
+  background-color: #2d3748;
+  border-color: #2d3748;
+}
+
+body.dark .notes-container .btn-secondary:hover {
+  background-color: #4a5568;
+}
+
+/* Styles pour le ruban Office 365 */
+.office-ribbon {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #f3f3f3;
+  border-bottom: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 15px;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.ribbon-group {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  border-right: 1px solid #e0e0e0;
+  min-width: 100px;
+  align-items: center;
+}
+
+.ribbon-group:last-child {
+  border-right: none;
+}
+
+.ribbon-label {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 5px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.ribbon-title-input {
+  min-width: 250px;
+  font-weight: bold;
+  height: 36px;
+}
+
+.ribbon-input {
+  font-size: 0.9rem;
+  padding: 4px 8px;
+  height: 36px;
+}
+
+.ribbon-tag-input {
+  max-width: 180px;
+  font-size: 0.9rem;
+}
+
+.ribbon-tags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
+  max-width: 180px;
+}
+
+.ribbon-actions {
+  margin-left: auto;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  min-width: 200px;
+}
+
+.ribbon-btn {
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ribbon-btn i {
+  font-size: 1rem;
+}
+
+.save-status {
+  font-size: 0.8rem;
+  margin-left: 5px;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Mode sombre pour le ruban */
+body.dark .office-ribbon {
+  background-color: #2a2a2a;
+  border-color: #444;
+}
+
+body.dark .ribbon-group {
+  border-color: #444;
+}
+
+body.dark .ribbon-label {
+  color: #aaa;
+}
+
+body.dark .ribbon-title-input,
+body.dark .ribbon-input {
+  background-color: #333;
+  color: #e0e0e0;
+  border-color: #555;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .kanban-board {
+    flex-direction: column;
+  }
+  
+  .kanban-column {
+    min-width: 100%;
+  }
+}
+
+/* Media queries pour la responsivité du ruban */
+@media (max-width: 992px) {
+  .office-ribbon {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: 8px;
+    white-space: nowrap;
+  }
+  
+  .ribbon-group {
+    min-width: 90px;
+    padding: 3px;
+  }
+  
+  .ribbon-title-input {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .office-ribbon {
+    flex-direction: column;
+    align-items: stretch;
+    overflow-x: visible;
+  }
+  
+  .ribbon-group {
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 8px 5px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-width: auto;
+  }
+  
+  .ribbon-group:last-child {
+    border-bottom: none;
+  }
+  
+  .ribbon-label {
+    width: 80px;
+    text-align: left;
+    margin-bottom: 0;
+    margin-right: 10px;
+  }
+  
+  .ribbon-title-input {
+    min-width: 0;
+    width: 100%;
+  }
+  
+  .ribbon-input {
+    flex-grow: 1;
+    width: 100%;
+  }
+  
+  .ribbon-tag-input {
+    max-width: none;
+    width: 100%;
+  }
+  
+  .ribbon-tags {
+    max-width: none;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .ribbon-actions {
+    flex-direction: column;
+    margin-left: 0;
+    gap: 5px;
+    min-width: auto;
+  }
+  
+  .ribbon-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ribbon-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .ribbon-label {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+  
+  .office-ribbon {
+    padding: 5px;
+    gap: 5px;
+  }
+  
+  .ribbon-btn {
+    padding: 8px 6px;
+    font-size: 0.85rem;
+  }
+  
+  .ribbon-btn i {
+    font-size: 0.9rem;
+    margin-right: 4px;
+  }
+}
+
+/* Styles pour le conteneur du ruban Office 365 */
+.office-ribbon-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #f3f3f3;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Styles pour les deux lignes du ruban */
+.office-ribbon {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Ligne principale du ruban */
+.ribbon-main {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Ligne secondaire du ruban */
+.ribbon-secondary {
+  background-color: #f9f9f9;
+}
+
+/* Groupe spécifique pour le titre */
+.ribbon-title-group {
+  flex: 1.5;
+  min-width: 250px;
+}
+
+/* Groupe spécifique pour les tags */
+.ribbon-tags-group {
+  flex: 3;
+  min-width: 300px;
+}
+
+.ribbon-group {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  border-right: 1px solid #e0e0e0;
+  min-width: 120px;
+  align-items: flex-start;
+}
+
+/* Version responsive du ruban */
+@media (max-width: 992px) {
+  .office-ribbon {
+    padding: 8px;
+  }
+  
+  .ribbon-group {
+    min-width: 100px;
+    padding: 3px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ribbon-main, .ribbon-secondary {
+    flex-direction: column;
+  }
+  
+  .ribbon-group {
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 8px 5px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .ribbon-group:last-child {
+    border-bottom: none;
+  }
+  
+  .ribbon-label {
+    width: 80px;
+    text-align: left;
+    margin-bottom: 0;
+    margin-right: 10px;
+  }
+  
+  .ribbon-title-input, .ribbon-input, .ribbon-tag-input {
+    flex-grow: 1;
+    width: calc(100% - 90px);
+  }
+}
+
+/* Mode sombre pour le ruban */
+body.dark .office-ribbon-container {
+  background-color: #2a2a2a;
+  border-color: #444;
+}
+
+body.dark .ribbon-main {
+  border-bottom-color: #444;
+}
+
+body.dark .ribbon-secondary {
+  background-color: #252525;
+}
+
+/* Styles pour les nouveaux champs de métadonnées */
+.metadata-fields {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 20px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 20px;
+}
+
+body.dark .metadata-fields {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+
+.tags-container {
+  min-height: 30px;
+  padding: 5px 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Modifier la section où le pseudo-élément -ms-expand est utilisé (autour ligne 105) */
+.filter-group select::-ms-expand {
+  display: none; /* Nous gardons ceci mais modifions le sélecteur */
 }

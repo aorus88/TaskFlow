@@ -46,6 +46,7 @@ const taskSchema = new mongoose.Schema({
     archived: { type: String, enum: ['open', 'closed'], default: 'open' }, // Nouveau champ
     addedAt: { type: Date, default: Date.now },
     categories: { type: [String], default: [] },
+    taskType: { type: String, enum: ['task', 'habit'], default: 'task' }, // Ajout du type de tâche
     totalTime: { type: Number, default: 0 }, // Temps total en minutes
     LastSessionTime: { type: Number, default: 0 }, // Temps en cours en minutes
     subtasks: { type: [subtaskSchema], default: [] },
@@ -65,11 +66,16 @@ const consumptionEntrySchema = new mongoose.Schema({
 
 const ConsumptionEntry = mongoose.model('ConsumptionEntry', consumptionEntrySchema);
 
+// Mettre à jour le schéma des notes pour prendre en charge les nouvelles fonctionnalités
 const noteSchema = new mongoose.Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
     date: { type: Date, required: true },
-    createdAt: { type: Date, default: Date.now }
+    category: { type: String, default: "" },
+    tags: { type: [String], default: [] },
+    status: { type: String, enum: ['à faire', 'en cours', 'terminé'], default: 'à faire' }, // Nouveau champ
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
 });
 
 const Note = mongoose.model('Note', noteSchema);
@@ -109,14 +115,17 @@ app.get('/tasks', async (req, res) => {
 // 1)
 //  Ajouter une nouvelle tâche
 app.post('/tasks', async (req, res) => {
-    const { name, date, priority, categories, subtasks } = req.body;
+    const { name, date, priority, categories, subtasks, taskType, time, status } = req.body;
     try {
         const newTask = new Task({
             name,
             date,
             priority,
             categories,
-            subtasks
+            subtasks,
+            taskType: taskType || 'task', // S'assurer que le taskType est bien sauvegardé
+            time,
+            status
         });
         await newTask.save();
         res.status(201).json(newTask);
@@ -393,49 +402,176 @@ app.get('/all-tasks', async (req, res) => {
 // a) Récupérer toutes les notes
 app.get('/notes', async (req, res) => {
     try {
-        const notes = await Note.find();
+        const notes = await Note.find().sort({ date: -1, updatedAt: -1 });
         res.json(notes);
     } catch (err) {
+        console.error('Erreur lors de la récupération des notes:', err);
         res.status(500).json({ error: 'Erreur lors de la récupération des notes.' });
     }
 });
 
-// b) Ajouter une nouvelle note
+// b) Récupérer une note spécifique
+app.get('/notes/:id', async (req, res) => {
+    try {
+        const note = await Note.findById(req.params.id);
+        if (!note) {
+            return res.status(404).json({ error: 'Note non trouvée.' });
+        }
+        res.json(note);
+    } catch (err) {
+        console.error('Erreur lors de la récupération de la note:', err);
+        res.status(500).json({ error: 'Erreur lors de la récupération de la note.' });
+    }
+});
+
+// c) Ajouter une nouvelle note
 app.post('/notes', async (req, res) => {
-    const { title, content, date } = req.body;
+    const { title, content, date, category, tags } = req.body;
     try {
         const newNote = new Note({
             title,
             content,
-            date
+            date,
+            category: category || "",
+            tags: tags || [],
+            updatedAt: new Date()
         });
         await newNote.save();
         res.status(201).json(newNote);
     } catch (err) {
+        console.error('Erreur lors de l\'ajout de la note:', err);
         res.status(400).json({ error: 'Erreur lors de l\'ajout de la note.' });
     }
 });
 
-// c) Mettre à jour une note
+// d) Mettre à jour une note
 app.put('/notes/:id', async (req, res) => {
     const { id } = req.params;
-    const updates = req.body;
+    const updates = { ...req.body, updatedAt: new Date() };
+    
     try {
-        const updatedNote = await Note.findByIdAndUpdate(id, updates, { new: true });
+        const updatedNote = await Note.findByIdAndUpdate(
+            id, 
+            updates, 
+            { new: true, runValidators: true }
+        );
+        
+        if (!updatedNote) {
+            return res.status(404).json({ error: 'Note non trouvée.' });
+        }
+        
         res.json(updatedNote);
     } catch (err) {
+        console.error('Erreur lors de la mise à jour de la note:', err);
         res.status(400).json({ error: 'Erreur lors de la mise à jour de la note.' });
     }
 });
 
-// d) Supprimer une note
+// e) Supprimer une note
 app.delete('/notes/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        await Note.findByIdAndDelete(id);
+        const deletedNote = await Note.findByIdAndDelete(id);
+        
+        if (!deletedNote) {
+            return res.status(404).json({ error: 'Note non trouvée.' });
+        }
+        
         res.json({ message: 'Note supprimée avec succès.' });
     } catch (err) {
+        console.error('Erreur lors de la suppression de la note:', err);
         res.status(500).json({ error: 'Erreur lors de la suppression de la note.' });
+    }
+});
+
+// f) Rechercher des notes
+app.get('/notes/search/:term', async (req, res) => {
+    const { term } = req.params;
+    try {
+        const notes = await Note.find({
+            $or: [
+                { title: { $regex: term, $options: 'i' } },
+                { content: { $regex: term, $options: 'i' } },
+                { tags: { $in: [new RegExp(term, 'i')] } }
+            ]
+        }).sort({ date: -1, updatedAt: -1 });
+        
+        res.json(notes);
+    } catch (err) {
+        console.error('Erreur lors de la recherche de notes:', err);
+        res.status(500).json({ error: 'Erreur lors de la recherche de notes.' });
+    }
+});
+
+// g) Filtrer les notes par catégorie
+app.get('/notes/category/:category', async (req, res) => {
+    const { category } = req.params;
+    try {
+        const notes = await Note.find({ 
+            category: { $regex: category, $options: 'i' } 
+        }).sort({ date: -1, updatedAt: -1 });
+        
+        res.json(notes);
+    } catch (err) {
+        console.error('Erreur lors du filtrage des notes par catégorie:', err);
+        res.status(500).json({ error: 'Erreur lors du filtrage des notes par catégorie.' });
+    }
+});
+
+// Route pour régénérer les habitudes quotidiennes
+app.post('/regenerate-habits', async (req, res) => {
+    try {
+        // Trouver toutes les habitudes ouvertes
+        const habits = await Task.find({ 
+            taskType: 'habit',
+            archived: 'open'
+        });
+        
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Début de la journée
+        
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        
+        const newHabits = [];
+        
+        // Pour chaque habitude, vérifier si une instance pour aujourd'hui existe déjà
+        for (const habit of habits) {
+            // Vérifier si cette habitude a déjà été créée aujourd'hui
+            const habitInstanceToday = await Task.findOne({
+                name: habit.name,
+                taskType: 'habit',
+                date: { $gte: today, $lt: tomorrow }
+            });
+            
+            // Si aucune instance n'existe pour aujourd'hui, en créer une nouvelle
+            if (!habitInstanceToday) {
+                const newHabit = new Task({
+                    name: habit.name,
+                    date: new Date(),
+                    priority: habit.priority,
+                    categories: habit.categories,
+                    taskType: 'habit',
+                    subtasks: habit.subtasks.map(subtask => ({
+                        name: subtask.name,
+                        priority: subtask.priority,
+                        archived: 'open'
+                    }))
+                });
+                
+                await newHabit.save();
+                newHabits.push(newHabit);
+            }
+        }
+        
+        res.json({ 
+            message: 'Habitudes régénérées avec succès', 
+            count: newHabits.length,
+            habits: newHabits
+        });
+    } catch (err) {
+        console.error('Erreur lors de la régénération des habitudes:', err);
+        res.status(500).json({ error: 'Erreur lors de la régénération des habitudes.' });
     }
 });
 

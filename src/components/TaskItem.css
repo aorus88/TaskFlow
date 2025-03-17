@@ -230,7 +230,84 @@ body.dark .task-item p {
   transform: translateY(-50%);
 }
 
+/* Styles spécifiques pour les tâches de type "habit" */
+.task-item.habit-task {
+  border-left: 6px solid #2196F3; /* Couleur bleue pour les habits */
+}
 
+.habit-label {
+  background-color: #2196F3;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+body.dark .habit-label {
+  background-color: #4299e1;
+}
+
+body.dark .task-item.habit-task {
+  border-left-color: #4299e1; /* Couleur bleue plus sombre pour les habits en mode sombre */
+}
+
+/* Styles pour les badges d'échéance */
+.due-date-badge {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+}
+
+/* Style similaire à habit-label */
+.badge-today {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.badge-tomorrow {
+  background-color: #ed8936;
+  color: white;
+}
+
+.badge-this-week {
+  background-color: #ecc94b;
+  color: black;
+}
+
+.badge-later {
+  background-color: #38a169;
+  color: white;
+}
+
+.badge-overdue {
+  background-color: #e53e3e;
+  animation: pulse 1.5s infinite;
+  color: white;
+}
+
+.badge-no-date {
+  background-color: #718096;
+  color: white;
+}
+
+/* Animation pour les tâches en retard */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 /* Media queries pour les appareils mobiles */
 @media screen and (max-width: 768px) {

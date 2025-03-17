@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./TaskForm.css"; // Centralisation des styles
-import TaskReady from "./TaskReady"; // Import de taskTemplates
 
 const TaskForm = ({ onAddTask, taskCategories }) => {
   const [formData, setFormData] = useState({
@@ -9,7 +8,8 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
     time: "23:59",
     priority: "medium",
     categories: "Personnel 🐈", // Ajout de la catégorie par défaut
-    subtasks: [] // Ajout du tableau de sous-tâches
+    subtasks: [], // Ajout du tableau de sous-tâches
+    taskType: "task" // Ajout du type de tâche (task ou habit)
   });
 
   const [errors, setErrors] = useState({});
@@ -40,6 +40,9 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
     if (!formData.categories) {
       newErrors.categories = "La catégorie est requise.";
     }
+    if (!formData.taskType) {
+      newErrors.taskType = "Le type de tâche est requis.";
+    }
     return newErrors;
   };
 
@@ -66,7 +69,8 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
         time: "23:59",
         priority: "medium",
         categories: "Personnel 🐈",
-        subtasks: [] // Réinitialiser les sous-tâches
+        subtasks: [], // Réinitialiser les sous-tâches
+        taskType: "task" // Réinitialiser le type de tâche
       });
       setErrors({});
     } catch (error) {
@@ -82,22 +86,6 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
     }
   };
 
-    // Gestion du changement de modèle
-    const handleTemplateChange = (e) => {
-      const templateIndex = e.target.value;
-      if (templateIndex !== "") {
-        const selectedTemplate = TaskReady[templateIndex];
-        setFormData({
-          ...formData,
-          name: selectedTemplate.name || "",
-          date: selectedTemplate.date || new Date().toISOString().split("T")[0],
-          time: selectedTemplate.time || "23:59",
-          priority: selectedTemplate.priority || "medium",
-          categories: selectedTemplate.categories || "Personnel 🐈",
-          subtasks: selectedTemplate.subtasks || [] // Ajout des sous-tâches du modèle
-        });
-      }
-    };
 
   return (
     <div className="task-form">
@@ -105,17 +93,6 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
         <div className="form-group-task">
 
         <div className="form-model">
-      <label>
-        Modèle de tâche :
-        <select onChange={handleTemplateChange}>
-          <option value="">Sélectionner un modèle</option>
-          {TaskReady.map((template, index) => (
-            <option key={index} value={index}>
-              {template.name}
-            </option>
-          ))}
-        </select>
-      </label>
     </div>
 
           <label>
@@ -127,6 +104,25 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
             />
             {errors.name && <span className="error-message">{errors.name}</span>}
           </label>
+        </div>
+
+        <div className="form-group">
+          <label>
+            Type de tâche :
+            <select
+              value={formData.taskType}
+              onChange={(e) => handleChange("taskType", e.target.value)}
+            >
+              <option value="task">Tâche ordinaire</option>
+              <option value="habit">Habitude quotidienne</option>
+            </select>
+            {errors.taskType && <span className="error-message">{errors.taskType}</span>}
+          </label>
+          {formData.taskType === "habit" && (
+            <p className="info-message">
+              Les habitudes seront automatiquement renouvelées chaque jour.
+            </p>
+          )}
         </div>
 
         <div className="form-group">
@@ -187,7 +183,7 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
         </div>
 
         <button type="button" onClick={handleAddTask}>
-          Ajouter une tâche
+          {formData.taskType === "habit" ? "Ajouter une habitude" : "Ajouter une tâche"}
         </button>
       </form>
     </div>

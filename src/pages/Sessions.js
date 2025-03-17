@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import TaskFilters_Sessions from '../components/TaskFilters_Sessions';
+import SessionFilters from '../components/SessionFilters'; // Importer le nouveau composant
 import './Sessions.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -25,11 +25,20 @@ function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
     formattedDateTime: new Date().toISOString().slice(0, 16)
   });
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [filter, setFilter] = useState({
-    date: '',
-    sortOrder: 'newest',
-    taskId: '',
-    categories: '',
+  
+  // État pour afficher/masquer la modale de filtres
+  const [showFilters, setShowFilters] = useState(false);
+  
+  // État des filtres avec chargement depuis localStorage
+  const [filter, setFilter] = useState(() => {
+    const savedFilters = localStorage.getItem('sessionFilters');
+    return savedFilters ? JSON.parse(savedFilters) : {
+      date: '',
+      sortOrder: 'newest',
+      categories: [],
+      sessionType: '',
+      minDuration: '',
+    };
   });
 
   // Ajouter cette fonction pour obtenir la date et heure locale au format ISO
@@ -143,8 +152,35 @@ function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
     }
   };
 
-  // Garder le reste du code identique...
-  const sortedSessions = sessions.sort((a, b) => {
+  // Appliquer les filtres aux sessions
+  const filteredSessions = sessions.filter(session => {
+    // Filtre par date
+    if (filter.date && new Date(session.date).toISOString().split('T')[0] !== filter.date) {
+      return false;
+    }
+
+    // Filtre par catégorie
+    if (filter.categories && filter.categories.length > 0) {
+      if (!session.categories || !session.categories.some(cat => filter.categories.includes(cat))) {
+        return false;
+      }
+    }
+
+    // Filtre par type (task/subtask)
+    if (filter.sessionType && session.type !== filter.sessionType) {
+      return false;
+    }
+
+    // Filtre par durée minimum
+    if (filter.minDuration && session.duration < parseInt(filter.minDuration, 10)) {
+      return false;
+    }
+
+    return true;
+  });
+
+  // Tri des sessions filtrées
+  const sortedSessions = filteredSessions.sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
     return filter.sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
@@ -193,19 +229,13 @@ function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
 
   return (
     <div className="statistics-container">
- 
-
-    
-
       <div className="sessions-header">
         <h1> ⏱️ Suivi du temps</h1>
       </div>
 
-      
-
       <Calendar
         localizer={localizer}
-        events={sessions}
+        events={filteredSessions} // Utiliser les sessions filtrées ici
         startAccessor="start"
         endAccessor="end"
         titleAccessor={(session) => {
@@ -218,8 +248,6 @@ function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
           margin: '10px 0', 
           padding: '0 20px', 
           overflow: 'auto',
-
-
         }}  
         defaultView='day'
         scrollToTime={new Date()}
@@ -235,21 +263,35 @@ function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
         eventPropGetter={(event) => ({
           style: getSessionStyle(event.categories),
         })}
-        step={30} // Adjust the step to 15 minutes to reduce overlapping
-        timeslots={2} // Number of timeslots per hour
-
+        step={30}
+        timeslots={2}
       />
 
-      <TaskFilters_Sessions 
-        filter={filter} 
-        setFilter={setFilter} 
-        tasks={tasks} 
-      />
+      {/* Actions et filtres */}
+      <div className="sessions-actions">
+        <button className="add-session-btn" onClick={() => setShowSessionForm(true)}>
+          Ajouter une session
+        </button>
+        <button className="show-filters-btn" onClick={() => setShowFilters(true)}>
+          Afficher les filtres
+        </button>
+      </div>
 
-            {/* Bouton pour afficher le formulaire */}
-            <button onClick={() => setShowSessionForm(true)}>
-        Ajouter une session
-      </button>
+      {/* Modale des filtres */}
+      {showFilters && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button className="close-btn" onClick={() => setShowFilters(false)}>
+              Fermer
+            </button>
+            <SessionFilters
+              filter={filter}
+              setFilter={setFilter}
+              tasks={tasks}
+            />
+          </div>
+        </div>
+      )}
 
       {showSessionForm && (
         <div className="modal-overlay">
@@ -321,7 +363,6 @@ function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
         </div>
       )}
 
-
       <ul className="sessions-list">
         {sortedSessions.length > 0 ? (
           sortedSessions.map((session) => {
@@ -360,9 +401,6 @@ function Sessions({ isDarkMode, toggleDarkMode, taskCategories, onAddTask }) {
           <p>Aucune session trouvée.</p>
         )}
       </ul>
-
-
-
     </div>
   );
 }

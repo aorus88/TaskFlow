@@ -34,39 +34,104 @@ const StatCard = ({ label, value, emoji, color }) => {
 };
 
 const BarChartCard = ({ label, data, color = "#4285f4" }) => {
+  // -------------------------------
+  // 1. ÉTATS
+  // -------------------------------
   const [isExpanded, setIsExpanded] = useState(false);
-  const chartRef = useRef(null);
   
+  // -------------------------------
+  // 2. FONCTIONS AUXILIAIRES
+  // -------------------------------
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
+  
+  // Fonction pour formater les dates
+  const formatChartDate = (dateStr) => {
+    if (!dateStr) return "";
+    
+    try {
+      const date = new Date(dateStr);
+      if (!isNaN(date.getTime())) {
+        // Récupérer l'initiale du jour de la semaine
+        const weekday = date.toLocaleDateString("fr-FR", {
+          weekday: "narrow" // "narrow" donne généralement l'initiale (L, M, M...)
+        });
+        
+        // Formater la date comme avant
+        const dayMonth = date.toLocaleDateString("fr-FR", {
+          day: "numeric",
+          month: "short",
+        });
+        
+        // Combiner les deux
+        return `${weekday} ${dayMonth}`;
+      }
+      return dateStr;
+    } catch (error) {
+      console.error("Erreur format date:", dateStr);
+      return dateStr;
+    }
+  };
 
-  // Préparation des données pour le graphique
+  // -------------------------------
+  // 3. DONNÉES DU GRAPHIQUE
+  // -------------------------------
   const chartData = {
     labels: data.map((entry) => entry.date),
     datasets: [
       {
-        label: "Conso par jour",
+        label: "🍂",
         data: data.map((entry) => entry.count),
-        backgroundColor: data.map((entry) => 
-          entry.count < 3 
-            ? "rgba(0, 255, 0, 0.5)" 
-            : entry.count <= 6 
-              ? "rgba(255, 165, 0, 0.5)" 
-              : "rgba(255, 0, 0, 0.5)"
-        ),
-        borderColor: data.map((entry) => 
-          entry.count < 3 
-            ? "rgba(0, 200, 0, 1)" 
-            : entry.count <= 6 
-              ? "rgba(255, 140, 0, 1)" 
-              : "rgba(200, 0, 0, 1)"
-        ),
+        backgroundColor: data.map((entry) => {
+          if (entry.count < 3) {
+            return "rgba(0, 255, 0, 0.2)"; // Vert pour < 3
+          } else if (entry.count >= 3 && entry.count <= 6) {
+            return "rgba(255, 165, 0, 0.2)"; // Orange pour 3 à 6
+          } else {
+            return "rgba(255, 0, 0, 0.2)"; // Rouge pour > 6
+          }
+        }),
+        borderColor: data.map((entry) => {
+          if (entry.count < 3) {
+            return "rgba(0, 255, 0, 0.2)"; // Vert pour < 3
+          } else if (entry.count >= 3 && entry.count <= 6) {
+            return "rgba(255, 165, 0, 0.2)"; // Orange pour 3 à 6
+          } else {
+            return "rgba(255, 0, 0, 0.2)"; // Rouge pour > 6
+          }
+        }),
+        borderWidth: 1,
+      },
+      {
+        label: "🏆",
+        data: data.map((entry) => entry.noCount),
+        backgroundColor: data.map((entry) => {
+          if (entry.noCount < 3) {
+            return "rgba(144, 238, 144, 0.2)"; // Vert clair pour < 3
+          } else if (entry.noCount >= 3 && entry.noCount <= 6) {
+            return "rgba(60, 179, 113, 0.2)"; // Vert moyen pour 3 à 6
+          } else {
+            return "rgba(0, 128, 0, 0.2)"; // Vert foncé pour > 6
+          }
+        }),
+        borderColor: data.map((entry) => {
+          if (entry.noCount < 3) {
+            return "rgba(144, 238, 144, 1)"; // Vert clair pour < 3
+          } else if (entry.noCount >= 3 && entry.noCount <= 6) {
+            return "rgba(60, 179, 113, 1)"; // Vert moyen pour 3 à 6
+          } else {
+            return "rgba(0, 128, 0, 1)"; // Vert foncé pour > 6
+          }
+        }),
         borderWidth: 1,
       },
     ],
   };
 
+  // -------------------------------
+  // 4. OPTIONS DU GRAPHIQUE
+  // -------------------------------
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -74,7 +139,23 @@ const BarChartCard = ({ label, data, color = "#4285f4" }) => {
       legend: {
         position: "top",
         align: "center",
-        labels: { font: { size: 14 }, color: "#333" },
+        labels: { 
+          font: { size: 18 }, 
+          color: "#333",
+          padding: 2, // Augmentez cette valeur (25 → 40 ou plus)
+        },
+        // Ajoutez une marge supplémentaire
+        margin: {
+          top: 0, // Marge supérieure additionnelle
+          bottom: 10
+        },
+        title: {
+          display: false,
+          padding: {
+            top: 20, // Augmentez cette valeur (102→ 20)
+            bottom: 10
+          }
+        }
       },
       tooltip: {
         callbacks: {
@@ -86,40 +167,53 @@ const BarChartCard = ({ label, data, color = "#4285f4" }) => {
           },
         },
       },
+      datalabels: {
+        display: true,
+        color: "#000",
+        anchor: "end",
+        align: "end",
+        offset: 4,
+        font: {
+          weight: 'bold',
+          size: 12,
+        },
+        backgroundColor: 'rgba(255, 255, 255, 0.94)',
+        borderRadius: 4,
+        padding: {
+          top: 2,
+          bottom: 2,
+          left: 4,
+          right: 4,
+        },
+        formatter: (value) => value,
+      },
     },
     scales: {
       y: {
         beginAtZero: true,
-        title: { display: true, text: "Consommations", color: "#333", font: { size: 14 } },
+        title: { display: true, text: "/ jour", color: "#333", font: { size: 18 } },
         ticks: { color: "#333", font: { size: 12 } },
+        grid: { color: "rgba(0, 0, 0, 0)" },
       },
       x: {
-        title: { display: true, text: "Date", color: "#333", font: { size: 14 } },
+        title: { display: true, color: "#333", font: { size: 18 } },
         ticks: {
           color: "#333",
-          font: { size: 10 },
+          font: { size: 12 },
           callback: function (value, index) {
-            // Vérifier que value est une chaîne avant d'appeler split
-            if (typeof value !== 'string') {
-              return value;
-            }
-            
-            const dateParts = value.split('-');
-            if (dateParts.length === 3) {
-              const date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
-              return date.toLocaleDateString("fr-FR", {
-                day: "numeric",
-                month: "short",
-              });
-            }
-            return value;
+            // Récupérer directement la date à partir des labels originaux
+            return formatChartDate(chartData.labels[index]);
           },
         },
+        grid: { color: "rgba(0, 0, 0, 0)" },
       },
     },
-    animation: { duration: 600, easing: "easeOutQuart" },
+    animation: { duration: 1200, easing: "easeOutQuart" },
   };
 
+  // -------------------------------
+  // 5. RENDU JSX
+  // -------------------------------
   return (
     <div
       className="stat-card"
@@ -135,36 +229,65 @@ const BarChartCard = ({ label, data, color = "#4285f4" }) => {
         </button>
       </div>
       
-      {isExpanded ? (
+      {isExpanded && (
         <div style={{ height: "300px", width: "100%" }}>
           <Bar 
             data={chartData} 
             options={options} 
-            ref={chartRef}
+            key={`chart-${isExpanded}`} 
           />
         </div>
-      ) : (
-        <div className="chart-preview">
-          <p>Cliquez sur "Développer" pour voir le graphique</p>
-          <div className="mini-chart">
-            {data.slice(-7).map((entry, index) => (
-              <div 
-                key={index} 
-                className="mini-bar" 
-                style={{
-                  height: `${Math.min(entry.count * 5, 30)}px`,
-                  backgroundColor: entry.count < 3 
-                    ? "rgba(0, 255, 0, 0.5)" 
-                    : entry.count <= 6 
-                      ? "rgba(255, 165, 0, 0.5)" 
-                      : "rgba(255, 0, 0, 0.5)"
-                }}
-                title={`${entry.date}: ${entry.count}`}
-              ></div>
-            ))}
-          </div>
-        </div>
       )}
+      
+      
+      {!isExpanded && (
+  <div className="chart-preview" style={{ padding: "10px 0", textAlign: "center" }}>
+    <p>Cliquez sur "Développer" pour voir le graphique</p>
+    <div className="mini-chart">
+      {data.slice(-15).map((entry, index) => (
+        <div key={`${index}-container`} className="mini-bar-container" style={{ display: 'inline-block', margin: '0 2px' }}>
+          {/* Barre pour les entrées "yes" (🍂) */}
+          <div 
+            key={`yes-${index}`} 
+            className="mini-bar" 
+            style={{
+              height: `${Math.min(entry.count * 5, 30)}px`,
+              width: '6px',
+              display: 'inline-block',
+              backgroundColor: entry.count < 3 
+                ? "rgba(0, 255, 0, 0.5)" 
+                : entry.count <= 6 
+                  ? "rgba(255, 165, 0, 0.5)" 
+                  : "rgba(255, 0, 0, 0.5)",
+              marginRight: '2px'
+            }}
+            title={`🍂 ${entry.date}: ${entry.count}`}
+          ></div>
+          
+          {/* Barre pour les entrées "no" (🏆) */}
+          <div 
+            key={`no-${index}`} 
+            className="mini-bar" 
+            style={{
+              height: `${Math.min(entry.noCount * 5, 30)}px`,
+              width: '6px',
+              display: 'inline-block',
+              backgroundColor: entry.noCount < 3 
+                ? "rgba(144, 238, 144, 0.5)" 
+                : entry.noCount <= 6 
+                  ? "rgba(60, 179, 113, 0.5)" 
+                  : "rgba(0, 128, 0, 0.5)"
+            }}
+            title={`🏆 ${entry.date}: ${entry.noCount}`}
+          ></div>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
+
+
     </div>
   );
 };
@@ -352,15 +475,35 @@ const FusionTool = ({
     timeSinceLastYesEntry = { hours, minutes };
   }
 
-  // Calcul en secondes depuis la dernière entrée "yes" (si existante)
-  const timeSinceLastYesSec = lastYesEntry ? Math.floor((new Date() - lastYesEntry) / 1000) : 0;
-  // Seuil de 4 heures (en secondes)
-  const thresholdSec = 4 * 3600;
-  // Pourcentage de remplissage : maximum 100%
-  const endOfDay = new Date();
-  endOfDay.setHours(23, 59, 59, 999);
-  const timeUntilEndOfDaySec = Math.floor((endOfDay - new Date()) / 1000);
-  const glassProgress = Math.min((timeSinceLastYesSec / timeUntilEndOfDaySec) * 100, 100);
+  // Calcul en secondes depuis la dernière entrée "yes" (pour affichage, pas pour le pourcentage)
+const timeSinceLastYesSec = lastYesEntry ? Math.floor((new Date() - lastYesEntry) / 1000) : 0;
+
+
+// 1. Définir le point de départ (dernière entrée "yes" ou début de journée si aucune)
+const now = new Date();
+let startPoint;
+
+if (lastYesEntry) {
+  startPoint = new Date(lastYesEntry);
+} else {
+  // Si aucune entrée "yes", on prend minuit comme départ
+  startPoint = new Date();
+  startPoint.setHours(0, 0, 0, 0);
+}
+
+// 2. Définir la fin de journée
+const endOfDay = new Date();
+endOfDay.setHours(23, 59, 59, 999);
+
+// 3. Calcul du temps total depuis le départ jusqu'à la fin du jour
+const totalPeriodSec = Math.max(Math.floor((endOfDay - startPoint) / 1000), 1); // On évite division par zéro
+
+// 4. Calcul du temps écoulé depuis le départ
+const elapsedSec = Math.floor((now - startPoint) / 1000);
+
+// 5. Calcul du pourcentage
+const glassProgress = Math.min((elapsedSec / totalPeriodSec) * 100, 100);
+
 
   // Fonction pour formater le temps en h, m, s
   const formatTimeDiff = (secs) => {
@@ -687,7 +830,7 @@ const FusionTool = ({
           />
 
 <StatCard
-          label="Progress "
+          label="🛡️Restant "
           value={`${glassProgress.toFixed(2)}%`}
         />
 
