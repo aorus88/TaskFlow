@@ -249,14 +249,29 @@ const App = () => {
 
   const addConsumptionEntry = async (entry) => {
     try {
+      // Utiliser createdAt comme source de vérité (en UTC)
+      const createdAtDate = new Date(entry.createdAt);
+      
+      // Préparer les données à envoyer au backend
+      const entryForBackend = {
+        // Conserver tous les champs existants
+        ...entry,
+        // Ajouter le champ date à partir de createdAt
+        date: createdAtDate.toISOString().split('T')[0],
+        // Extraire l'heure et la minute DIRECTEMENT depuis createdAt pour assurer la cohérence
+        time: `${String(createdAtDate.getUTCHours()).padStart(2, '0')}:${String(createdAtDate.getUTCMinutes()).padStart(2, '0')}`
+      };
+      
       const response = await fetch('http://192.168.50.241:4000/consumption-entries', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(entry),
+        body: JSON.stringify(entryForBackend),
       });
+      
       if (!response.ok) {
         throw new Error('Erreur lors de l\'ajout de l\'entrée de consommation.');
       }
+      
       await fetchConsumptionEntries();
     } catch (error) {
       console.error('Erreur :', error);
@@ -295,6 +310,21 @@ const App = () => {
       await fetchTasks();
     } catch (error) {
       console.error("Erreur lors de la mise à jour du temps de la tâche :", error);
+    }
+  };
+
+  // Créer une version augmentée de la fonction onAddEntry qui inclut refreshEntries
+  const enhancedAddConsumptionEntry = entry => {
+    addConsumptionEntry(entry);
+  };
+  // Ajouter la fonction de rafraîchissement comme propriété de la fonction
+  enhancedAddConsumptionEntry.refreshEntries = data => {
+    // Si des données sont fournies, les utiliser directement
+    if (data) {
+      dispatch({ type: "SET_CONSUMPTION_ENTRIES", payload: data });
+    } else {
+      // Sinon, appeler fetchConsumptionEntries pour les récupérer
+      fetchConsumptionEntries();
     }
   };
 
@@ -378,7 +408,7 @@ const App = () => {
                   element={
                     <FusionTool
                       entries={state.consumptionEntries}
-                      onAddEntry={addConsumptionEntry}
+                      onAddEntry={enhancedAddConsumptionEntry}
                       onDeleteEntry={deleteConsumptionEntry}
                       isDarkMode={isDarkMode}
                       toggleDarkMode={toggleDarkMode}

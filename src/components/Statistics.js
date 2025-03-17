@@ -35,8 +35,8 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
 
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
-
-  
+  const yesterdayEnd = new Date(yesterday);
+  yesterdayEnd.setHours(23, 59, 59, 999);
 
   // Statistiques tâches ouvertes
   const openTasks = tasks.filter((task) => 
@@ -59,27 +59,38 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
     return false;
   });
 
+  // Fonction utilitaire pour comparer seulement les dates (sans l'heure)
+  const isSameDay = (date1, date2) => {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+    return d1.getFullYear() === d2.getFullYear() && 
+           d1.getMonth() === d2.getMonth() && 
+           d1.getDate() === d2.getDate();
+  };
 
-  // Debug logs
-  useEffect(() => {
-    console.log("Date actuelle:", today);
-    console.log("Tâches archivées:", tasks.filter(task => task.archivedAt));
-    console.log("Tâches créées:", tasks.filter(task => task.addedAt));
-  }, [tasks]);
-
-  // Sessions du jour (TOUTES les tâches)
+  // Sessions du jour (TOUTES les tâches) - Utilisation de isSameDay pour une comparaison plus précise
   const sessionsToday = tasks.flatMap((task) => task.sessions || [])
     .filter((session) => {
       const sessionDate = new Date(session.date);
-      return sessionDate >= today && sessionDate < new Date(today.getTime() + 86400000);
+      return isSameDay(sessionDate, today);
     });
 
-  // Sessions d'hier (TOUTES les tâches)
+  // Sessions d'hier (TOUTES les tâches) - Utilisation de isSameDay pour une comparaison plus précise
   const sessionsYesterday = tasks.flatMap((task) => task.sessions || [])
     .filter((session) => {
       const sessionDate = new Date(session.date);
-      return sessionDate >= yesterday && sessionDate < new Date(today.getTime() + 86400000);
+      return isSameDay(sessionDate, yesterday);
     });
+
+  // Suppression des logs pour éviter les boucles infinies
+  // Pour activer le débogage temporairement, décommenter le code ci-dessous
+  /*
+  useEffect(() => {
+    // Ne log qu'au premier rendu ou si les données changent vraiment
+    console.log("DEBUG: Sessions aujourd'hui:", sessionsToday);
+    console.log("DEBUG: Sessions hier:", sessionsYesterday);
+  }, []); // Dépendances vides = exécution uniquement au montage
+  */
 
   // Calcul du temps total des sessions du jour
   const totalSessionTimeToday = sessionsToday.reduce((total, session) => total + session.duration, 0);

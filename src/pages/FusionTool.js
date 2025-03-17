@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef, useCallback } from "react";
 import "./FusionTool.css"; // Importer les styles spécifiques
 import { Bar } from "react-chartjs-2"; // Importer le composant Bar de react-chartjs-2
 import {
@@ -306,15 +306,19 @@ const FusionTool = ({
   const [isTaskFormModalOpen, setIsTaskFormModalOpen] = useState(false);
   const { selectedTaskId, setSelectedTaskId } = useContext(SelectedTaskContext);
 
-  // État du formulaire
-  const [formData, setFormData] = useState({
-    date: new Date().toISOString().split("T")[0],
-    time: new Date().toLocaleTimeString("fr-FR", {
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
-    mood: "",
-    consumption: "yes",
+  // État du formulaire - Modifié pour utiliser un seul datetime-local
+  const [formData, setFormData] = useState(() => {
+    // Ajuster l'heure locale pour le formulaire principal
+    const now = new Date();
+    const localISOString = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 16);
+    
+    return {
+      createdAt: localISOString,
+      mood: "",
+      consumption: "yes",
+    };
   });
 
   // État pour le tri des entrées - Mettre à jour pour utiliser la valeur du filtre
@@ -347,17 +351,33 @@ const FusionTool = ({
 
   // Fonction pour formater l'heure
   const formatClock = (time) => {
-    return time.toLocaleTimeString("fr-FR", {
+    return new Date(time).toLocaleTimeString("fr-FR", {
       hour: "2-digit",
       minute: "2-digit",
       second: "2-digit",
     });
   };
 
+  // Fonction simplifiée pour l'extraction de la date au format YYYY-MM-DD
+  const getDateOnly = (dateString) => {
+    return new Date(dateString).toISOString().split('T')[0];
+  };
+
+  // Fonction pour ajuster la date/heure pour les formulaires datetime-local
+  const adjustDateForLocalInput = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    // Convertir l'heure UTC en heure locale correctement pour l'input datetime-local
+    return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 16);
+  };
+
   const handleChange = (key, value) => {
     setFormData({ ...formData, [key]: value });
   };
 
+  // Définir les dates de référence pour les statistiques
   const today = new Date().toISOString().split("T")[0];
   const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
     .toISOString()
@@ -408,21 +428,29 @@ const FusionTool = ({
       indécis: "Indécis 🤔",
       indiférent: "Indiférent 😐",
     };
+
+    // Création d'une nouvelle entrée avec uniquement createdAt
     onAddEntry({
-      ...formData,
+      mood: formData.mood,
+      consumption: formData.consumption,
       id: Date.now(),
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(formData.createdAt).toISOString(),
     });
+
+    // Restaurer le formulaire avec l'heure actuelle ajustée
+    const now = new Date();
+    const localISOString = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 16);
+    
     setFormData({
-      date: new Date().toISOString().split("T")[0],
-      time: new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }),
+      createdAt: localISOString,
       mood: "",
       consumption: "yes",
     });
   };
 
   const handleDeleteEntry = (id) => {
-    console.log("ID à supprimer:", id);
     if (typeof onDeleteEntry === "function") {
       onDeleteEntry(id);
     } else {
@@ -430,33 +458,33 @@ const FusionTool = ({
     }
   };
 
-  // Calcul de diverses statistiques
+  // Calcul de diverses statistiques en utilisant createdAt au lieu de date
   const totalEntries = entries.length;
   const todayEntries = entries.filter(
-    (entry) => entry.date.split("T")[0] === today && entry.consumption === "yes"
+    (entry) => getDateOnly(entry.createdAt) === today && entry.consumption === "yes"
   ).length;
   const yesterdayEntries = entries.filter(
-    (entry) => entry.date.split("T")[0] === yesterday && entry.consumption === "yes"
+    (entry) => getDateOnly(entry.createdAt) === yesterday && entry.consumption === "yes"
   ).length;
   const dayBeforeYesterdayEntries = entries.filter(
-    (entry) => entry.date.split("T")[0] === dayBeforeYesterday && entry.consumption === "yes"
+    (entry) => getDateOnly(entry.createdAt) === dayBeforeYesterday && entry.consumption === "yes"
   ).length;
   const sevenDaysAgoEntries = entries.filter(
-    (entry) => entry.date.split("T")[0] === sevenDaysAgo && entry.consumption === "yes"
+    (entry) => getDateOnly(entry.createdAt) === sevenDaysAgo && entry.consumption === "yes"
   ).length;
   const nonConsumptionEntries = entries.filter(
     (entry) => entry.consumption === "no"
   ).length;
   const nonConsumptionTodayEntries = entries.filter(
-    (entry) => entry.date.split("T")[0] === today && entry.consumption === "no"
+    (entry) => getDateOnly(entry.createdAt) === today && entry.consumption === "no"
   ).length;
   const thisMonthEntries = entries.filter(
-    (entry) => entry.date.split("T")[0] >= startOfMonth && entry.consumption === "yes"
+    (entry) => getDateOnly(entry.createdAt) >= startOfMonth && entry.consumption === "yes"
   ).length;
   const lastMonthEntries = entries.filter(
     (entry) =>
-      entry.date.split("T")[0] >= startOfLastMonth &&
-      entry.date.split("T")[0] <= endOfLastMonth &&
+      getDateOnly(entry.createdAt) >= startOfLastMonth &&
+      getDateOnly(entry.createdAt) <= endOfLastMonth &&
       entry.consumption === "yes"
   ).length;
 
@@ -576,12 +604,12 @@ const glassProgress = Math.min((elapsedSec / totalPeriodSec) * 100, 100);
       // Compter uniquement les entrées dont la date correspond et la consommation est "yes"
       const count = entries.filter(
         (entry) =>
-          entry.date.split("T")[0] === date && entry.consumption === "yes"
+          getDateOnly(entry.createdAt) === date && entry.consumption === "yes"
       ).length;
       // compter uniquement les entrées dont la date correspond et la consommation est "no"
       const noCount = entries.filter(
         (entry) =>
-          entry.date.split("T")[0] === date && entry.consumption === "no"
+          getDateOnly(entry.createdAt) === date && entry.consumption === "no"
       ).length;
       last15Days.push({ date, count, noCount });
     }
@@ -645,7 +673,15 @@ const glassProgress = Math.min((elapsedSec / totalPeriodSec) * 100, 100);
 
   // Fonction pour ouvrir la modale d'édition pour une entrée donnée
   const openEditEntryModal = (entry) => {
-    setCurrentEntry({ ...entry });
+    const entryToEdit = { ...entry };
+    
+    // Si la date est au format ISO, on la convertit pour l'input datetime-local
+    // en tenant compte du décalage horaire
+    if (entryToEdit.createdAt) {
+      entryToEdit.createdAtFormatted = adjustDateForLocalInput(entryToEdit.createdAt);
+    }
+    
+    setCurrentEntry(entryToEdit);
     setEditEntryModal(true);
   };
 
@@ -657,30 +693,83 @@ const glassProgress = Math.min((elapsedSec / totalPeriodSec) * 100, 100);
 
   // Fonction pour mettre à jour un champ de l'entrée en cours d'édition
   const handleEditEntryChange = (field, value) => {
-    setCurrentEntry({ ...currentEntry, [field]: value });
-  };
-
-  // Fonction pour sauvegarder l'édition (ici via une requête PUT)
-  const handleSaveEntryEdit = async () => {
-    try {
-      const response = await fetch(
-        `http://192.168.50.241:4000/consumption-entries/${currentEntry._id || currentEntry.id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(currentEntry),
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Erreur lors de la mise à jour de l'entrée.");
-      }
-      // Vous pouvez actualiser la liste des entrées ici, par exemple en rappelant une fonction de récupération,
-      // ou en mettant à jour localement l'état.
-      closeEditEntryModal();
-    } catch (error) {
-      console.error("Erreur :", error);
+    if (field === "createdAtFormatted") {
+      setCurrentEntry({
+        ...currentEntry,
+        createdAtFormatted: value,
+        createdAt: new Date(value).toISOString(), // Mise à jour simultanée du champ createdAt
+      });
+    } else {
+      setCurrentEntry({ ...currentEntry, [field]: value });
     }
   };
+
+  // Ajout d'une fonction pour rafraîchir les données
+  const refreshEntries = useCallback(async () => {
+    try {
+      const response = await fetch("http://192.168.50.241:4000/consumption-entries");
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      const data = await response.json();
+      
+      // Si nous avons une fonction pour mettre à jour les entrées dans le parent
+      if (typeof onAddEntry === "function" && typeof onAddEntry.refreshEntries === "function") {
+        onAddEntry.refreshEntries(data);
+      } else {
+        // Mise à jour locale en attendant que le parent se rafraîchisse
+        setLocalEntries(data);
+      }
+    } catch (error) {
+      console.error("Erreur lors du rafraîchissement des entrées :", error);
+    }
+  }, [onAddEntry]);
+
+  // État local pour les entrées (utilisé en cas de non-rafraîchissement automatique)
+  const [localEntries, setLocalEntries] = useState([]);
+  
+  // Utiliser localEntries seulement si elles sont définies, sinon utiliser les props entries
+  const entriesToDisplay = localEntries.length > 0 ? localEntries : entries;
+
+  // Fonction pour sauvegarder l'édition (ici via une requête PUT)
+const handleSaveEntryEdit = async () => {
+  try {
+    // Convertir la date du formulaire en objet Date UTC
+    const createdAtDate = new Date(currentEntry.createdAtFormatted);
+    
+    // Créer l'objet à envoyer au backend
+    const entryToUpdate = {
+      ...currentEntry,
+      // Utiliser createdAt comme source unique de vérité
+      createdAt: createdAtDate.toISOString(),
+      // Extraire time directement à partir de createdAt pour assurer la cohérence
+      time: `${String(createdAtDate.getUTCHours()).padStart(2, '0')}:${String(createdAtDate.getUTCMinutes()).padStart(2, '0')}`
+    };
+    
+    // Supprimer le champ formatté qui n'est pas nécessaire pour l'API
+    delete entryToUpdate.createdAtFormatted;
+    
+    const response = await fetch(
+      `http://192.168.50.241:4000/consumption-entries/${currentEntry._id || currentEntry.id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(entryToUpdate),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Erreur lors de la mise à jour de l'entrée.");
+    }
+
+    // Fermer la modale
+    closeEditEntryModal();
+    
+    // Rafraîchir les données immédiatement
+    await refreshEntries();
+  } catch (error) {
+    console.error("Erreur :", error);
+  }
+};
 
   // Fonction pour supprimer l'entrée depuis la modale
   const handleDeleteEntryFromModal = async () => {
@@ -703,8 +792,8 @@ const glassProgress = Math.min((elapsedSec / totalPeriodSec) * 100, 100);
 
   // Mettre à jour la logique de tri et de filtrage des entrées
   const filteredEntries = sortedEntries.filter(entry => {
-    // Filtre par date
-    if (filter.date && entry.date.split("T")[0] !== filter.date) {
+    // Filtre par date (maintenant basé sur createdAt)
+    if (filter.date && getDateOnly(entry.createdAt) !== filter.date) {
       return false;
     }
     
@@ -749,19 +838,11 @@ const glassProgress = Math.min((elapsedSec / totalPeriodSec) * 100, 100);
 
       <form className="fusion-form">
         <label>
-          Date :
+          Date et heure :
           <input
-            type="date"
-            value={formData.date}
-            onChange={(e) => handleChange("date", e.target.value)}
-          />
-        </label>
-        <label>
-          Heure :
-          <input
-            type="time"
-            value={formData.time}
-            onChange={(e) => handleChange("time", e.target.value)}
+            type="datetime-local"
+            value={formData.createdAt}
+            onChange={(e) => handleChange("createdAt", e.target.value)}
           />
         </label>
         <label>
@@ -914,14 +995,14 @@ const glassProgress = Math.min((elapsedSec / totalPeriodSec) * 100, 100);
           {filteredEntries.map((entry) => (
             <tr key={entry._id || entry.id}>
               <td>
-                {new Date(entry.date).toLocaleDateString("fr-FR", {
+                {new Date(entry.createdAt).toLocaleDateString("fr-FR", {
                   weekday: "long", // jour de la semaine en lettres
                   day: "2-digit",
                   month: "2-digit",
                   year: "numeric"
                 })}
               </td>
-              <td>{entry.time}</td>
+              <td>{new Date(entry.createdAt).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}</td>
               <td>{getMoodWithEmoji(entry.mood)}</td>
               <td>{entry.consumption === "yes" ? "Oui" : "Non"}</td>
               <td>
@@ -940,19 +1021,11 @@ const glassProgress = Math.min((elapsedSec / totalPeriodSec) * 100, 100);
           <div className="modal-content">
             <h3>Modifier l'entrée</h3>
             <label>
-              Date :
+              Date et heure :
               <input
-                type="date"
-                value={new Date(currentEntry.date).toISOString().split("T")[0]}
-                onChange={(e) => handleEditEntryChange("date", e.target.value)}
-              />
-            </label>
-            <label>
-              Heure :
-              <input
-                type="time"
-                value={currentEntry.time}
-                onChange={(e) => handleEditEntryChange("time", e.target.value)}
+                type="datetime-local"
+                value={currentEntry.createdAtFormatted}
+                onChange={(e) => handleEditEntryChange("createdAtFormatted", e.target.value)}
               />
             </label>
             <label>
