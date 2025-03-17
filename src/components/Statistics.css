@@ -189,4 +189,17 @@ body.dark .timer-display {
   color: #cccccc;
 }
 
+.level-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.reward-emoji {
+  margin-top: 5px;
+  font-size: 1.2em;
+}
+
 

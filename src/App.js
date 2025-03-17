@@ -52,7 +52,92 @@ const App = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  // Modification de l'initialisation de isDarkMode pour prendre en compte le mode système
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Récupérer le mode de thème depuis localStorage
+    const savedThemeMode = localStorage.getItem('themeMode');
+    
+    if (savedThemeMode === 'system') {
+      // Vérifier la préférence système
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    
+    // Retourner true si le mode est 'dark', false sinon
+    return savedThemeMode === 'dark';
+  });
+  
+  // Mise à jour de toggleDarkMode pour enregistrer la préférence
+  const toggleDarkMode = () => {
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+    
+    // Mettre à jour localStorage avec le nouveau mode (light ou dark)
+    localStorage.setItem('themeMode', newMode ? 'dark' : 'light');
+    document.body.classList.toggle('dark', newMode);
+  };
+
+  // Nouvelle fonction pour définir directement le mode
+  const setThemeMode = (mode) => {
+    if (mode === 'system') {
+      // Appliquer la préférence système
+      const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setIsDarkMode(prefersDarkMode);
+      document.body.classList.toggle('dark', prefersDarkMode);
+    } else {
+      // Appliquer le mode choisi (light ou dark)
+      const isDark = mode === 'dark';
+      setIsDarkMode(isDark);
+      document.body.classList.toggle('dark', isDark);
+    }
+    
+    // Sauvegarder le mode dans localStorage
+    localStorage.setItem('themeMode', mode);
+  };
+
+  // Écouter les changements de préférence système si mode === 'system'
+  useEffect(() => {
+    const handleSystemThemeChange = (e) => {
+      if (localStorage.getItem('themeMode') === 'system') {
+        setIsDarkMode(e.matches);
+        document.body.classList.toggle('dark', e.matches);
+      }
+    };
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    // Utiliser addEventListener ou addListener selon la compatibilité du navigateur
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleSystemThemeChange);
+    } else {
+      // Fallback pour les anciens navigateurs
+      mediaQuery.addListener(handleSystemThemeChange);
+    }
+
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', handleSystemThemeChange);
+      } else {
+        mediaQuery.removeListener(handleSystemThemeChange);
+      }
+    };
+  }, []);
+
+  // Effet pour initialiser correctement le thème au démarrage
+  useEffect(() => {
+    const currentThemeMode = localStorage.getItem('themeMode');
+    
+    if (!currentThemeMode) {
+      // Définir 'light' comme valeur par défaut si rien n'est défini
+      localStorage.setItem('themeMode', 'light');
+    }
+    
+    if (currentThemeMode === 'system') {
+      const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.body.classList.toggle('dark', prefersDarkMode);
+    } else {
+      document.body.classList.toggle('dark', currentThemeMode === 'dark');
+    }
+  }, []);
   
   const taskCategories = [
     "Travail 💼",
@@ -292,11 +377,6 @@ const App = () => {
     }
   };
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    document.body.classList.toggle('dark', !isDarkMode);
-  };
-
   const updateTaskTime = async (taskId, session) => {
     try {
       const response = await fetch(`http://192.168.50.241:4000/tasks/${taskId}/sessions`, {
@@ -337,7 +417,7 @@ const App = () => {
               <div className="app-title">
                 <h3>
                   <AdditionalMenu />
-                  TaskFlow 📬 1.4.1 
+                  TaskFlow 📬 1.4.2 
                   <button onClick={toggleDarkMode} className="dark-mode-button">
                     {isDarkMode ? "🌚" : "🌞"}
                   </button>
@@ -446,6 +526,7 @@ const App = () => {
                       taskCategories={taskCategories}
                       isDarkMode={isDarkMode}
                       toggleDarkMode={toggleDarkMode}
+                      setThemeMode={setThemeMode}
                     />
                   }
                 />

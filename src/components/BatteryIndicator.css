@@ -1,0 +1,71 @@
+.battery-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.battery-container {
+  position: relative;
+  height: 20px;
+  background-color: #f0f0f0;
+  border: 2px solid #333;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* Différentes tailles de batterie */
+.battery-small {
+  width: 60px;
+  height: 12px;
+}
+
+.battery-medium {
+  width: 100px;
+  height: 20px;
+}
+
+.battery-large {
+  width: 150px;
+  height: 30px;
+}
+
+.battery-tip {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 10px;
+  background-color: #333;
+  border-radius: 0 2px 2px 0;
+}
+
+.battery-level {
+  height: 100%;
+  transition: width 0.5s ease, background-color 0.5s ease;
+}
+
+.battery-text {
+  margin-top: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Support du mode sombre */
+body.dark .battery-container {
+  background-color: #2d3748;
+  border-color: #718096;
+}
+
+body.dark .battery-tip {
+  background-color: #718096;
+}
+
+body.dark .battery-text {
+  color: #e2e8f0;
+}

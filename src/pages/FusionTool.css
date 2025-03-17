@@ -297,3 +297,211 @@ body.dark .show-filters-btn:hover {
 .mini-bar:hover {
   opacity: 0.8;
 }
+
+/* Styles pour les boutons principaux */
+.entry-buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.entry-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 45%;
+  min-height: 120px;
+  padding: 20px;
+  border-radius: 15px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1.2rem;
+}
+
+.entry-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.entry-button:active {
+  transform: translateY(1px);
+}
+
+.entry-button-yes {
+  background-color: #ff6b6b;
+  border: 2px solid #ff5252;
+}
+
+.entry-button-no {
+  background-color: #4db6ac;
+  border: 2px solid #26a69a;
+}
+
+.entry-button-emoji {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.entry-button-text {
+  text-align: center;
+}
+
+/* Styles pour la modale de saisie */
+.entry-modal {
+  max-width: 90%;
+  width: 550px;
+}
+
+.modal-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.datetime-picker {
+  margin-bottom: 20px;
+}
+
+.datetime-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.mood-selector label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.mood-tabs {
+  margin-top: 15px;
+}
+
+.mood-group {
+  margin-bottom: 15px;
+}
+
+.mood-group-title {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #666;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.mood-button {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mood-button:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05);
+}
+
+.mood-button.selected {
+  background-color: #e3f2fd;
+  border-color: #2196f3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.3);
+}
+
+.submit-entry-btn {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 8px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-entry-btn:hover {
+  background-color: #45a049;
+}
+
+.submit-entry-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Adaptation pour les appareils mobiles */
+@media (max-width: 600px) {
+  .entry-buttons-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .entry-button {
+    width: 90%;
+    min-height: 100px;
+  }
+  
+  .mood-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .entry-modal {
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
+
+/* Mode sombre */
+body.dark .modal-title {
+  color: #e0e0e0;
+}
+
+body.dark .mood-group-title {
+  color: #aaa;
+  border-bottom: 1px solid #444;
+}
+
+body.dark .mood-button {
+  background-color: #333;
+  border-color: #555;
+  color: #fff;
+}
+
+body.dark .mood-button:hover {
+  background-color: #444;
+}
+
+body.dark .mood-button.selected {
+  background-color: #1e3a5f;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.3);
+}
+
+body.dark .datetime-input {
+  background-color: #333;
+  border-color: #555;
+  color: #fff;
+}

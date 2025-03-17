@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Statistics.css";
 import WeatherWidget from "../components/WeatherWidget";
 import { TimerContext } from "../context/TimerContext";
+import BatteryIndicator from "./BatteryIndicator";
 
 const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
   const { timeLeft, selectedTaskId } = useContext(TimerContext);
@@ -146,15 +147,6 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
     return "Tâche non trouvée";
   };
 
-  // Fonction pour déterminer l'emoji de récompense en fonction du pourcentage de progression
-  const getRewardEmoji = (closedTasksToday) => {
-    if (closedTasksToday >= 5) return "5️⃣🏆🏆🏆"; // Trophée pour 100% ou plus
-    if (closedTasksToday >= 4) return "4️⃣🏆"; // Trophée pour 100% ou plus
-    if (closedTasksToday >= 3) return "3️⃣🎉"; // Confettis pour 75% ou plus
-    if (closedTasksToday >= 2) return "2️⃣👍"; // Pouce en l'air pour 50% ou plus
-    if (closedTasksToday >= 1) return "1️⃣🙂"; // Visage souriant pour 25% ou plus
-    return "0️⃣💪"; // Muscle pour moins de 1
-  };
 
   const calculateCategoryDurations = (tasks) => {
     const categoryDurations = {};
@@ -203,29 +195,30 @@ const Statistics = ({ tasks, isDarkMode, toggleDarkMode }) => {
 
       <div className="statistics-grid">
         <div className="stat-card-tasks">
-          <h4>Tâches Ouvertes</h4>
-          <p>📋 {openTasks.length}</p>
-          <h4>Tâches prioritaires</h4>
-          <p>🔴🟠 {highMediumPriorityOpen.length}</p>
-           <h4>Tâches liquidées (Aujourd'hui)</h4>
-          <p>✅ {closedTasksToday.length}</p>
+          <h4>📋 Ouvertes</h4>
+          <p> {openTasks.length}</p>
+          <h4>🔴🟠 Ouvertes</h4>
+          <p> {highMediumPriorityOpen.length}</p>
+           <h4>✅ (Aujourd'hui)</h4>
+          <p> {closedTasksToday.length}</p>
         </div>
 
         <div className="stat-card-duration">
-          <h4>Durée (Hier) </h4>
+          <h4>Hier </h4>
           <p>⏱️ {formatTime(totalSessionTimeYesterday)}</p>
-          <h4>Durée (Aujourd'hui)</h4>
+          <h4> Aujourd'hui </h4>
           <p>⏱️ {formatTime(totalSessionTimeToday)}</p>
   
           <div className="spacer">
-            </div> 
+          </div> 
   
-          <h4>Level</h4>
-          <p className="reward-emoji">{getRewardEmoji(closedTasksToday.length)}</p>
+          <div className="level-indicator">
+            <BatteryIndicator level={closedTasksToday.length} maxLevel={5} />
+          </div>
         </div>
 
         <div className="stat-card-top5">
-          <h4>Top 5 (7 derniers jours)</h4>
+          <h4>7 derniers jours</h4>
           {top5Categories.map(([category, duration]) => (
             <p key={category}>
               {category} : {formatDurationInHours(duration)}

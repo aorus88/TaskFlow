@@ -37,12 +37,19 @@ const VersionHistory = ({ isDarkMode, toggleDarkMode }) => {
 
 
         {/* Ajoutez d'autres versions ici */}
+      <li>Version 1.4.1 - 17 mars 2025
+          <ul>Interface FusionTool repensée pour une utilisation plus intuitive</ul>
+          <ul>Nouvelle méthode de saisie des entrées via deux boutons principaux (consommation/non-consommation)</ul>
+          <ul>Sélecteur d'humeurs amélioré avec organisation par catégories (Positif/Négatif/Autre)</ul>
+          <ul>Interface adaptée aux appareils mobiles (spécialement iOS)</ul>
+          <ul>Correction des problèmes de fuseaux horaires pour les entrées de consommation</ul>
+          <ul>Rafraîchissement automatique des données lors des modifications</ul>
+          <ul>Optimisation des performances de l'application</ul>
+      </li>
+        
       <li>Version 1.4.0 
           <ul> Mise à jour général source-code     </ul>
           <ul> Préparation à la 1ère prise en main 24 février 2025   </ul>
-
-
-
       </li>
 
 

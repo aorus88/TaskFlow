@@ -829,6 +829,93 @@ const handleSaveEntryEdit = async () => {
     setSortOrder(filter.sortOrder || "desc");
   }, [filter.sortOrder]);
 
+  // État pour contrôler l'affichage de la nouvelle modale de saisie
+  const [showEntryModal, setShowEntryModal] = useState(false);
+  
+  // État pour stocker la valeur de consommation pré-sélectionnée
+  const [preselectedConsumption, setPreselectedConsumption] = useState(null);
+  
+  // Fonction pour ouvrir la modale avec une valeur pré-sélectionnée
+  const openEntryModal = (consumption) => {
+    // Ajuster l'heure locale pour le formulaire de la modale
+    const now = new Date();
+    const localISOString = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 16);
+    
+    setFormData({
+      createdAt: localISOString,
+      mood: "",
+      consumption: consumption
+    });
+    setPreselectedConsumption(consumption);
+    setShowEntryModal(true);
+  };
+  
+  // Fonction pour fermer la modale
+  const closeEntryModal = () => {
+    setShowEntryModal(false);
+    setPreselectedConsumption(null);
+  };
+  
+  // Fonction pour soumettre le formulaire depuis la modale
+  const handleSubmitModalForm = () => {
+    onAddEntry({
+      mood: formData.mood,
+      consumption: formData.consumption,
+      id: Date.now(),
+      createdAt: new Date(formData.createdAt).toISOString(),
+    });
+    
+    closeEntryModal();
+    
+    // Réinitialiser le formulaire
+    const now = new Date();
+    const localISOString = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 16);
+    
+    setFormData({
+      createdAt: localISOString,
+      mood: "",
+      consumption: "yes",
+    });
+  };
+
+  // Groupe les émojis d'humeur pour un affichage plus organisé
+  const moodGroups = {
+    "Positif": [
+      { value: "heureux", label: "Heureux 😀" },
+      { value: "énergique", label: "Énergique 😜" },
+      { value: "excité", label: "Excité 🥳" },
+      { value: "détendu", label: "Détendu 😌" },
+      { value: "calme", label: "Calme 😌" },
+      { value: "confiant", label: "Confiant 😎" },
+      { value: "motivé", label: "Motivé 🚀" },
+      { value: "déterminé", label: "Déterminé 💪" },
+    ],
+    "Négatif": [
+      { value: "stressé", label: "Stressé 😣" },
+      { value: "anxieux", label: "Anxieux 😖" },
+      { value: "fatigué", label: "Fatigué 😴" },
+      { value: "triste", label: "Triste 😭" },
+      { value: "frustré", label: "Frustré 😤" },
+      { value: "colère", label: "Colère 😡" },
+      { value: "déprimé", label: "Déprimé 😵" },
+      { value: "ennuyé", label: "Ennuyé 😩" },
+    ],
+    "Autre": [
+      { value: "nerveux", label: "Nerveux 😵‍💫" },
+      { value: "démotivé", label: "Démotivé 😔" },
+      { value: "concentré", label: "Concentré 🧐" },
+      { value: "déçu", label: "Déçu 😞" },
+      { value: "dégoûté", label: "Dégoûté 🤢" },
+      { value: "indécis", label: "Indécis 🤔" },
+      { value: "indiférent", label: "Indiférent 😐" },
+      { value: "malade", label: "Malade 🤕" },
+    ],
+  };
+
   return (
 
     
@@ -836,70 +923,26 @@ const handleSaveEntryEdit = async () => {
     <div className="fusion-tool">
       <h1>Fusion-Tool ⛩️</h1>
 
-      <form className="fusion-form">
-        <label>
-          Date et heure :
-          <input
-            type="datetime-local"
-            value={formData.createdAt}
-            onChange={(e) => handleChange("createdAt", e.target.value)}
-          />
-        </label>
-        <label>
-          Humeur :
-          <select
-            value={formData.mood}
-            onChange={(e) => handleChange("mood", e.target.value)}
-          >
-            <option value="">Sélectionnez</option>
-            <option value="heureux">Heureux 😀</option>
-            <option value="triste">Triste 😭</option>
-            <option value="stressé">Stressé 😣</option>
-            <option value="calme">Calme 😌</option>
-            <option value="fatigué">Fatigué 😴</option>
-            <option value="énergique">Énergique 😜</option>
-            <option value="anxieux">Anxieux 😖</option>
-            <option value="colère">Colère 😡</option>
-            <option value="ennuyé">Ennuyé 😩</option>
-            <option value="excité">Excité 🥳</option>
-            <option value="déprimé">Déprimé 😵</option>
-            <option value="détendu">Détendu 😌</option>
-            <option value="nerveux">Nerveux 😵‍💫</option>
-            <option value="frustré">Frustré 😤</option>
-            <option value="déterminé">Déterminé 💪</option>
-            <option value="motivé">Motivé 🚀</option>
-            <option value="concentré">Concentré 🧐</option>
-            <option value="confiant">Confiant 😎</option>
-            <option value="déçu">Déçu 😞</option>
-            <option value="dégoûté">Dégoûté 🤢</option>
-            <option value="honteux">Honteux 😳</option>
-            <option value="triste">Triste 😢</option>
-            <option value="démotivé">Démotivé 😔</option>
-            <option value="fiévreux">Fiévreux 🤒</option>
-            <option value="malade">Malade 🤕</option>
-            <option value="indécis">Indécis 🤔</option>
-            <option value="indiférent">Indiférent 😐</option>
-          </select>
-        </label>
-        <label>
-          Consommation :
-          <select
-            value={formData.consumption}
-            onChange={(e) => handleChange("consumption", e.target.value)}
-          >
-            <option value="yes">Oui</option>
-            <option value="no">Non</option>
-          </select>
-        </label>
-        <button type="button" onClick={handleAddEntry}>
-          Ajouter
+      {/* Remplacer le formulaire par deux boutons centraux */}
+      <div className="entry-buttons-container">
+        <button 
+          className="entry-button entry-button-no"
+          onClick={() => openEntryModal("no")}
+        >
+          <span className="entry-button-emoji">🏆</span>
+          <span className="entry-button-text">Pas de consommation</span>
         </button>
-      </form>
-
+        
+        <button 
+          className="entry-button entry-button-yes"
+          onClick={() => openEntryModal("yes")}
+        >
+          <span className="entry-button-emoji">🍂</span>
+          <span className="entry-button-text">Consommation</span>
+        </button>
+      </div>
 
       <div className="stats-global-FusionTool">
-
-
         <StatCard
           label="📥Last "
           value={lastYesEntry ? `${formatClock(lastYesEntry)}` : "N/A"}
@@ -1080,6 +1123,66 @@ const handleSaveEntryEdit = async () => {
               <button onClick={handleSaveEntryEdit}>Enregistrer</button>
               <button onClick={closeEditEntryModal}>Annuler</button>
               <button onClick={handleDeleteEntryFromModal}>Supprimer</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Nouvelle modale pour la saisie des entrées */}
+      {showEntryModal && (
+        <div className="modal-overlay">
+          <div className="modal-content entry-modal">
+            <button className="close-btn" onClick={closeEntryModal}>
+              Fermer
+            </button>
+            
+            <h3 className="modal-title">
+              {preselectedConsumption === "yes" ? "Nouvelle consommation 🍂" : "Sans consommation 🏆"}
+            </h3>
+            
+            <div className="modal-form">
+              <div className="datetime-picker">
+                <label>Date et heure :</label>
+                <input
+                  type="datetime-local"
+                  value={formData.createdAt}
+                  onChange={(e) => handleChange("createdAt", e.target.value)}
+                  className="datetime-input"
+                />
+              </div>
+              
+              <div className="mood-selector">
+                <label>Comment vous sentez-vous ?</label>
+                
+                <div className="mood-tabs">
+                  {Object.keys(moodGroups).map(group => (
+                    <div className="mood-group" key={group}>
+                      <h4 className="mood-group-title">{group}</h4>
+                      <div className="mood-grid">
+                        {moodGroups[group].map(mood => (
+                          <button
+                            key={mood.value}
+                            type="button"
+                            className={`mood-button ${formData.mood === mood.value ? 'selected' : ''}`}
+                            onClick={() => handleChange("mood", mood.value)}
+                            title={mood.label}
+                          >
+                            {mood.label.split(' ')[1]} {/* Afficher uniquement l'emoji */}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <button 
+                className="submit-entry-btn"
+                onClick={handleSubmitModalForm}
+                disabled={!formData.mood}
+              >
+                Enregistrer
+              </button>
             </div>
           </div>
         </div>

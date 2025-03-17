@@ -2,8 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { TasksContext } from '../context/TasksContext';
 import { regenerateHabits } from '../utils/cronJobs';
 import './Settings.css';
+import AdditionalMenu from '../components/AdditionalMenu';
 
-const Settings = ({ taskCategories }) => {
+const Settings = ({ taskCategories, isDarkMode, toggleDarkMode, setThemeMode }) => {
   const { tasks, fetchTasks } = useContext(TasksContext);
   const [habits, setHabits] = useState([]);
   const [activeHabits, setActiveHabits] = useState([]);
@@ -19,6 +20,9 @@ const Settings = ({ taskCategories }) => {
     subtasks: []
   });
   const [newSubtask, setNewSubtask] = useState('');
+  const [currentTheme, setCurrentTheme] = useState(() => {
+    return localStorage.getItem('themeMode') || 'system';
+  });
 
   // Charger toutes les habitudes
   useEffect(() => {
@@ -212,55 +216,72 @@ const Settings = ({ taskCategories }) => {
     }
   };
 
+  const handleThemeChange = (e) => {
+    const newTheme = e.target.value;
+    setCurrentTheme(newTheme);
+    setThemeMode(newTheme);
+  };
+
   return (
     <div className="settings-container">
+      <div className="app-title">
+        <h3>
+          TaskFlow ⚙️ Paramètres
+          <button onClick={toggleDarkMode} className="dark-mode-button">
+            {isDarkMode ? "🌚" : "🌞"}
+          </button>
+        </h3>
+      </div>
+
       <div className="settings-tabs">
         <button 
           className={`tab-button ${activeTab === 'general' ? 'active' : ''}`}
           onClick={() => setActiveTab('general')}
         >
-          Paramètres généraux
+          Général
+        </button>
+        <button 
+          className={`tab-button ${activeTab === 'appearance' ? 'active' : ''}`}
+          onClick={() => setActiveTab('appearance')}
+        >
+          Apparence
         </button>
         <button 
           className={`tab-button ${activeTab === 'habits' ? 'active' : ''}`}
           onClick={() => setActiveTab('habits')}
         >
-          Gestion des habitudes
+          Habitudes
         </button>
       </div>
-      
+
       {activeTab === 'general' && (
         <div className="general-settings">
-          <h1>⚙️ Paramètres généraux</h1>
           <div className="settings-section">
-            <h2>Apparence</h2>
+            <h3>Paramètres généraux</h3>
+            {/* Autres paramètres généraux ici */}
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'appearance' && (
+        <div className="appearance-settings">
+          <div className="settings-section">
+            <h3>Apparence</h3>
             <div className="settings-option">
               <label>
-                <span>Thème par défaut:</span>
-                <select>
+                <span>Thème d'interface :</span>
+                <select value={currentTheme} onChange={handleThemeChange}>
                   <option value="light">Clair</option>
                   <option value="dark">Sombre</option>
                   <option value="system">Système</option>
                 </select>
               </label>
             </div>
-          </div>
-          <div className="settings-section">
-            <h2>Notifications</h2>
-            <div className="settings-option">
-              <label>
-                <input type="checkbox" /> Activer les notifications sonores
-              </label>
-            </div>
-            <div className="settings-option">
-              <label>
-                <input type="checkbox" /> Rappels pour les tâches en retard
-              </label>
-            </div>
+            {/* Autres options d'apparence ici */}
           </div>
         </div>
       )}
-      
+
       {activeTab === 'habits' && (
         <div className="habits-settings">
           <h1>🔄 Gestion des habitudes quotidiennes</h1>
