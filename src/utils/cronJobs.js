@@ -1,3 +1,5 @@
+import { API_BASE_URL } from './api';
+
 /**
  * Utilitaire pour exécuter la régénération quotidienne des habitudes
  * Cette fonction peut être appelée par un cron job côté serveur
@@ -7,25 +9,21 @@ export const regenerateHabits = async () => {
     try {
         console.log("Début de la régénération des habitudes...");
         
-        // Vérifier d'abord combien d'habitudes existent
-        const checkResponse = await fetch('http://192.168.50.241:4000/tasks');
-        const tasks = await checkResponse.json();
-        const habitCount = tasks.filter(task => task.taskType === 'habit').length;
-        console.log(`Nombre d'habitudes trouvées: ${habitCount}`);
-        
-        const response = await fetch('http://192.168.50.241:4000/regenerate-habits', {
+        // Utiliser l'URL de base dynamique
+        const response = await fetch(`${API_BASE_URL}/regenerate-habits`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            }
         });
         
         if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Erreur serveur lors de la régénération:', errorText);
-            throw new Error('Erreur lors de la régénération des habitudes');
+            throw new Error(`Erreur HTTP: ${response.status}`);
         }
         
         const data = await response.json();
-        console.log('Régénération des habitudes:', data);
+        console.log('Habitudes régénérées:', data);
         return data;
     } catch (error) {
         console.error('Erreur lors de la régénération des habitudes:', error);

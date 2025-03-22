@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
+import { API_BASE_URL } from '../utils/api';
 
 export const TasksContext = createContext();
 
@@ -10,10 +11,10 @@ export const TasksProvider = ({ children }) => {
 
   // Fonction pour récupérer toutes les tâches
   const fetchTasks = useCallback(async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      const response = await fetch('http://192.168.50.241:4000/all-tasks');
-      if (!response.ok) throw new Error('Erreur réseau');
+      const response = await fetch(`${API_BASE_URL}/all-tasks`);
+      if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
       
       const data = await response.json();
       if (Array.isArray(data)) {

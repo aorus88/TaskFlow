@@ -151,7 +151,7 @@ const Notes = ({ taskCategories = [] }) => {
     if (!newNote.title || !newNote.content) return;
 
     try {
-      const response = await fetch('http://192.168.50.241:4000/notes', {
+      const response = await fetch('https://192.168.50.241:4443/notes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -194,7 +194,7 @@ const Notes = ({ taskCategories = [] }) => {
     }
     
     try {
-      const response = await fetch(`http://192.168.50.241:4000/notes/${editingId}`, {
+      const response = await fetch(`https://192.168.50.241:4443/notes/${editingId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -226,7 +226,7 @@ const Notes = ({ taskCategories = [] }) => {
     if (!window.confirm('Êtes-vous sûr de vouloir supprimer cette note ?')) return;
     
     try {
-      const response = await fetch(`http://192.168.50.241:4000/notes/${id}`, {
+      const response = await fetch(`https://192.168.50.241:4443/notes/${id}`, {
         method: 'DELETE',
       });
 
@@ -249,7 +249,7 @@ const Notes = ({ taskCategories = [] }) => {
     if (!noteToUpdate) return;
     
     try {
-      const response = await fetch(`http://192.168.50.241:4000/notes/${noteId}`, {
+      const response = await fetch(`https://192.168.50.241:4443/notes/${noteId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

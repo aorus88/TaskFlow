@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState, useRef, useCallback } from "rea
 import { TimerContext } from "../context/TimerContext";
 import TaskForm from "./TaskForm"; // Importez TaskForm
 import "./GlobalPomodoroTimer.css";
+import { API_BASE_URL } from '../utils/api';
 
 // Sons de notification
 const NOTIFICATION_SOUNDS = {
@@ -160,7 +161,7 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
       };
 
       const response = await fetch(
-        `http://192.168.50.241:4000/tasks/${parentTask._id}/sessions`,
+        `https://192.168.50.241:4443/tasks/${parentTask._id}/sessions`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -220,14 +221,57 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
     }
   }, [customDuration, setTimeLeft, setSessionTime]);
 
-  const completeAndAssignTime = useCallback(() => {
+  const completeAndAssignTime = async () => {
     if (!selectedTaskId) {
       alert("Veuillez sélectionner une tâche");
       return;
     }
     setIsManualStop(true);
-    handleSessionEnd(sessionTime);
-  }, [selectedTaskId, sessionTime]);
+    try {
+      if (!selectedTaskId || isSubmitting.current) return;
+
+      isSubmitting.current = true;
+      setIsRunning(false);
+      
+      const [type, id] = selectedTaskId.split('-');
+      const sessionTimeInMinutes = Math.floor(sessionTime / 60);
+
+      // Trouver la tâche parente
+      const parentTask = type === 'subtask' 
+        ? tasks.find(task => task.subtasks?.some(st => st._id === id))
+        : tasks.find(task => task._id === id);
+
+      if (!parentTask) throw new Error("Tâche parente non trouvée");
+
+      const session = {
+        duration: sessionTimeInMinutes,
+        date: new Date(),
+        type: type, // 'task' ou 'subtask'
+        targetId: id // ID de la tâche ou sous-tâche
+      };
+
+      const response = await fetch(
+        `${API_BASE_URL}/tasks/${parentTask._id}/sessions`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(session)
+        }
+      );
+
+      if (!response.ok) throw new Error("Erreur lors de l'ajout de la session");
+
+      setTimeLeft(customDuration * 60);
+      setSessionTime(0);
+      setSessionEnded(false);
+
+      if (fetchTasks) await fetchTasks();
+    } catch (error) {
+      console.error("Erreur:", error);
+    } finally {
+      isSubmitting.current = false;
+    }
+  };
 
   const handleDurationChange = useCallback((value) => {
     const minutes = Number(value);

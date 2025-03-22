@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect, useState, useCallback } from "react";
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from "./pages/Home";
 import Archives from "./pages/Archives";
 import FusionTool from "./pages/FusionTool";
@@ -7,17 +7,38 @@ import VersionHistory from "./pages/VersionHistory";
 import Sessions from "./pages/Sessions";
 import Settings from "./pages/Settings";
 import NotesEditor from "./pages/NotesEditor"; // Importer le nouvel éditeur de notes
+import Login from "./pages/Login"; // Import du composant Login
+import Register from "./pages/Register"; // Import du composant Register
 import "./index.css";
 import taskReducer from "./reducers/taskReducer";
 import { TimerProvider } from "./context/TimerContext";
 import { SelectedTaskProvider } from './context/SelectedTaskContext';
 import { NotesProvider } from './context/NotesContext'; // Importer le provider de notes
+import { AuthProvider, AuthContext } from './context/AuthContext'; // Import du AuthProvider
+import ProtectedRoute from "./components/ProtectedRoute"; // Import du composant ProtectedRoute
 import AdditionalMenu from "./components/AdditionalMenu";
+import SessionInfoBar from './components/SessionInfoBar'; // Import du nouveau composant
 import "./App.css";
 import GlobalPomodoroTimer from "./components/GlobalPomodoroTimer";
 import { TasksProvider } from './context/TasksContext';
 import { setupHabitRegenerationCheck, regenerateHabits } from './utils/cronJobs';
 import { ToggleLeft } from "./icons/ToggleLeft"; // Ajout de l'import de ToggleLeft
+import { migrateDataToAdmin } from './utils/api';
+
+// Composant de protection des routes
+const ProtectedLayout = ({ children }) => {
+  const { isAuthenticated, loading } = React.useContext(AuthContext);
+  
+  if (loading) {
+    return <div className="loading">Chargement...</div>;
+  }
+  
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  
+  return children;
+};
 
 const initialState = {
   tasks: [],
@@ -174,6 +195,7 @@ const App = () => {
 
   const fetchTasks = useCallback(async () => {
     try {
+      // Utiliser uniquement l'URL HTTP
       const response = await fetch(`http://192.168.50.241:4000/tasks`);
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
@@ -219,6 +241,21 @@ const App = () => {
       .then(() => console.log('Vérification des habitudes au démarrage terminée'))
       .catch(err => console.error('Erreur lors de la vérification des habitudes:', err));
   }, [fetchTasks, fetchConsumptionEntries]);
+
+  // Migrer les données existantes vers l'admin au chargement (une seule fois)
+  useEffect(() => {
+    const hasMigrated = localStorage.getItem('dataMigrated');
+    if (!hasMigrated) {
+      migrateDataToAdmin()
+        .then(result => {
+          console.log('Migration des données réussie:', result);
+          localStorage.setItem('dataMigrated', 'true');
+        })
+        .catch(err => {
+          console.error('Erreur lors de la migration des données:', err);
+        });
+    }
+  }, []);
 
   const addTask = async (task) => {
     try {
@@ -410,146 +447,146 @@ const App = () => {
   };
 
   return (
-    <TasksProvider>
-      <TimerProvider>
-        <SelectedTaskProvider>
-          <NotesProvider>
-            <div className={`App ${isDarkMode ? 'dark' : ''}`}>
-              <div className="app-title">
-                <h3>
-                  <AdditionalMenu />
-                  TaskFlow 📬 1.4.2 
-                  <button onClick={toggleDarkMode} className="dark-mode-button">
-                    <ToggleLeft 
-                      width={36} 
-                      height={36} 
-                      stroke={isDarkMode ? "#4299e1" : "#718096"}
-                      fill={isDarkMode ? "#4299e1" : "none"} 
-                    />
-                  </button>
-                </h3>
+    <AuthProvider>
+      <TasksProvider>
+        <TimerProvider>
+          <SelectedTaskProvider>
+            <NotesProvider>
+              <div className="app-container">
+                {/* En-tête toujours visible */}
+                <div className="app-header">
+                  
+                </div>
+                
+                <Routes>
+                  {/* Routes publiques */}
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+
+                  {/* Routes protégées */}
+                  <Route path="/*" element={
+                    <ProtectedLayout>
+                      <div className="app-content">
+                        {/* Menu horizontal et barre d'infos utilisateur */}
+                        <div className="top-menu-container">
+                          <AdditionalMenu position="top" />
+                        </div>
+                        <SessionInfoBar />
+                        
+                        {/* Application principale */}
+                        <div className="main-wrapper">
+                          <section className="stats-pomodoro-section">
+                            <GlobalPomodoroTimer
+                              tasks={state.tasks.filter(task => task.status === 'open')}
+                              updateTaskTime={updateTaskTime}
+                              fetchTasks={fetchTasks}
+                              setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
+                              onAddTask={addTask}
+                              taskCategories={taskCategories}
+                            />
+                          </section>
+                          
+                          {/* Routes imbriquées pour les pages protégées */}
+                          <Routes>
+                            <Route path="/" element={
+                              <Home
+                                tasks={state.tasks}
+                                onAddTask={addTask}
+                                onEditTask={updateTask}
+                                onDeleteTask={deleteTask}
+                                onArchiveTask={archiveTask}
+                                onAddSubtask={addSubtask}
+                                onDeleteSubtask={deleteSubtask}
+                                onToggleSubtaskStatus={toggleSubtaskStatus}
+                                filter={filter}
+                                setFilter={setFilter}
+                                onSaveTask={updateTask}
+                                fetchTasks={fetchTasks}
+                                updateTaskTime={updateTaskTime}
+                                setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
+                                isDarkMode={isDarkMode}
+                                toggleDarkMode={toggleDarkMode}
+                                taskCategories={taskCategories}
+                              />
+                            } />
+                            
+                            <Route path="/archives" element={
+                              <Archives
+                                archivedTasks={state.tasks.filter((task) => task.archived?.trim() === "closed")}
+                                archivedSubtasksWithOpenParent={state.tasks.flatMap(task =>
+                                  task.subtasks.filter(subtask => subtask.archived === "closed" && task.archived !== "closed").map(subtask => ({
+                                    ...subtask,
+                                    parentTaskName: task.name,
+                                    parentTaskId: task._id,
+                                  }))
+                                )}
+                                onDeleteTask={deleteTask}
+                                onDeleteSubtask={deleteSubtask}
+                                onFetchArchivedTasks={() => fetchTasks(true)}
+                                taskCategories={taskCategories}
+                                isDarkMode={isDarkMode}
+                                toggleDarkMode={toggleDarkMode}
+                                setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
+                                onUpdateTask={updateTask}
+                              />
+                            } />
+                            
+                            <Route path="/fusion-tool" element={
+                              <FusionTool
+                                entries={state.consumptionEntries}
+                                onAddEntry={enhancedAddConsumptionEntry}
+                                onDeleteEntry={deleteConsumptionEntry}
+                                isDarkMode={isDarkMode}
+                                toggleDarkMode={toggleDarkMode}
+                                onAddTask={addTask}
+                                taskCategories={taskCategories}
+                              />
+                            } />
+                            
+                            <Route path="/sessions" element={
+                              <Sessions
+                                tasks={state.tasks}
+                                fetchTasks={fetchTasks}
+                                isDarkMode={isDarkMode}
+                                toggleDarkMode={toggleDarkMode}
+                                onAddTask={addTask}
+                                taskCategories={taskCategories}
+                              />
+                            } />
+                            
+                            <Route path="/VersionHistory" element={
+                              <VersionHistory
+                                isDarkMode={isDarkMode}
+                                toggleDarkMode={toggleDarkMode}
+                              />
+                            } />
+                            
+                            <Route path="/settings" element={
+                              <Settings
+                                taskCategories={taskCategories}
+                                isDarkMode={isDarkMode}
+                                toggleDarkMode={toggleDarkMode}
+                                setThemeMode={setThemeMode}
+                              />
+                            } />
+                            
+                            <Route path="/notes" element={
+                              <NotesEditor
+                                taskCategories={taskCategories}
+                              />
+                            } />
+                          </Routes>
+                        </div>
+                      </div>
+                    </ProtectedLayout>
+                  } />
+                </Routes>
               </div>
-
-              <section className="stats-pomodoro-section">
-                <GlobalPomodoroTimer
-                  tasks={state.tasks.filter(task => task.status === 'open')}
-                  updateTaskTime={updateTaskTime}
-                  fetchTasks={fetchTasks}
-                  setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
-                  onAddTask={addTask}
-                  taskCategories={taskCategories}
-                />
-              </section>
-
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <Home
-                      tasks={state.tasks}
-                      onAddTask={addTask}
-                      onEditTask={updateTask}
-                      onDeleteTask={deleteTask}
-                      onArchiveTask={archiveTask}
-                      onAddSubtask={addSubtask}
-                      onDeleteSubtask={deleteSubtask}
-                      onToggleSubtaskStatus={toggleSubtaskStatus}
-                      onSaveTask={updateTask}
-                      filter={filter}
-                      setFilter={setFilter}
-                      fetchTasks={fetchTasks}
-                      updateTaskTime={updateTaskTime}
-                      setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
-                      isDarkMode={isDarkMode}
-                      toggleDarkMode={toggleDarkMode}
-                      taskCategories={taskCategories}
-                    />
-                  }
-                />
-                <Route
-                  path="/archives"
-                  element={
-                    <Archives
-                      archivedTasks={state.tasks.filter((task) => task.archived?.trim() === "closed")}
-                      archivedSubtasksWithOpenParent={state.tasks.flatMap(task =>
-                        task.subtasks.filter(subtask => subtask.archived === "closed" && task.archived !== "closed").map(subtask => ({
-                          ...subtask,
-                          parentTaskName: task.name,
-                          parentTaskId: task._id,
-                        }))
-                      )}
-                      onDeleteTask={deleteTask}
-                      onDeleteSubtask={deleteSubtask}
-                      onFetchArchivedTasks={() => fetchTasks(true)}
-                      taskCategories={taskCategories}
-                      isDarkMode={isDarkMode}
-                      toggleDarkMode={toggleDarkMode}
-                      setSelectedTaskId={(taskId) => dispatch({ type: "SET_SELECTED_TASK_ID", payload: taskId })}
-                      onUpdateTask={updateTask}
-                    />
-                  }
-                />
-                <Route
-                  path="/fusion-tool"
-                  element={
-                    <FusionTool
-                      entries={state.consumptionEntries}
-                      onAddEntry={enhancedAddConsumptionEntry}
-                      onDeleteEntry={deleteConsumptionEntry}
-                      isDarkMode={isDarkMode}
-                      toggleDarkMode={toggleDarkMode}
-                      onAddTask={addTask}
-                      taskCategories={taskCategories}
-                    />
-                  }
-                />
-                <Route
-                  path="/sessions"
-                  element={
-                    <Sessions
-                      tasks={state.tasks}
-                      fetchTasks={fetchTasks}
-                      isDarkMode={isDarkMode}
-                      toggleDarkMode={toggleDarkMode}
-                      onAddTask={addTask}
-                      taskCategories={taskCategories}
-                    />
-                  }
-                />
-                <Route
-                  path="/VersionHistory"
-                  element={
-                    <VersionHistory
-                      isDarkMode={isDarkMode}
-                      toggleDarkMode={toggleDarkMode}
-                    />
-                  }
-                />
-                <Route
-                  path="/settings"
-                  element={
-                    <Settings
-                      taskCategories={taskCategories}
-                      isDarkMode={isDarkMode}
-                      toggleDarkMode={toggleDarkMode}
-                      setThemeMode={setThemeMode}
-                    />
-                  }
-                />
-                <Route
-                  path="/notes"
-                  element={
-                    <NotesEditor
-                      taskCategories={taskCategories}
-                    />
-                  }
-                />
-              </Routes>
-            </div>
-          </NotesProvider>
-        </SelectedTaskProvider>
-      </TimerProvider>
-    </TasksProvider>
+            </NotesProvider>
+          </SelectedTaskProvider>
+        </TimerProvider>
+      </TasksProvider>
+    </AuthProvider>
   );
 };
 

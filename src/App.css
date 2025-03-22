@@ -7,19 +7,14 @@
 }
 
 .dark-mode-button {
-  display: inline-flex;
-  align-items: right;
-  justify-content: right;
+  position: absolute;
+  right: 20px;
+  top: 15px;
   background: none;
   border: none;
-  padding: 0;
-  margin-left: 10px;
   cursor: pointer;
-}
-
-
-.dark-mode-button:focus {
-  outline: none;
+  font-size: 1.5rem;
+  color: inherit;
 }
 
 .app-title {
@@ -31,4 +26,131 @@
 
 body.dark .app-title {
   color: #fff;
+}
+
+/* Structure de mise en page principale avec menu en haut */
+.app-content {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px); /* Hauteur d'écran moins hauteur de l'en-tête */
+  min-height: calc(100vh - 60px);
+}
+
+.top-menu-container {
+  width: 100%;
+}
+
+/* Structure de mise en page principale avec menu latéral */
+.main-layout {
+  display: flex;
+  min-height: calc(100vh - 60px); /* Hauteur d'écran moins hauteur de l'en-tête */
+}
+
+/* Wrapper pour le contenu et la barre d'information de session */
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-wrapper {
+  flex: 1;
+  padding: 0 20px 20px;
+  overflow-y: auto;
+}
+
+/* Style pour la barre d'information de session */
+.session-info-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 8px 15px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.9rem;
+}
+
+body.dark .session-info-bar {
+  background-color: #1a202c;
+  border-color: #2d3748;
+  color: #e2e8f0;
+}
+
+.session-user-info, .connection-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.username {
+  font-weight: 600;
+}
+
+.user-emoji, .connection-emoji {
+  font-size: 1.1rem;
+}
+
+.logout-button {
+  background-color: #e53e3e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.logout-button:hover {
+  background-color: #c53030;
+}
+
+/* Style pour le contenu principal */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Styles spécifiques pour les pages d'authentification */
+.auth-page {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+body.dark .auth-page {
+  background-color: #2d3748;
+  color: #e2e8f0;
+}
+
+/* Style pour le Pomodoro Timer */
+.stats-pomodoro-section {
+  margin-bottom: 20px;
+}
+
+/* Adaptation mobile */
+@media (max-width: 768px) {
+  .app-content {
+    padding: 0 10px;
+  }
+  
+  .session-info-bar {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+  }
+  
+  .session-info-bar > div {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .logout-button {
+    width: 100%;
+  }
 }

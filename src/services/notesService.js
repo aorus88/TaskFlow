@@ -1,4 +1,4 @@
-const API_URL = 'http://192.168.50.241:4000';
+const API_URL = 'https://192.168.50.241:4443';
 
 // Fonction de gestion des erreurs
 const handleResponse = async (response) => {

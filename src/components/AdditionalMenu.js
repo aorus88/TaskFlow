@@ -1,55 +1,59 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "./AdditionalMenu.css";
-import { Home } from "../icons/Home";
-import { Activity } from "../icons/Activity";
-import { Calendar1 } from "../icons/Calendar1"; 
-import { Note } from "../icons/Note";
-import { Settings } from "../icons/Settings";
-import { Archive } from "../icons/Archive";
-import { History } from "../icons/History";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FaHome, FaCalendarAlt, FaArchive, FaChartLine, FaStickyNote, FaCog, FaHistory } from 'react-icons/fa';
+import './AdditionalMenu.css';
 
-const AdditionalMenu = () => {
+const AdditionalMenu = ({ position = "side" }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  // Classes CSS basées sur la position (top ou side)
+  const menuContainerClass = position === "top" ? "horizontal-menu" : "additional-menu";
+  const menuClass = position === "top" ? "horizontal-menu-content" : "menu-content";
 
   return (
     <>
-      <button className="menu-button" onClick={toggleMenu}>
-        {isOpen ? <Home stroke="#333" /> : <Home stroke="#333" />}
-      </button>
-      {isOpen && (
-        <div className="menu-items">
-            <Link to="/" className="menu-link" onClick={toggleMenu}>
-                <Home width={24} height={24} stroke="#ffffff" />
-            </Link>
-
-          <Link to="/fusion-tool" className="menu-link" onClick={toggleMenu}>
-            <Activity width={24} height={24} stroke="#ffffff" />
+      <div className={menuContainerClass}>
+        <div className={menuClass}>
+          <Link to="/" className="menu-link">
+            <FaHome size={24} color="#ffffff" />
+            {position === "top" && <span>Accueil</span>}
           </Link>
 
-          <Link to="/sessions" className="menu-link" onClick={toggleMenu}>
-            <Calendar1 width={24} height={24} stroke="#ffffff" />
+          <Link to="/sessions" className="menu-link">
+            <FaCalendarAlt size={24} color="#ffffff" />
+            {position === "top" && <span>Sessions</span>}
           </Link>
 
-          <Link to="/notes" className="menu-link" onClick={toggleMenu}>
-            <Note width={24} height={24} stroke="#ffffff" />
+          <Link to="/fusion-tool" className="menu-link">
+            <FaChartLine size={24} color="#ffffff" />
+            {position === "top" && <span>Fusion</span>}
           </Link>
 
-          <Link to="/settings" className="menu-link" onClick={toggleMenu}>
-            <Settings width={24} height={24} stroke="#ffffff" />
+          <Link to="/notes" className="menu-link">
+            <FaStickyNote size={24} color="#ffffff" />
+            {position === "top" && <span>Notes</span>}
           </Link>
 
-          <Link to="/archives" className="menu-link" onClick={toggleMenu}>
-            <Archive width={24} height={24} stroke="#ffffff" />
+          <Link to="/settings" className="menu-link">
+            <FaCog size={24} color="#ffffff" />
+            {position === "top" && <span>Paramètres</span>}
           </Link>
 
-          <Link to="/versionHistory" className="menu-link" onClick={toggleMenu}>
-            <History width={24} height={24} stroke="#ffffff" />
+          <Link to="/archives" className="menu-link">
+            <FaArchive size={24} color="#ffffff" />
+            {position === "top" && <span>Archives</span>}
+          </Link>
+
+          <Link to="/versionHistory" className="menu-link">
+            <FaHistory size={24} color="#ffffff" />
+            {position === "top" && <span>Historique</span>}
           </Link>
         </div>
-      )}
+      </div>
     </>
   );
 };

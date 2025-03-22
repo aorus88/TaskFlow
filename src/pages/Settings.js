@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { TasksContext } from '../context/TasksContext';
+import { AuthContext } from '../context/AuthContext'; // Importer le contexte d'authentification
 import { regenerateHabits } from '../utils/cronJobs';
 import './Settings.css';
 import AdditionalMenu from '../components/AdditionalMenu';
+import { API_BASE_URL } from '../utils/api';
 
 const Settings = ({ taskCategories, isDarkMode, toggleDarkMode, setThemeMode }) => {
   const { tasks, fetchTasks } = useContext(TasksContext);
+  const { currentUser, isAdmin } = useContext(AuthContext); // Récupérer l'état d'authentification et le rôle
   const [habits, setHabits] = useState([]);
   const [activeHabits, setActiveHabits] = useState([]);
   const [selectedHabit, setSelectedHabit] = useState(null);
@@ -23,6 +26,19 @@ const Settings = ({ taskCategories, isDarkMode, toggleDarkMode, setThemeMode }) 
   const [currentTheme, setCurrentTheme] = useState(() => {
     return localStorage.getItem('themeMode') || 'system';
   });
+
+  // États pour la gestion des utilisateurs
+  const [users, setUsers] = useState([]);
+  const [userFormData, setUserFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    role: 'user'
+  });
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isEditingUser, setIsEditingUser] = useState(false);
+  const [userLoading, setUserLoading] = useState(false);
+  const [userError, setUserError] = useState(null);
 
   // Charger toutes les habitudes
   useEffect(() => {
@@ -222,6 +238,192 @@ const Settings = ({ taskCategories, isDarkMode, toggleDarkMode, setThemeMode }) 
     setThemeMode(newTheme);
   };
 
+  // Fonction pour charger la liste des utilisateurs
+  const fetchUsers = async () => {
+    if (!isAdmin) return;
+    
+    setUserLoading(true);
+    setUserError(null);
+    try {
+      // Utiliser l'URL de base dynamique
+      const response = await fetch(`${API_BASE_URL}/api/auth/users`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        }
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Impossible de récupérer la liste des utilisateurs');
+      }
+      
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error('Erreur:', error);
+      setUserError(error.message || 'Erreur lors de la récupération des utilisateurs');
+      
+      // Fallback en mode développement pour permettre de continuer à travailler
+      if (process.env.NODE_ENV === 'development') {
+        setUsers([{
+          _id: '67dee6ba6514967a97a47495',
+          username: 'admin',
+          email: 'admin@taskflow.com',
+          role: 'admin'
+        }]);
+      }
+    } finally {
+      setUserLoading(false);
+    }
+  };
+
+  // Charger les utilisateurs lorsque l'onglet "Utilisateurs" est sélectionné
+  useEffect(() => {
+    if (activeTab === 'users' && isAdmin) {
+      fetchUsers();
+    }
+  }, [activeTab, isAdmin]);
+
+  // Gérer les changements dans le formulaire utilisateur
+  const handleUserFormChange = (field, value) => {
+    setUserFormData(prevData => ({
+      ...prevData,
+      [field]: value
+    }));
+  };
+
+  // Sélectionner un utilisateur pour modification
+  const handleSelectUser = (user) => {
+    setSelectedUser(user);
+    setIsEditingUser(true);
+    setUserFormData({
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      password: '' // Champ vide pour le mot de passe
+    });
+  };
+
+  // Réinitialiser le formulaire utilisateur
+  const resetUserForm = () => {
+    setSelectedUser(null);
+    setIsEditingUser(false);
+    setUserFormData({
+      username: '',
+      email: '',
+      password: '',
+      role: 'user'
+    });
+    setUserError(null);
+  };
+
+  // Ajouter un nouvel utilisateur
+  const handleAddUser = async () => {
+    setUserLoading(true);
+    setUserError(null);
+    try {
+      // Validation basique
+      if (!userFormData.username || !userFormData.email || (!isEditingUser && !userFormData.password)) {
+        throw new Error('Veuillez remplir tous les champs obligatoires');
+      }
+      
+      const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify(userFormData)
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Erreur lors de la création de l\'utilisateur');
+      }
+      
+      // Rafraîchir la liste des utilisateurs
+      fetchUsers();
+      resetUserForm();
+      alert('Utilisateur créé avec succès');
+    } catch (error) {
+      console.error('Erreur:', error);
+      setUserError(error.message);
+    } finally {
+      setUserLoading(false);
+    }
+  };
+
+  // Mettre à jour un utilisateur existant
+  const handleUpdateUser = async () => {
+    if (!selectedUser) return;
+    
+    setUserLoading(true);
+    setUserError(null);
+    try {
+      const payload = {...userFormData};
+      // Ne pas envoyer le mot de passe s'il est vide
+      if (!payload.password) delete payload.password;
+      
+      const response = await fetch(`${API_BASE_URL}/api/auth/users/${selectedUser._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify(payload)
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Erreur lors de la mise à jour de l\'utilisateur');
+      }
+      
+      // Rafraîchir la liste des utilisateurs
+      fetchUsers();
+      resetUserForm();
+      alert('Utilisateur mis à jour avec succès');
+    } catch (error) {
+      console.error('Erreur:', error);
+      setUserError(error.message);
+    } finally {
+      setUserLoading(false);
+    }
+  };
+
+  // Supprimer un utilisateur
+  const handleDeleteUser = async (userId) => {
+    if (!window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) return;
+    
+    setUserLoading(true);
+    setUserError(null);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/auth/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        }
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Erreur lors de la suppression de l\'utilisateur');
+      }
+      
+      // Rafraîchir la liste des utilisateurs
+      fetchUsers();
+      // Réinitialiser le formulaire si l'utilisateur supprimé était en cours d'édition
+      if (selectedUser && selectedUser._id === userId) {
+        resetUserForm();
+      }
+      alert('Utilisateur supprimé avec succès');
+    } catch (error) {
+      console.error('Erreur:', error);
+      setUserError(error.message);
+    } finally {
+      setUserLoading(false);
+    }
+  };
+
   return (
     <div className="settings-container">
       <div className="app-title">
@@ -252,6 +454,15 @@ const Settings = ({ taskCategories, isDarkMode, toggleDarkMode, setThemeMode }) 
         >
           Habitudes
         </button>
+        {/* Afficher l'onglet Utilisateurs seulement pour les administrateurs */}
+        {isAdmin && (
+          <button 
+            className={`tab-button ${activeTab === 'users' ? 'active' : ''}`}
+            onClick={() => setActiveTab('users')}
+          >
+            Utilisateurs
+          </button>
+        )}
       </div>
 
       {activeTab === 'general' && (
@@ -388,6 +599,7 @@ const Settings = ({ taskCategories, isDarkMode, toggleDarkMode, setThemeMode }) 
                   value={newHabitForm.categories}
                   onChange={(e) => handleFormChange('categories', e.target.value)}
                 >
+                  <option value="Travail 💼">Travail 💼</option>
                   <option value="Personnel 🐈">Personnel 🐈</option>
                   {taskCategories.map(category => (
                     <option key={category} value={category}>
@@ -451,6 +663,122 @@ const Settings = ({ taskCategories, isDarkMode, toggleDarkMode, setThemeMode }) 
                         subtasks: []
                       });
                     }}
+                  >
+                    Annuler
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Nouvelle section pour la gestion des utilisateurs */}
+      {activeTab === 'users' && isAdmin && (
+        <div className="users-settings">
+          <h1>👥 Gestion des utilisateurs</h1>
+          
+          {userError && <div className="error-message">{userError}</div>}
+          
+          <div className="settings-layout">
+            <div className="users-list">
+              <h2>Liste des utilisateurs</h2>
+              {userLoading ? (
+                <p>Chargement...</p>
+              ) : (
+                <ul className="users-list-items">
+                  {users.map(user => (
+                    <li 
+                      key={user._id} 
+                      className={`user-item ${selectedUser && selectedUser._id === user._id ? 'selected' : ''}`}
+                      onClick={() => handleSelectUser(user)}
+                    >
+                      <div className="user-item-info">
+                        <div className="user-name">{user.username}</div>
+                        <div className="user-email">{user.email}</div>
+                        <div className="user-role">
+                          <span className={`role-badge ${user.role}`}>
+                            {user.role === 'admin' ? '👑 Admin' : '👤 Utilisateur'}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="user-item-controls">
+                        <button 
+                          className="delete-user-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteUser(user._id);
+                          }}
+                          disabled={user._id === currentUser?._id} // Empêcher la suppression de soi-même
+                        >
+                          Supprimer
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            
+            <div className="user-form">
+              <h2>{isEditingUser ? `Modifier l'utilisateur: ${selectedUser?.username}` : 'Nouvel utilisateur'}</h2>
+              
+              <div className="form-group">
+                <label>Nom d'utilisateur:</label>
+                <input 
+                  type="text"
+                  value={userFormData.username}
+                  onChange={(e) => handleUserFormChange('username', e.target.value)}
+                  placeholder="Nom d'utilisateur"
+                />
+              </div>
+              
+              <div className="form-group">
+                <label>Email:</label>
+                <input 
+                  type="email"
+                  value={userFormData.email}
+                  onChange={(e) => handleUserFormChange('email', e.target.value)}
+                  placeholder="Email"
+                />
+              </div>
+              
+              <div className="form-group">
+                <label>{isEditingUser ? 'Nouveau mot de passe (laisser vide pour ne pas changer)' : 'Mot de passe'}:</label>
+                <input 
+                  type="password"
+                  value={userFormData.password}
+                  onChange={(e) => handleUserFormChange('password', e.target.value)}
+                  placeholder={isEditingUser ? "Laisser vide pour ne pas changer" : "Mot de passe"}
+                />
+              </div>
+              
+              <div className="form-group">
+                <label>Rôle:</label>
+                <select
+                  value={userFormData.role}
+                  onChange={(e) => handleUserFormChange('role', e.target.value)}
+                >
+                  <option value="user">Utilisateur</option>
+                  <option value="admin">Administrateur</option>
+                </select>
+              </div>
+              
+              <div className="form-actions">
+                <button 
+                  type="button" 
+                  className="save-user"
+                  onClick={isEditingUser ? handleUpdateUser : handleAddUser}
+                  disabled={userLoading}
+                >
+                  {isEditingUser ? 'Mettre à jour' : 'Créer l\'utilisateur'}
+                </button>
+                {isEditingUser && (
+                  <button 
+                    type="button" 
+                    className="cancel-edit"
+                    onClick={resetUserForm}
+                    disabled={userLoading}
                   >
                     Annuler
                   </button>
