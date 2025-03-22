@@ -45,11 +45,7 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
     return saved ? JSON.parse(saved) : true;
   });
   const [isManualStop, setIsManualStop] = useState(false);
-  const [isFloating, setIsFloating] = useState(() => {
-    const saved = localStorage.getItem('pomodoroPosition');
-    return saved ? JSON.parse(saved) : true;
-  });
-
+  
   // Nouvel état pour la modale
   const [isTaskFormModalOpen, setIsTaskFormModalOpen] = useState(false);
 
@@ -64,15 +60,6 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
 
   const isSubmitting = useRef(false);
   const timerRef = useRef(null);
-
-  // Sauvegarder la position du pomodoro
-  const togglePosition = () => {
-    setIsFloating(prev => {
-      const newValue = !prev;
-      localStorage.setItem('pomodoroPosition', JSON.stringify(newValue));
-      return newValue;
-    });
-  };
 
   // Restaurer la dernière tâche ou sous-tâche sélectionnée
   useEffect(() => {
@@ -288,14 +275,10 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
   const activeSegments = Math.floor(progress / segmentProgress);
 
   return (
-    <div className={`pomodoro-timer ${!isPreview ? (isFloating ? 'floating' : 'docked') : ''} ${isMinimized ? 'minimized' : ''}`}>
+    <div className={`pomodoro-timer ${isMinimized ? 'minimized' : ''}`}>
       <div className="pomodoro-timer__header">
         <h1 className="pomodoro-timer-header-timer">{formatTime(timeLeft)} ⏱️</h1>
 
-
-
-
-        
         <h1 className="pomodoro-timer-header-taskname">{getTaskNameWithIcon(selectedTaskId, tasks)}
 
         <select
@@ -324,16 +307,9 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
           ))}
         </select>
 
-
         </h1>
         <h3></h3>
         <div className="pomodoro-timer__controls">
-          <button 
-            className="dock-button"
-            onClick={togglePosition}
-          >
-            {isFloating ? '📌' : '📌'}
-          </button>
           <button 
             className="minimize-button"
             onClick={() => setIsMinimized(!isMinimized)}
@@ -373,19 +349,10 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
         ))}
       </div>
 
-      
-
       <div className={`pomodoro-timer__content ${isMinimized ? 'hidden' : ''}`}>
-
-
-
-
-        
         <div className="pomodoro-timer__container">
           <span className="pomodoro-timer__display">{formatTime(timeLeft)}</span>
         </div>
-
-
 
         <input
           type="number"
@@ -410,7 +377,6 @@ const GlobalPomodoroTimer = ({ tasks = [], isPreview = false, fetchTasks, onAddT
             Réinitialiser 🛑
           </button>
         </div>
-
       </div>
 
       {/* Modale pour TaskForm */}

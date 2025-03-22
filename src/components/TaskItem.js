@@ -245,7 +245,7 @@ const handleArchiveTask = () => {
             <button className="edit-button" onClick={() => openEditModal(task)}>
               Éditer
             </button>
-            <button className="complete-button" onClick={handleArchiveTask}>
+            <button className="complete-button" onClick={handleArchiveTask}> 
               Terminé
             </button>
             <button className="delete-button" onClick={() => onDeleteTask(task.id, isArchived)}>

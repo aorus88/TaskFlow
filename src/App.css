@@ -7,14 +7,19 @@
 }
 
 .dark-mode-button {
-  position: absolute;
-  right: 20px;
-  top: 20px;
+  display: inline-flex;
+  align-items: right;
+  justify-content: right;
   background: none;
   border: none;
+  padding: 0;
+  margin-left: 10px;
   cursor: pointer;
-  font-size: 1.5rem;
-  color: inherit;
+}
+
+
+.dark-mode-button:focus {
+  outline: none;
 }
 
 .app-title {

@@ -212,8 +212,7 @@
   }
   
   .task-buttons {
-    position: static;
-    margin-top: 8px;
+    margin-top: 2px;
   }
 }
 
@@ -224,7 +223,7 @@
 }
 
 .compact-view .task-name {
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .toggle-view-button {

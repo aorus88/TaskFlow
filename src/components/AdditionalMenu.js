@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./AdditionalMenu.css";
+import { Home } from "../icons/Home";
+import { Activity } from "../icons/Activity";
+import { Calendar1 } from "../icons/Calendar1"; 
+import { Note } from "../icons/Note";
+import { Settings } from "../icons/Settings";
+import { Archive } from "../icons/Archive";
+import { History } from "../icons/History";
 
 const AdditionalMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,44 +17,37 @@ const AdditionalMenu = () => {
   return (
     <>
       <button className="menu-button" onClick={toggleMenu}>
-        {isOpen ? "🏠" : "🏠"}
+        {isOpen ? <Home stroke="#333" /> : <Home stroke="#333" />}
       </button>
       {isOpen && (
         <div className="menu-items">
             <Link to="/" className="menu-link" onClick={toggleMenu}>
-                <span role="img" aria-label="Home">📬</span></Link>
+                <Home width={24} height={24} stroke="#ffffff" />
+            </Link>
 
           <Link to="/fusion-tool" className="menu-link" onClick={toggleMenu}>
-            <span role="img" aria-label="Fusion Tool">⛩️</span>
+            <Activity width={24} height={24} stroke="#ffffff" />
           </Link>
 
           <Link to="/sessions" className="menu-link" onClick={toggleMenu}>
-            <span role="img" aria-label="Sessions">📆</span>
+            <Calendar1 width={24} height={24} stroke="#ffffff" />
           </Link>
 
-          
           <Link to="/notes" className="menu-link" onClick={toggleMenu}>
-            <span role="img" aria-label="Notes">📝</span>
-            </Link>
-      
-
-      
+            <Note width={24} height={24} stroke="#ffffff" />
+          </Link>
 
           <Link to="/settings" className="menu-link" onClick={toggleMenu}>
-            <span role="img" aria-label="Settings">⚙️</span>
+            <Settings width={24} height={24} stroke="#ffffff" />
           </Link>
 
-      
-
-            <Link to="/archives" className="menu-link" onClick={toggleMenu}>
-            <span role="img" aria-label="Archives">📪</span>
+          <Link to="/archives" className="menu-link" onClick={toggleMenu}>
+            <Archive width={24} height={24} stroke="#ffffff" />
           </Link>
 
           <Link to="/versionHistory" className="menu-link" onClick={toggleMenu}>
-            <span role="img" aria-label="Version History">📜</span>
+            <History width={24} height={24} stroke="#ffffff" />
           </Link>
-
-        
         </div>
       )}
     </>

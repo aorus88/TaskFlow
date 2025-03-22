@@ -185,6 +185,7 @@ const TaskForm = ({ onAddTask, taskCategories }) => {
         <button type="button" onClick={handleAddTask}>
           {formData.taskType === "habit" ? "Ajouter une habitude" : "Ajouter une tâche"}
         </button>
+        
       </form>
     </div>
   );

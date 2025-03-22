@@ -253,15 +253,23 @@ body.dark .task-item.habit-task {
   border-left-color: #4299e1; /* Couleur bleue plus sombre pour les habits en mode sombre */
 }
 
+/* Ajoutez un conteneur flex autour du nom et du badge */
+.task-header-content {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 /* Styles pour les badges d'échéance */
 .due-date-badge {
-  display: inline-block;
   margin-left: 10px;
   padding: 2px 8px;
   border-radius: 10px;
   font-size: 0.75rem;
   font-weight: bold;
   color: white;
+  
 }
 
 /* Style similaire à habit-label */

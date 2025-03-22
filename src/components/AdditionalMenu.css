@@ -42,18 +42,28 @@
   .menu-link {
     color: white;
     text-decoration: none;
-    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
   }
 
-.menu-button {
-  position: absolute;
-  left: 20px;
-  border: none;
-  cursor: pointer;
-  z-index: 1000;
-  background: none; /* retire le fond */
-  border: none;     /* retire la bordure */
-  font-size: 2rem;  /* agrandit l'emoji */
+  .menu-link:hover {
+    transform: translateY(-3px);
+  }
 
+  .menu-button {
+    position: absolute;
+    left: 20px;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    background: none; /* retire le fond */
+    border: none;     /* retire la bordure */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    color:rgb(216, 12, 12)
+  }
 
-}

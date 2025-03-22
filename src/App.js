@@ -17,6 +17,7 @@ import "./App.css";
 import GlobalPomodoroTimer from "./components/GlobalPomodoroTimer";
 import { TasksProvider } from './context/TasksContext';
 import { setupHabitRegenerationCheck, regenerateHabits } from './utils/cronJobs';
+import { ToggleLeft } from "./icons/ToggleLeft"; // Ajout de l'import de ToggleLeft
 
 const initialState = {
   tasks: [],
@@ -419,7 +420,12 @@ const App = () => {
                   <AdditionalMenu />
                   TaskFlow 📬 1.4.2 
                   <button onClick={toggleDarkMode} className="dark-mode-button">
-                    {isDarkMode ? "🌚" : "🌞"}
+                    <ToggleLeft 
+                      width={36} 
+                      height={36} 
+                      stroke={isDarkMode ? "#4299e1" : "#718096"}
+                      fill={isDarkMode ? "#4299e1" : "none"} 
+                    />
                   </button>
                 </h3>
               </div>
